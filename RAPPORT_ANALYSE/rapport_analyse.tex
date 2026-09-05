@@ -1,0 +1,625 @@
+\documentclass[12pt,a4paper]{article}
+
+% ---- ENCODAGE & LANGUE ----
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+% ---- MISE EN PAGE ----
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+
+% ---- TYPOGRAPHIE ----
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ---- MATHS ----
+\usepackage{amsmath, amssymb, mathtools}
+
+% ---- COULEURS & BOÎTES ----
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable, listings}
+
+% ---- EN-TÊTE & PIED DE PAGE ----
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small\textit{Rapport d'analyse des annales}}
+\rhead{\small\textit{Confidentiel}}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---- HYPERLIENS ----
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=RoyalBlue,
+    citecolor=ForestGreen,
+    pdftitle={Rapport d'Analyse des Annales Corrigées},
+    pdfauthor={Analyse Critique}
+}
+
+% ---- LISTES ----
+\usepackage{enumitem}
+\setlist[itemize]{topsep=4pt, itemsep=2pt}
+\setlist[enumerate]{topsep=4pt, itemsep=2pt}
+
+% ---- TABLEAUX ----
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+
+% ---- TITRES ----
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{RoyalBlue}}{\thesection.}{0.8em}{}[\vspace{-0.3em}\rule{\linewidth}{0.4pt}]
+\titleformat{\subsection}{\large\bfseries\color{MidnightBlue}}{\thesubsection.}{0.7em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{NavyBlue}}{\thesubsubsection.}{0.6em}{}
+
+% ---- BOÎTES PERSONNALISÉES ----
+\newtcolorbox{erreur}[1][]{
+  colback=red!5!white, colframe=red!70!black,
+  fonttitle=\bfseries\small, title=Erreur détectée,
+  breakable, #1
+}
+
+\newtcolorbox{avertissement}[1][]{
+  colback=orange!10!white, colframe=orange!80!black,
+  fonttitle=\bfseries\small, title=Point d'attention,
+  breakable, #1
+}
+
+\newtcolorbox{recommandation}[1][]{
+  colback=green!5!white, colframe=ForestGreen!80!black,
+  fonttitle=\bfseries\small, title=Recommandation,
+  breakable, #1
+}
+
+\newtcolorbox{info}[1][]{
+  colback=RoyalBlue!5!white, colframe=RoyalBlue!70!black,
+  fonttitle=\bfseries\small, title=Observation,
+  breakable, #1
+}
+
+% ---- COMMANDES UTILES ----
+\newcommand{\fichier}[1]{\texttt{\small\color{Purple}#1}}
+\newcommand{\ligne}[1]{\textbf{ligne #1}}
+\newcommand{\correct}[1]{\textcolor{ForestGreen}{\textbf{#1}}}
+\newcommand{\faux}[1]{\textcolor{BrickRed}{\textbf{#1}}}
+
+% ============================================================
+\begin{document}
+
+% ---- PAGE DE TITRE ----
+\begin{titlepage}
+\begin{center}
+\vspace*{2cm}
+{\Huge\bfseries\color{RoyalBlue} Rapport d'Analyse Critique}\\[0.5cm]
+{\Large\bfseries\color{MidnightBlue} des Annales Corrigées}\\[0.3cm]
+{\large Licence Fondamentale en Mathématiques, Physique et Chimie}\\[0.2cm]
+{\large Semestres 1--2 (L1), 3--4 (L2) et 5--6 (L3)}
+
+\vspace{1.5cm}
+\rule{0.8\linewidth}{1pt}
+\vspace{0.5cm}
+
+\begin{tabular}{ll}
+\textbf{Date du rapport :} & 31 mars 2026 \\
+\textbf{Nature :} & Analyse qualitative, détection d'erreurs \\
+& et recommandations d'amélioration \\
+\textbf{Portée :} & Fichiers sources \LaTeX, contenu scientifique, \\
+& design et structure éditoriaux \\
+\end{tabular}
+
+\vspace{1.5cm}
+\rule{0.8\linewidth}{1pt}
+\vspace{1cm}
+
+\begin{tcolorbox}[colback=RoyalBlue!8!white, colframe=RoyalBlue, width=0.85\linewidth]
+\centering\small
+Ce rapport a pour objectif d'identifier avec précision toutes les erreurs, ambiguïtés et faiblesses structurelles des annales corrigées actuelles, afin d'en permettre une refonte complète produisant un document de référence irréprochable sur le marché.
+\end{tcolorbox}
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Présentation générale du projet}
+
+Le projet consiste en trois annales corrigées couvrant l'ensemble du cursus de Licence Fondamentale en Mathématiques, Physique et Chimie (tronc commun) sur six semestres. Ces documents s'adressent aux étudiants de L1, L2 et L3 et constituent un outil de préparation aux examens universitaires.
+
+L'analyse qui suit s'appuie sur la lecture exhaustive des fichiers sources \LaTeX\ disponibles dans le répertoire \fichier{Code source Latex/}, ainsi que sur l'examen de la structure générale des dossiers finaux pour chaque niveau.
+
+\subsection{Fichiers analysés}
+
+\begin{itemize}
+  \item \fichier{Atomistique.tex} (L1)
+  \item \fichier{ELECTROCINETIQUE.tex} (L1)
+  \item \fichier{Electromagnetisme.tex} (L2)
+  \item \fichier{relativité.tex} (L2)
+  \item \fichier{THERMODYNAMIQUE.tex} (L2)
+  \item \fichier{mecanique quantique.tex} (L2)
+  \item \fichier{probabilité.tex} (L2)
+  \item \fichier{l3\_analyse complexe\_vrai.tex} (L3)
+  \item \fichier{l3\_physique\_statistique.tex} (L3)
+  \item \fichier{Avant-propos.tex} (L1), \fichier{Avant-propos\_L2.tex} (L2)
+  \item \fichier{main.tex} (fichier de test)
+\end{itemize}
+
+\subsection{Résumé exécutif}
+
+L'analyse révèle trois niveaux de problèmes distincts.
+
+\begin{enumerate}
+  \item \textbf{Erreurs scientifiques et mathématiques} : plusieurs erreurs de contenu sont présentes dans les corrigés (résultats faux, formules incorrectes, contradictions internes). Ces erreurs constituent le danger le plus grave pour la crédibilité du document.
+  \item \textbf{Incohérence structurelle et technique} : les templates \LaTeX\ sont radicalement différents entre L1/L2 et L3, révélant un manque de cohérence éditoriale. Plusieurs fautes techniques (pied de page erroné, option de classe manquante, code dupliqué) se retrouvent dans la quasi-totalité des fichiers L1/L2.
+  \item \textbf{Qualité rédactionnelle} : des fautes d'orthographe, des erreurs grammaticales, des formulations ambiguës et des textes tronqués ont été identifiés.
+\end{enumerate}
+
+% ============================================================
+\section{Incohérences structurelles et techniques}
+
+\subsection{Deux templates incompatibles}
+
+Il existe une rupture nette entre les fichiers des niveaux L1/L2 et ceux du niveau L3.
+
+\begin{info}[title=Templates en présence]
+\textbf{Fichiers L1/L2 (ancien style) :}
+\begin{itemize}
+  \item Déclaration de classe avec erreur : \verb|\documentclass[a4paper 12pt]{article}|
+  \item Pas d'encodage \verb|[utf8]|, pas de \verb|[french]{babel}|
+  \item En-tête fausse copiée d'un autre document (voir §\,\ref{subsec:entete})
+  \item Tout le contenu emballé dans \verb|\large{...}|, mauvaise pratique
+  \item Pas de \verb|siunitx|, pas de \verb|tcolorbox|, pas de \verb|hyperref|
+\end{itemize}
+
+\textbf{Fichiers L3 (nouveau style) :}
+\begin{itemize}
+  \item Déclaration correcte : \verb|\documentclass[12pt,a4paper]{article}|
+  \item Encodage UTF-8, \verb|[french]{babel}|, \verb|lmodern|
+  \item En-tête correctement configurée avec \verb|fancyhdr|
+  \item Environnements colorés avec \verb|tcolorbox| pour exercices et corrigés
+  \item Packages modernes : \verb|siunitx|, \verb|hyperref|, \verb|physics|
+\end{itemize}
+\end{info}
+
+Cette incohérence donne une impression de documents produits par des auteurs différents sans coordination. Pour un produit commercial, cela est rédhibitoire.
+
+\begin{recommandation}
+Unifier tous les fichiers sur la base du template L3, qui est nettement supérieur. Créer un fichier \fichier{preambule\_commun.tex} inclus par tous les documents via \verb|\input{}|.
+\end{recommandation}
+
+\subsection{L'option de classe mal formée (tous les fichiers L1/L2)}
+
+\begin{erreur}
+Dans tous les fichiers L1/L2 (\fichier{Atomistique.tex}, \fichier{ELECTROCINETIQUE.tex}, \fichier{Electromagnetisme.tex}, \fichier{relativité.tex}, \fichier{THERMODYNAMIQUE.tex}, \fichier{mecanique quantique.tex}) :
+
+\ligne{1} : \verb|\documentclass[a4paper 12pt]{article}|
+
+La virgule est absente entre les options. La syntaxe correcte est :
+
+\verb|\documentclass[a4paper,12pt]{article}|
+
+Sans cette virgule, \LaTeX\ interprète \verb|a4paper 12pt| comme une seule option inconnue. Le fichier compile malgré tout (comportement permissif de \LaTeX), mais la taille de police demandée peut ne pas être appliquée.
+\end{erreur}
+
+\subsection{Le pied de page erroné systématique}\label{subsec:entete}
+
+\begin{erreur}
+Dans tous les fichiers L1/L2, la commande \verb|\auteurDOC| est définie ainsi :
+
+\begin{verbatim}
+\newcommand{\auteurDOC}{{\small \it Prof Komi P. TCHAKPELE }\ \& \
+  {\small \it Dr Komi SODOGA \quad
+  TD de relativité\   L2 \  2020 - 2021 }}
+\end{verbatim}
+
+Cette mention \textit{«TD de relativité L2 2020-2021»} se retrouve en pied de page dans \textbf{tous} les fichiers : Atomistique, Électrocinétique, Électromagnétisme, Mécanique quantique, Thermodynamique, Probabilités. C'est une copie-colle du fichier \fichier{relativité.tex} qui n'a jamais été corrigée.
+
+Un lecteur qui ouvre le chapitre d'Atomistique voit en bas de chaque page : «TD de relativité L2 2020-2021». C'est une erreur grossière qui trahit un manque de rigueur éditoriale.
+\end{erreur}
+
+\begin{recommandation}
+Chaque fichier doit avoir son propre pied de page cohérent avec son contenu. Exemple pour l'Atomistique : \textit{«Atomistique -- Licence 1 -- Annale corrigée»}.
+\end{recommandation}
+
+\subsection{L'auteur non renseigné dans les fichiers L3}
+
+\begin{avertissement}
+Dans \fichier{l3\_physique\_statistique.tex} et \fichier{l3\_analyse complexe\_vrai.tex}, la balise auteur est :
+
+\verb|\author{\Large Préparé par : Ton Nom}|
+
+Le texte \textit{«Ton Nom»} est un placeholder non remplacé. Si ce fichier est compilé tel quel, il apparaîtra dans le PDF final.
+\end{avertissement}
+
+\subsection{Usage incorrect de \texttt{\textbackslash large\{...\}}}
+
+\begin{avertissement}
+Dans les fichiers L1/L2, tout le contenu est encapsulé dans \verb|\large{...}|. Cette pratique est incorrecte en \LaTeX\ : \verb|\large| est une commande de changement de taille de groupe, pas un environnement. Le risque est que toute la mise en page soit affectée globalement de manière incontrôlée, notamment pour les sauts de page et les listes imbriquées.
+
+La bonne pratique est de définir la taille de police globalement dans la déclaration de classe ou via \verb|\fontsize{}{}| dans le préambule.
+\end{avertissement}
+
+% ============================================================
+\section{Erreurs scientifiques et mathématiques}
+
+\subsection{Fichier : Atomistique.tex (L1)}
+
+\subsubsection{Exercice 7, question (d) -- Symbole chimique incorrect}
+
+\begin{erreur}
+\ligne{464} du fichier \fichier{Atomistique.tex} :
+
+\faux{«Le deuxième métal de transition : Kr (Z = 22) : [Ar] 4s² 3d²»}
+
+Le symbole \textbf{Kr} est celui du Krypton, un gaz noble de numéro atomique Z~=~36. L'élément Z~=~22 est le \textbf{Titane (Ti)}, effectivement le deuxième métal de transition de la première série.
+
+\textbf{Correction :}
+
+\correct{«Le deuxième métal de transition : Ti (Z = 22) : [Ar] 4s² 3d²»}
+
+L'erreur est grave car elle identifie un gaz noble comme métal de transition, ce qui est une contradiction fondamentale en chimie.
+\end{erreur}
+
+\subsubsection{Exercice 8, question (a) -- Configuration électronique erronée}
+
+\begin{erreur}
+\ligne{479} du fichier \fichier{Atomistique.tex} :
+
+\faux{«la configuration électronique de X : ${}_{3}X$ : (Ne) 3s² 2p¹»}
+
+L'analyse est correcte : si $X^{3+}$ possède la configuration du Néon (10 électrons), alors $X$ possède $10 + 3 = 13$ électrons, ce qui correspond à l'Aluminium (Al, Z~=~13). La configuration de l'aluminium est $[\text{Ne}]\,3s^{2}\,3p^{1}$, et non $[\text{Ne}]\,3s^{2}\,2p^{1}$.
+
+La sous-couche $2p$ appartient au cœur électronique (déjà incluse dans [Ne]). Écrire $2p^{1}$ après [Ne] est une impossibilité physique.
+
+\textbf{Correction :}
+
+\correct{«la configuration électronique de X : ${}_{13}X (\text{Al})$ : $[\text{Ne}]\,3s^{2}\,3p^{1}$»}
+\end{erreur}
+
+\subsubsection{Exercice 6, question (2) -- Erreurs grammaticales dans la rédaction}
+
+\begin{avertissement}
+\ligne{421} : \faux{«Ces éléments sont appartient à la même famille»}
+
+Correction : \correct{«Ces éléments appartiennent à la même famille.»}
+
+\ligne{422} : \faux{«N, P et As appartient à la même famille»}
+
+Correction : \correct{«N, P et As appartiennent à la même famille»}
+
+Ces erreurs de conjugaison sont visibles au premier coup d'œil et nuisent à la crédibilité du document.
+\end{avertissement}
+
+\subsubsection{Exercice 6, question (4) -- Faute de frappe sur le symbole chimique}
+
+\begin{erreur}
+\ligne{427} : \faux{«Nl$_5$ Ne peut pas se former»}
+
+La formule \verb|Nl$_5$| est une faute de frappe. Il s'agit évidemment de NCl$_5$.
+
+\textbf{Correction :} \correct{«NCl$_5$ ne peut pas se former car l'azote (N) appartient à la deuxième période et ne dispose pas d'orbitales d disponibles.»}
+
+De plus, la majuscule en début de phrase au milieu de l'énoncé (\textit{«Ne»}) est à corriger en \textit{«car il ne»}.
+\end{erreur}
+
+\subsubsection{Exercice 5, question (c) -- Règle de Klechkowski mal identifiée}
+
+\begin{avertissement}
+\ligne{377} : «Orbitale s, un électron au lieu de deux électrons \faux{(anti Klechkowski)}»
+
+La règle de Klechkowski stipule l'ordre de remplissage des sous-couches. Si une orbitale $s$ a un seul électron au lieu de deux, c'est la règle de \textbf{Hund} qui est violée (une case à moitié remplie peut être stable, mais si deux cases $s$ ne sont pas identiques, c'est Pauli).
+
+En réalité, si la structure montre une orbitale $s$ à moitié remplie alors qu'une sous-couche de niveau inférieur est disponible et vide, c'est \textbf{Klechkowski} (remplissage dans le mauvais ordre). La formulation doit être précisée selon le dessin de la question (c) que l'on ne peut pas lire ici, mais il faut vérifier attentivement la cohérence avec le diagramme image \fichier{i3.jpg}.
+\end{avertissement}
+
+\subsection{Fichier : ELECTROCINETIQUE.tex (L1)}
+
+\subsubsection{Corrigé 2 -- Texte tronqué (coupure de phrase)}
+
+\begin{erreur}
+\lignes{293--295} du fichier \fichier{ELECTROCINETIQUE.tex} :
+
+\faux{«Pour connaítre l'intensité $I'$ circulant dans la branche con l'intensité $I''$ qui circule de $D$ vers $F$ dans la branche contenan soumises à la tension $E'$.»}
+
+Les mots \textit{«con»} et \textit{«contenan»} sont des fins de mots tronquées. La phrase originale était probablement :
+
+\correct{«Pour connaître l'intensité $I'$ circulant dans la branche \textbf{contenant} $E'$, on calcule d'abord l'intensité $I''$ qui circule de $D$ vers $F$ dans la branche \textbf{contenant} $3R$, soumises à la tension $E'$.»}
+
+Cette coupure rend la phrase incompréhensible et trahit un problème d'édition (probablement une coupure lors d'un copier-coller).
+\end{erreur}
+
+\subsubsection{Corrigé 2 -- Formule dupliquée avec valeur tronquée}
+
+\begin{erreur}
+\ligne{291} : La formule de $I_0$ est écrite deux fois de suite. La première occurrence est correcte :
+
+\[\boxed{I_0 = \frac{E_0}{R_0} = \frac{5}{12R}(E-E') = \frac{5}{6}\,\text{A} \approx 0{,}83\,\text{A}}\]
+
+La seconde occurrence (\faux{lignes 291, suite}) se termine par \texttt{=0\}}, ce qui affiche «$= 0$» dans le PDF -- un résultat absurde. Il s'agit d'un artefact de copier-coller non nettoyé.
+\end{erreur}
+
+\subsubsection{Corrigé 2 -- Faute d'orthographe}
+
+\begin{avertissement}
+\ligne{279} : \faux{«une force éloctromotrice»}
+
+Correction : \correct{«une force électromotrice»}
+\end{avertissement}
+
+\subsection{Fichier : Electromagnetisme.tex (L2)}
+
+\subsubsection{Exercice 1 -- Formule physique incorrecte pour la portée}
+
+\begin{erreur}
+Le corrigé de l'exercice 1 utilise la formule :
+\[E = \sqrt{\frac{P}{4\pi\varepsilon_0 c^2 r^2}}\]
+
+Cette expression est \textbf{dimensionnellement incohérente}. En particulier, $\frac{P}{4\pi\varepsilon_0 c^2 r^2}$ n'a pas les unités de $E^2$ (V²/m²).
+
+La relation correcte pour une antenne isotropique dans le vide est :
+\[\langle S \rangle = \frac{P}{4\pi r^2} \quad \text{et} \quad \langle S \rangle = \frac{E_{rms}^2}{\mu_0 c}\]
+d'où :
+\[\correct{E_{rms} = \sqrt{\frac{\mu_0 c\, P}{4\pi r^2}}}\]
+
+Le résultat numérique de 1{,}41 km semble coïncider approximativement avec la bonne valeur, mais la formule présentée est fausse et ne doit pas figurer dans un document pédagogique.
+\end{erreur}
+
+\subsubsection{Exercice 6 -- Vitesse de phase sans unité}
+
+\begin{erreur}
+\ligne{381} : \faux{«La vitesse de phase est $v_\varphi = \omega/k > 1$»}
+
+L'inégalité \textit{$> 1$} est dépourvue de sens physique : une vitesse ne peut pas se comparer à un scalaire sans dimension. Ce qu'on veut exprimer est que la vitesse de phase est supérieure à $c$ :
+
+\correct{«La vitesse de phase est $v_\varphi = \frac{\omega}{k} > c$»}
+
+De même, dans la même phrase, il est écrit «la vitesse de groupe $v_g < 1$», ce qui devrait être $v_g < c$.
+\end{erreur}
+
+\subsubsection{Titre de section -- Faute d'orthographe}
+
+\begin{avertissement}
+\ligne{408} : \faux{«Corrié de l'épreuve»}
+
+Correction : \correct{«Corrigé de l'épreuve»}
+
+Cette faute apparaît dans un titre de section et est donc très visible.
+\end{avertissement}
+
+\subsubsection{Exercice 6 -- Répétition inutile}
+
+\begin{avertissement}
+Les lignes 369--371 et 399--403 sont quasiment identiques (la densité de charge et le courant surfacique sont calculés deux fois de suite dans le même corrigé). Cela alourdit inutilement le document.
+\end{avertissement}
+
+\subsection{Fichier : Avant-propos.tex (L1)}
+
+\begin{avertissement}
+\ligne{71} : \faux{«Nous vous souhaitons une excellente utilisation de \textbf{cet} annale»}
+
+Le mot \textit{annale} est féminin. La phrase correcte est :
+
+\correct{«une excellente utilisation de \textbf{cette} annale»}
+
+Cette erreur grammaticale se trouve dans la conclusion de l'avant-propos, soit l'une des premières choses que le lecteur lit.
+\end{avertissement}
+
+\subsection{Fichier : l3\_physique\_statistique.tex (L3)}
+
+\subsubsection{Exercice 2 -- Contradiction dans la simplification de $\sigma^2$}
+
+\begin{erreur}
+Le corrigé de l'exercice 2 présente une contradiction interne. Après avoir correctement calculé :
+\[\langle M^2 \rangle = \frac{64\cosh(4\beta J) + 32}{4(3+\cosh(4\beta J))}\]
+
+La simplification donne (ligne 169) :
+\[\sigma^2 = 8\,\frac{2\cosh(4\beta J)+1}{3+\cosh(4\beta J)} \quad \textbf{(correct)}\]
+
+Puis, à la ligne suivante (ligne 170), le même résultat est réécrit avec une erreur :
+\[\faux{\sigma^2 = 8\,\frac{\cosh(4\beta J)+1}{3+\cosh(4\beta J)}} \quad \textbf{(faux)}\]
+
+Le facteur 2 devant $\cosh$ a disparu. Le résultat juste est celui de la ligne 169. La ligne 170 est à supprimer.
+\end{erreur}
+
+\subsubsection{Exercice 4 -- Notation Tr incorrecte}
+
+\begin{avertissement}
+\ligne{228} : Le texte écrit \verb|\text{Tr}(T)^{N}|, ce qui se compose en $\text{Tr}(T)^N$ et signifie «la trace de $T$, élevée à la puissance $N$».
+
+Ce qu'on veut écrire est $\text{Tr}(T^N)$, soit «la trace de la matrice $T^N$». Il s'agit de deux quantités différentes. La formule correcte est :
+
+\correct{$\displaystyle\sum_{\sigma_1}(T^N)_{\sigma_1\sigma_1} = \text{Tr}(T^N)$}
+\end{avertissement}
+
+% ============================================================
+\section{Problèmes de rédaction et de présentation}
+
+\subsection{Exercices sans corrigés complets}
+
+Plusieurs exercices ont des questions posées mais dont les réponses sont partielles ou s'appuient entièrement sur des images scannées (fichiers \fichier{.png} et \fichier{.jpg}). C'est le cas notamment dans \fichier{Atomistique.tex} (Exercices 1 et 2 avec \fichier{t1.png}, \fichier{t2.png}, \fichier{t10.png}, \fichier{t23.png}) et dans \fichier{Electromagnetisme.tex} (section «Examens corrigés» entièrement composée d'images \fichier{g1.png} à \fichier{g17.png}).
+
+\begin{avertissement}
+Les corrigés sous forme d'images scannées présentent plusieurs inconvénients majeurs : qualité d'impression médiocre, texte illisible au zoom, impossibilité de corriger une erreur dans l'image, taille de fichier inutilement grande. Un document professionnel doit avoir tous ses corrigés rédigés en \LaTeX.
+\end{avertissement}
+
+\subsection{Absence de numérotation cohérente des équations}
+
+Dans les fichiers L1/L2, certaines équations importantes sont numérotées (via \verb|\begin{equation}|) mais sans référence dans le texte. D'autres équations cruciales ne sont pas numérotées du tout. L'usage de la numérotation doit être systématique pour les équations majeures et absent pour les calculs intermédiaires.
+
+\subsection{Listes mal structurées}
+
+Dans \fichier{Atomistique.tex}, le corrigé de l'exercice 2 mélange des \verb|\begin{enumerate}| et des \verb|\begin{itemize}| de manière désordonnée, avec des \verb|\setcounter{enumi}{1}| qui cassent la numérotation naturelle. La hiérarchie des questions/sous-questions n'est pas visuellement claire.
+
+\subsection{Formatage des unités}
+
+Les unités physiques sont formatées de manière incohérente à travers les documents. On trouve successivement : $m.s^{-1}$, $\text{m.s}^{-1}$, $\mathrm{m/s}$, $\mathrm{m \cdot s^{-1}}$. Dans un document professionnel, l'usage du package \verb|siunitx| (\verb|\si{\metre\per\second}| ou \verb|\qty{3e8}{\metre\per\second}|) devrait être systématique.
+
+\subsection{Pages de transition}
+
+Les pages de transition entre les UE sont mentionnées dans la structure (fichiers \fichier{trans\_*.tex}) mais leur intégration dans le document final doit être vérifiée pour s'assurer qu'elles sont toutes incluses et dans le bon ordre.
+
+% ============================================================
+\section{Recommandations pour le style et le design}
+
+\subsection{Vision éditoriale globale}
+
+Pour qu'une annale corrigée soit «incontournable», elle doit répondre à trois exigences simultanées : être \textbf{exacte} (aucune erreur scientifique), être \textbf{claire} (structure immédiatement lisible), et être \textbf{agréable} (design soigné qui donne envie de l'ouvrir).
+
+\subsection{Proposition de charte graphique}
+
+\begin{recommandation}[title=Charte graphique recommandée]
+\textbf{Couleurs principales :}
+\begin{itemize}
+  \item Bleu marine profond (\verb|RoyalBlue!80!black|) : titres, en-têtes, filets
+  \item Vert sauge (\verb|ForestGreen!70!black|) : environnements de correction
+  \item Rouge brique (\verb|BrickRed!80!black|) : encadrés «attention» et formules clés
+  \item Fond gris très clair (\verb|gray!8!white|) : fond des boîtes d'exercices
+\end{itemize}
+
+\textbf{Typographie :}
+\begin{itemize}
+  \item Police principale : Latin Modern Roman (package \verb|lmodern|), 12pt
+  \item Titres en gras, couleur bleue
+  \item Légendes en italique, taille réduite
+\end{itemize}
+
+\textbf{Mise en page :}
+\begin{itemize}
+  \item Marges : 2{,}5 cm à gauche et à droite, 3 cm en haut (pour l'en-tête)
+  \item Interligne : 1{,}3 (setspace)
+  \item En-tête : titre de l'UE à gauche, niveau (L1/L2/L3) à droite
+  \item Pied de page : numéro de page centré
+\end{itemize}
+\end{recommandation}
+
+\subsection{Environnements d'exercice et de correction}
+
+\begin{recommandation}[title=Structure des exercices recommandée]
+Chaque exercice doit suivre ce schéma type :
+
+\begin{enumerate}
+  \item \textbf{Boîte Exercice} (fond bleu clair, encadré bleu) : contient l'énoncé, les données numériques, les questions. Un symbole discret (ex. stylo ou «Ex~N°») en titre.
+  \item \textbf{Boîte Correction} (fond vert très clair, encadré vert) : contient la résolution détaillée, toutes les équations numérotées si elles sont référencées, les applications numériques avec unités via \verb|siunitx|.
+  \item \textbf{Encadré résultat final} (avec \verb|\boxed{}|) : pour mettre en valeur le résultat de chaque question.
+  \item \textbf{Remarque/Conseil} (fond orange clair) : pour signaler les pièges classiques ou donner des astuces méthodologiques.
+\end{enumerate}
+\end{recommandation}
+
+\subsection{Structure globale du document}
+
+\begin{recommandation}
+Chaque annale (L1, L2, L3) doit s'ouvrir sur :
+\begin{enumerate}
+  \item Une \textbf{page de garde} professionnelle avec le logo de l'établissement (si disponible), le titre, le niveau, et l'année.
+  \item Un \textbf{avant-propos} (existant, à affiner).
+  \item Une \textbf{table des matières} avec liens cliquables (via \verb|hyperref|).
+  \item Pour chaque UE : une \textbf{page de transition} (existante) puis le contenu exercices/corrigés.
+  \item Un \textbf{index} en fin de document (optionnel mais valorisant).
+\end{enumerate}
+\end{recommandation}
+
+\subsection{Unification du tome L3}
+
+L'annale L3 est actuellement divisée en deux tomes. Le regroupement en un seul tome est la bonne décision, à condition de :
+\begin{itemize}
+  \item Vérifier que la table des matières unique est bien organisée (regrouper les UE par semestre ou par discipline).
+  \item S'assurer que la numérotation des pages est continue.
+  \item Vérifier les liens hypertexte inter-UE si des renvois sont présents.
+\end{itemize}
+
+% ============================================================
+\section{Tableau récapitulatif des corrections prioritaires}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{lXcc}
+\toprule
+\textbf{Fichier} & \textbf{Erreur} & \textbf{Ligne} & \textbf{Priorité} \\
+\midrule
+\fichier{Atomistique.tex} & Symbole Kr au lieu de Ti & 464 & \textcolor{red}{\textbf{Haute}} \\
+\fichier{Atomistique.tex} & Config. électronique 2p¹ au lieu de 3p¹ & 479 & \textcolor{red}{\textbf{Haute}} \\
+\fichier{Atomistique.tex} & Faute frappe «Nl$_5$» & 427 & \textcolor{red}{\textbf{Haute}} \\
+\fichier{Atomistique.tex} & Fautes grammaticales & 421--422 & \textcolor{orange}{\textbf{Moyenne}} \\
+\fichier{ELECTROCINETIQUE.tex} & Texte tronqué (coupure) & 293--295 & \textcolor{red}{\textbf{Haute}} \\
+\fichier{ELECTROCINETIQUE.tex} & Formule $I_0$ doublée et tronquée & 291 & \textcolor{red}{\textbf{Haute}} \\
+\fichier{ELECTROCINETIQUE.tex} & «éloctromotrice» & 279 & \textcolor{orange}{\textbf{Moyenne}} \\
+\fichier{Electromagnetisme.tex} & Formule portée talkie-walkie fausse & 159--174 & \textcolor{red}{\textbf{Haute}} \\
+\fichier{Electromagnetisme.tex} & $v_\varphi > 1$ sans unité & 381 & \textcolor{red}{\textbf{Haute}} \\
+\fichier{Electromagnetisme.tex} & «Corrié» au lieu de «Corrigé» & 408 & \textcolor{orange}{\textbf{Moyenne}} \\
+\fichier{Avant-propos.tex} & «cet annale» & 71 & \textcolor{orange}{\textbf{Moyenne}} \\
+\fichier{l3\_phys\_stat.tex} & Contradiction $\sigma^2$ (ligne 170 fausse) & 170 & \textcolor{red}{\textbf{Haute}} \\
+\fichier{l3\_phys\_stat.tex} & $\text{Tr}(T)^N$ au lieu de $\text{Tr}(T^N)$ & 228 & \textcolor{red}{\textbf{Haute}} \\
+\textit{Tous L1/L2} & Virgule manquante dans \verb|\documentclass| & 1 & \textcolor{orange}{\textbf{Moyenne}} \\
+\textit{Tous L1/L2} & Pied de page «TD de relativité» & 32--34 & \textcolor{red}{\textbf{Haute}} \\
+\textit{Tous L1/L2} & \verb|\large{...}| autour du contenu & 147 & \textcolor{orange}{\textbf{Moyenne}} \\
+\textit{Tous L1/L2} & Corrigés sous forme d'images scannées & --- & \textcolor{red}{\textbf{Haute}} \\
+\fichier{l3\_phys\_stat.tex} & «Ton Nom» placeholder non remplacé & 68 & \textcolor{orange}{\textbf{Moyenne}} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+% ============================================================
+\section{Plan d'action pour la refonte complète}
+
+\subsection{Phase 1 : Correction des erreurs critiques (urgent)}
+
+\begin{enumerate}
+  \item Corriger toutes les erreurs scientifiques identifiées en section 3.
+  \item Récupérer et retranscrire en \LaTeX\ tous les corrigés actuellement sous forme d'images.
+  \item Corriger le pied de page dans chaque fichier L1/L2.
+  \item Corriger les textes tronqués dans \fichier{ELECTROCINETIQUE.tex}.
+\end{enumerate}
+
+\subsection{Phase 2 : Harmonisation du template (prioritaire)}
+
+\begin{enumerate}
+  \item Créer un préambule commun (\fichier{preambule.tex}) basé sur le style L3.
+  \item Adapter tous les fichiers L1/L2 à ce nouveau préambule.
+  \item Standardiser les environnements \verb|exercice| et \verb|correction| avec \verb|tcolorbox|.
+  \item Adopter \verb|siunitx| pour toutes les unités physiques.
+\end{enumerate}
+
+\subsection{Phase 3 : Amélioration du contenu}
+
+\begin{enumerate}
+  \item Revoir les formulations ambiguës et améliorer la rigueur des raisonnements.
+  \item Ajouter des remarques méthodologiques («Attention au piège classique...»).
+  \item Vérifier la cohérence entre les énoncés et les données fournies.
+  \item Uniformiser la notation mathématique (vecteurs, différentielles, intégrales).
+\end{enumerate}
+
+\subsection{Phase 4 : Finalisation éditoriale}
+
+\begin{enumerate}
+  \item Intégrer la charte graphique complète.
+  \item Vérifier la table des matières, la numérotation des pages et les hyperliens.
+  \item Fusionner les deux tomes de L3 en un seul document cohérent.
+  \item Relecture finale complète de chaque annale.
+\end{enumerate}
+
+% ============================================================
+\section{Conclusion}
+
+Les trois annales corrigées contiennent un travail de fond considérable et couvrent de manière large l'ensemble du programme de Licence. Cependant, plusieurs problèmes compromettent leur qualité commerciale :
+
+\begin{itemize}
+  \item Des \textbf{erreurs scientifiques graves} (numéro atomique erroné, formule physique incorrecte, configuration électronique fausse, contradiction mathématique) qui, si elles sont découvertes par un étudiant ou un enseignant, nuiront immédiatement à la réputation du document.
+  \item Un \textbf{manque flagrant de cohérence éditoriale} entre les niveaux L1/L2 et L3, qui laisse transparaître une production peu maîtrisée.
+  \item Des \textbf{artefacts de copier-coller} (pied de page erroné, textes tronqués, formules dupliquées) qui trahissent une absence de relecture rigoureuse.
+\end{itemize}
+
+Ces trois catégories de problèmes sont toutes corrigeables. Une refonte méthodique suivant le plan en quatre phases proposé permettra d'obtenir un document professionnel, précis et esthétiquement soigné qui se distinguera nettement de tout document concurrent. La priorité absolue reste l'exactitude scientifique : un seul corrigé faux dûment repéré par un étudiant peut suffire à détruire la crédibilité de l'ensemble de l'ouvrage.
+
+\vspace{1cm}
+\begin{tcolorbox}[colback=RoyalBlue!8, colframe=RoyalBlue]
+\centering\small\itshape
+Ce rapport constitue la base de travail pour la phase de production. Il est recommandé de valider chaque correction avec l'auteur avant d'intégrer les modifications dans les fichiers sources.
+\end{tcolorbox}
+
+\end{document}

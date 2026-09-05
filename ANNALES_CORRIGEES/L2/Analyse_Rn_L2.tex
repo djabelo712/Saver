@@ -1,0 +1,719 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+% En-têtes et pieds de page
+\lhead{\textbf{Analyse dans $\mathbb{R}^n$} - Licence 2}
+\rhead{Université de Kara - FaST}
+\cfoot{\thepage}
+\lfoot{\textit{Licence Fondamentale MPC}}
+\rfoot{\textit{Annales corrigées}}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries Analyse dans $\mathbb{R}^n$}\\[6pt]
+  {\large Licence 2 - Mathématiques, Physique, Chimie}\\[4pt]
+  {\normalsize Université de Kara - Faculté des Sciences et Techniques}
+\end{center}
+
+\vspace{8pt}
+\hrule
+\vspace{12pt}
+
+% ================================================================
+\section{Résumé de cours}
+% ================================================================
+
+\begin{boiteresume}
+\textbf{1. Fonctions de plusieurs variables}
+
+Une fonction $f : U \subset \mathbb{R}^n \to \mathbb{R}$ est \textbf{continue en $a$} si
+$\displaystyle\lim_{x \to a} f(x) = f(a)$,
+ce qui, pour $n \geq 2$, doit être vérifié quelle que soit la direction d'approche.
+
+\textbf{Dérivées partielles} :
+\[
+\dpart{f}{x_i}(a) = \lim_{h \to 0} \frac{f(a + h\,e_i) - f(a)}{h},
+\]
+où $e_i$ est le $i$-ème vecteur de la base canonique.
+
+\medskip
+\textbf{2. Différentielle totale et gradient}
+
+$f$ est \textbf{différentiable en $a$} s'il existe une forme linéaire $L$ telle que :
+\[
+f(a+h) = f(a) + L(h) + o(\|h\|).
+\]
+La différentielle totale est alors $\mathrm{d}f_a = \displaystyle\sum_{i=1}^n \dpart{f}{x_i}(a)\,\mathrm{d}x_i$.
+
+Le \textbf{gradient} de $f$ en $a$ est :
+\[
+\overrightarrow{\nabla f}(a) = \sum_{i=1}^n \dpart{f}{x_i}(a)\,\vec{e}_i.
+\]
+
+\textbf{Règle de dérivation en chaîne} : si $x(t) : \mathbb{R} \to \mathbb{R}^n$ est dérivable et $f$ est différentiable,
+\[
+\frac{\mathrm{d}}{\mathrm{d}t}\bigl[f(x(t))\bigr] = \overrightarrow{\nabla f}(x(t)) \cdot x'(t) = \sum_{i=1}^n \dpart{f}{x_i}\,\dot{x}_i.
+\]
+
+Pour $g(s,t) = f(x(s,t), y(s,t))$ :
+\[
+\dpart{g}{s} = \dpart{f}{x}\,\dpart{x}{s} + \dpart{f}{y}\,\dpart{y}{s}.
+\]
+
+\medskip
+\textbf{3. Extrema libres et liés}
+
+\textbf{Extremum libre} : si $f$ admet un extremum local en $a$, alors $\overrightarrow{\nabla f}(a) = \vec{0}$ (point critique). La nature est déterminée par la matrice hessienne $H_f$ :
+\[
+H_f(a) = \left(\frac{\partial^2 f}{\partial x_i \partial x_j}(a)\right)_{i,j}.
+\]
+En deux variables :
+\begin{itemize}[nosep]
+  \item si $\det H_f > 0$ et $\partial^2 f/\partial x^2 > 0$, c'est un \textbf{minimum} ;
+  \item si $\det H_f > 0$ et $\partial^2 f/\partial x^2 < 0$, c'est un \textbf{maximum} ;
+  \item si $\det H_f < 0$, c'est un \textbf{point selle}.
+\end{itemize}
+
+\textbf{Multiplicateurs de Lagrange.} Pour optimiser $f(x,y)$ sous $g(x,y) = 0$, on cherche $(x,y,\lambda)$ vérifiant :
+\[
+\overrightarrow{\nabla f}(x,y) = \lambda\,\overrightarrow{\nabla g}(x,y) \quad \text{et} \quad g(x,y) = 0.
+\]
+
+\medskip
+\textbf{4. Intégrales doubles}
+
+\[
+\iint_D f(x,y)\,\mathrm{d}x\,\mathrm{d}y = \int_{a}^{b}\!\left(\int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y)\,\mathrm{d}y\right)\!\mathrm{d}x \quad \text{(théorème de Fubini).}
+\]
+
+\textbf{Changement de variables} : $(x,y) \to (u,v)$ de jacobien $J = \dpart{(x,y)}{(u,v)}$,
+\[
+\iint_D f(x,y)\,\mathrm{d}x\,\mathrm{d}y = \iint_{D'} f\bigl(x(u,v), y(u,v)\bigr)\,|J|\,\mathrm{d}u\,\mathrm{d}v.
+\]
+
+\textbf{Coordonnées polaires} : $x = r\cos\theta$, $y = r\sin\theta$, $|J| = r$.
+
+\medskip
+\textbf{5. Intégrales triples et coordonnées curvilignes}
+
+\[
+\iiint_V f\,\mathrm{d}V = \iiint f\,|J|\,\mathrm{d}u\,\mathrm{d}v\,\mathrm{d}w.
+\]
+
+\textbf{Coordonnées cylindriques} : $x = r\cos\theta$, $y = r\sin\theta$, $z = z$, $|J| = r$.
+
+\textbf{Coordonnées sphériques} : $x = r\sin\phi\cos\theta$, $y = r\sin\phi\sin\theta$, $z = r\cos\phi$, $|J| = r^2\sin\phi$.
+\end{boiteresume}
+
+% ================================================================
+\section{Exercices corrigés}
+% ================================================================
+
+% ----------------------
+\begin{boiteexercice}
+\textbf{Exercice 1 - Continuité et dérivées partielles}\niveau{\facile}
+
+Soit $f : \mathbb{R}^2 \to \mathbb{R}$ définie par :
+\[
+f(x,y) = \begin{cases} \dfrac{x^2 y}{x^2 + y^2} & \text{si } (x,y) \neq (0,0), \\ 0 & \text{si } (x,y) = (0,0). \end{cases}
+\]
+
+\begin{enumerate}
+  \item Calculer $\dpart{f}{x}(0,0)$ et $\dpart{f}{y}(0,0)$.
+  \item $f$ est-elle continue en $(0,0)$ ?
+  \item $f$ est-elle différentiable en $(0,0)$ ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Dérivées partielles en $(0,0)$.}
+
+Par définition :
+\[
+\dpart{f}{x}(0,0) = \lim_{h \to 0} \frac{f(h,0) - f(0,0)}{h} = \lim_{h \to 0} \frac{0}{h} = 0.
+\]
+\[
+\dpart{f}{y}(0,0) = \lim_{k \to 0} \frac{f(0,k) - f(0,0)}{k} = \lim_{k \to 0} \frac{0}{k} = 0.
+\]
+
+\textbf{2. Continuité en $(0,0)$.}
+
+On approche $(0,0)$ le long de la droite $y = tx$ ($t \in \mathbb{R}$, $t \neq 0$) :
+\[
+f(x, tx) = \frac{x^2 \cdot tx}{x^2 + t^2x^2} = \frac{tx}{1 + t^2} \xrightarrow[x \to 0]{} 0.
+\]
+Avec $t = 1$ (droite $y=x$) : $f(x,x) = \dfrac{x}{2} \to 0$.
+
+Vérifions avec $y = x^2$ : $f(x, x^2) = \dfrac{x^2 \cdot x^2}{x^2 + x^4} = \dfrac{x^2}{1+x^2} \to 0$.
+
+Toutes les limites tendent vers 0 et $f(0,0) = 0$. La fonction $f$ est continue en $(0,0)$.
+
+\textbf{3. Différentiabilité en $(0,0)$.}
+
+Si $f$ était différentiable en $(0,0)$, avec $\mathrm{d}f_0 = 0\,\mathrm{d}x + 0\,\mathrm{d}y = 0$, il faudrait :
+\[
+\lim_{(h,k)\to(0,0)} \frac{f(h,k) - 0}{\sqrt{h^2+k^2}} = 0.
+\]
+Avec $h = r\cos\theta$, $k = r\sin\theta$ :
+\[
+\frac{f(h,k)}{\sqrt{h^2+k^2}} = \frac{r^2\cos^2\theta \cdot r\sin\theta}{r^2 \cdot r} = \cos^2\theta\sin\theta.
+\]
+Cette expression dépend de $\theta$ et ne tend pas vers $0$ uniformément. Par exemple, pour $\theta = \pi/4$, elle vaut $1/2\sqrt{2} \neq 0$. Donc $f$ n'est pas différentiable en $(0,0)$.
+\end{boitecorrige}
+
+% ----------------------
+\begin{boiteexercice}
+\textbf{Exercice 2 - Règle de dérivation en chaîne}\niveau{\facile}
+
+Soit $f(x,y) = x^2 e^y + y\sin(x)$. On pose $x(t) = \cos t$ et $y(t) = t^2$.
+
+\begin{enumerate}
+  \item Calculer $\overrightarrow{\nabla f}(x,y)$.
+  \item En utilisant la règle de dérivation en chaîne, calculer $\dfrac{\mathrm{d}}{\mathrm{d}t}\bigl[f(x(t), y(t))\bigr]$.
+  \item Vérifier le résultat en développant directement $g(t) = f(\cos t, t^2)$ puis en dérivant.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Gradient de $f$.}
+
+\[
+\dpart{f}{x} = 2x\,\mathrm{e}^y + y\cos x, \qquad \dpart{f}{y} = x^2\,\mathrm{e}^y + \sin x.
+\]
+\[
+\overrightarrow{\nabla f}(x,y) = \bigl(2x\,\mathrm{e}^y + y\cos x\bigr)\,\vec{i} + \bigl(x^2\,\mathrm{e}^y + \sin x\bigr)\,\vec{j}.
+\]
+
+\textbf{2. Dérivée en chaîne.}
+
+$\dot{x}(t) = -\sin t$, $\dot{y}(t) = 2t$.
+
+\[
+\frac{\mathrm{d}g}{\mathrm{d}t} = \dpart{f}{x}\,\dot{x} + \dpart{f}{y}\,\dot{y}
+= \bigl(2\cos t\,\mathrm{e}^{t^2} + t^2\cos(\cos t)\bigr)(-\sin t) + \bigl(\cos^2 t\,\mathrm{e}^{t^2} + \sin(\cos t)\bigr)\cdot 2t.
+\]
+
+En développant :
+\[
+\frac{\mathrm{d}g}{\mathrm{d}t} = -2\sin t\cos t\,\mathrm{e}^{t^2} - t^2\sin t\cos(\cos t) + 2t\cos^2 t\,\mathrm{e}^{t^2} + 2t\sin(\cos t).
+\]
+
+\textbf{3. Vérification directe.}
+
+$g(t) = \cos^2 t\,\mathrm{e}^{t^2} + t^2\sin(\cos t)$.
+
+$\dfrac{\mathrm{d}}{\mathrm{d}t}\bigl[\cos^2 t\,\mathrm{e}^{t^2}\bigr] = -2\sin t\cos t\,\mathrm{e}^{t^2} + 2t\cos^2 t\,\mathrm{e}^{t^2}$.
+
+$\dfrac{\mathrm{d}}{\mathrm{d}t}\bigl[t^2\sin(\cos t)\bigr] = 2t\sin(\cos t) + t^2\cos(\cos t)\cdot(-\sin t)$.
+
+On retrouve exactement le même résultat.
+\end{boitecorrige}
+
+% ----------------------
+\begin{boiteexercice}
+\textbf{Exercice 3 - Extrema libres et liés}\niveau{\moyen}
+
+\textbf{Partie A.} Chercher les extrema locaux de $f(x,y) = x^3 + y^3 - 3xy$.
+
+\textbf{Partie B.} Maximiser $f(x,y) = xy$ sur l'ellipse $\dfrac{x^2}{4} + y^2 = 1$ en utilisant les multiplicateurs de Lagrange.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{Partie A : extrema libres.}
+
+Points critiques : $\overrightarrow{\nabla f} = \vec{0}$.
+\[
+\dpart{f}{x} = 3x^2 - 3y = 0 \Rightarrow y = x^2.
+\qquad
+\dpart{f}{y} = 3y^2 - 3x = 0 \Rightarrow x = y^2.
+\]
+En substituant $y = x^2$ dans $x = y^2 = x^4$, on obtient $x^4 - x = 0$, soit $x(x^3-1) = 0$. Donc $x = 0$ ou $x = 1$.
+
+Points critiques : $(0,0)$ et $(1,1)$.
+
+Matrice hessienne :
+\[
+H_f(x,y) = \begin{pmatrix} 6x & -3 \\ -3 & 6y \end{pmatrix}.
+\]
+
+En $(0,0)$ : $\det H_f = 0 \times 0 - 9 = -9 < 0$ : c'est un \textbf{point selle} (ni maximum ni minimum).
+
+En $(1,1)$ : $\det H_f = 6\times6 - 9 = 27 > 0$ et $H_{11} = 6 > 0$ : c'est un \textbf{minimum local}. $f(1,1) = 1 + 1 - 3 = -1$.
+
+\textbf{Partie B : multiplicateurs de Lagrange.}
+
+Contrainte : $g(x,y) = \dfrac{x^2}{4} + y^2 - 1 = 0$.
+
+\[
+\overrightarrow{\nabla f} = \lambda\,\overrightarrow{\nabla g} \Leftrightarrow
+\begin{cases} y = \lambda\,\dfrac{x}{2} \\[4pt] x = 2\lambda\,y \end{cases}.
+\]
+
+En substituant la première dans la seconde : $x = 2\lambda \cdot \dfrac{\lambda x}{2} = \lambda^2 x$.
+
+Si $x \neq 0$ : $\lambda^2 = 1$, soit $\lambda = \pm 1$.
+
+Pour $\lambda = 1$ : $y = x/2$. Contrainte : $\dfrac{x^2}{4} + \dfrac{x^2}{4} = 1 \Rightarrow x^2 = 2 \Rightarrow x = \pm\sqrt{2}$, $y = \pm\dfrac{\sqrt{2}}{2}$.
+
+Pour $\lambda = -1$ : $y = -x/2$. Mêmes valeurs de $|x|$, mais $y = -x/2$.
+
+Si $x = 0$ : $y^2 = 1$, $f(0,\pm1) = 0$.
+
+Les valeurs candidates :
+\[
+f\!\left(\sqrt{2},\frac{\sqrt{2}}{2}\right) = \sqrt{2}\cdot\frac{\sqrt{2}}{2} = 1, \quad
+f\!\left(-\sqrt{2},-\frac{\sqrt{2}}{2}\right) = 1, \quad
+f\!\left(\sqrt{2},-\frac{\sqrt{2}}{2}\right) = -1.
+\]
+
+Le \textbf{maximum} de $xy$ sur l'ellipse est $\boxed{1}$, atteint en $\bigl(\sqrt{2}, \tfrac{\sqrt{2}}{2}\bigr)$ et $\bigl(-\sqrt{2}, -\tfrac{\sqrt{2}}{2}\bigr)$.
+\end{boitecorrige}
+
+% ----------------------
+\begin{boiteexercice}
+\textbf{Exercice 4 - Intégrale double, changement en polaires}\niveau{\moyen}
+
+\textbf{Partie A.} Calculer $\displaystyle I = \iint_D (x^2 + y^2)\,\mathrm{d}x\,\mathrm{d}y$ où $D$ est le disque de rayon $R$ centré à l'origine.
+
+\textbf{Partie B.} Calculer $\displaystyle J = \int_0^{+\infty} \mathrm{e}^{-x^2}\,\mathrm{d}x$ en utilisant $I_0 = \iint_{\mathbb{R}^2} \mathrm{e}^{-(x^2+y^2)}\,\mathrm{d}x\,\mathrm{d}y$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{Partie A.} On passe en coordonnées polaires : $x = r\cos\theta$, $y = r\sin\theta$, $\mathrm{d}x\,\mathrm{d}y = r\,\mathrm{d}r\,\mathrm{d}\theta$.
+
+$D$ correspond à $r \in [0, R]$, $\theta \in [0, 2\pi]$.
+
+\[
+I = \int_0^{2\pi}\!\int_0^R r^2 \cdot r\,\mathrm{d}r\,\mathrm{d}\theta
+= \int_0^{2\pi}\mathrm{d}\theta \cdot \int_0^R r^3\,\mathrm{d}r
+= 2\pi \cdot \frac{R^4}{4} = \frac{\pi R^4}{2}.
+\]
+
+\textbf{Partie B.}
+
+\[
+I_0 = \int_{-\infty}^{+\infty}\!\int_{-\infty}^{+\infty} \mathrm{e}^{-(x^2+y^2)}\,\mathrm{d}x\,\mathrm{d}y
+= \left(\int_{-\infty}^{+\infty} \mathrm{e}^{-x^2}\,\mathrm{d}x\right)^2 = (2J)^2 = 4J^2.
+\]
+
+En passant en polaires sur $\mathbb{R}^2$ :
+\[
+I_0 = \int_0^{2\pi}\!\int_0^{+\infty} \mathrm{e}^{-r^2}\,r\,\mathrm{d}r\,\mathrm{d}\theta
+= 2\pi \int_0^{+\infty} r\,\mathrm{e}^{-r^2}\,\mathrm{d}r.
+\]
+Avec le changement $u = r^2$ : $\displaystyle\int_0^{+\infty} r\,\mathrm{e}^{-r^2}\,\mathrm{d}r = \dfrac{1}{2}$.
+
+Donc $I_0 = \pi$, ce qui donne $4J^2 = \pi$, soit :
+\[
+\boxed{J = \int_0^{+\infty} \mathrm{e}^{-x^2}\,\mathrm{d}x = \frac{\sqrt{\pi}}{2}.}
+\]
+\end{boitecorrige}
+
+% ----------------------
+\begin{boiteexercice}
+\textbf{Exercice 5 - Intégrale triple en coordonnées cylindriques et sphériques}\niveau{\moyen}
+
+\textbf{Partie A.} Calculer le volume du cylindre d'axe $Oz$, de rayon $a$, compris entre les plans $z = 0$ et $z = h$ :
+\[
+V_1 = \iiint_C \mathrm{d}V.
+\]
+
+\textbf{Partie B.} Calculer l'intégrale
+\[
+V_2 = \iiint_B \bigl(x^2 + y^2 + z^2\bigr)\,\mathrm{d}V,
+\]
+où $B$ est la boule de rayon $R$ centrée à l'origine.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{Partie A.} En coordonnées cylindriques $(r, \theta, z)$ avec $r \in [0,a]$, $\theta \in [0, 2\pi]$, $z \in [0, h]$ et $\mathrm{d}V = r\,\mathrm{d}r\,\mathrm{d}\theta\,\mathrm{d}z$ :
+
+\[
+V_1 = \int_0^{2\pi}\!\int_0^a\!\int_0^h r\,\mathrm{d}z\,\mathrm{d}r\,\mathrm{d}\theta
+= 2\pi \cdot \frac{a^2}{2} \cdot h = \pi a^2 h.
+\]
+On retrouve bien la formule classique du volume d'un cylindre.
+
+\textbf{Partie B.} En coordonnées sphériques $(r, \phi, \theta)$ avec $r \in [0,R]$, $\phi \in [0, \pi]$, $\theta \in [0, 2\pi]$ et $\mathrm{d}V = r^2\sin\phi\,\mathrm{d}r\,\mathrm{d}\phi\,\mathrm{d}\theta$ :
+
+$x^2 + y^2 + z^2 = r^2$.
+
+\[
+V_2 = \int_0^{2\pi}\!\int_0^{\pi}\!\int_0^R r^2 \cdot r^2\sin\phi\,\mathrm{d}r\,\mathrm{d}\phi\,\mathrm{d}\theta
+= \left(\int_0^{2\pi}\mathrm{d}\theta\right)\!\left(\int_0^{\pi}\sin\phi\,\mathrm{d}\phi\right)\!\left(\int_0^R r^4\,\mathrm{d}r\right).
+\]
+
+\[
+= 2\pi \cdot \bigl[-\cos\phi\bigr]_0^{\pi} \cdot \frac{R^5}{5}
+= 2\pi \cdot 2 \cdot \frac{R^5}{5} = \frac{4\pi R^5}{5}.
+\]
+\end{boitecorrige}
+
+% ----------------------
+\begin{boiteexercice}
+\textbf{Exercice 6 - Changement de variables, jacobien}\niveau{\difficile}
+
+On considère l'intégrale
+\[
+I = \iint_D \frac{y}{x}\,\mathrm{d}x\,\mathrm{d}y,
+\]
+où $D$ est le domaine délimité par les courbes $y = x$, $y = 2x$, $xy = 1$ et $xy = 2$ (avec $x > 0$).
+
+On pose $u = \dfrac{y}{x}$ et $v = xy$.
+
+\begin{enumerate}
+  \item Déterminer le domaine $D'$ dans le plan $(u,v)$.
+  \item Calculer le jacobien $\dpart{(x,y)}{(u,v)}$.
+  \item Calculer $I$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Domaine $D'$ dans le plan $(u,v)$.}
+
+Les courbes frontières :
+\begin{itemize}
+  \item $y = x$ donne $u = 1$ ; $y = 2x$ donne $u = 2$.
+  \item $xy = 1$ donne $v = 1$ ; $xy = 2$ donne $v = 2$.
+\end{itemize}
+Donc $D'$ est le rectangle $[1,2] \times [1,2]$ dans le plan $(u,v)$.
+
+\textbf{2. Jacobien.}
+
+On exprime $x$ et $y$ en fonction de $u$ et $v$ : $y = ux$ et $v = xy = ux^2$, donc $x = \sqrt{v/u}$ et $y = \sqrt{uv}$.
+
+\[
+\dpart{x}{u} = -\frac{1}{2}\sqrt{\frac{v}{u^3}}, \quad
+\dpart{x}{v} = \frac{1}{2}\sqrt{\frac{1}{uv}}, \quad
+\dpart{y}{u} = \frac{1}{2}\sqrt{\frac{v}{u}}, \quad
+\dpart{y}{v} = \frac{1}{2}\sqrt{\frac{u}{v}}.
+\]
+
+\[
+J = \dpart{(x,y)}{(u,v)} = \dpart{x}{u}\dpart{y}{v} - \dpart{x}{v}\dpart{y}{u}
+= -\frac{1}{4u} - \frac{1}{4u} = -\frac{1}{2u}.
+\]
+
+Donc $|J| = \dfrac{1}{2u}$.
+
+\textbf{3. Calcul de $I$.}
+
+\[
+I = \iint_{D'} u \cdot \frac{1}{2u}\,\mathrm{d}u\,\mathrm{d}v
+= \iint_{D'} \frac{1}{2}\,\mathrm{d}u\,\mathrm{d}v
+= \frac{1}{2} \int_1^2\!\int_1^2 \mathrm{d}u\,\mathrm{d}v
+= \frac{1}{2} \times 1 \times 1 = \frac{1}{2}.
+\]
+\end{boitecorrige}
+
+% ----------------------
+\begin{boiteexercice}
+\textbf{Exercice 7 - Continuité en plusieurs variables : définition $\varepsilon$-$\delta$}\niveau{\moyen}
+
+Soit $f : \mathbb{R}^2 \to \mathbb{R}$ définie par :
+\[
+f(x,y) = \begin{cases}\dfrac{xy}{x^2+y^2} & \text{si }(x,y)\neq(0,0)\\0 & \text{si }(x,y)=(0,0)\end{cases}
+\]
+\begin{enumerate}
+  \item Calculer la limite de $f(x,y)$ quand $(x,y)\to(0,0)$ le long de l'axe $Ox$ ($y=0$) et le long de la droite $y=x$.
+  \item En déduire que $f$ est \textbf{discontinue} en $(0,0)$.
+  \item Montrer que $|f(x,y)|\leq 1/2$ pour tout $(x,y)\neq(0,0)$ (inégalité arithmético-géométrique).
+  \item Calculer les dérivées partielles $\partial f/\partial x(0,0)$ et $\partial f/\partial y(0,0)$.
+  \item $f$ est-elle différentiable en $(0,0)$ ? Justifier.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Le long de $y=0$ ($x\neq0$) : $f(x,0)=0 \to 0$. Le long de $y=x$ ($x\neq0$) : $f(x,x)=\dfrac{x^2}{2x^2}=\dfrac{1}{2}\to\dfrac{1}{2}$.
+
+\textbf{2.} Les deux limites sont différentes ($0\neq 1/2$) : la limite de $f$ en $(0,0)$ n'existe pas. Donc $f$ est \textbf{discontinue} en $(0,0)$.
+
+\textbf{3.} Par l'inégalité arithmético-géométrique : $x^2 + y^2 \geq 2|xy|$, donc :
+\[
+|f(x,y)| = \frac{|xy|}{x^2+y^2} \leq \frac{|xy|}{2|xy|} = \frac{1}{2}
+\]
+
+\textbf{4.} $\dpart{f}{x}(0,0) = \lim_{h\to0}\dfrac{f(h,0)-f(0,0)}{h} = \lim_{h\to0}\dfrac{0}{h} = 0$. De même $\dpart{f}{y}(0,0) = 0$.
+
+\textbf{5.} Si $f$ était différentiable en $(0,0)$, avec $\mathrm{d}f_{(0,0)} = 0$, il faudrait $f(h,k)/\sqrt{h^2+k^2}\to0$. En prenant $h = r\cos\theta$, $k = r\sin\theta$ :
+\[
+\frac{f(h,k)}{\sqrt{h^2+k^2}} = \frac{r^2\cos\theta\sin\theta}{r^2} = \cos\theta\sin\theta\frac{1}{2}\sin(2\theta)
+\]
+Cette expression dépend de $\theta$ et ne tend pas vers $0$ uniformément. $f$ n'est \textbf{pas différentiable} en $(0,0)$. Cet exemple montre que l'existence des dérivées partielles ne suffit pas à garantir la différentiabilité.
+\end{boitecorrige}
+
+% ----------------------
+\begin{boiteexercice}
+\textbf{Exercice 8 - Matrice jacobienne et applications}\niveau{\moyen}
+
+\begin{enumerate}
+  \item Soit $F : \mathbb{R}^2\to\mathbb{R}^2$ définie par $F(x,y) = (x^2+y, xy+y^2)$. Calculer la matrice jacobienne $J_F(x,y)$.
+  \item Calculer $J_F(1,2)$ et $\det J_F(1,2)$.
+  \item Soit la transformation polaire $\Phi : (r,\theta)\mapsto(r\cos\theta, r\sin\theta)$. Calculer $J_\Phi$ et $\det J_\Phi$.
+  \item En utilisant la règle de la chaîne, calculer $J_{G\circ F}$ en $(1,2)$ où $G(u,v) = (u^2-v, uv)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $F = (F_1, F_2)$ avec $F_1 = x^2+y$ et $F_2 = xy+y^2$ :
+\[
+J_F(x,y) = \begin{pmatrix}\partial F_1/\partial x & \partial F_1/\partial y\\\partial F_2/\partial x & \partial F_2/\partial y\end{pmatrix} = \begin{pmatrix}2x & 1\\y & x+2y\end{pmatrix}
+\]
+
+\textbf{2.} En $(1,2)$ :
+\[
+J_F(1,2) = \begin{pmatrix}2 & 1\\2 & 1+4\end{pmatrix} = \begin{pmatrix}2 & 1\\2 & 5\end{pmatrix} \qquad \det J_F(1,2) = 2\times5 - 1\times2 = 8
+\]
+Comme $\det J_F \neq 0$, $F$ est un difféomorphisme local en $(1,2)$.
+
+\textbf{3.} $x = r\cos\theta$, $y = r\sin\theta$ :
+\[
+J_\Phi = \begin{pmatrix}\cos\theta & -r\sin\theta\\\sin\theta & r\cos\theta\end{pmatrix} \qquad \det J_\Phi = r\cos^2\theta + r\sin^2\theta = r
+\]
+C'est le jacobien des coordonnées polaires, qui apparaît dans $\d x\,\d y = r\,\d r\,\d\theta$.
+
+\textbf{4.} $G = (G_1,G_2)$ avec $G_1 = u^2-v$, $G_2 = uv$ :
+\[
+J_G(u,v) = \begin{pmatrix}2u & -1\\v & u\end{pmatrix}
+\]
+En $(u,v) = F(1,2) = (1+2, 1\times2+4) = (3, 6)$ :
+\[
+J_G(3,6) = \begin{pmatrix}6 & -1\\6 & 3\end{pmatrix}
+\]
+Par la règle de la chaîne : $J_{G\circ F}(1,2) = J_G(F(1,2))\cdot J_F(1,2)$ :
+\[
+J_{G\circ F}(1,2) = \begin{pmatrix}6 & -1\\6 & 3\end{pmatrix}\begin{pmatrix}2 & 1\\2 & 5\end{pmatrix} = \begin{pmatrix}12-2 & 6-5\\12+6 & 6+15\end{pmatrix} = \begin{pmatrix}10 & 1\\18 & 21\end{pmatrix}
+\]
+\end{boitecorrige}
+
+% ----------------------
+\begin{boiteexercice}
+\textbf{Exercice 9 - Extrema libres et conditions du second ordre}\niveau{\moyen}
+
+Trouver et classifier tous les points critiques de :
+\[
+f(x,y) = x^4 + y^4 - 4xy
+\]
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{Points critiques.} On résout $\nabla f = \vec{0}$ :
+\[
+\dpart{f}{x} = 4x^3 - 4y = 0 \Rightarrow y = x^3
+\]
+\[
+\dpart{f}{y} = 4y^3 - 4x = 0 \Rightarrow x = y^3
+\]
+En substituant : $y = x^3 = (y^3)^3 = y^9$, donc $y^9 - y = 0$, soit $y(y^8-1) = 0$.
+
+Solutions : $y = 0$ ou $y^8 = 1$ (soit $y = \pm1$ dans $\mathbb{R}$).
+\begin{itemize}[nosep]
+  \item $y = 0 \Rightarrow x = 0$ : point $(0,0)$.
+  \item $y = 1 \Rightarrow x = y^3 = 1$ : point $(1,1)$.
+  \item $y = -1 \Rightarrow x = -1$ : point $(-1,-1)$.
+\end{itemize}
+
+\textbf{Matrice hessienne.}
+\[
+H_f(x,y) = \begin{pmatrix}12x^2 & -4\\-4 & 12y^2\end{pmatrix}
+\]
+
+En $(0,0)$ : $H_f = \begin{pmatrix}0&-4\\-4&0\end{pmatrix}$, $\det H = -16 < 0$ : \textbf{point selle}.
+
+En $(1,1)$ : $H_f = \begin{pmatrix}12&-4\\-4&12\end{pmatrix}$, $\det H = 144-16 = 128 > 0$ et $H_{11} = 12 > 0$ : \textbf{minimum local}. $f(1,1) = 1+1-4 = -2$.
+
+En $(-1,-1)$ : même matrice hessienne, même conclusion : \textbf{minimum local}.
+\[
+f(-1,-1) = 1+1-4(-1)(-1) = -2.
+\]
+
+Les deux minima locaux ont la même valeur $f = -2$, ils sont globaux par argument de croissance à l'infini.
+\end{boitecorrige}
+
+% ----------------------
+\begin{boiteexercice}
+\textbf{Exercice 10 - Intégrale double sur un domaine non rectangulaire}\niveau{\moyen}
+
+Calculer l'intégrale $I = \displaystyle\iint_D (x+y)\,\mathrm{d}x\,\mathrm{d}y$ sur le domaine $D$ délimité par $y = x^2$ et $y = x$ (avec $0\leq x\leq1$).
+\begin{enumerate}
+  \item Tracer le domaine $D$ et écrire les bornes d'intégration.
+  \item Calculer l'intégrale par Fubini.
+  \item Vérifier en inversant l'ordre d'intégration.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Les courbes $y=x^2$ et $y=x$ se croisent en $x=0$ et $x=1$. Pour $0\leq x\leq1$, $x^2\leq x$, donc $D = \{(x,y) : 0\leq x\leq1,\; x^2\leq y\leq x\}$.
+
+\textbf{2.} Par Fubini (intégrer $y$ en premier) :
+\[
+I = \int_0^1\!\int_{x^2}^x(x+y)\,\mathrm{d}y\,\mathrm{d}x = \int_0^1\!\left[xy + \frac{y^2}{2}\right]_{x^2}^x\mathrm{d}x
+\]
+\[
+= \int_0^1\!\left[\left(x^2+\frac{x^2}{2}\right) - \left(x^3+\frac{x^4}{2}\right)\right]\mathrm{d}x = \int_0^1\!\left(\frac{3x^2}{2} - x^3 - \frac{x^4}{2}\right)\mathrm{d}x
+\]
+\[
+= \left[\frac{x^3}{2} - \frac{x^4}{4} - \frac{x^5}{10}\right]_0^1 = \frac{1}{2} - \frac{1}{4} - \frac{1}{10} = \frac{10-5-2}{20} = \frac{3}{20}
+\]
+
+\textbf{3.} Inversons l'ordre : pour $0\leq y\leq1$, $x$ varie entre $y$ et $\sqrt{y}$ (car $x\geq y\Leftrightarrow x\geq y$ et $x\leq\sqrt{y}$) :
+\[
+I = \int_0^1\!\int_y^{\sqrt{y}}(x+y)\,\mathrm{d}x\,\mathrm{d}y = \int_0^1\!\left[\frac{x^2}{2}+yx\right]_y^{\sqrt{y}}\mathrm{d}y
+\]
+\[
+= \int_0^1\!\left[\left(\frac{y}{2}+y\sqrt{y}\right)-\left(\frac{y^2}{2}+y^2\right)\right]\mathrm{d}y = \int_0^1\!\left(\frac{y}{2}+y^{3/2}-\frac{3y^2}{2}\right)\mathrm{d}y
+\]
+\[
+= \left[\frac{y^2}{4}+\frac{2y^{5/2}}{5}-\frac{y^3}{2}\right]_0^1 = \frac{1}{4}+\frac{2}{5}-\frac{1}{2} = \frac{5+8-10}{20} = \frac{3}{20} \quad
+\]
+\end{boitecorrige}
+
+% ----------------------
+\begin{boiteexercice}
+\textbf{Exercice 11 - Théorème des fonctions implicites}\niveau{\difficile}
+
+Soit $F(x,y) = x^2 + y^2 - 1$ (cercle unité). On cherche à exprimer $y$ comme fonction de $x$ localement.
+\begin{enumerate}
+  \item En quel point $(x_0, y_0) = (0,1)$ le théorème des fonctions implicites s'applique-t-il ? Quelle condition vérifie $\partial F/\partial y$ ?
+  \item Donner la formule de la dérivée $\d y/\d x$ implicitement définie par $F(x,y)=0$.
+  \item Calculer $\d y/\d x$ en $(0,1)$ et en $(1/\sqrt{2}, 1/\sqrt{2})$.
+  \item Calculer $\d^2y/\d x^2$ en différentiant à nouveau la relation implicite.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} En $(0,1)$ : $F(0,1) = 0+1-1 = 0$. On vérifie $\dpart{F}{y}(0,1) = 2y\big|_{(0,1)} = 2\neq0$. Le théorème des fonctions implicites s'applique : il existe $\varphi$ définie au voisinage de 0 telle que $F(x,\varphi(x)) = 0$ et $\varphi(0) = 1$.
+
+\textbf{2.} En différentiant $F(x,y(x)) = 0$ par rapport à $x$ :
+\[
+\dpart{F}{x} + \dpart{F}{y}\cdot\frac{\d y}{\d x} = 0 \quad\Rightarrow\quad \frac{\d y}{\d x} = -\frac{\partial F/\partial x}{\partial F/\partial y} = -\frac{2x}{2y} = -\frac{x}{y}
+\]
+
+\textbf{3.}
+\begin{itemize}[nosep]
+  \item En $(0,1)$ : $\d y/\d x = -0/1 = 0$ (tangente horizontale au sommet du cercle).
+  \item En $(1/\sqrt{2}, 1/\sqrt{2})$ : $\d y/\d x = -(1/\sqrt{2})/(1/\sqrt{2}) = -1$ (tangente à $-45°$).
+\end{itemize}
+
+\textbf{4.} On dérive $\d y/\d x = -x/y$ par rapport à $x$ :
+\[
+\frac{\d^2y}{\d x^2} = -\frac{y - x(\d y/\d x)}{y^2} = -\frac{y - x(-x/y)}{y^2} = -\frac{y^2+x^2}{y^3} = -\frac{1}{y^3}
+\]
+(car $x^2+y^2=1$). En $(0,1)$ : $\d^2y/\d x^2 = -1$ : le cercle est concave vers le bas, courbure $= 1$.
+\end{boitecorrige}
+
+\subsection*{Exercice 12 - Ligne de niveau et domaine de définition \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit la fonction $f(x,y) = \ln\!\left(x^2 - 6x + y^2 + 4y - 2\right)$.
+\begin{enumerate}
+  \item Déterminer le domaine de définition $\mathcal{D}_f$ de $f$ et le représenter géométriquement.
+  \item Déterminer la ligne de niveau $z = 0$ de $f$, c'est-à-dire l'ensemble $\{(x,y)\in\mathcal{D}_f : f(x,y) = 0\}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Domaine de définition.} La fonction $\ln$ est définie pour un argument strictement positif :
+\[
+x^2 - 6x + y^2 + 4y - 2 > 0.
+\]
+On complète les carrés :
+\[
+x^2 - 6x + y^2 + 4y - 2 = (x-3)^2 - 9 + (y+2)^2 - 4 - 2 = (x-3)^2 + (y+2)^2 - 15.
+\]
+La condition devient $(x-3)^2 + (y+2)^2 > 15$. Le domaine $\mathcal{D}_f$ est donc le plan $\R^2$ privé du disque fermé de centre $\Omega(3,-2)$ et de rayon $R = \sqrt{15}$.
+
+\textbf{2. Ligne de niveau $z=0$.} On résout $f(x,y) = 0$, soit :
+\[
+\ln\!\left((x-3)^2 + (y+2)^2 - 15\right) = 0 \iff (x-3)^2 + (y+2)^2 - 15 = 1.
+\]
+D'où :
+\[
+\boxed{(x-3)^2 + (y+2)^2 = 16}
+\]
+qui est l'équation du cercle de centre $\Omega(3,-2)$ et de rayon $4$. Puisque $4 > \sqrt{15}$, ce cercle est bien contenu dans $\mathcal{D}_f$ : la ligne de niveau est donc le cercle complet.
+
+\reponse{La ligne de niveau $z=0$ est le cercle $(x-3)^2 + (y+2)^2 = 16$, de centre $(3,-2)$ et de rayon $4$.}
+\end{boitecorrige}
+
+\subsection*{Exercice 13 - Calcul de limites au point $(0,0)$ \niveau{\moyen}}
+
+\begin{boiteexercice}
+Calculer, si elle existe, la limite en $(0,0)$ des fonctions suivantes :
+\begin{enumerate}
+  \item $f_1(x,y) = \dfrac{(1+x+y)\sin y}{y}$.
+  \item $f_2(x,y) = (x^2+y^2)\sin\!\left(\dfrac{\pi}{x^2+y^2}\right)$.
+  \item $f_3(x,y) = \dfrac{xy}{x^2+y^2}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On réécrit $f_1(x,y) = (1+x+y)\cdot\dfrac{\sin y}{y}$. Comme $\dfrac{\sin y}{y} \xrightarrow[y\to 0]{} 1$ et $1+x+y \xrightarrow[(x,y)\to(0,0)]{} 1$, on a par produit :
+\[
+\lim_{(x,y)\to(0,0)} f_1(x,y) = 1 \times 1 = \boxed{1}.
+\]
+
+\textbf{2.} On utilise le théorème des gendarmes. Comme $\left|\sin\!\left(\dfrac{\pi}{x^2+y^2}\right)\right| \leq 1$, on a :
+\[
+0 \leq \left|(x^2+y^2)\sin\!\left(\dfrac{\pi}{x^2+y^2}\right)\right| \leq x^2+y^2 \xrightarrow[(x,y)\to(0,0)]{} 0.
+\]
+Par gendarmes : $\lim_{(x,y)\to(0,0)} f_2(x,y) = \boxed{0}$.
+
+\textbf{3.} Cette limite n'existe pas. En approchant selon la droite $y = mx$ :
+\[
+f_3(x, mx) = \dfrac{x(mx)}{x^2 + (mx)^2} = \dfrac{m}{1+m^2},
+\]
+qui dépend de $m$. Par exemple, selon $y=0$ ($m=0$) on obtient $0$, et selon $y=x$ ($m=1$) on obtient $\dfrac{1}{2}$. La limite dépend donc du chemin d'approche, elle n'existe pas.
+
+\reponse{$f_1 \to 1$, $f_2 \to 0$, $f_3$ n'a pas de limite en $(0,0)$.}
+\end{boitecorrige}
+
+\subsection*{Exercice 14 - Optimisation : durée d'une infection \niveau{\difficile}}
+
+\begin{boiteexercice}
+Une étude en laboratoire montre que la durée d'une infection bactérienne (en jours) peut être modélisée par la fonction
+\[
+D(x, y) = x^2 + 2y^2 - 18x - 24y + 2xy + 120,
+\]
+où $x$ et $y$ sont les doses (en mg) de deux composés chimiques.
+\begin{enumerate}
+  \item Calculer les dérivées partielles $\dpart{D}{x}$ et $\dpart{D}{y}$.
+  \item Déterminer le point critique $(x^\star, y^\star)$ de $D$.
+  \item Étudier la nature du point critique à l'aide de la matrice hessienne.
+  \item En déduire les doses optimales et la durée minimale de l'infection.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Dérivées partielles.}
+\[
+\dpart{D}{x} = 2x - 18 + 2y, \qquad \dpart{D}{y} = 4y - 24 + 2x.
+\]
+
+\textbf{2. Point critique.} On résout $\dpart{D}{x} = \dpart{D}{y} = 0$ :
+\[
+\begin{cases}
+2x + 2y = 18 \;\Rightarrow\; x + y = 9\\
+2x + 4y = 24 \;\Rightarrow\; x + 2y = 12
+\end{cases}
+\]
+Par soustraction : $y = 3$, puis $x = 6$. Le point critique est $(x^\star, y^\star) = (6, 3)$.
+
+\textbf{3. Matrice hessienne.}
+\[
+H(x,y) = \begin{pmatrix} \dpart{^2 D}{\partial x^2} & \dpart{^2 D}{\partial x\partial y}\\[4pt] \dpart{^2 D}{\partial y\partial x} & \dpart{^2 D}{\partial y^2}\end{pmatrix} = \begin{pmatrix} 2 & 2 \\ 2 & 4 \end{pmatrix}.
+\]
+En $(6,3)$ : $\det H = 2\times 4 - 2\times 2 = 4 > 0$ et $\dpart{^2 D}{\partial x^2} = 2 > 0$. Donc $H$ est définie positive : $(6,3)$ est un \textbf{minimum local} (et global, car $D$ est quadratique strictement convexe).
+
+\textbf{4. Doses optimales et durée minimale.}
+\[
+D(6,3) = 36 + 18 - 108 - 72 + 36 + 120 = 30 \text{ jours.}
+\]
+
+\reponse{Doses optimales : $x^\star = 6$ mg, $y^\star = 3$ mg ; durée minimale $D_{\min} = 30$ jours.}
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

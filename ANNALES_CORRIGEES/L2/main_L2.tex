@@ -1,0 +1,446 @@
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+\def\inMainDoc{}
+
+\lhead{\small\textit{Annale corrigée - Licence 2 - MPC}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\graphicspath{{images/}}
+
+\usepackage{listings}
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape,
+  stringstyle=\ttfamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=8pt,
+  frame=single,
+  breaklines=true,
+  tabsize=4,
+  showstringspaces=false,
+  literate={é}{{\'{e}}}1 {è}{{\`{e}}}1 {ê}{{\^{e}}}1
+           {à}{{\`a}}1 {ù}{{\`u}}1 {î}{{\^i}}1 {ô}{{\^o}}1
+           {ç}{{\c{c}}}1
+}
+
+\begin{document}
+
+% ================================================================
+%  PAGE DE GARDE
+% ================================================================
+\begin{titlepage}
+\centering
+\thispagestyle{empty}
+
+\includegraphics[width=0.22\textwidth]{../L1/images/logo1.png}\\[0.4cm]
+{\large\bfseries UNIVERSITÉ DE KARA}\\[0.1cm]
+{\normalsize Faculté des Sciences et Techniques (FaST)}\\[0.1cm]
+{\normalsize Département de Physique}\\[0.3cm]
+\rule{\textwidth}{1.5pt}\\[0.1cm]
+\rule{\textwidth}{0.4pt}\\[0.8cm]
+
+\begin{tikzpicture}
+  \draw[line width=2pt] (-7.5,-2.6) rectangle (7.5,2.6);
+  \draw[line width=0.6pt] (-7.2,-2.3) rectangle (7.2,2.3);
+  \node at (0, 1.2) {\Huge\bfseries ANNALE D'EXERCICES};
+  \node at (0, 0.2) {\Huge\bfseries ET EXAMENS CORRIGÉS};
+  \node at (0,-0.9) {\large\bfseries Semestres 3 et 4};
+  \node at (0,-1.7) {\normalsize Exercices classiques, annales et examens résolus avec méthode};
+\end{tikzpicture}
+
+\vspace{0.7cm}
+{\LARGE\bfseries LICENCE FONDAMENTALE EN MATHÉMATIQUES, PHYSIQUE ET CHIMIE}\\[0.2cm]
+{\Large\bfseries PARCOURS DEUXIÈME ANNÉE (L2)}\\[0.3cm]
+\rule{0.6\textwidth}{0.4pt}\\[0.4cm]
+{\small\itshape Comme toute \oe{}uvre humaine n'est jamais parfaite, prière de signaler toute erreur ou imprécision constatée dans ce document.}
+
+\vspace{0.7cm}
+\rule{\textwidth}{0.4pt}\\[0.5cm]
+
+\begin{flushleft}
+{\large\bfseries\underline{AUTEURS}}\\[0.3cm]
+\hspace{1cm}{\bfseries DJABON Ounimborbitibou}\\
+\hspace{1.5cm}{\itshape Master en Physique Théorique}\\
+\hspace{1.5cm}{\itshape Master in Mathematical Sciences, AIMS Ghana}\\[0.25cm]
+\hspace{1cm}{\bfseries BOUTCHOKA Malaki}\\
+\hspace{1.5cm}{\itshape Master en Matériaux Avancés en Électricité}\\
+\hspace{1.5cm}{\itshape Université de Lomé}
+\end{flushleft}
+
+\vspace{0.5cm}
+\rule{\textwidth}{0.4pt}\\[0.15cm]
+{\small Université de Kara, FaST \hfill Octobre 2025}
+
+\end{titlepage}
+
+% ================================================================
+%  AVANT-PROPOS
+% ================================================================
+\newpage
+\thispagestyle{plain}
+\pagestyle{fancy}
+
+\section*{Avant-propos}
+
+Chères étudiantes, chers étudiants de deuxième année en Mathématiques, Physique et Chimie,
+
+Après la première année qui vous a initié aux fondements de la physique et des mathématiques, cette deuxième année vous plonge dans des domaines plus spécialisés et plus profonds. Vous y découvrirez la beauté de l'électromagnétisme, la rigueur de la mécanique analytique, l'étrangeté de la mécanique quantique, et l'efficacité de la programmation scientifique.
+
+Cet ouvrage couvre l'intégralité des Unités d'Enseignement de votre deuxième année :
+
+\begin{itemize}
+  \item Électromagnétisme
+  \item Thermodynamique
+  \item Relativité restreinte
+  \item Géométrie affine
+  \item Mécanique quantique (introduction)
+  \item Mécanique du solide
+  \item Probabilités et statistiques
+  \item Analyse dans $\mathbb{R}^n$
+  \item Séries de Fourier et transformée de Laplace
+  \item Suites et séries de fonctions
+  \item Physique des semi-conducteurs
+  \item Programmation en Python
+\end{itemize}
+
+Chaque UE s'articule de la même manière : un \textbf{résumé de cours} condensé rappelle les résultats essentiels à maîtriser, suivi d'exercices progressifs dont le degré de difficulté est indiqué par des étoiles ($\star$ : accessible, $\star\star$ : intermédiaire, $\star\star\star$ : difficile). Chaque exercice est suivi de son corrigé détaillé, rédigé étape par étape.
+
+La deuxième année est souvent celle qui détermine les vocations. C'est là que les concepts abstraits de première année prennent tout leur sens et que les connexions entre physique, mathématiques et informatique deviennent évidentes. Ne sous-estimez pas la puissance de la pratique régulière : une heure de travail quotidien vaut mieux que dix heures de révision intensive à la veille des examens.
+
+\begin{flushright}
+\emph{«\,La science est une belle chose si l'on n'est pas obligé d'en vivre.\,»}\\
+\textbf{Marie Curie}
+\end{flushright}
+
+Nous vous souhaitons une excellente utilisation de cette annale et plein succès dans vos études scientifiques.
+
+\vspace{1cm}
+\begin{flushright}
+\textit{DJABON Ounimborbitibou \& BOUTCHOKA Malaki}
+\end{flushright}
+
+% ================================================================
+%  TABLE DES MATIÈRES
+% ================================================================
+\newpage
+\tableofcontents
+\newpage
+
+% ================================================================
+%  UE 1 : ÉLECTROMAGNÉTISME
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{34}{42}\bfseries\selectfont ÉLECTROMAGNÉTISME}\\[1.2cm]
+    {\large\itshape Équations de Maxwell}\\[0.4cm]
+    {\large\itshape Ondes électromagnétiques - Énergie}\\[1.8cm]
+    {\normalsize Licence 2 - UE 1}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 1};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{ÉLECTROMAGNÉTISME}
+\input{Electromagnetisme_L2.tex}
+
+% ================================================================
+%  UE 2 : THERMODYNAMIQUE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{34}{42}\bfseries\selectfont THERMODYNAMIQUE}\\[1.2cm]
+    {\large\itshape Principes - Fonctions d'état}\\[0.4cm]
+    {\large\itshape Machines thermiques - Cycles}\\[1.8cm]
+    {\normalsize Licence 2 - UE 2}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 2};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{THERMODYNAMIQUE}
+\input{Thermodynamique_L2.tex}
+
+% ================================================================
+%  UE 3 : RELATIVITÉ RESTREINTE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{30}{38}\bfseries\selectfont RELATIVITÉ RESTREINTE}\\[1.2cm]
+    {\large\itshape Transformations de Lorentz}\\[0.4cm]
+    {\large\itshape Dynamique relativiste - Quadrivecteurs}\\[1.8cm]
+    {\normalsize Licence 2 - UE 3}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 3};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{RELATIVITÉ RESTREINTE}
+\input{Relativite_L2.tex}
+
+% ================================================================
+%  UE 4 : GÉOMÉTRIE AFFINE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{34}{42}\bfseries\selectfont GÉOMÉTRIE AFFINE}\\[1.2cm]
+    {\large\itshape Espaces affines - Transformations}\\[0.4cm]
+    {\large\itshape Coniques et quadriques}\\[1.8cm]
+    {\normalsize Licence 2 - UE 4}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 4};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{GÉOMÉTRIE AFFINE}
+\input{Geometrie_Affine_L2.tex}
+
+% ================================================================
+%  UE 5 : MÉCANIQUE QUANTIQUE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{30}{38}\bfseries\selectfont MÉCANIQUE QUANTIQUE}\\[1.2cm]
+    {\large\itshape Postulats - Équation de Schrödinger}\\[0.4cm]
+    {\large\itshape Puits et barrières de potentiel}\\[1.8cm]
+    {\normalsize Licence 2 - UE 5}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 5};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{MÉCANIQUE QUANTIQUE}
+\input{Mecanique_Quantique_L2.tex}
+
+% ================================================================
+%  UE 6 : MÉCANIQUE DU SOLIDE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{30}{38}\bfseries\selectfont MÉCANIQUE DU SOLIDE}\\[1.2cm]
+    {\large\itshape Cinématique du solide indéformable}\\[0.4cm]
+    {\large\itshape Tenseur d'inertie - Équations d'Euler}\\[1.8cm]
+    {\normalsize Licence 2 - UE 6}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 6};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{MÉCANIQUE DU SOLIDE}
+\input{Mecanique_Solide_L2.tex}
+
+% ================================================================
+%  UE 7 : PROBABILITÉS ET STATISTIQUES
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{28}{36}\bfseries\selectfont PROBABILITÉS ET STATISTIQUES}\\[1.2cm]
+    {\large\itshape Variables aléatoires - Lois usuelles}\\[0.4cm]
+    {\large\itshape Estimation et tests statistiques}\\[1.8cm]
+    {\normalsize Licence 2 - UE 7}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 7};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{PROBABILITÉS ET STATISTIQUES}
+\input{Probabilites_L2.tex}
+
+% ================================================================
+%  UE 8 : ANALYSE DANS Rn
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{34}{42}\bfseries\selectfont ANALYSE DANS $\mathbb{R}^n$}\\[1.2cm]
+    {\large\itshape Fonctions de plusieurs variables}\\[0.4cm]
+    {\large\itshape Différentiabilité - Intégrales multiples}\\[1.8cm]
+    {\normalsize Licence 2 - UE 8}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 8};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{ANALYSE DANS $\mathbb{R}^n$}
+\input{Analyse_Rn_L2.tex}
+
+% ================================================================
+%  UE 9 : SÉRIES DE FOURIER ET LAPLACE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{28}{36}\bfseries\selectfont SÉRIES DE FOURIER}\\[0.3cm]
+    {\fontsize{28}{36}\bfseries\selectfont ET TRANSFORMÉE DE LAPLACE}\\[1.0cm]
+    {\large\itshape Analyse harmonique - Convergence}\\[0.4cm]
+    {\large\itshape Applications aux équations différentielles}\\[1.5cm]
+    {\normalsize Licence 2 - UE 9}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 9};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{SÉRIES DE FOURIER ET TRANSFORMÉE DE LAPLACE}
+\input{Series_Fourier_L2.tex}
+
+% ================================================================
+%  UE 10 : SUITES ET SÉRIES DE FONCTIONS
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{26}{34}\bfseries\selectfont SUITES ET SÉRIES DE FONCTIONS}\\[1.2cm]
+    {\large\itshape Convergence simple et uniforme}\\[0.4cm]
+    {\large\itshape Séries entières - Critère de Weierstrass}\\[1.8cm]
+    {\normalsize Licence 2 - UE 10}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 10};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{SUITES ET SÉRIES DE FONCTIONS}
+\input{Suites_Series_L2.tex}
+
+% ================================================================
+%  UE 11 : PHYSIQUE DES SEMI-CONDUCTEURS
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{26}{34}\bfseries\selectfont PHYSIQUE DES SEMI-CONDUCTEURS}\\[1.2cm]
+    {\large\itshape Structure de bande - Dopage}\\[0.4cm]
+    {\large\itshape Jonction p-n - Transistor bipolaire}\\[1.8cm]
+    {\normalsize Licence 2 - UE 11}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 11};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{PHYSIQUE DES SEMI-CONDUCTEURS}
+\input{Semi_Conducteurs_L2.tex}
+
+% ================================================================
+%  UE 12 : PROGRAMMATION EN PYTHON
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{30}{38}\bfseries\selectfont PROGRAMMATION EN PYTHON}\\[1.2cm]
+    {\large\itshape NumPy - Matplotlib - SciPy}\\[0.4cm]
+    {\large\itshape Calcul scientifique et visualisation}\\[1.8cm]
+    {\normalsize Licence 2 - UE 12}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 12};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{PROGRAMMATION EN PYTHON}
+\input{Programmation_Python_L2.tex}
+
+\end{document}

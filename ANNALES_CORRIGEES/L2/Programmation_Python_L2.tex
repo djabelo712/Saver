@@ -1,0 +1,848 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Programmation Python - Licence 2}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\usepackage{listings}
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape,
+  stringstyle=\ttfamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=8pt,
+  frame=single,
+  breaklines=true,
+  tabsize=4,
+  showstringspaces=false,
+  literate={é}{{\'{e}}}1 {è}{{\`{e}}}1 {ê}{{\^{e}}}1
+           {à}{{\`a}}1 {ù}{{\`u}}1 {î}{{\^i}}1 {ô}{{\^o}}1
+           {ç}{{\c{c}}}1
+}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries PROGRAMMATION EN PYTHON}\\[0.3cm]
+  {\normalsize Licence 2 - Mathématiques, Physique et Chimie}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Types et variables.} Python est un langage interprété à typage dynamique. Types de base : \texttt{int}, \texttt{float}, \texttt{complex}, \texttt{str}, \texttt{bool}, \texttt{list}, \texttt{tuple}, \texttt{dict}, \texttt{set}.
+
+\textbf{2. Structures de contrôle.}
+\begin{lstlisting}
+if condition:           # conditionnel
+    ...
+elif autre:
+    ...
+else:
+    ...
+
+for i in range(n):      # boucle for
+    ...
+
+while condition:        # boucle while
+    ...
+\end{lstlisting}
+
+\textbf{3. Fonctions.}
+\begin{lstlisting}
+def nom_fonction(param1, param2, defaut=0):
+    """Docstring."""
+    return resultat
+\end{lstlisting}
+
+\textbf{4. Bibliothèques scientifiques.}
+\begin{itemize}[nosep]
+  \item \texttt{numpy} : tableaux numériques, algèbre linéaire, fonctions mathématiques.
+  \item \texttt{matplotlib} : tracé de courbes (\texttt{plt.plot}, \texttt{plt.show}).
+  \item \texttt{scipy} : intégration, optimisation, statistiques.
+\end{itemize}
+
+\textbf{5. Listes et compréhensions.} \texttt{[f(x) for x in liste if condition]} crée une liste en une ligne. Les tableaux NumPy (\texttt{np.array}) permettent des opérations vectorisées (plus rapides que les boucles).
+
+\end{boiteresume}
+
+\newpage
+\section{Bases du langage}
+
+\subsection*{Exercice 1 - Variables et opérations \niveau{\facile}}
+
+\begin{boiteexercice}
+Écrire un programme Python qui :
+\begin{enumerate}
+  \item Demande à l'utilisateur deux réels $a$ et $b$.
+  \item Affiche leurs somme, différence, produit et rapport.
+  \item Résout l'équation $ax^2 + bx + c = 0$ (en demandant aussi $c$) en affichant toutes les racines complexes.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+import cmath  # pour les racines complexes
+
+# Partie 1 : operations de base
+a = float(input("Entrez a : "))
+b = float(input("Entrez b : "))
+
+print(f"Somme      : {a} + {b} = {a + b}")
+print(f"Difference : {a} - {b} = {a - b}")
+print(f"Produit    : {a} * {b} = {a * b}")
+if b != 0:
+    print(f"Rapport    : {a} / {b} = {a / b:.4f}")
+else:
+    print("Division par zero impossible.")
+
+# Partie 2 : trinome du second degre
+print("\n- Resolution du trinome ax^2 + bx + c -")
+c = float(input("Entrez c : "))
+
+if a == 0:
+    print("Ce n'est pas un trinome (a = 0).")
+else:
+    delta = b**2 - 4*a*c
+    x1 = (-b + cmath.sqrt(delta)) / (2*a)
+    x2 = (-b - cmath.sqrt(delta)) / (2*a)
+    if delta > 0:
+        print(f"Deux racines reelles : x1 = {x1.real:.4f}, x2 = {x2.real:.4f}")
+    elif delta == 0:
+        print(f"Racine double : x = {x1.real:.4f}")
+    else:
+        print(f"Racines complexes : x1 = {x1}, x2 = {x2}")
+\end{lstlisting}
+\end{boitecorrige}
+
+\section{Calcul scientifique avec NumPy et Matplotlib}
+
+\subsection*{Exercice 2 - Tracé de fonctions \niveau{\facile}}
+
+\begin{boiteexercice}
+Tracer sur le même graphique les fonctions $f(x)=\sin(x)$, $g(x)=\cos(x)$ et $h(x)=\sin(2x)$ pour $x\in[0,2\pi]$ avec une légende, un titre et des labels d'axes. Ajouter une grille.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 2*np.pi, 500)
+
+plt.figure(figsize=(9, 5))
+plt.plot(x, np.sin(x),   label=r'$\sin(x)$',   linewidth=2)
+plt.plot(x, np.cos(x),   label=r'$\cos(x)$',   linewidth=2, linestyle='--')
+plt.plot(x, np.sin(2*x), label=r'$\sin(2x)$',  linewidth=2, linestyle=':')
+
+plt.axhline(0, color='black', linewidth=0.8)
+plt.xlabel('$x$ (radians)', fontsize=12)
+plt.ylabel('Valeur', fontsize=12)
+plt.title('Fonctions trigonometriques', fontsize=14)
+plt.legend(fontsize=12)
+plt.grid(True, alpha=0.4)
+plt.xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi],
+           ['0', r'$\pi/2$', r'$\pi$', r'$3\pi/2$', r'$2\pi$'])
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\texttt{np.linspace(0, 2*np.pi, 500)} génère 500 points régulièrement espacés entre 0 et $2\pi$. Les opérations NumPy (\texttt{np.sin}, \texttt{np.cos}) s'appliquent vectoriellement à tous les points simultanément.
+\end{boitecorrige}
+
+\subsection*{Exercice 3 - Méthodes numériques \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Implémenter la méthode de la bissection pour trouver la racine de $f(x)=x^3-x-2$ sur $[1,2]$.
+  \item Implémenter la méthode d'Euler pour résoudre $y'=y\sin(x)$, $y(0)=1$ sur $[0,5]$. Comparer avec la solution exacte $y(x)=\e^{1-\cos x}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Méthode de la bissection :}
+\begin{lstlisting}
+def bissection(f, a, b, tol=1e-8, max_iter=100):
+    """Trouve la racine de f sur [a,b] par bissection."""
+    if f(a) * f(b) > 0:
+        raise ValueError("f(a) et f(b) doivent etre de signes opposes.")
+    for _ in range(max_iter):
+        c = (a + b) / 2
+        if abs(f(c)) < tol or (b - a) / 2 < tol:
+            return c
+        if f(a) * f(c) < 0:
+            b = c
+        else:
+            a = c
+    return (a + b) / 2
+
+f = lambda x: x**3 - x - 2
+racine = bissection(f, 1, 2)
+print(f"Racine : x = {racine:.8f}")  # x ~= 1.52137971
+\end{lstlisting}
+
+\textbf{2. Méthode d'Euler :}
+\begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Methode d'Euler
+def euler(f, y0, x0, xf, n):
+    h = (xf - x0) / n
+    x = np.linspace(x0, xf, n+1)
+    y = np.zeros(n+1)
+    y[0] = y0
+    for i in range(n):
+        y[i+1] = y[i] + h * f(x[i], y[i])
+    return x, y
+
+f = lambda x, y: y * np.sin(x)
+x_euler, y_euler = euler(f, 1, 0, 5, 200)
+
+# Solution exacte
+x_exact = np.linspace(0, 5, 1000)
+y_exact = np.exp(1 - np.cos(x_exact))
+
+plt.plot(x_euler, y_euler, label="Euler (n=200)", linestyle='--')
+plt.plot(x_exact, y_exact, label="Solution exacte")
+plt.legend(); plt.grid(True); plt.show()
+\end{lstlisting}
+\end{boitecorrige}
+
+\subsection*{Exercice 4 - Algèbre linéaire avec NumPy \niveau{\moyen}}
+
+\begin{boiteexercice}
+Résoudre le système $A\vec{x}=\vec{b}$ avec :
+\[
+A = \begin{pmatrix}2&1&-1\\-3&-1&2\\-2&1&2\end{pmatrix}, \quad \vec{b} = \begin{pmatrix}8\\-11\\-3\end{pmatrix}
+\]
+en utilisant \texttt{numpy.linalg.solve}. Vérifier la solution, calculer $\det(A)$ et les valeurs propres de $A$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+import numpy as np
+
+A = np.array([[2, 1, -1],
+              [-3, -1, 2],
+              [-2, 1, 2]], dtype=float)
+
+b = np.array([8, -11, -3], dtype=float)
+
+# Resolution du systeme
+x = np.linalg.solve(A, b)
+print(f"Solution : x = {x}")  # x = [2, 3, -1]
+
+# Verification : A @ x doit etre egale a b
+residuel = np.linalg.norm(A @ x - b)
+print(f"Residuel ||Ax - b|| = {residuel:.2e}")
+
+# Determinant
+det = np.linalg.det(A)
+print(f"det(A) = {det:.4f}")
+
+# Valeurs propres
+valeurs_propres, vecteurs_propres = np.linalg.eig(A)
+print(f"Valeurs propres : {valeurs_propres}")
+\end{lstlisting}
+
+La solution est $x_1=2$, $x_2=3$, $x_3=-1$. \texttt{np.linalg.solve} utilise la décomposition LU, ce qui est bien plus efficace que l'inversion de matrice (\texttt{np.linalg.inv}).
+\end{boitecorrige}
+
+\subsection*{Exercice 5 - Traitement de données et statistiques \niveau{\difficile}}
+
+\begin{boiteexercice}
+On dispose d'une série de mesures de la résistance d'un conducteur à différentes températures :
+
+\begin{center}
+\begin{tabular}{c|cccccc}
+$T$ (°C) & 20 & 40 & 60 & 80 & 100 & 120\\
+\hline
+$R$ ($\Omega$) & 10.2 & 11.1 & 12.0 & 12.8 & 13.9 & 14.7
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item Calculer la moyenne, l'écart-type et le coefficient de variation de $R$.
+  \item Effectuer une régression linéaire $R = aT + b$ par la méthode des moindres carrés (\texttt{numpy.polyfit}).
+  \item Estimer la résistance à $T = \qtydegc{150}$.
+  \item Tracer les données et la droite de régression.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+
+T = np.array([20, 40, 60, 80, 100, 120], dtype=float)
+R = np.array([10.2, 11.1, 12.0, 12.8, 13.9, 14.7])
+
+# 1. Statistiques descriptives
+print(f"Moyenne de R  : {np.mean(R):.3f} Ohm")
+print(f"Ecart-type    : {np.std(R, ddof=1):.3f} Ohm")
+print(f"Coeff. variation : {100*np.std(R,ddof=1)/np.mean(R):.1f} %")
+
+# 2. Regression lineaire
+coeffs = np.polyfit(T, R, 1)
+a, b = coeffs
+print(f"\nRegression : R = {a:.4f} * T + {b:.4f}")
+
+# Coefficient de correlation
+r = np.corrcoef(T, R)[0, 1]
+print(f"Coefficient de correlation r = {r:.4f}")
+
+# 3. Estimation a T = 150 degC
+T_pred = 150
+R_pred = a * T_pred + b
+print(f"\nEstimation a {T_pred} degC : R = {R_pred:.2f} Ohm")
+
+# 4. Trace
+T_fit = np.linspace(0, 160, 100)
+R_fit = a * T_fit + b
+
+plt.scatter(T, R, color='black', zorder=5, label='Mesures')
+plt.plot(T_fit, R_fit, label=f'Regression: R={a:.3f}T+{b:.3f}')
+plt.xlabel('Temperature (degC)'); plt.ylabel('Resistance (Ohm)')
+plt.title('Resistance vs Temperature')
+plt.legend(); plt.grid(True); plt.show()
+\end{lstlisting}
+
+Résultats : $a \approx \ensuremath{\num{0.045}\,\Omega/{}^\circ\text{C}}$, $b \approx \qty{9.28}{\Omega}$, $r \approx 0{,}9997$. La linéarité est excellente. À 150°C, $R\approx\qty{16.0}{\Omega}$.
+\end{boitecorrige}
+
+\section{Structures de données et algorithmes}
+
+\subsection*{Exercice 6 - Listes, tri et compréhension \niveau{\facile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Créer une liste des carrés des entiers de 1 à 20 en utilisant une compréhension de liste.
+  \item Filtrer les éléments pairs de cette liste.
+  \item Trier une liste de mots par longueur (puis alphabétiquement en cas d'égalité) : \texttt{mots = ["chat", "python", "code", "AI", "Numpy", "ax"]}.
+  \item Écrire une fonction qui recherche un élément dans une liste triée par l'algorithme de \emph{recherche dichotomique}.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+# 1. Comprehension de liste : carres
+carres = [n**2 for n in range(1, 21)]
+print("Carres:", carres)
+
+# 2. Filtrage des elements pairs
+pairs = [x for x in carres if x % 2 == 0]
+print("Carres pairs:", pairs)
+
+# 3. Tri par longueur puis alphabetique
+mots = ["chat", "python", "code", "AI", "Numpy", "ax"]
+mots_tries = sorted(mots, key=lambda m: (len(m), m.lower()))
+print("Mots tries:", mots_tries)
+# Resultat: ['AI', 'ax', 'chat', 'code', 'Numpy', 'python']
+
+# 4. Recherche dichotomique
+def recherche_dicho(liste, cible):
+    """Recherche dichotomique dans une liste triee.
+    Retourne l'indice si trouve, -1 sinon."""
+    gauche, droite = 0, len(liste) - 1
+    while gauche <= droite:
+        milieu = (gauche + droite) // 2
+        if liste[milieu] == cible:
+            return milieu
+        elif liste[milieu] < cible:
+            gauche = milieu + 1
+        else:
+            droite = milieu - 1
+    return -1
+
+nombres = sorted([3, 7, 1, 15, 9, 4, 12])  # [1, 3, 4, 7, 9, 12, 15]
+print(f"Recherche de 9 : indice {recherche_dicho(nombres, 9)}")   # 4
+print(f"Recherche de 6 : indice {recherche_dicho(nombres, 6)}")   # -1
+\end{lstlisting}
+
+\textbf{Complexité :} La recherche dichotomique a une complexité $O(\log_2 n)$ au lieu de $O(n)$ pour la recherche linéaire. Pour $n = 10^6$ éléments, seulement $\sim 20$ comparaisons suffisent.
+\end{boitecorrige}
+
+\subsection*{Exercice 7 - Fonctions récursives \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Écrire une fonction récursive calculant $n!$ et une version itérative. Comparer pour $n=10$.
+  \item Écrire une fonction récursive pour les nombres de Fibonacci $F_n = F_{n-1}+F_{n-2}$, $F_0=0$, $F_1=1$.
+  \item Pourquoi la version naïve de Fibonacci est-elle exponentiellement lente ? Implémenter une version mémoïsée avec un dictionnaire.
+  \item Calculer $F_{35}$ avec les deux versions et mesurer le temps avec \texttt{time.time()}.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+import time
+
+# 1. Factorielle
+def factorielle_rec(n):
+    """Factorielle recursive."""
+    if n <= 1:
+        return 1
+    return n * factorielle_rec(n - 1)
+
+def factorielle_iter(n):
+    """Factorielle iterative."""
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
+print(f"10! (recursif)  = {factorielle_rec(10)}")
+print(f"10! (iteratif)  = {factorielle_iter(10)}")
+
+# 2. Fibonacci naif (exponentiel)
+def fib_naif(n):
+    if n <= 1:
+        return n
+    return fib_naif(n-1) + fib_naif(n-2)
+
+# 3. Fibonacci memoize (lineaire)
+def fib_memo(n, cache={}):
+    if n in cache:
+        return cache[n]
+    if n <= 1:
+        return n
+    cache[n] = fib_memo(n-1, cache) + fib_memo(n-2, cache)
+    return cache[n]
+
+# 4. Comparaison de temps
+n = 35
+t0 = time.time()
+res_naif = fib_naif(n)
+t1 = time.time()
+print(f"F({n}) naif    = {res_naif} en {t1-t0:.3f} s")
+
+t0 = time.time()
+res_memo = fib_memo(n)
+t1 = time.time()
+print(f"F({n}) memoize = {res_memo} en {t1-t0:.6f} s")
+\end{lstlisting}
+
+\textbf{Analyse :} La version naïve calcule $\sim 2^{35}$ appels (exponentiel), tandis que la version mémoïsée fait $O(n)$ calculs. Pour $n=35$, la version naïve prend $\sim$ 5 secondes, la mémoïsée $\sim$ 0 ms.
+\end{boitecorrige}
+
+\subsection*{Exercice 8 - Lecture et écriture de fichiers \niveau{\facile}}
+
+\begin{boiteexercice}
+On dispose d'un fichier texte \texttt{mesures.txt} contenant des lignes de la forme \texttt{t R} (temps et résistance).
+\begin{enumerate}
+  \item Écrire un programme qui génère ce fichier avec des données simulées ($T = [20, 40, 60, 80, 100]$°C, $R = 10 + 0.05T + \text{bruit}$).
+  \item Lire le fichier et extraire les données dans deux listes.
+  \item Calculer la moyenne et l'écart-type de $R$ à partir des données lues.
+  \item Réécrire un fichier \texttt{resultats.txt} avec les statistiques calculées.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+import numpy as np
+
+# 1. Generation et ecriture du fichier
+np.random.seed(42)
+T_vals = [20, 40, 60, 80, 100]
+R_vals = [10 + 0.05*T + np.random.normal(0, 0.1) for T in T_vals]
+
+with open("mesures.txt", "w") as f:
+    f.write("# Temperature(C)  Resistance(Ohm)\n")
+    for T, R in zip(T_vals, R_vals):
+        f.write(f"{T:.1f}  {R:.4f}\n")
+
+print("Fichier mesures.txt cree.")
+
+# 2. Lecture du fichier
+temperatures = []
+resistances = []
+
+with open("mesures.txt", "r") as f:
+    for ligne in f:
+        if ligne.startswith("#"):  # ignorer commentaires
+            continue
+        parts = ligne.strip().split()
+        if len(parts) == 2:
+            temperatures.append(float(parts[0]))
+            resistances.append(float(parts[1]))
+
+print("Temperatures lues:", temperatures)
+print("Resistances lues :", [f"{r:.4f}" for r in resistances])
+
+# 3. Statistiques
+R_arr = np.array(resistances)
+moyenne = np.mean(R_arr)
+ecart_type = np.std(R_arr, ddof=1)
+print(f"\nMoyenne R = {moyenne:.4f} Ohm")
+print(f"Ecart-type = {ecart_type:.4f} Ohm")
+
+# 4. Ecriture des resultats
+with open("resultats.txt", "w") as f:
+    f.write("=== Resultats statistiques ===\n")
+    f.write(f"Nombre de mesures : {len(resistances)}\n")
+    f.write(f"Moyenne R         : {moyenne:.4f} Ohm\n")
+    f.write(f"Ecart-type        : {ecart_type:.4f} Ohm\n")
+    f.write(f"Min / Max         : {R_arr.min():.4f} / {R_arr.max():.4f} Ohm\n")
+
+print("\nFichier resultats.txt ecrit.")
+\end{lstlisting}
+\end{boitecorrige}
+
+\subsection*{Exercice 9 - NumPy : tableaux et algèbre linéaire \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Créer un tableau NumPy $A$ de taille $3\times3$ représentant la matrice de rotation d'angle $\theta = 45°$.
+  \item Calculer $\det(A)$, $A^{-1}$, et les valeurs propres et vecteurs propres de $A$.
+  \item Résoudre le système $Ax = b$ avec $b = (1, 0, 1)^T$.
+  \item Vérifier que $A^{-1}A = I$ et que la solution satisfait bien $Ax = b$.
+\end{enumerate}
+Matrice de rotation 3D autour de $z$ :
+\[
+A = \begin{pmatrix}\cos\theta & -\sin\theta & 0\\\sin\theta & \cos\theta & 0\\0 & 0 & 1\end{pmatrix}
+\]
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+import numpy as np
+
+theta = np.pi / 4  # 45 degres
+
+# 1. Matrice de rotation
+A = np.array([
+    [np.cos(theta), -np.sin(theta), 0],
+    [np.sin(theta),  np.cos(theta), 0],
+    [0,              0,             1]
+])
+print("Matrice A :")
+print(np.round(A, 6))
+
+# 2. Determinant, inverse, valeurs propres
+det_A = np.linalg.det(A)
+print(f"\ndet(A) = {det_A:.6f}")  # doit valoir 1
+
+A_inv = np.linalg.inv(A)
+print("\nA^(-1) :")
+print(np.round(A_inv, 6))
+
+vals_propres, vects_propres = np.linalg.eig(A)
+print(f"\nValeurs propres : {np.round(vals_propres, 4)}")
+# Pour une rotation, les VP sont 1 et exp(+-i*theta)
+
+# 3. Resolution du systeme
+b = np.array([1.0, 0.0, 1.0])
+x = np.linalg.solve(A, b)
+print(f"\nSolution x = {np.round(x, 6)}")
+
+# 4. Verification
+identite = np.round(A_inv @ A, 10)
+print("\nA^(-1) @ A =")
+print(identite)
+
+residuel = np.linalg.norm(A @ x - b)
+print(f"\nResidu ||Ax - b|| = {residuel:.2e}")
+\end{lstlisting}
+
+\textbf{Résultats attendus :} $\det(A) = 1$ (rotation préserve les volumes), valeurs propres $\{1, \e^{i\pi/4}, \e^{-i\pi/4}\}$, résidu $\approx 10^{-15}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 10 - Matplotlib : visualisation et histogramme \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Générer $N = 1000$ réalisations d'une variable aléatoire gaussienne $X \sim \mathcal{N}(\mu=5, \sigma=2)$ avec NumPy.
+  \item Tracer l'histogramme normalisé (densité de probabilité) et superposer la densité théorique $f(x) = \dfrac{1}{\sigma\sqrt{2\pi}}\e^{-(x-\mu)^2/(2\sigma^2)}$.
+  \item Calculer la moyenne et l'écart-type empiriques et les comparer aux valeurs théoriques.
+  \item Tracer une figure avec deux sous-graphiques : (a) l'histogramme, (b) la courbe de distribution cumulée empirique (ECDF).
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+# 1. Generation des donnees
+np.random.seed(42)
+mu, sigma = 5, 2
+N = 1000
+data = np.random.normal(mu, sigma, N)
+
+# 3. Statistiques empiriques
+print(f"Moyenne empirique : {data.mean():.3f}  (theorique : {mu})")
+print(f"Ecart-type empirique : {data.std():.3f}  (theorique : {sigma})")
+
+# 2. et 4. Graphiques
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+
+# Sous-graphique 1 : Histogramme
+ax1.hist(data, bins=40, density=True, alpha=0.6,
+         color='steelblue', label=f'Histogramme (N={N})')
+
+# Densite theorique
+x_theo = np.linspace(data.min(), data.max(), 200)
+ax1.plot(x_theo, norm.pdf(x_theo, mu, sigma),
+         'r-', linewidth=2,
+         label=rf'$\mathcal{{N}}(\mu={mu}, \sigma={sigma})$')
+ax1.set_xlabel('x'); ax1.set_ylabel('Densite')
+ax1.set_title('Histogramme normalise')
+ax1.legend()
+ax1.grid(alpha=0.3)
+
+# Sous-graphique 2 : ECDF
+data_sorted = np.sort(data)
+ecdf = np.arange(1, N+1) / N
+
+ax2.step(data_sorted, ecdf, color='steelblue', label='ECDF empirique')
+ax2.plot(x_theo, norm.cdf(x_theo, mu, sigma),
+         'r-', linewidth=2, label='CDF theorique')
+ax2.set_xlabel('x'); ax2.set_ylabel('P(X <= x)')
+ax2.set_title('Fonction de repartition')
+ax2.legend()
+ax2.grid(alpha=0.3)
+
+plt.tight_layout()
+plt.savefig("statistiques.pdf", bbox_inches='tight')
+plt.show()
+\end{lstlisting}
+
+\textbf{Interprétation :} L'histogramme normalisé (densité) converge vers la densité théorique en $1/\sqrt{N}$. L'ECDF (Empirical Cumulative Distribution Function) permet de visualiser la distribution sans choisir une largeur de bin.
+\end{boitecorrige}
+
+\section{Algorithmique et structures de données}
+
+\subsection*{Exercice 11 - Parité et année bissextile \niveau{\facile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Écrire un programme qui demande un entier $n$ à l'utilisateur et affiche s'il est pair ou impair.
+  \item Écrire un programme qui demande une année et indique si elle est bissextile. Rappel : une année est bissextile si elle est divisible par 4 mais pas par 100, sauf si elle est divisible par 400.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+# 1. Test de parite
+n = int(input("Entrez un entier n : "))
+if n % 2 == 0:
+    print(f"{n} est pair.")
+else:
+    print(f"{n} est impair.")
+
+# 2. Annee bissextile
+annee = int(input("Entrez une annee : "))
+if (annee % 4 == 0 and annee % 100 != 0) or (annee % 400 == 0):
+    print(f"{annee} est bissextile.")
+else:
+    print(f"{annee} n'est pas bissextile.")
+\end{lstlisting}
+
+\textbf{Tests :} 2024 (bissextile, divisible par 4 mais pas 100), 1900 (non bissextile, divisible par 100 mais pas 400), 2000 (bissextile, divisible par 400).
+\end{boitecorrige}
+
+\subsection*{Exercice 12 - PGCD, PPCM et décomposition binaire \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Écrire une fonction \texttt{pgcd(a, b)} utilisant l'algorithme d'Euclide, puis une fonction \texttt{ppcm(a, b)} qui en déduit le PPCM via la relation $a \times b = \mathrm{pgcd}(a,b) \times \mathrm{ppcm}(a,b)$.
+  \item Écrire une fonction \texttt{binaire(n)} qui retourne la représentation binaire (chaîne de caractères) d'un entier positif sans utiliser \texttt{bin()}.
+  \item Tester avec $a = 84$, $b = 60$ et $n = 77$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+def pgcd(a, b):
+    """Algorithme d'Euclide iteratif."""
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+def ppcm(a, b):
+    """PPCM via la relation a*b = pgcd(a,b) * ppcm(a,b)."""
+    if a == 0 or b == 0:
+        return 0
+    return abs(a * b) // pgcd(a, b)
+
+def binaire(n):
+    """Decomposition binaire d'un entier positif."""
+    if n == 0:
+        return "0"
+    bits = []
+    while n > 0:
+        bits.append(str(n % 2))
+        n //= 2
+    return "".join(reversed(bits))
+
+# Tests
+a, b = 84, 60
+print(f"pgcd({a}, {b}) = {pgcd(a, b)}")   # 12
+print(f"ppcm({a}, {b}) = {ppcm(a, b)}")   # 420
+
+n = 77
+print(f"binaire({n}) = {binaire(n)}")     # 1001101
+print(f"verification : bin({n}) = {bin(n)[2:]}")
+\end{lstlisting}
+
+\textbf{Résultats :} $\mathrm{pgcd}(84,60)=12$, $\mathrm{ppcm}(84,60)=420$, $77 = 64+8+4+1 = (1001101)_2$.
+\end{boitecorrige}
+
+\subsection*{Exercice 13 - Permutation et équation du premier degré \niveau{\facile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Écrire une fonction \texttt{permute(a, b)} qui échange les valeurs de deux variables sans utiliser de variable temporaire (astuce arithmétique ou \texttt{a, b = b, a}).
+  \item Écrire un programme qui résout l'équation $ax + b = 0$ (avec $a, b$ saisis par l'utilisateur) en traitant tous les cas : solution unique, infinité de solutions, aucune solution.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+# 1. Permutation sans variable temporaire
+def permute_arith(a, b):
+    """Permutation par somme/difference (entiers/reels)."""
+    a = a + b
+    b = a - b
+    a = a - b
+    return a, b
+
+def permute_python(a, b):
+    """Permutation pythonique (tuples)."""
+    return b, a
+
+x, y = 5, 12
+x, y = permute_python(x, y)
+print(f"Apres permutation : x = {x}, y = {y}")  # x=12, y=5
+
+# 2. Equation du premier degre a*x + b = 0
+a = float(input("Coeff a : "))
+b = float(input("Coeff b : "))
+
+if a == 0:
+    if b == 0:
+        print("Infinité de solutions (tout réel x convient).")
+    else:
+        print("Aucune solution (équation impossible).")
+else:
+    x = -b / a
+    print(f"Solution unique : x = {x:.6f}")
+\end{lstlisting}
+
+\rmq{La permutation arithmétique \texttt{a=a+b; b=a-b; a=a-b} ne fonctionne qu'avec des nombres et peut provoquer des dépassements de capacité dans certains langages ; l'échange par tuples \texttt{a, b = b, a} est la méthode idiomatique en Python.}
+\end{boitecorrige}
+
+\subsection*{Exercice 14 - Indice et valeur du maximum dans une liste \niveau{\facile}}
+
+\begin{boiteexercice}
+Écrire un programme qui :
+\begin{enumerate}
+  \item Demande à l'utilisateur $n$ nombres réels et les stocke dans une liste.
+  \item Détermine la valeur maximale et son indice (première occurrence).
+  \item Détermine également la valeur minimale et son indice.
+  \item Affiche la moyenne, la médiane et l'étendue.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+# Saisie de la liste
+n = int(input("Combien de valeurs ? "))
+valeurs = [float(input(f"valeur {i+1} : ")) for i in range(n)]
+
+# Recherche du maximum et de son indice
+val_max = valeurs[0]
+idx_max = 0
+for i, v in enumerate(valeurs):
+    if v > val_max:
+        val_max = v
+        idx_max = i
+
+# Recherche du minimum et de son indice
+val_min = valeurs[0]
+idx_min = 0
+for i, v in enumerate(valeurs):
+    if v < val_min:
+        val_min = v
+        idx_min = i
+
+# Statistiques
+moyenne = sum(valeurs) / n
+etendue = val_max - val_min
+valeurs_triees = sorted(valeurs)
+if n % 2 == 1:
+    mediane = valeurs_triees[n // 2]
+else:
+    mediane = (valeurs_triees[n//2 - 1] + valeurs_triees[n//2]) / 2
+
+print(f"Maximum : {val_max} a l'indice {idx_max}")
+print(f"Minimum : {val_min} a l'indice {idx_min}")
+print(f"Moyenne : {moyenne:.4f}")
+print(f"Mediane : {mediane}")
+print(f"Etendue : {etendue}")
+\end{lstlisting}
+
+\textbf{Note :} En Python, on peut aussi utiliser les fonctions natives \texttt{max()}, \texttt{min()}, \texttt{list.index()} et le module \texttt{statistics} (fonction \texttt{median()}). L'implémentation manuelle reste utile pour comprendre la logique algorithmique.
+\end{boitecorrige}
+
+\subsection*{Exercice 15 - Somme de série géométrique et intégrale numérique \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Calculer la somme partielle $S_n = \displaystyle\sum_{k=0}^{n} q^k$ pour $q = 0{,}5$ et $n = 20$, et la comparer à la limite $S_\infty = \dfrac{1}{1-q}$. Afficher l'erreur relative.
+  \item Calculer numériquement l'intégrale $I = \displaystyle\int_0^1 \e^{-x^2}\,\mathrm{d}x$ par la méthode des rectangles (à gauche) avec $N = 1000$ intervals. Comparer avec la valeur de référence $I \approx 0{,}746824$.
+  \item Refaire le calcul avec la méthode des trapèzes et comparer la précision.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+import math
+
+# 1. Somme de la serie geometrique
+q = 0.5
+n = 20
+S_n = sum(q**k for k in range(n + 1))
+S_inf = 1 / (1 - q)
+erreur_rel = abs(S_n - S_inf) / S_inf * 100
+print(f"S_{n}      = {S_n:.10f}")
+print(f"S_inf     = {S_inf:.10f}")
+print(f"Erreur rel. = {erreur_rel:.3e} %")
+
+# 2. Methode des rectangles (gauche)
+def f(x):
+    return math.exp(-x**2)
+
+N = 1000
+a, b = 0.0, 1.0
+h = (b - a) / N
+I_rect = sum(f(a + i * h) for i in range(N)) * h
+print(f"\nIntegrale (rectangles) : I = {I_rect:.6f}")
+
+# 3. Methode des trapezes
+I_trap = (f(a) + f(b)) / 2
+for i in range(1, N):
+    I_trap += f(a + i * h)
+I_trap *= h
+print(f"Integrale (trapezes)   : I = {I_trap:.6f}")
+
+I_ref = 0.746824
+print(f"Valeur de reference    : I = {I_ref:.6f}")
+print(f"Erreur rectangles : {abs(I_rect - I_ref):.2e}")
+print(f"Erreur trapezes   : {abs(I_trap - I_ref):.2e}")
+\end{lstlisting}
+
+\textbf{Résultats :} $S_{20} \approx 0{,}9999990463$ avec une erreur relative de $\sim 5 \times 10^{-6}$ \%. Pour l'intégrale, la méthode des rectangles donne $I \approx 0{,}746980$ (erreur $\sim 10^{-4}$) et la méthode des trapèzes $I \approx 0{,}746824$ (erreur $\sim 10^{-7}$, plus précise car la méthode des trapèzes est d'ordre 2).
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

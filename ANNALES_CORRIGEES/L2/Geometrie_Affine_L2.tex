@@ -1,0 +1,741 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Géométrie Affine et Analytique - Licence 2}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries GÉOMÉTRIE AFFINE ET ANALYTIQUE}\\[0.3cm]
+  {\normalsize Licence 2 - Mathématiques, Physique et Chimie}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Espaces euclidiens, produit scalaire, norme.}
+Dans $\mathbb{R}^n$ muni du produit scalaire usuel, pour $\vec{u} = (u_1, \ldots, u_n)$ et
+$\vec{v} = (v_1, \ldots, v_n)$ :
+\[
+  \vec{u} \cdot \vec{v} = \sum_{i=1}^n u_i v_i, \qquad
+  \|\vec{u}\| = \sqrt{\vec{u} \cdot \vec{u}}.
+\]
+L'angle $\theta$ entre $\vec{u}$ et $\vec{v}$ vérifie $\cos\theta = \dfrac{\vec{u}\cdot\vec{v}}{\|\vec{u}\|\,\|\vec{v}\|}$.
+
+\textbf{2. Produit vectoriel et produit mixte.}
+Dans $\mathbb{R}^3$ avec la base canonique $(\vec{i}, \vec{j}, \vec{k})$ :
+\[
+  \vec{u} \wedge \vec{v} =
+  \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ u_1 & u_2 & u_3 \\ v_1 & v_2 & v_3 \end{vmatrix},
+  \qquad
+  [\vec{u}, \vec{v}, \vec{w}] = \vec{u} \cdot (\vec{v} \wedge \vec{w}) =
+  \begin{vmatrix} u_1 & u_2 & u_3 \\ v_1 & v_2 & v_3 \\ w_1 & w_2 & w_3 \end{vmatrix}.
+\]
+L'aire du parallélogramme construit sur $\vec{u}$ et $\vec{v}$ vaut $\|\vec{u} \wedge \vec{v}\|$.
+Trois vecteurs sont coplanaires si et seulement si leur produit mixte est nul.
+Identité de Lagrange :
+$\vec{u} \wedge (\vec{v} \wedge \vec{w}) = (\vec{u}\cdot\vec{w})\,\vec{v} - (\vec{u}\cdot\vec{v})\,\vec{w}$.
+
+\textbf{3. Droites et plans dans $\mathbb{R}^3$.}
+\begin{itemize}[nosep]
+  \item \textit{Plan} de vecteur normal $\vec{n}=(a,b,c)$ passant par $A_0$ :
+    $\vec{n}\cdot\overrightarrow{A_0 M}=0$, soit $ax+by+cz=d$.
+  \item \textit{Droite} passant par $A$ de vecteur directeur $\vec{u}$ : forme paramétrique $M = A + t\vec{u}$,
+    $t\in\mathbb{R}$.
+  \item Forme cartésienne : intersection de deux plans non parallèles.
+\end{itemize}
+
+\textbf{4. Rotations vectorielles - formule de Rodrigues.}
+La rotation d'angle $\theta$ autour de l'axe unitaire $\vec{u}$ applique tout vecteur $\vec{v}$ sur :
+\[
+  r(\vec{v}) = (\cos\theta)\,\vec{v} + (1-\cos\theta)(\vec{v}\cdot\vec{u})\,\vec{u}
+               + (\sin\theta)\,\vec{u}\wedge\vec{v}.
+\]
+
+\textbf{5. Projections orthogonales.}
+La projection orthogonale de la droite $(D)$ sur le plan $(P)$ est l'intersection de $(P)$ avec le
+plan $(P')$ contenant $(D)$ et perpendiculaire à $(P)$. Pour construire $(P')$, on prend un repère
+formé par un point de $(D)$, son vecteur directeur $\vec{u}$ et le vecteur normal $\vec{n}$ à $(P)$.
+
+\textbf{6. Distances.}
+\begin{itemize}[nosep]
+  \item \textit{Distance d'un point $M$ à une droite} $(A,\vec{u})$ :
+    $d = \dfrac{\|\overrightarrow{AM}\wedge\vec{u}\|}{\|\vec{u}\|}$.
+  \item \textit{Distance d'un point $M$ à un plan} $ax+by+cz=d$ :
+    $d = \dfrac{|ax_M+by_M+cz_M-d|}{\sqrt{a^2+b^2+c^2}}$.
+  \item \textit{Distance de deux droites gauches} $(A,\vec{u})$ et $(B,\vec{v})$ :
+    $d = \dfrac{|\overrightarrow{AB}\cdot(\vec{u}\wedge\vec{v})|}{\|\vec{u}\wedge\vec{v}\|}$.
+\end{itemize}
+
+\textbf{7. Éléments remarquables d'un triangle.}
+\begin{itemize}[nosep]
+  \item Centre de gravité : $G = \tfrac{1}{3}(A+B+C)$.
+  \item Centre du cercle circonscrit $O$ : équidistant des trois sommets.
+  \item Orthocentre $H$ : relation d'Euler
+    $\overrightarrow{OH} = \overrightarrow{OA}+\overrightarrow{OB}+\overrightarrow{OC}$,
+    soit $H = O+3\overrightarrow{OG}$.
+  \item Centre du cercle inscrit : barycentre des sommets pondérés par les longueurs des côtés opposés.
+\end{itemize}
+
+\end{boiteresume}
+
+\newpage
+\section{Examen 2021-2022}
+
+\subsection*{Exercice 1 - Rotation vectorielle \niveau{\difficile}}
+
+\begin{boiteexercice}
+Déterminer la matrice dans la base canonique orthonormée directe de la rotation vectorielle de
+$\mathbb{R}^3$ autour de l'axe dirigé par $(1,2,2)$ qui transforme $\vec{j}$ en $\vec{k}$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Soit $r$ la rotation cherchée. Le vecteur $\vec{u} = \tfrac{1}{3}(1,2,2)$ est unitaire et constitue
+le vecteur directeur de l'axe. On note $\theta$ l'angle de la rotation. La formule de Rodrigues donne,
+pour tout vecteur $\vec{v}$ :
+\[
+  r(\vec{v}) = (\cos\theta)\,\vec{v} + (1-\cos\theta)(\vec{v}\cdot\vec{u})\,\vec{u}
+               + (\sin\theta)\,\vec{u}\wedge\vec{v}.
+\]
+
+\textbf{Détermination de $\theta$.}
+On utilise la relation $[\vec{v},r(\vec{v}),\vec{u}] = \sin\theta\,\|\vec{v}\wedge\vec{u}\|^2$.
+Avec $\vec{v}=\vec{j}$ et $r(\vec{j})=\vec{k}$ :
+\[
+  \sin\theta\,\|\vec{j}\wedge\vec{u}\|^2 = [\vec{j},\vec{k},\vec{u}] = [\vec{u},\vec{j},\vec{k}]
+  = \frac{1}{3}\begin{vmatrix}1&0&0\\2&1&0\\2&0&1\end{vmatrix} = \frac{1}{3}.
+\]
+Puisque $\vec{u}\wedge\vec{j} = \tfrac{1}{3}(1,2,2)\wedge(0,1,0) = \tfrac{1}{3}(-2,0,1)$,
+on obtient $\|\vec{j}\wedge\vec{u}\|^2 = \tfrac{5}{9}$, d'où
+\[
+  \sin\theta = \frac{1/3}{5/9} = \frac{3}{5}.
+\]
+
+En analysant la composante en $\vec{i}$ de l'égalité $r(\vec{j})=\vec{k}$ (formule de Rodrigues
+avec $\vec{v}=\vec{j}$, $\vec{v}\cdot\vec{u}=\tfrac{2}{3}$) :
+\[
+  \frac{2}{9}(1-\cos\theta) - \frac{2}{5} = 0 \implies \cos\theta = -\frac{4}{5}.
+\]
+
+\textbf{Expression matricielle.}
+Pour $\vec{v}=(x,y,z)$, on calcule $\vec{v}\cdot\vec{u} = \tfrac{x+2y+2z}{3}$ et
+$\vec{u}\wedge\vec{v} = \tfrac{1}{3}(2z-2y,\, 2x-z,\, -2x+y)$.
+La formule de Rodrigues donne :
+\[
+  r(\vec{v}) = -\frac{4}{5}(x,y,z) + \frac{1}{5}(x+2y+2z)(1,2,2)
+               + \frac{1}{5}(2z-2y,\, 2x-z,\, -2x+y).
+\]
+En développant composante par composante :
+\[
+  r(x,y,z) = \frac{1}{5}\bigl(-3x+4z,\; 4x+3z,\; 5y\bigr).
+\]
+La matrice de la rotation dans la base canonique est donc :
+\[
+  \boxed{M_r = \begin{pmatrix} -3/5 & 0 & 4/5 \\ 4/5 & 0 & 3/5 \\ 0 & 1 & 0 \end{pmatrix}.}
+\]
+\textit{Vérification} : $\det M_r = 1$ et $M_r\vec{j} = (0,0,1) = \vec{k}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 2 - Projection orthogonale \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soient $(D)$ la droite d'équations cartésiennes
+\[
+  \begin{cases} x+y-3z = 1 \\ x-2y-z = 0 \end{cases}
+\]
+et $(P)$ le plan d'équation $x+3y+2z=6$. Déterminer la projetée orthogonale de $(D)$ sur $(P)$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Notons $p$ la projection orthogonale sur $(P)$.
+
+\textbf{Repère de $(D)$.}
+En résolvant le système définissant $(D)$ (on pose $z=t$) :
+\[
+  x+y = 1+3t, \quad x-2y = t \implies y = \frac{2+2t}{3}, \quad x = 1+t - y = \frac{1+t}{3}+\frac{2t}{3}.
+\]
+On peut prendre directement $z=0$ : $\{x+y=1, x-2y=0\} \Rightarrow y=-\tfrac{1}{3}\cdot(-3)$... On
+effectue le calcul plus directement en soustrayant les équations :
+\[
+  3y - 2z = 1 \implies y = \frac{1+2z}{3}, \quad x = 2y+z = \frac{2+4z+3z}{3} = \frac{2+7z}{3}.
+\]
+Pour $z=0$ on obtient $A\bigl(\tfrac{2}{3}, \tfrac{1}{3}, 0\bigr)$... En fait, pour obtenir des
+coordonnées entières, choisissons $z=1$ :
+\[
+  y = 1, \quad x = 3 \implies A(3,1,1).
+\]
+Le vecteur directeur s'obtient en retirant $z=0$ à $z=1$ : $\vec{u} = (3-0, 1-(-1), 1-2) = (3,2,-1)$.
+
+\textit{Vérification de $A(3,1,1)$} : $3+1-3=1$, $3-2-1=0$.
+\textit{Vérification de $\vec{u}=(3,2,-1)$} : $3+2+3=8\neq0$... Reprenons. La différence de deux
+points de $(D)$ est vecteur directeur. En prenant $z=0$ et $z=1$ :
+\begin{align*}
+  z=0 &: x+y=1,\; x-2y=0 \implies y=1/3, x=2/3 \implies P_1(2/3,\,1/3,\,0).\\
+  z=1 &: x+y=4,\; x-2y=1 \implies 3y=3, y=1, x=3 \implies P_2(3,1,1).
+\end{align*}
+Vecteur directeur $\vec{u} = P_2 - P_1 = (3-2/3,\,1-1/3,\,1) = (7/3,\,2/3,\,1)$, ou proportionnellement
+$\vec{u}(7,2,3)$.
+
+\textit{Vérification} : $7+2-9=0$, $7-4-3=0$.
+
+On repart avec $A = P_1 = (2/3, 1/3, 0)$ - ou plus simplement, pour la démonstration, on utilisera
+le point $A(3,1,1)$ (en vérifiant qu'il appartient à $(D)$) et le vecteur directeur $\vec{u}(7,2,3)$.
+
+\textbf{Construction de la projetée.}
+Le vecteur normal à $(P)$ est $\vec{n}(1,3,2)$. Comme $\vec{u}$ et $\vec{n}$ ne sont pas colinéaires,
+$p(D)$ est une droite. Elle est l'intersection de $(P)$ avec le plan $(P')$ contenant $(D)$ et
+perpendiculaire à $(P)$.
+
+Le plan $(P')$ passe par $A(3,1,1)$ et est engendré par $\vec{u}$ et $\vec{n}$. Son équation :
+\[
+  M(x,y,z)\in (P') \iff
+  \begin{vmatrix} x-3 & 7 & 1 \\ y-1 & 2 & 3 \\ z-1 & 3 & 2 \end{vmatrix} = 0.
+\]
+En développant par rapport à la première ligne :
+\begin{align*}
+  &(x-3)(2\cdot2-3\cdot3) - (y-1)(7\cdot2-1\cdot3) + (z-1)(7\cdot3-1\cdot2) = 0\\
+  &-5(x-3) - 11(y-1) + 19(z-1) = 0\\
+  &-5x - 11y + 19z = -15 - 11 + 19 - 15 = -22.
+\end{align*}
+D'où $(P')$ : $5x + 11y - 19z = 22$.
+
+La projetée orthogonale de $(D)$ sur $(P)$ est la droite :
+\[
+  \boxed{\begin{cases} x + 3y + 2z = 6 \\ 5x + 11y - 19z = 22 \end{cases}.}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 3 - Géométrie du triangle \niveau{\difficile}}
+
+\begin{boiteexercice}
+Dans $\mathbb{R}^3$ euclidien rapporté à un repère orthonormé, on donne $A(2,-2,0)$, $B(4,2,6)$ et
+$C(-1,-3,0)$. Déterminer :
+\begin{enumerate}
+  \item le centre de gravité $G$ ;
+  \item le centre du cercle circonscrit $O$ ;
+  \item l'orthocentre $H$ ;
+  \item le centre du cercle inscrit $I$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Centre de gravité.}
+\[
+  G = \frac{1}{3}(A+B+C) = \frac{1}{3}(2+4-1,\,-2+2-3,\,0+6+0) = \left(\frac{5}{3},\,-1,\,2\right).
+\]
+
+\textbf{2. Centre du cercle circonscrit $O(a,b,c)$.}
+
+Le point $O$ appartient au plan $(ABC)$. L'équation de ce plan :
+\[
+  \begin{vmatrix} x-2 & 2 & -3 \\ y+2 & 4 & -1 \\ z & 6 & 0 \end{vmatrix} = 0
+  \implies 6(x-2) - 18(y+2) + 10z = 0
+  \implies 3x - 9y + 5z = 24.
+\]
+Les conditions $OA = OB$ et $OA = OC$ donnent :
+\begin{align*}
+  OA^2 = OB^2 &\implies 4a + 8b + 12c = 48 \implies a + 2b + 3c = 16,\\
+  OA^2 = OC^2 &\implies -6a - 2b = 2 \implies 3a + b = -1.
+\end{align*}
+On résout le système $\{3a-9b+5c=24,\; a+2b+3c=16,\; 3a+b=-1\}$.
+De la troisième équation $b = -1-3a$. Substitution :
+\[
+  a+2(-1-3a)+3c = 16 \implies -5a+3c = 18, \qquad 6a+c = 3.
+\]
+D'où $c = 3-6a$, puis $-5a+9-18a=18 \implies -23a=9 \implies a = -\tfrac{9}{23}$.
+Ensuite $b = -1+\tfrac{27}{23} = \tfrac{4}{23}$ et $c = 3+\tfrac{54}{23} = \tfrac{123}{23}$.
+\[
+  O\!\left(-\frac{9}{23},\,\frac{4}{23},\,\frac{123}{23}\right).
+\]
+
+\textbf{3. Orthocentre $H$.}
+D'après la relation d'Euler $\overrightarrow{OH} = 3\overrightarrow{OG}$, on a $H = O + 3(G-O)$ :
+\[
+  H = \left(-\frac{9}{23},\frac{4}{23},\frac{123}{23}\right)
+      + 3\!\left(\frac{5}{3}+\frac{9}{23},\,-1-\frac{4}{23},\,2-\frac{123}{23}\right).
+\]
+On calcule chaque composante :
+\[
+  H_x = -\tfrac{9}{23}+3\!\left(\tfrac{115+27}{69}\right)
+       = -\tfrac{9}{23}+\tfrac{3\times 142}{69}
+       = -\tfrac{27}{69}+\tfrac{426}{69} = \tfrac{399}{69} = \tfrac{-151}{23}?
+\]
+Reprenons proprement : $G - O = \bigl(\tfrac{5}{3}+\tfrac{9}{23},\,-1-\tfrac{4}{23},\,2-\tfrac{123}{23}\bigr)
+= \bigl(\tfrac{115+27}{69},\,\tfrac{-23-4}{23},\,\tfrac{46-123}{23}\bigr)
+= \bigl(\tfrac{142}{69},\,-\tfrac{27}{23},\,-\tfrac{77}{23}\bigr)$.
+
+$3(G-O) = \bigl(\tfrac{142}{23},\,-\tfrac{81}{23},\,-\tfrac{231}{23}\bigr)$.
+
+\[
+  H = \left(-\frac{9}{23}+\frac{142}{23},\;\frac{4}{23}-\frac{81}{23},\;\frac{123}{23}-\frac{231}{23}\right)
+    = \left(\frac{133}{23},\,-\frac{77}{23},\,-\frac{108}{23}\right).
+\]
+
+\textit{Remarque} : on peut vérifier que $H$ appartient au plan $(ABC)$ et que
+$\overrightarrow{AH}\cdot\overrightarrow{BC}=0$.
+
+\textbf{4. Centre du cercle inscrit $I$.}
+On calcule les longueurs des côtés :
+\begin{align*}
+  a = BC &= \sqrt{(-5)^2+(-5)^2+(-6)^2} = \sqrt{86}\\
+  b = CA &= \sqrt{3^2+1^2+0^2} = \sqrt{10}\\
+  c = AB &= \sqrt{2^2+4^2+6^2} = \sqrt{56}
+\end{align*}
+Le centre inscrit est le barycentre $I = \dfrac{a\,A + b\,B + c\,C}{a+b+c}$ :
+\[
+  I = \frac{\sqrt{86}\,A + \sqrt{10}\,B + \sqrt{56}\,C}{\sqrt{86}+\sqrt{10}+\sqrt{56}}.
+\]
+En coordonnées (en notant $\Sigma = \sqrt{86}+\sqrt{10}+\sqrt{56}$) :
+\begin{align*}
+  I_x &= \frac{2\sqrt{86}+4\sqrt{10}-\sqrt{56}}{\Sigma}, \\
+  I_y &= \frac{-2\sqrt{86}+2\sqrt{10}-3\sqrt{56}}{\Sigma}, \\
+  I_z &= \frac{6\sqrt{10}}{\Sigma}.
+\end{align*}
+\end{boitecorrige}
+
+\subsection*{Exercice 4 - Distance et cylindre de révolution \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $M(x,y,z)$ un point de $\mathbb{R}^3$ rapporté à un repère orthonormé. Déterminer la distance de
+$M$ à la droite
+\[
+  (D) : \begin{cases} x+y+z+1=0 \\ 2x+y+5z=2 \end{cases}.
+\]
+En déduire une équation du cylindre de révolution d'axe $(D)$ et de rayon $3$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{Repère de $(D)$.}
+On résout le système en paramétrant par $z$ :
+\[
+  \begin{cases} x+y = -1-z \\ 2x+y = 2-5z \end{cases}
+  \implies x = 3-4z, \quad y = -4+3z.
+\]
+Un repère de $(D)$ est $(A, \vec{u})$ avec $A(3,-4,0)$ et $\vec{u}(-4,3,1)$.
+
+\textbf{Calcul de la distance.}
+Pour un point $M(x,y,z)$, on pose $\overrightarrow{AM} = (x-3,\, y+4,\, z)$.
+\begin{align*}
+  \overrightarrow{AM}\wedge\vec{u} &=
+  \begin{vmatrix}\vec{i}&\vec{j}&\vec{k}\\x-3&y+4&z\\-4&3&1\end{vmatrix}\\
+  &= \bigl(y+4-3z,\;-4z-(x-3),\;3(x-3)+4(y+4)\bigr)\\
+  &= \bigl(y-3z+4,\;-(x+4z-3),\;3x+4y+7\bigr)
+\end{align*}
+Avec $\|\vec{u}\|^2 = 16+9+1 = 26$, la distance de $M$ à $(D)$ vaut :
+\[
+  \boxed{d\bigl(M,(D)\bigr) = \frac{\sqrt{(y-3z+4)^2+(x+4z-3)^2+(3x+4y+7)^2}}{\sqrt{26}}.}
+\]
+
+\textbf{Équation du cylindre.}
+Un point $M(x,y,z)$ appartient au cylindre $\mathcal{C}$ si et seulement si $d(M,(D))=3$, soit :
+\[
+  (y-3z+4)^2 + (x+4z-3)^2 + (3x+4y+7)^2 = 9\times 26 = 234.
+\]
+\end{boitecorrige}
+
+\newpage
+\section{Examen - Géométrie Analytique 2021-2022}
+
+\subsection*{Exercice I - Produit vectoriel et aires \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soient $\vec{u} = \vec{a}+3\vec{b}$ et $\vec{v} = 3\vec{a}+\vec{b}$, avec $\|\vec{a}\|=a>0$,
+$\|\vec{b}\|=b>0$ et $\theta$ l'angle entre $\vec{a}$ et $\vec{b}$.
+\begin{enumerate}
+  \item Déterminer l'ensemble $S$ des valeurs de $\theta$ pour que $\vec{u}$ et $\vec{v}$ ne soient
+    pas colinéaires.
+  \item Pour $\theta\in S$, calculer en fonction de $a$, $b$ et $\theta$ l'aire du triangle dont les
+    côtés sont portés par $\vec{a}$ et $\vec{b}$.
+  \item Pour $\theta\in S$, calculer en fonction de $a$, $b$ et $\theta$ l'aire du parallélogramme
+    construit sur $\vec{u}$ et $\vec{v}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $\vec{u}$ et $\vec{v}$ sont colinéaires si et seulement si $\vec{u}\wedge\vec{v} = \vec{0}$.
+\begin{align*}
+  \vec{u}\wedge\vec{v}
+  &= (\vec{a}+3\vec{b})\wedge(3\vec{a}+\vec{b})
+   = 3\vec{a}\wedge\vec{a} + \vec{a}\wedge\vec{b} + 9\vec{b}\wedge\vec{a} + 3\vec{b}\wedge\vec{b}\\
+  &= \vec{a}\wedge\vec{b} - 9\vec{a}\wedge\vec{b} = -8\,\vec{a}\wedge\vec{b}.
+\end{align*}
+Comme $a>0$ et $b>0$, $\vec{u}\wedge\vec{v}=\vec{0}$ si et seulement si $\sin\theta = 0$, soit
+$\theta = k\pi$, $k\in\mathbb{Z}$.
+\[
+  \boxed{S = \{\theta\in\mathbb{R} \mid \theta\neq k\pi,\; k\in\mathbb{Z}\}.}
+\]
+
+\textbf{2.} L'aire du triangle de côtés $\vec{a}$ et $\vec{b}$ est la moitié de l'aire du
+parallélogramme correspondant :
+\[
+  \boxed{\mathcal{A}_{\triangle} = \tfrac{1}{2}\|\vec{a}\wedge\vec{b}\| = \tfrac{1}{2}ab\sin\theta.}
+\]
+(Pour $\theta\in S$, $\sin\theta\neq 0$, donc l'aire est bien non nulle.)
+
+\textbf{3.} D'après le calcul au point 1, $\vec{u}\wedge\vec{v} = -8\,\vec{a}\wedge\vec{b}$.
+L'aire du parallélogramme construit sur $\vec{u}$ et $\vec{v}$ est donc :
+\[
+  \boxed{\mathcal{A}_{\text{//}} = \|\vec{u}\wedge\vec{v}\| = 8\|\vec{a}\wedge\vec{b}\|
+         = 8ab\sin\theta.}
+\]
+On vérifie que $\mathcal{A}_{\text{//}} = 16\,\mathcal{A}_\triangle$, ce qui est cohérent avec
+le fait que les vecteurs $\vec{u}$ et $\vec{v}$ «embrassent» un domaine 16 fois plus grand.
+\end{boitecorrige}
+
+\subsection*{Exercice II - Produit mixte, coplanarité et cosinus directeurs \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Soient $\vec{u}$, $\vec{v}$ et $\vec{w}$ trois vecteurs de $\mathbb{R}^3$. Montrer que :
+    \[
+      \vec{u}\wedge(\vec{v}\wedge\vec{w}) = (\vec{u}\cdot\vec{w})\,\vec{v} - (\vec{u}\cdot\vec{v})\,\vec{w}.
+    \]
+  \item Montrer que les vecteurs $\vec{u}(1,4,-7)$, $\vec{v}(2,-1,4)$ et $\vec{w}(0,-9,18)$ sont
+    coplanaires.
+  \item Donner une paramétrisation de la droite $(D)$ d'équation $4x-3y+1=0$ dans le plan.
+  \item Un vecteur $\vec{u}$ fait un angle $\pi/3$ avec l'axe des abscisses et $2\pi/3$ avec l'axe
+    des ordonnées. Déterminer ses coordonnées sachant que $\|\vec{u}\|=3$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Identité de Lagrange.}
+Notons $\vec{a}=(a_1,a_2,a_3)$, $\vec{b}=(b_1,b_2,b_3)$, $\vec{c}=(c_1,c_2,c_3)$.
+On calcule $\vec{b}\wedge\vec{c} = (b_2c_3-b_3c_2,\; b_3c_1-b_1c_3,\; b_1c_2-b_2c_1)$, puis la
+composante en $\vec{i}$ de $\vec{a}\wedge(\vec{b}\wedge\vec{c})$ :
+\[
+  a_2(b_1c_2-b_2c_1) - a_3(b_3c_1-b_1c_3) = b_1(a_2c_2+a_3c_3) - c_1(a_2b_2+a_3b_3).
+\]
+En ajoutant et soustrayant $a_1b_1c_1$ :
+\[
+  = b_1(a_1c_1+a_2c_2+a_3c_3) - c_1(a_1b_1+a_2b_2+a_3b_3)
+  = (\vec{a}\cdot\vec{c})\,b_1 - (\vec{a}\cdot\vec{b})\,c_1.
+\]
+Le même calcul s'applique aux deux autres composantes. Cela démontre l'identité.
+
+\textbf{2.} Trois vecteurs sont coplanaires si et seulement si leur produit mixte est nul :
+\[
+  [\vec{u},\vec{v},\vec{w}] =
+  \begin{vmatrix} 1 & 4 & -7 \\ 2 & -1 & 4 \\ 0 & -9 & 18 \end{vmatrix}
+  = 1\cdot((-1)(18)-4(-9)) - 4\cdot(2\cdot18-4\cdot0) + (-7)\cdot(2(-9)-(-1)(0))
+\]
+\[
+  = 1(-18+36) - 4(36) + (-7)(-18) = 18 - 144 + 126 = 0.
+\]
+Les trois vecteurs sont bien coplanaires.
+
+\textbf{3.} La droite $4x-3y+1=0$ peut être paramétrée en posant $x=t$ :
+\[
+  y = \frac{4t+1}{3}, \qquad \text{soit} \quad
+  \begin{cases} x = t \\ y = \dfrac{4t+1}{3} \end{cases}, \quad t\in\mathbb{R}.
+\]
+Le point de base est $(0, 1/3)$ et le vecteur directeur est $(1, 4/3)$, ou proportionnellement
+$(3, 4)$.
+
+\textbf{4.} Les cosinus directeurs d'un vecteur $\vec{u}$ sont définis par
+$\cos\alpha = u_x/\|\vec{u}\|$, $\cos\beta = u_y/\|\vec{u}\|$, $\cos\gamma = u_z/\|\vec{u}\|$.
+Ici, $\alpha = \pi/3$, $\beta = 2\pi/3$ et $\|\vec{u}\|=3$.
+\[
+  u_x = 3\cos\frac{\pi}{3} = \frac{3}{2}, \qquad
+  u_y = 3\cos\frac{2\pi}{3} = -\frac{3}{2}.
+\]
+La relation de normalisation $\cos^2\alpha + \cos^2\beta + \cos^2\gamma = 1$ donne :
+\[
+  \frac{1}{4} + \frac{1}{4} + \cos^2\gamma = 1 \implies \cos^2\gamma = \frac{1}{2}
+  \implies u_z = \pm\frac{3}{\sqrt{2}} = \pm\frac{3\sqrt{2}}{2}.
+\]
+\[
+  \boxed{\vec{u} = \left(\frac{3}{2},\,-\frac{3}{2},\,\pm\frac{3\sqrt{2}}{2}\right).}
+\]
+\end{boitecorrige}
+
+\newpage
+\section{Exercices complémentaires}
+
+\subsection*{Exercice III - Droites sécantes à quatre droites \niveau{\difficile}}
+
+\begin{boiteexercice}
+Trouver toutes les droites sécantes aux quatre droites :
+$(D_1) : x-1=y=0$, \quad $(D_2) : y-1=z=0$, \quad $(D_3) : z-1=x=0$, \quad $(D_4) : x=y=-6z$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Notons $(\Delta)$ une droite solution.
+
+\textbf{Sécante à $(D_1)$ et $(D_2)$.}
+$(D_1)$ est l'axe $\{x=1, y=0\}$ et $(D_2)$ est $\{y=1, z=0\}$. Si $(\Delta)$ coupe $(D_1)$ en
+$(1,0,a)$ et $(D_2)$ en $(b,1,0)$, son vecteur directeur est $(b-1,1,-a)$ et un système
+d'équations cartésiennes est :
+\[
+  \begin{cases} x-(b-1)y = 1 \\ ay + z = a \end{cases}.
+\]
+
+\textbf{Sécante à $(D_3)$ aussi.}
+$(D_3)$ est $\{z=1, x=0\}$. En cherchant un point commun à $(\Delta)$ et $(D_3)$ :
+$x=0 \Rightarrow (b-1)y=-1$ et $ay+1=a$. La deuxième donne $y=1-1/a$ (pour $a\neq 0$) et
+la première donne $b\neq 1$ et $b = 1 - 1/y = 1-(a/(a-1))$. En simplifiant, on obtient
+$b\notin\{0,1\}$ et $a = 1-1/b$, soit $ab = b-1$.
+
+\textbf{Sécante à $(D_4)$ aussi.}
+$(D_4) : x=y=-6z$. On cherche un point sur $(\Delta)$ vérifiant $x=y=-6z$, c'est-à-dire un $t$
+tel que $1+(b-1)t = t = -6(a-at)$... On substitue dans le système des conditions et on trouve que
+$b$ doit satisfaire $6b^2 - 13b + 6 = 0$, d'où $b = 2/3$ ou $b = 3/2$.
+
+Pour $b = 2/3$ : $a = 1-3/2 = -1/2$. La droite $(\Delta_1)$ a pour équations :
+\[
+  (\Delta_1) : \begin{cases} 3x+y = 3 \\ y-2z = 1 \end{cases}.
+\]
+
+Pour $b = 3/2$ : $a = 1-2/3 = 1/3$. La droite $(\Delta_2)$ a pour équations :
+\[
+  (\Delta_2) : \begin{cases} 2x-y = 2 \\ y+3z = 1 \end{cases}.
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice IV - Angle de deux plans \niveau{\facile}}
+
+\begin{boiteexercice}
+Calculer l'angle entre les plans $(P) : x+2y+2z=3$ et $(P') : x+y=0$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Les vecteurs normaux sont $\vec{n}(1,2,2)$ et $\vec{n}'(1,1,0)$. L'angle $\phi$ entre les deux plans
+est l'angle aigu entre leurs normales :
+\[
+  \cos\phi = \frac{|\vec{n}\cdot\vec{n}'|}{\|\vec{n}\|\,\|\vec{n}'\|}
+           = \frac{|1+2+0|}{\sqrt{1+4+4}\cdot\sqrt{1+1+0}}
+           = \frac{3}{3\sqrt{2}} = \frac{1}{\sqrt{2}}.
+\]
+\[
+  \boxed{\phi = \frac{\pi}{4}.}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice V - Cercles en géométrie plane \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soient $A(0,0)$, $B(2,1)$, $C(2,3)$ dans le plan.
+\begin{enumerate}
+  \item Déterminer une équation du cercle de diamètre $[AB]$.
+  \item Déterminer une équation du cercle circonscrit au triangle $ABC$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Un point $M(x,y)$ est sur le cercle de diamètre $[AB]$ si et seulement si
+$\overrightarrow{AM}\cdot\overrightarrow{BM} = 0$ (angle inscrit dans un demi-cercle) :
+\[
+  x(x-2) + y(y-1) = 0 \implies \boxed{x^2 + y^2 - 2x - y = 0.}
+\]
+
+\textbf{2.} L'équation générale d'un cercle est $x^2+y^2-2ax-2by+c=0$.
+En passant par $A(0,0)$ : $c=0$.
+En passant par $B(2,1)$ : $4+1-4a-2b=0 \Rightarrow 4a+2b=5$.
+En passant par $C(2,3)$ : $4+9-4a-6b=0 \Rightarrow 4a+6b=13$.
+On résout : $4b=8 \Rightarrow b=2$ et $a=1/4$.
+\[
+  \boxed{x^2+y^2-\tfrac{1}{2}x-4y = 0.}
+\]
+Son centre est $(1/4, 2)$ et son rayon $R = \sqrt{(1/4)^2+4} = \sqrt{65}/4$.
+\end{boitecorrige}
+
+\subsection*{Exercice VI - Équations d'une droite, forme polaire \niveau{\facile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Donner une équation cartésienne de la droite $\bigl\{x=3+2t,\; y=1-t\bigr\}$.
+  \item Donner une représentation paramétrique de la droite $2x-3y=4$.
+  \item Donner une équation polaire de cette droite.
+  \item Quel est l'angle entre l'axe des abscisses et la droite d'équation polaire
+    $r = \dfrac{2}{\sqrt{3}\cos\theta+\sin\theta}$ ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On tire $t = 1-y$ de la deuxième équation et on substitue dans la première :
+$x = 3+2(1-y) = 5-2y$. L'équation cartésienne est :
+\[
+  \boxed{x+2y = 5.}
+\]
+
+\textbf{2.} On paramètre par $y=t$, ce qui donne $x = (3t+4)/2$.
+\[
+  \boxed{\begin{cases} x = \dfrac{3t+4}{2} \\[4pt] y = t \end{cases}, \quad t\in\mathbb{R}.}
+\]
+
+\textbf{3.} En substituant $x = r\cos\theta$ et $y = r\sin\theta$ dans $2x-3y=4$ :
+\[
+  r(2\cos\theta - 3\sin\theta) = 4 \implies \boxed{r = \frac{4}{2\cos\theta-3\sin\theta}.}
+\]
+
+\textbf{4.} L'équation polaire $r(\sqrt{3}\cos\theta+\sin\theta)=2$ correspond en cartésien à
+$\sqrt{3}x+y=2$. Le vecteur directeur de cette droite est $\vec{u}=(1,-\sqrt{3})$
+(perpendiculaire à $(\sqrt{3},1)$).
+\[
+  \cos(\vec{u},\vec{e}_1) = \frac{\vec{u}\cdot\vec{e}_1}{\|\vec{u}\|} = \frac{1}{2}.
+\]
+L'angle est donc $\arccos(1/2) = \pi/3$ (modulo $\pi$).
+\end{boitecorrige}
+
+\subsection*{Exercice VII - Orthocentre et cercle circonscrit \niveau{\difficile}}
+
+\begin{boiteexercice}
+Montrer que, dans tout triangle $ABC$, les symétriques de l'orthocentre $H$ par rapport aux côtés
+appartiennent au cercle circonscrit au triangle.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Notons $K$ le symétrique de $H$ par rapport au côté $(BC)$. Il suffit de montrer que $A$, $B$, $C$
+et $K$ sont cocycliques, c'est-à-dire que :
+\[
+  (\overrightarrow{AB},\overrightarrow{AC}) \equiv (\overrightarrow{KB},\overrightarrow{KC}) \pmod{\pi}.
+\]
+
+Soit $B'$ le pied de la hauteur issue de $B$ et $C'$ celui issue de $C$. Les points $B'$ et $C'$
+sont sur le cercle de diamètre $[AH]$. Par le théorème de l'angle inscrit :
+\[
+  (\overrightarrow{AC'},\overrightarrow{AB'}) \equiv (\overrightarrow{HC'},\overrightarrow{HB'}) \pmod{\pi}.
+\]
+Puisque $B'$ est sur $AC$ et $C'$ est sur $AB$, on a :
+\[
+  (\overrightarrow{AB},\overrightarrow{AC}) \equiv (\overrightarrow{AC'},\overrightarrow{AB'})
+  \equiv (\overrightarrow{HC'},\overrightarrow{HB'}) \equiv (\overrightarrow{HC},\overrightarrow{HB}) \pmod{\pi}.
+\]
+Par ailleurs, $K$ est le symétrique de $H$ par rapport à $(BC)$, donc la droite $(BC)$ est la
+médiatrice de $[HK]$. On en déduit que $(\overrightarrow{HC},\overrightarrow{HB})$ et
+$(\overrightarrow{KC},\overrightarrow{KB})$ sont égaux modulo $\pi$ (la symétrie par rapport à
+$(BC)$ conserve les angles). Donc :
+\[
+  (\overrightarrow{AB},\overrightarrow{AC}) \equiv (\overrightarrow{KB},\overrightarrow{KC}) \pmod{\pi},
+\]
+ce qui prouve que $A$, $B$, $C$, $K$ sont cocycliques.
+\end{boitecorrige}
+
+\subsection*{Exercice VIII - Intersection droite-plan et plans orthogonaux \niveau{\moyen}}
+
+\begin{boiteexercice}
+Dans $\mathbb{R}^3$ muni du repère orthonormé $(O;\vec{i},\vec{j},\vec{k})$, on considère la droite
+\[
+(D) : \begin{cases} x = 1 + t \\ y = 2 - t \\ z = 3 + 2t \end{cases},\quad t\in\mathbb{R},
+\]
+et le plan $(P)$ d'équation $2x - y + z - 4 = 0$.
+\begin{enumerate}
+  \item Donner un vecteur directeur $\vec{u}$ de $(D)$ et un vecteur normal $\vec{n}$ de $(P)$.
+  \item $(D)$ et $(P)$ sont-ils sécants ? Si oui, déterminer leur point d'intersection $I$.
+  \item Donner une équation du plan $(Q)$ passant par $I$ et orthogonal à $(D)$.
+  \item Calculer la distance du point $A(2, 0, -1)$ au plan $(P)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $\vec{u} = (1, -1, 2)$ est un vecteur directeur de $(D)$ et $\vec{n} = (2, -1, 1)$ est un vecteur normal à $(P)$.
+
+\textbf{2.} On substitue les équations de $(D)$ dans l'équation de $(P)$ :
+\[
+2(1+t) - (2-t) + (3+2t) - 4 = 2+2t-2+t+3+2t-4 = 5t - 1 = 0 \;\Rightarrow\; t = \tfrac{1}{5}.
+\]
+Le point d'intersection est donc :
+\[
+I = \left(1+\tfrac{1}{5},\; 2-\tfrac{1}{5},\; 3+\tfrac{2}{5}\right) = \left(\tfrac{6}{5}, \tfrac{9}{5}, \tfrac{17}{5}\right).
+\]
+
+\textbf{3.} Le plan $(Q)$ orthogonal à $(D)$ admet $\vec{u} = (1, -1, 2)$ comme vecteur normal. Son équation est
+\[
+1\cdot\!\left(x-\tfrac{6}{5}\right) - 1\cdot\!\left(y-\tfrac{9}{5}\right) + 2\cdot\!\left(z-\tfrac{17}{5}\right) = 0,
+\]
+soit $x - y + 2z - \dfrac{41}{5} = 0$, ou encore $5x - 5y + 10z = 41$.
+
+\textbf{4.} La distance de $A(2,0,-1)$ à $(P)$ s'obtient par la formule
+\[
+d(A, P) = \frac{|2(2) - 0 + 1(-1) - 4|}{\sqrt{2^2+(-1)^2+1^2}} = \frac{|4 - 1 - 4|}{\sqrt{6}} = \frac{1}{\sqrt{6}} = \frac{\sqrt{6}}{6}.
+\]
+
+\reponse{$I = (6/5, 9/5, 17/5)$, $(Q) : 5x - 5y + 10z = 41$, $d(A,P) = \sqrt{6}/6$.}
+\end{boitecorrige}
+
+\subsection*{Exercice IX - Lieu géométrique : centres de cercles \niveau{\difficile}}
+
+\begin{boiteexercice}
+Dans le plan muni d'un repère orthonormé, on fixe le point $A(1,0)$. On cherche l'ensemble $(\mathcal{E})$ des centres $M(x,y)$ des cercles passant par $A$ et tangents à deux droites perpendiculaires se coupant en l'origine $O$, à savoir les axes $(Ox)$ et $(Oy)$.
+\begin{enumerate}
+  \item Montrer qu'un cercle de centre $M(x,y)$ et de rayon $R$ passe par $A$ si et seulement si $R^2 = (x-1)^2 + y^2$.
+  \item Montrer que ce cercle est tangent aux deux axes si et seulement si $R = |x| = |y|$.
+  \item En déduire que $(x,y)\in(\mathcal{E})$ vérifie $(x-1)^2 + y^2 = x^2$ avec $|x| = |y|$.
+  \item Déterminer et représenter $(\mathcal{E})$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Le cercle de centre $M(x,y)$ et de rayon $R$ passe par $A(1,0)$ ssi $MA = R$, soit $R^2 = (1-x)^2 + (0-y)^2 = (x-1)^2 + y^2$.
+
+\textbf{2.} Le cercle est tangent à l'axe $(Ox)$ ssi la distance du centre à $(Ox)$ égale $R$, soit $|y| = R$. De même, il est tangent à $(Oy)$ ssi $|x| = R$. Les deux conditions donnent bien $R = |x| = |y|$.
+
+\textbf{3.} En combinant : $(x-1)^2 + y^2 = R^2 = x^2$ et $|x| = |y|$ (donc $y = \pm x$).
+
+\textbf{4.} Développons $(x-1)^2 + y^2 = x^2$ :
+\[
+x^2 - 2x + 1 + y^2 = x^2 \;\Longleftrightarrow\; y^2 = 2x - 1.
+\]
+C'est l'équation d'une parabole d'axe $(Ox)$. La condition $|x| = |y|$ impose $y = \pm x$. Substituons :
+\[
+x^2 = 2x - 1 \;\Longleftrightarrow\; (x-1)^2 = 0 \;\Longleftrightarrow\; x = 1,\; y = \pm 1.
+\]
+Il n'y a donc que deux centres possibles : $M_1(1, 1)$ et $M_2(1, -1)$, correspondant à $R = 1$.
+
+\reponse{$(\mathcal{E}) = \{(1,1),\,(1,-1)\}$ : deux cercles de rayon 1, centrés en $(1,\pm 1)$, passant par $A(1,0)$ et tangents aux deux axes.}
+\end{boitecorrige}
+
+\subsection*{Exercice X - Coordonnées barycentriques et alignement \niveau{\difficile}}
+
+\begin{boiteexercice}
+Soit $ABC$ un triangle du plan. On note $G$ le centre de gravité, $I$ le milieu de $[BC]$, $J$ le milieu de $[AC]$ et $K$ le milieu de $[AB]$.
+\begin{enumerate}
+  \item Rappeler les coordonnées barycentriques de $G$, $I$, $J$, $K$ dans le repère $(A, B, C)$.
+  \item Soit $M$ le point de coordonnées barycentriques $(\alpha, \beta, \gamma)$ avec $\alpha+\beta+\gamma=1$. Donner la condition sur $\alpha, \beta, \gamma$ pour que $M$ appartienne à la médiane $(AI)$.
+  \item On définit $P$ sur $[AB]$ par $\overrightarrow{AP} = \tfrac{1}{3}\overrightarrow{AB}$ et $Q$ sur $[AC]$ par $\overrightarrow{AQ} = \tfrac{1}{3}\overrightarrow{AC}$. Montrer que $(PQ)$ est parallèle à $(BC)$.
+  \item Déterminer le point d'intersection $R$ de $(BQ)$ et $(CP)$. Quelles sont ses coordonnées barycentriques ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Dans le repère barycentrique $(A,B,C)$ :
+\begin{itemize}[nosep]
+  \item $G = (1/3, 1/3, 1/3)$ (isobarycentre),
+  \item $I$ milieu de $[BC]$ : $(0, 1/2, 1/2)$,
+  \item $J$ milieu de $[AC]$ : $(1/2, 0, 1/2)$,
+  \item $K$ milieu de $[AB]$ : $(1/2, 1/2, 0)$.
+\end{itemize}
+
+\textbf{2.} La médiane $(AI)$ est l'ensemble des barycentres de $A$ et $I$ : $M = (1-t)A + tI$ pour $t\in\mathbb{R}$, soit en coordonnées barycentriques $\alpha = 1-t$, $\beta = t/2$, $\gamma = t/2$. On a donc $\beta = \gamma$. Réciproquement, si $\beta = \gamma$, en posant $t = 2\beta$ et $\alpha = 1 - 2\beta = 1-t$, on retrouve $M\in(AI)$.
+
+\[
+\boxed{M\in(AI) \;\Longleftrightarrow\; \beta = \gamma.}
+\]
+
+\textbf{3.} $P = \tfrac{2}{3}A + \tfrac{1}{3}B$ et $Q = \tfrac{2}{3}A + \tfrac{1}{3}C$, donc
+\[
+\overrightarrow{PQ} = \overrightarrow{Q} - \overrightarrow{P} = \tfrac{1}{3}(\overrightarrow{C} - \overrightarrow{B}) = \tfrac{1}{3}\overrightarrow{BC}.
+\]
+Ainsi $\overrightarrow{PQ} = \tfrac{1}{3}\overrightarrow{BC}$ : les droites $(PQ)$ et $(BC)$ sont parallèles (théorème de Thalès, configuration « des milieux » généralisée).
+
+\textbf{4.} En coordonnées barycentriques : $P = (2/3, 1/3, 0)$ et $Q = (2/3, 0, 1/3)$.
+\begin{itemize}[nosep]
+  \item $(BQ)$ est l'ensemble des barycentres de $B = (0,1,0)$ et $Q = (2/3, 0, 1/3)$, soit $M = (2\lambda/3,\; 1-\lambda,\; \lambda/3)$.
+  \item $(CP)$ est l'ensemble des barycentres de $C = (0,0,1)$ et $P = (2/3, 1/3, 0)$, soit $M = (2\mu/3,\; \mu/3,\; 1-\mu)$.
+\end{itemize}
+À l'intersection : $2\lambda/3 = 2\mu/3$ (donc $\lambda = \mu$), $1-\lambda = \lambda/3$ (donc $\lambda = 3/4$), $\lambda/3 = 1-\lambda$ (vérifié). Les coordonnées de $R$ sont donc
+\[
+R = \left(\tfrac{1}{2},\; \tfrac{1}{4},\; \tfrac{1}{4}\right).
+\]
+On remarque que $\beta = \gamma$ : $R$ appartient à la médiane $(AI)$. C'est un exemple du \textbf{théorème de Céva} : les trois céviennes $(BQ)$, $(CP)$, $(AI)$ sont concourantes.
+
+\reponse{$R = (1/2, 1/4, 1/4)$ : intersection de $(BQ)$ et $(CP)$, située sur la médiane $(AI)$.}
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

@@ -1,0 +1,54 @@
+\babel@toc {french}{}\relax 
+\contentsline {section}{ÉLECTROMAGNÉTISME}{7}{Doc-Start}%
+\contentsline {section}{\numberline {1}Ondes électromagnétiques}{8}{section.1}%
+\contentsline {section}{\numberline {2}Ondes dans les milieux}{11}{section.2}%
+\contentsline {section}{\numberline {3}Examens corrigés}{13}{section.3}%
+\contentsline {section}{\numberline {4}Suppléments et exercices d'approfondissement}{25}{section.4}%
+\contentsline {section}{THERMODYNAMIQUE}{31}{Item.33}%
+\contentsline {section}{\numberline {5}Fonctions d'état et relations thermodynamiques}{32}{section.5}%
+\contentsline {section}{\numberline {6}Entropie et second principe}{37}{section.6}%
+\contentsline {section}{\numberline {7}Cycles thermodynamiques}{40}{section.7}%
+\contentsline {section}{RELATIVITÉ RESTREINTE}{44}{Item.74}%
+\contentsline {section}{\numberline {8}Cinématique relativiste}{45}{section.8}%
+\contentsline {section}{\numberline {9}Dynamique relativiste}{47}{section.9}%
+\contentsline {section}{\numberline {10}Examens corrigés}{50}{section.10}%
+\contentsline {section}{\numberline {11}Annales d'examens}{56}{section.11}%
+\contentsline {section}{GÉOMÉTRIE AFFINE}{61}{Item.130}%
+\contentsline {section}{\numberline {12}Examen 2021-2022}{63}{section.12}%
+\contentsline {section}{\numberline {13}Examen - Géométrie Analytique 2021-2022}{69}{section.13}%
+\contentsline {section}{\numberline {14}Exercices complémentaires}{72}{section.14}%
+\contentsline {section}{MÉCANIQUE QUANTIQUE}{77}{Item.147}%
+\contentsline {section}{\numberline {15}Rayonnement du corps noir - Loi de Planck}{79}{section.15}%
+\contentsline {section}{\numberline {16}Atome d'hydrogène et modèle de Bohr}{82}{section.16}%
+\contentsline {section}{\numberline {17}Fonction d'onde et principe d'incertitude}{84}{section.17}%
+\contentsline {section}{\numberline {18}Puits de potentiel sphérique}{87}{section.18}%
+\contentsline {section}{\numberline {19}Particule dans un puits infini}{89}{section.19}%
+\contentsline {section}{\numberline {20}Examens : puits de potentiel fini et barrière de potentiel}{93}{section.20}%
+\contentsline {section}{MÉCANIQUE DU SOLIDE}{102}{section.20}%
+\contentsline {section}{\numberline {21}Résumé de cours}{102}{section.21}%
+\contentsline {section}{\numberline {22}Exercices corrigés}{103}{section.22}%
+\contentsline {section}{PROBABILITÉS ET STATISTIQUES}{118}{Item.215}%
+\contentsline {section}{\numberline {23}Résumé de cours}{118}{section.23}%
+\contentsline {section}{\numberline {24}Exercices corrigés}{119}{section.24}%
+\contentsline {section}{\numberline {25}Variables aléatoires discrètes et continues}{127}{section.25}%
+\contentsline {section}{\numberline {26}Examens corrigés}{133}{section.26}%
+\contentsline {section}{ANALYSE DANS $\mathbb {R}^n$}{140}{Item.290}%
+\contentsline {section}{\numberline {27}Résumé de cours}{140}{section.27}%
+\contentsline {section}{\numberline {28}Exercices corrigés}{141}{section.28}%
+\contentsline {section}{SÉRIES DE FOURIER ET TRANSFORMÉE DE LAPLACE}{153}{Item.315}%
+\contentsline {section}{\numberline {29}Séries de Fourier}{154}{section.29}%
+\contentsline {section}{\numberline {30}Transformée de Laplace}{155}{section.30}%
+\contentsline {section}{\numberline {31}Transformée de Fourier}{157}{section.31}%
+\contentsline {section}{SUITES ET SÉRIES DE FONCTIONS}{168}{Item.363}%
+\contentsline {section}{\numberline {32}Suites de fonctions}{169}{section.32}%
+\contentsline {section}{\numberline {33}Séries de fonctions}{170}{section.33}%
+\contentsline {section}{\numberline {34}Séries entières}{170}{section.34}%
+\contentsline {section}{\numberline {35}Suites définies par récurrence}{172}{section.35}%
+\contentsline {section}{PHYSIQUE DES SEMI-CONDUCTEURS}{183}{Item.434}%
+\contentsline {section}{\numberline {36}Structure de bande et porteurs}{184}{section.36}%
+\contentsline {section}{\numberline {37}Jonction p-n}{185}{section.37}%
+\contentsline {section}{\numberline {38}Porteurs minoritaires et recombinaison}{187}{section.38}%
+\contentsline {section}{PROGRAMMATION EN PYTHON}{194}{Item.471}%
+\contentsline {section}{\numberline {39}Bases du langage}{195}{section.39}%
+\contentsline {section}{\numberline {40}Calcul scientifique avec NumPy et Matplotlib}{196}{section.40}%
+\contentsline {section}{\numberline {41}Structures de données et algorithmes}{200}{section.41}%

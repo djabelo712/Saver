@@ -1,0 +1,936 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Logique et Algèbre de Base - Licence 1}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries LOGIQUE ET ALGÈBRE DE BASE}\\[0.3cm]
+  {\normalsize Licence 1 - Mathématiques, Physique et Chimie}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Propositions et connecteurs logiques.} Une \textit{proposition} est un énoncé vrai (V) ou faux (F). Les connecteurs : négation $\neg p$, conjonction $p\wedge q$ (ET), disjonction $p\vee q$ (OU), implication $p\Rightarrow q$ (équivalente à $\neg p\vee q$), équivalence $p\Leftrightarrow q$.
+
+Lois de De Morgan : $\neg(p\wedge q)\equiv\neg p\vee\neg q$ et $\neg(p\vee q)\equiv\neg p\wedge\neg q$.
+
+\textbf{2. Tables de vérité.}
+\begin{center}
+\begin{tabular}{cc|cccc}
+$p$ & $q$ & $p\wedge q$ & $p\vee q$ & $p\Rightarrow q$ & $p\Leftrightarrow q$\\
+\hline
+V & V & V & V & V & V\\
+V & F & F & V & F & F\\
+F & V & F & V & V & F\\
+F & F & F & F & V & V\\
+\end{tabular}
+\end{center}
+
+\textbf{3. Ensembles.} Opérations : union $A\cup B$, intersection $A\cap B$, différence $A\setminus B$, complémentaire $\bar{A}$. Lois de De Morgan pour les ensembles : $\overline{A\cup B}=\bar{A}\cap\bar{B}$, $\overline{A\cap B}=\bar{A}\cup\bar{B}$.
+
+\textbf{4. Relations.} Une relation $\mathcal{R}$ sur $E$ est réflexive ($a\mathcal{R}a$), symétrique ($a\mathcal{R}b\Rightarrow b\mathcal{R}a$), transitive ($a\mathcal{R}b$ et $b\mathcal{R}c\Rightarrow a\mathcal{R}c$), antisymétrique ($a\mathcal{R}b$ et $b\mathcal{R}a\Rightarrow a=b$). Une \textit{relation d'équivalence} est réflexive, symétrique et transitive.
+
+\textbf{5. Applications.} Une application $f:A\to B$ est injective si $f(x)=f(y)\Rightarrow x=y$, surjective si $\forall y\in B,\;\exists x\in A:f(x)=y$, bijective si elle est injective et surjective.
+
+\textbf{6. Algèbre de Boole.} Un treillis booléen $(B,+,\cdot,\bar{\phantom{x}},0,1)$ avec les lois : commutativité, associativité, distributivité, identité ($a+0=a$, $a\cdot1=a$), complémentation ($a+\bar{a}=1$, $a\cdot\bar{a}=0$).
+
+\end{boiteresume}
+
+\newpage
+\section{Logique propositionnelle}
+
+\subsection*{Exercice 1 - Tables de vérité \niveau{\facile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Construire la table de vérité de $p\Rightarrow(q\wedge r)$.
+  \item Construire la table de vérité de $(p\Rightarrow q)\wedge(q\Rightarrow r)$ et de $p\Rightarrow r$. Ces deux formules sont-elles équivalentes ?
+  \item Montrer que $\neg(p\Rightarrow q)\equiv p\wedge\neg q$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\begin{center}
+\begin{tabular}{ccc|cc|c}
+$p$ & $q$ & $r$ & $q\wedge r$ & $p\Rightarrow(q\wedge r)$\\
+\hline
+V & V & V & V & V\\
+V & V & F & F & F\\
+V & F & V & F & F\\
+V & F & F & F & F\\
+F & V & V & V & V\\
+F & V & F & F & V\\
+F & F & V & F & V\\
+F & F & F & F & V\\
+\end{tabular}
+\end{center}
+
+\textbf{2.}
+\begin{center}
+\begin{tabular}{ccc|cc|cc|c}
+$p$ & $q$ & $r$ & $p\Rightarrow q$ & $q\Rightarrow r$ & $(p\Rightarrow q)\wedge(q\Rightarrow r)$ & $p\Rightarrow r$\\
+\hline
+V & V & V & V & V & V & V\\
+V & V & F & V & F & F & F\\
+V & F & V & F & V & F & V\\
+V & F & F & F & V & F & F\\
+F & V & V & V & V & V & V\\
+F & V & F & V & F & F & V\\
+F & F & V & V & V & V & V\\
+F & F & F & V & V & V & V\\
+\end{tabular}
+\end{center}
+Les colonnes diffèrent (ligne 3) : les formules ne sont \textbf{pas} équivalentes. Mais $(p\Rightarrow q)\wedge(q\Rightarrow r)\Rightarrow(p\Rightarrow r)$ est une tautologie (principe de transitivité).
+
+\textbf{3.} $\neg(p\Rightarrow q) = \neg(\neg p\vee q) = p\wedge\neg q$ (De Morgan). Table de vérité :
+\begin{center}
+\begin{tabular}{cc|c|c|c}
+$p$ & $q$ & $p\Rightarrow q$ & $\neg(p\Rightarrow q)$ & $p\wedge\neg q$\\
+\hline
+V & V & V & F & F\\
+V & F & F & V & V\\
+F & V & V & F & F\\
+F & F & V & F & F\\
+\end{tabular}
+\end{center}
+Les colonnes 4 et 5 sont identiques : $\neg(p\Rightarrow q)\equiv p\wedge\neg q$. En clair, une implication est fausse si et seulement si la prémisse est vraie et la conclusion est fausse.
+\end{boitecorrige}
+
+\section{Théorie des ensembles}
+
+\subsection*{Exercice 2 - Opérations sur les ensembles \niveau{\facile}}
+
+\begin{boiteexercice}
+Soient $E=\{1,2,3,4,5,6,7,8\}$, $A=\{1,2,3,4\}$, $B=\{3,4,5,6\}$, $C=\{5,6,7,8\}$.
+\begin{enumerate}
+  \item Calculer $A\cup B$, $A\cap B$, $A\setminus B$, $B\setminus A$, $\bar{A}$.
+  \item Vérifier les lois de De Morgan : $\overline{A\cup B}=\bar{A}\cap\bar{B}$.
+  \item Calculer $(A\cup B)\cap C$ et $A\cup(B\cap C)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+$A\cup B = \{1,2,3,4,5,6\}$, $A\cap B = \{3,4\}$, $A\setminus B=\{1,2\}$, $B\setminus A=\{5,6\}$, $\bar{A}=\{5,6,7,8\}$.
+
+\textbf{2.} $\overline{A\cup B}=\overline{\{1,2,3,4,5,6\}}=\{7,8\}$.
+
+$\bar{A}\cap\bar{B} = \{5,6,7,8\}\cap\{1,2,7,8\} = \{7,8\}$.
+
+\textbf{3.} $(A\cup B)\cap C = \{1,2,3,4,5,6\}\cap\{5,6,7,8\} = \{5,6\}$.
+
+$A\cup(B\cap C) = \{1,2,3,4\}\cup(\{3,4,5,6\}\cap\{5,6,7,8\}) = \{1,2,3,4\}\cup\{5,6\} = \{1,2,3,4,5,6\}$.
+
+Ces deux résultats sont différents, ce qui illustre que l'union et l'intersection ne sont pas interchangeables dans la distributivité.
+\end{boitecorrige}
+
+\subsection*{Exercice 3 - Relations d'équivalence \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Sur $\mathbb{Z}$, on définit $a\mathcal{R}b$ si et seulement si $3\mid(a-b)$. Vérifier que $\mathcal{R}$ est une relation d'équivalence et décrire les classes d'équivalence.
+  \item Sur $\mathbb{R}$, on définit $x\mathcal{S}y$ si et seulement si $x-y\in\mathbb{Q}$. Montrer que $\mathcal{S}$ est une relation d'équivalence.
+  \item Sur $\mathbb{N}^*\times\mathbb{N}^*$, on définit $(a,b)\mathcal{T}(c,d)$ si $ad=bc$. Vérifier que $\mathcal{T}$ est une relation d'équivalence. Que représentent les classes d'équivalence ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\textit{Réflexivité} : $a-a=0=3\times0$, donc $a\mathcal{R}a$.
+\textit{Symétrie} : si $3\mid(a-b)$, alors $3\mid(-(a-b))=b-a$, donc $b\mathcal{R}a$.
+\textit{Transitivité} : si $a-b=3k$ et $b-c=3l$, alors $a-c=(a-b)+(b-c)=3(k+l)$, donc $a\mathcal{R}c$.
+
+Classes d'équivalence :
+\begin{align*}
+[0] &= \{\ldots,-6,-3,0,3,6,\ldots\},\\
+[1] &= \{\ldots,-5,-2,1,4,7,\ldots\},\\
+[2] &= \{\ldots,-4,-1,2,5,8,\ldots\}.
+\end{align*}
+C'est la congruence modulo 3.
+
+\textbf{2.}
+\textit{Réflexivité} : $x-x=0\in\mathbb{Q}$.
+\textit{Symétrie} : si $x-y\in\mathbb{Q}$, alors $y-x=-(x-y)\in\mathbb{Q}$.
+\textit{Transitivité} : si $x-y\in\mathbb{Q}$ et $y-z\in\mathbb{Q}$, alors $(x-z)=(x-y)+(y-z)\in\mathbb{Q}$.
+
+\textbf{3.}
+$(a,b)\mathcal{T}(a,b)$ car $ab=ba$ (réflexivité).
+$(a,b)\mathcal{T}(c,d)\Rightarrow ad=bc\Rightarrow cb=da\Rightarrow(c,d)\mathcal{T}(a,b)$.
+$(a,b)\mathcal{T}(c,d)$ et $(c,d)\mathcal{T}(e,f)$ : $ad=bc$ et $cf=de$. En multipliant : $adcf=bcde$, donc $af=be$, soit $(a,b)\mathcal{T}(e,f)$.
+
+La classe de $(a,b)$ rassemble tous les couples $(c,d)$ tels que $a/b=c/d$ (même valeur de la fraction). Les classes d'équivalence représentent les \textit{nombres rationnels}.
+\end{boitecorrige}
+
+\section{Applications et algèbre de Boole}
+
+\subsection*{Exercice 4 - Injectivité et surjectivité \niveau{\moyen}}
+
+\begin{boiteexercice}
+Étudier l'injectivité, la surjectivité et la bijectivité des applications suivantes :
+\begin{enumerate}[label=(\alph*)]
+  \item $f:\mathbb{R}\to\mathbb{R}$, $f(x)=2x-3$
+  \item $g:\mathbb{R}\to\mathbb{R}$, $g(x)=x^2$
+  \item $h:\mathbb{R}\to\mathbb{R}^+$, $h(x)=x^2$
+  \item $k:\mathbb{R}^+\to\mathbb{R}^+$, $k(x)=x^2$
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} $f(x)=f(y)\Rightarrow 2x-3=2y-3\Rightarrow x=y$ : \textbf{injective}. $\forall y\in\mathbb{R}$, $x=(y+3)/2\in\mathbb{R}$ : \textbf{surjective}. Donc \textbf{bijective}.
+
+\textbf{(b)} $g(1)=g(-1)=1$ : \textbf{non injective}. $g(x)=x^2\geq0$, donc $-1\in\mathbb{R}$ n'a pas d'antécédent : \textbf{non surjective}.
+
+\textbf{(c)} Même non-injectivité que (b) : \textbf{non injective}. Mais maintenant le codomaine est $\mathbb{R}^+$ : $\forall y\geq0$, $h(\sqrt{y})=y$ : \textbf{surjective}.
+
+\textbf{(d)} $k(x)=k(y)$ avec $x,y\geq0$ : $x^2=y^2\Rightarrow(x-y)(x+y)=0$, et comme $x,y\geq0$, $x+y\geq0$, donc $x=y$ : \textbf{injective}. $\forall y\geq0$, $k(\sqrt{y})=y$ : \textbf{surjective}. Donc \textbf{bijective}. La bijection réciproque est $k^{-1}(y)=\sqrt{y}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 5 - Algèbre de Boole et simplification \niveau{\difficile}}
+
+\begin{boiteexercice}
+En algèbre de Boole, simplifier les expressions suivantes :
+\begin{enumerate}[label=(\alph*)]
+  \item $A\cdot\bar{A}+B$
+  \item $A+(A\cdot B)$
+  \item $(A+B)\cdot(A+\bar{B})$
+  \item $A\cdot B + A\cdot\bar{B} + \bar{A}\cdot B$
+  \item $(A+B)\cdot(\bar{A}+C)\cdot(B+C)$
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} $A\cdot\bar{A}+B = 0+B = B$ (complémentation : $A\cdot\bar{A}=0$).
+
+\textbf{(b)} $A+(A\cdot B) = A\cdot(1+B) = A\cdot1 = A$ (absorption).
+
+\textbf{(c)} $(A+B)(A+\bar{B}) = A+B\cdot\bar{B} = A+0 = A$ (distributivité puis complémentation).
+
+\textbf{(d)} $AB+A\bar{B}+\bar{A}B = A(B+\bar{B})+\bar{A}B = A+\bar{A}B = (A+\bar{A})(A+B) = 1\cdot(A+B) = A+B$.
+
+\textbf{(e)} Par le théorème du consensus, le terme $B+C$ est redondant quand $A+B$ et $\bar{A}+C$ sont tous deux vrais (car si $A=1$ : $B+C$ découle de $\bar{A}+C\Rightarrow C=1$; si $A=0$ : $B+C$ découle de $A+B\Rightarrow B=1$). On montre directement :
+$(A+B)(\bar{A}+C)(B+C)$. Développons $(A+B)(\bar{A}+C) = A\bar{A}+AC+\bar{A}B+BC = AC+\bar{A}B+BC$.
+En multipliant par $(B+C)$ : $(AC+\bar{A}B+BC)(B+C)$.
+$= ACB+ACC+\bar{A}B^2+\bar{A}BC+B^2C+BC^2$
+$= ABC+AC+\bar{A}B+\bar{A}BC+BC$
+$= AC+\bar{A}B+BC = AC+\bar{A}B+BC$.
+Par absorption ($BC$ est couvert par $AC$ et $\bar{A}B$ ensemble) : résultat final $= AC+\bar{A}B$.
+\end{boitecorrige}
+
+
+\subsection*{Exercice 6 - Tautologie et équivalence logique \niveau{\facile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Construire la table de vérité de $(p\Rightarrow q)\Leftrightarrow(\neg p\vee q)$ et montrer que c'est une tautologie.
+  \item Construire la table de vérité de $(p\Rightarrow q)\Rightarrow(\neg q\Rightarrow\neg p)$ (contraposée) et montrer que c'est une tautologie.
+  \item Montrer que $(p\Leftrightarrow q)\equiv (p\Rightarrow q)\wedge(q\Rightarrow p)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\begin{center}
+\begin{tabular}{cc|c|c|c}
+$p$ & $q$ & $p\Rightarrow q$ & $\neg p\vee q$ & $(p\Rightarrow q)\Leftrightarrow(\neg p\vee q)$\\
+\hline
+V & V & V & V & V\\
+V & F & F & F & V\\
+F & V & V & V & V\\
+F & F & V & V & V\\
+\end{tabular}
+\end{center}
+La dernière colonne est toujours V : c'est bien une \textbf{tautologie}. Cela prouve que $p\Rightarrow q \equiv \neg p\vee q$.
+
+\textbf{2.}
+\begin{center}
+\begin{tabular}{cc|c|cc|c}
+$p$ & $q$ & $p\Rightarrow q$ & $\neg q$ & $\neg q\Rightarrow\neg p$ & $(p\Rightarrow q)\Rightarrow(\neg q\Rightarrow\neg p)$\\
+\hline
+V & V & V & F & V & V\\
+V & F & F & V & F & V\\
+F & V & V & F & V & V\\
+F & F & V & V & V & V\\
+\end{tabular}
+\end{center}
+Toujours V : tautologie. Cela confirme que $p\Rightarrow q \equiv \neg q\Rightarrow\neg p$ (contraposée).
+
+\textbf{3.} Par définition, $p\Leftrightarrow q$ est vraie quand $p$ et $q$ ont même valeur de vérité. D'autre part, $(p\Rightarrow q)\wedge(q\Rightarrow p)$ est vraie si et seulement si les deux implications sont vraies simultanément, ce qui est le cas uniquement si $p$ et $q$ ont la même valeur. On vérifie dans la table :
+\begin{center}
+\begin{tabular}{cc|c|c|c|c}
+$p$ & $q$ & $p\Rightarrow q$ & $q\Rightarrow p$ & $(p\Rightarrow q)\wedge(q\Rightarrow p)$ & $p\Leftrightarrow q$\\
+\hline
+V & V & V & V & V & V\\
+V & F & F & V & F & F\\
+F & V & V & F & F & F\\
+F & F & V & V & V & V\\
+\end{tabular}
+\end{center}
+Les colonnes 5 et 6 sont identiques : $p\Leftrightarrow q \equiv (p\Rightarrow q)\wedge(q\Rightarrow p)$.
+\end{boitecorrige}
+
+\subsection*{Exercice 7 - Simplification en algèbre de Boole \niveau{\moyen}}
+
+\begin{boiteexercice}
+En algèbre de Boole, simplifier la fonction $f = ABC + AB'C + A'BC$.
+\begin{enumerate}
+  \item Factoriser les deux premiers termes, puis simplifier.
+  \item Montrer que la forme minimale est $f = AC + A'BC$.
+  \item Vérifier en construisant la table de vérité pour $A=1, B=0, C=1$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On factorise les deux premiers termes (ils diffèrent seulement par $B$ et $B'$) :
+\[
+ABC + AB'C = AC(B + B') = AC\cdot 1 = AC
+\]
+Donc :
+\[
+f = AC + A'BC
+\]
+
+\textbf{2.} La forme minimale est $f = AC + A'BC$. On ne peut pas simplifier davantage car $AC$ et $A'BC$ ne partagent aucun facteur commun (l'un contient $A$ et l'autre $A'$). On peut vérifier que $A'BC$ n'est pas couvert par $AC$ (prendre $A=0, B=1, C=1$ : $AC=0$ mais $A'BC=1$).
+
+\textbf{3.} Pour $A=1, B=0, C=1$ :
+\begin{itemize}
+  \item Forme initiale : $f = 1\cdot1\cdot0\cdot1 + 1\cdot1\cdot0\cdot1 + 0\cdot1\cdot0\cdot1$... Attention, $B'=\bar{B}=1$ quand $B=0$.
+  \item $ABC = 1\cdot0\cdot1 = 0$, $AB'C = 1\cdot1\cdot1 = 1$, $A'BC = 0\cdot0\cdot1 = 0$.
+  \item Donc $f = 0 + 1 + 0 = 1$.
+\end{itemize}
+Avec la forme simplifiée : $AC + A'BC = 1\cdot1 + 0\cdot0\cdot1 = 1 + 0 = 1$.
+\end{boitecorrige}
+
+\subsection*{Exercice 8 - Opérations sur les ensembles \niveau{\facile}}
+
+\begin{boiteexercice}
+Dans l'ensemble universel $U = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\}$, soient $A = \{1,2,3,4\}$ et $B = \{2,4,6,8\}$.
+\begin{enumerate}
+  \item Calculer $A\cup B$, $A\cap B$, $A\setminus B$, $B\setminus A$.
+  \item Calculer $\bar{A}$ et $\bar{B}$ (complémentaires dans $U$).
+  \item Vérifier la loi de De Morgan : $\overline{A\cap B} = \bar{A}\cup\bar{B}$.
+  \item Calculer le nombre d'éléments de $A\cup B$ en utilisant la formule $|A\cup B| = |A| + |B| - |A\cap B|$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+$A\cup B = \{1,2,3,4,6,8\}$,
+$A\cap B = \{2,4\}$,
+$A\setminus B = \{1,3\}$,
+$B\setminus A = \{6,8\}$.
+
+\textbf{2.}
+$\bar{A} = U\setminus A = \{5,6,7,8,9,10\}$,
+$\bar{B} = U\setminus B = \{1,3,5,7,9,10\}$.
+
+\textbf{3.} De Morgan $\overline{A\cap B} = \bar{A}\cup\bar{B}$ :
+$\overline{A\cap B} = \overline{\{2,4\}} = \{1,3,5,6,7,8,9,10\}$.
+$\bar{A}\cup\bar{B} = \{5,6,7,8,9,10\}\cup\{1,3,5,7,9,10\} = \{1,3,5,6,7,8,9,10\}$.
+
+\textbf{4.}
+$|A\cup B| = |A| + |B| - |A\cap B| = 4 + 4 - 2 = 6$.
+On vérifie : $A\cup B = \{1,2,3,4,6,8\}$ a bien 6 éléments.
+\end{boitecorrige}
+
+\subsection*{Exercice 9 - Relation de congruence modulo 3 \niveau{\moyen}}
+
+\begin{boiteexercice}
+Sur $\mathbb{Z}$, on définit la relation $\mathcal{R}$ par : $a\,\mathcal{R}\,b$ si et seulement si $3\mid(a-b)$ (3 divise $a-b$).
+\begin{enumerate}
+  \item Vérifier que $\mathcal{R}$ est réflexive, symétrique et transitive (c'est une relation d'équivalence).
+  \item Déterminer les classes d'équivalence de $\mathcal{R}$.
+  \item À quelle classe appartient $7$ ? Et $-4$ ? Et $100$ ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+
+\textit{Réflexivité} : $a - a = 0 = 3\times0$, donc $3\mid0$ et $a\,\mathcal{R}\,a$.
+
+\textit{Symétrie} : Si $3\mid(a-b)$, alors $a-b = 3k$ pour un entier $k$, donc $b-a = -3k = 3(-k)$, d'où $3\mid(b-a)$ et $b\,\mathcal{R}\,a$.
+
+\textit{Transitivité} : Si $a-b = 3k$ et $b-c = 3l$, alors $a-c = (a-b)+(b-c) = 3(k+l)$, donc $3\mid(a-c)$ et $a\,\mathcal{R}\,c$.
+
+\textbf{2.} Les classes d'équivalence sont les classes de congruence modulo 3 :
+\[
+[0] = \{\ldots,-6,-3,0,3,6,9,\ldots\} = \{3k \mid k\in\mathbb{Z}\}
+\]
+\[
+[1] = \{\ldots,-5,-2,1,4,7,10,\ldots\} = \{3k+1 \mid k\in\mathbb{Z}\}
+\]
+\[
+[2] = \{\ldots,-4,-1,2,5,8,11,\ldots\} = \{3k+2 \mid k\in\mathbb{Z}\}
+\]
+Ces trois classes forment une partition de $\mathbb{Z}$.
+
+\textbf{3.}
+$7 = 3\times2 + 1$, donc $7\in[1]$.
+$-4 = 3\times(-2) + 2$, donc $-4\in[2]$.
+$100 = 3\times33 + 1$, donc $100\in[1]$.
+\end{boitecorrige}
+
+\subsection*{Exercice 10 - Application bijective et réciproque \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $f:\mathbb{R}\to\mathbb{R}$ définie par $f(x) = 2x+1$.
+\begin{enumerate}
+  \item Montrer que $f$ est injective.
+  \item Montrer que $f$ est surjective.
+  \item Conclure que $f$ est bijective et trouver son application réciproque $f^{-1}$.
+  \item Calculer $f^{-1}(5)$ et $f^{-1}(-3)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Injectivité :} Supposons $f(x) = f(y)$, c'est-à-dire $2x+1 = 2y+1$. En soustrayant 1 des deux membres : $2x = 2y$, donc $x = y$. Ainsi $f$ est injective.
+
+\textbf{2. Surjectivité :} Soit $y\in\mathbb{R}$ quelconque. On cherche $x$ tel que $f(x) = y$ :
+\[
+2x+1 = y \quad \Rightarrow \quad x = \frac{y-1}{2}
+\]
+Ce $x$ existe bien dans $\mathbb{R}$ pour tout $y\in\mathbb{R}$. Donc $f$ est surjective.
+
+\textbf{3.} $f$ est bijective. Pour trouver $f^{-1}$, on résout $y = 2x+1$ par rapport à $x$ :
+\[
+x = \frac{y-1}{2} \quad \Rightarrow \quad f^{-1}(x) = \frac{x-1}{2}
+\]
+Vérification : $f(f^{-1}(x)) = 2\cdot\dfrac{x-1}{2}+1 = x-1+1 = x$.
+
+\textbf{4.}
+$f^{-1}(5) = \dfrac{5-1}{2} = 2$.
+$f^{-1}(-3) = \dfrac{-3-1}{2} = -2$.
+\end{boitecorrige}
+
+\subsection*{Exercice 11 - Dénombrement : arrangements et combinaisons \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Calculer $\binom{10}{3}$ (nombre de combinaisons de 10 éléments pris 3 à 3).
+  \item Calculer $A_5^2$ (arrangements de 5 éléments pris 2 à 2, sans répétition).
+  \item Combien de sous-ensembles possède l'ensemble $E = \{1,2,3,4,5,6,7,8\}$ ?
+  \item Dans une classe de 20 élèves, combien peut-on former de groupes de 4 ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\[
+\binom{10}{3} = \frac{10!}{3!\,7!} = \frac{10\times9\times8}{3\times2\times1} = \frac{720}{6} = 120
+\]
+
+\textbf{2.} Les arrangements $A_n^k$ (ordonnés, sans répétition) :
+\[
+A_5^2 = \frac{5!}{(5-2)!} = \frac{5!}{3!} = 5\times4 = 20
+\]
+
+\textbf{3.} Un ensemble à $n$ éléments possède $2^n$ sous-ensembles (on choisit pour chaque élément s'il est dedans ou dehors). Ici $n = 8$ :
+\[
+\text{Nombre de sous-ensembles} = 2^8 = 256
+\]
+
+\textbf{4.} On choisit 4 élèves parmi 20 sans ordre :
+\[
+\binom{20}{4} = \frac{20!}{4!\,16!} = \frac{20\times19\times18\times17}{4\times3\times2\times1} = \frac{116280}{24} = 4845
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 12 - Raisonnement par récurrence \niveau{\moyen}}
+
+\begin{boiteexercice}
+Prouver par récurrence les identités suivantes :
+\begin{enumerate}
+  \item $\displaystyle\sum_{k=1}^{n} k = \frac{n(n+1)}{2}$ pour tout entier $n\geq1$.
+  \item $\displaystyle\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}$ pour tout entier $n\geq1$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Posons $P(n) : \displaystyle\sum_{k=1}^{n} k = \frac{n(n+1)}{2}$.
+
+\textit{Initialisation ($n=1$) :} $\displaystyle\sum_{k=1}^{1} k = 1$ et $\dfrac{1\times2}{2} = 1$. Vrai.
+
+\textit{Hérédité :} Supposons $P(n)$ vraie pour un certain $n\geq1$. Montrons $P(n+1)$ :
+\begin{align}
+\sum_{k=1}^{n+1} k &= \sum_{k=1}^{n} k + (n+1) = \frac{n(n+1)}{2} + (n+1) \notag \\
+&= (n+1)\left(\frac{n}{2}+1\right) = (n+1)\cdot\frac{n+2}{2} = \frac{(n+1)(n+2)}{2}
+\end{align}
+C'est bien la formule $P(n+1)$ avec $n$ remplacé par $n+1$.
+
+Par le principe de récurrence, $P(n)$ est vraie pour tout $n\geq1$.
+
+\textbf{2.} Posons $Q(n) : \displaystyle\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}$.
+
+\textit{Initialisation ($n=1$) :} $1^2 = 1$ et $\dfrac{1\times2\times3}{6} = 1$. Vrai.
+
+\textit{Hérédité :} Supposons $Q(n)$ vraie. Alors :
+\begin{align}
+\sum_{k=1}^{n+1} k^2 &= \frac{n(n+1)(2n+1)}{6} + (n+1)^2 \notag \\
+&= \frac{(n+1)}{6}\bigl[n(2n+1) + 6(n+1)\bigr] \notag \\
+&= \frac{(n+1)}{6}\bigl[2n^2+n+6n+6\bigr] \notag \\
+&= \frac{(n+1)(2n^2+7n+6)}{6} = \frac{(n+1)(n+2)(2n+3)}{6}
+\end{align}
+C'est bien $Q(n+1)$. Par récurrence, $Q(n)$ est vraie pour tout $n\geq1$.
+\end{boitecorrige}
+
+\subsection*{Exercice 13 - Combinatoire et dénombrement avancé \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Un comité de 5 personnes doit être formé parmi 8 femmes et 6 hommes. Combien de comités contiennent au moins 3 femmes ?
+  \item On dispose de 10 questions pour un examen. Un étudiant doit en répondre exactement 6, dont obligatoirement les 2 premières. Combien de choix a-t-il ?
+  \item Dans un groupe de 20 personnes, combien de poignées de mains distinctes peuvent-elles être échangées ?
+  \item Combien d'anagrammes du mot \og LOGIQUE \fg{} commence par une voyelle ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Le comité de 5 personnes parmi 14 doit contenir au moins 3 femmes. On distingue les cas :
+\begin{itemize}[nosep]
+  \item \textbf{3 femmes + 2 hommes :} $\binom{8}{3}\binom{6}{2} = 56\times15 = 840$
+  \item \textbf{4 femmes + 1 homme :} $\binom{8}{4}\binom{6}{1} = 70\times6 = 420$
+  \item \textbf{5 femmes + 0 homme :} $\binom{8}{5}\binom{6}{0} = 56\times1 = 56$
+\end{itemize}
+Total : $840 + 420 + 56 = \mathbf{1316}$ comités.
+
+\textbf{2.} Les 2 premières questions sont obligatoires, il reste à choisir 4 questions parmi les 8 restantes :
+\[
+\binom{8}{4} = \frac{8!}{4!\,4!} = \frac{8\times7\times6\times5}{4\times3\times2\times1} = 70 \text{ choix}
+\]
+
+\textbf{3.} Une poignée de mains correspond à un choix non ordonné de 2 personnes parmi 20 :
+\[
+\binom{20}{2} = \frac{20\times19}{2} = 190 \text{ poignées de mains}
+\]
+
+\textbf{4.} Le mot LOGIQUE contient 7 lettres (toutes distinctes) : L, O, G, I, Q, U, E. Les voyelles sont O, I, U, E (4 voyelles).
+
+Le nombre total d'anagrammes est $7! = 5040$.
+
+Pour les anagrammes commençant par une voyelle : on choisit une voyelle parmi 4 pour la 1re position, puis on arrange les 6 lettres restantes :
+\[
+4 \times 6! = 4 \times 720 = 2880 \text{ anagrammes}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 14 - Probabilités discrètes \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un sac contient 4 boules rouges (R) et 6 boules bleues (B). On tire successivement 3 boules \textbf{sans remise}.
+\begin{enumerate}
+  \item Calculer la probabilité d'obtenir 3 boules rouges.
+  \item Calculer la probabilité d'obtenir exactement 2 boules rouges.
+  \item Calculer la probabilité d'obtenir au moins une boule rouge.
+  \item Sachant qu'on a obtenu au moins une boule rouge, quelle est la probabilité d'en avoir obtenu exactement 2 ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+L'espace de référence est $\binom{10}{3} = 120$ tirages équiprobables de 3 boules parmi 10.
+
+\textbf{1.} Trois boules rouges : $\binom{4}{3} = 4$ façons.
+\[
+P(\text{3R}) = \frac{4}{120} = \frac{1}{30} \approx 3{,}3\,\%
+\]
+
+\textbf{2.} Deux rouges et une bleue : $\binom{4}{2}\binom{6}{1} = 6\times6 = 36$ façons.
+\[
+P(\text{2R, 1B}) = \frac{36}{120} = \frac{3}{10} = 30\,\%
+\]
+
+\textbf{3.} Complémentaire : au moins une rouge = 1 - P(0 rouge).
+\[
+P(\text{0R}) = \frac{\binom{4}{0}\binom{6}{3}}{\binom{10}{3}} = \frac{1\times20}{120} = \frac{1}{6}
+\]
+\[
+P(\text{au moins 1R}) = 1 - \frac{1}{6} = \frac{5}{6} \approx 83{,}3\,\%
+\]
+
+\textbf{4.} Probabilité conditionnelle :
+\[
+P(\text{2R} \mid \text{au moins 1R}) = \frac{P(\text{2R et au moins 1R})}{P(\text{au moins 1R})}.
+\]
+
+L'événement ``2R'' implique ``au moins 1R'', donc
+\[
+P(\text{2R et au moins 1R}) = P(\text{2R}) = 3/10.
+\]
+\[
+P(\text{2R} \mid \text{au moins 1R}) = \frac{3/10}{5/6} = \frac{3}{10}\times\frac{6}{5} = \frac{18}{50} = \frac{9}{25} = 36\,\%
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 15 - Récurrence forte et suites \niveau{\difficile}}
+
+\begin{boiteexercice}
+La suite de Fibonacci est définie par $F_0 = 0$, $F_1 = 1$ et $F_{n+2} = F_{n+1} + F_n$ pour tout $n \geq 0$.
+\begin{enumerate}
+  \item Calculer $F_2, F_3, \ldots, F_8$.
+  \item Montrer par récurrence forte que $F_n < 2^n$ pour tout $n \geq 0$.
+  \item Montrer que $\sum_{k=0}^{n} F_k = F_{n+2} - 1$ pour tout $n\geq0$.
+  \item Calculer $\gcd(F_5, F_3)$ et $\gcd(F_6, F_4)$. Conjecturer un résultat général.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Calcul des premiers termes :
+
+\begin{center}
+\begin{tabular}{c|cccccccccc}
+$n$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+$F_n$ & 0 & 1 & 1 & 2 & 3 & 5 & 8 & 13 & 21
+\end{tabular}
+\end{center}
+
+\textbf{2.} Montrons $P(n) : F_n < 2^n$ par récurrence forte.
+
+\textit{Initialisation :} $F_0 = 0 < 1 = 2^0$ et $F_1 = 1 < 2 = 2^1$.
+
+\textit{Hérédité :} Supposons $P(k)$ vraie pour tout $k \leq n$ (avec $n \geq 1$). Pour $n+1$ :
+\[
+F_{n+1} = F_n + F_{n-1} < 2^n + 2^{n-1} = 2^{n-1}(2+1) = 3\times2^{n-1} < 4\times2^{n-1} = 2^{n+1}
+\]
+Donc $P(n+1)$ est vraie. Par récurrence forte, $F_n < 2^n$ pour tout $n\geq0$.
+
+\textbf{3.} Posons $S(n) : \sum_{k=0}^{n} F_k = F_{n+2} - 1$.
+
+\textit{Initialisation :} $F_0 = 0 = F_2 - 1 = 1 - 1 = 0$.
+
+\textit{Hérédité :} $\sum_{k=0}^{n+1} F_k = \sum_{k=0}^{n} F_k + F_{n+1} = (F_{n+2}-1) + F_{n+1} = F_{n+3} - 1$.
+
+\textbf{4.} $\gcd(F_5, F_3) = \gcd(5, 2) = 1 = F_1$.
+
+$\gcd(F_6, F_4) = \gcd(8, 3) = 1 = F_2$.
+
+Conjecture : $\gcd(F_m, F_n) = F_{\gcd(m,n)}$ (propriété classique de Fibonacci).
+\end{boitecorrige}
+
+\subsection*{Exercice 16 - Quantificateurs et négation \niveau{\facile}}
+
+\begin{boiteexercice}
+Soient les assertions suivantes, où $x$ et $y$ sont des entiers naturels :
+\begin{enumerate}
+  \item $A_1 : \forall x\in\mathbb{N},\ \exists y\in\mathbb{N},\ y > x$.
+  \item $A_2 : \exists x\in\mathbb{N},\ \forall y\in\mathbb{N},\ y \geq x$.
+  \item $A_3 : \forall x\in\mathbb{N},\ \forall y\in\mathbb{N},\ \exists z\in\mathbb{N},\ z = x+y$.
+\end{enumerate}
+Pour chacune : (a) déterminer si elle est vraie ou fausse ; (b) écrire sa négation.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.(a)} $A_1$ est vraie : pour tout $x$, on peut choisir $y = x+1 > x$.
+
+\textbf{1.(b)} $\neg A_1 : \exists x\in\mathbb{N},\ \forall y\in\mathbb{N},\ y \leq x$.
+
+\textbf{2.(a)} $A_2$ est vraie : en prenant $x = 0$, tout $y\in\mathbb{N}$ vérifie $y \geq 0$.
+
+\textbf{2.(b)} $\neg A_2 : \forall x\in\mathbb{N},\ \exists y\in\mathbb{N},\ y < x$. Cette assertion est fausse (prendre $x=0$).
+
+\textbf{3.(a)} $A_3$ est vraie : la somme de deux entiers naturels est un entier naturel ($z = x+y$ convient).
+
+\textbf{3.(b)} $\neg A_3 : \exists x\in\mathbb{N},\ \exists y\in\mathbb{N},\ \forall z\in\mathbb{N},\ z \neq x+y$.
+\end{boitecorrige}
+
+\subsection*{Exercice 17 - Tables de vérité : implications \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soient $P$ et $Q$ deux propositions. On définit :
+\[
+P \implies Q \equiv \neg P \vee Q, \qquad P \iff Q \equiv (P\implies Q)\wedge(Q\implies P).
+\]
+\begin{enumerate}
+  \item Donner les tables de vérité de $P\implies Q$ et $P\iff Q$.
+  \item Montrer que $(P\implies Q) \iff (\neg Q \implies \neg P)$ (contraposée).
+  \item Montrer que $P\implies Q$ n'est pas équivalente à $Q\implies P$.
+  \item Simplifier $\neg(P\implies Q)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Tables de vérité :
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$P$ & $Q$ & $P\implies Q$ & $P\iff Q$\\
+\hline
+V & V & V & V\\
+V & F & F & F\\
+F & V & V & F\\
+F & F & V & V\\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{2.} La contraposée $\neg Q \implies \neg P$ vaut $\neg(\neg Q)\vee\neg P = Q \vee \neg P = \neg P \vee Q = P\implies Q$.
+
+\textbf{3.} Contre-exemple : $P$ fausse, $Q$ vraie. Alors $P\implies Q$ est vraie mais $Q\implies P$ est fausse. Donc pas équivalentes.
+
+\textbf{4.} $\neg(P\implies Q) = \neg(\neg P \vee Q) = P \wedge \neg Q$ (lois de De Morgan).
+\reponse{$\neg(P\implies Q) \equiv P\wedge\neg Q$}
+\end{boitecorrige}
+
+\subsection*{Exercice 18 - Lois de De Morgan \niveau{\facile}}
+
+\begin{boiteexercice}
+Soient $A$ et $B$ deux parties d'un ensemble $E$. Démontrer :
+\begin{enumerate}
+  \item $\overline{A\cup B} = \overline{A}\cap\overline{B}$
+  \item $\overline{A\cap B} = \overline{A}\cup\overline{B}$
+  \item $A\setminus B = A\cap\overline{B}$
+  \item $A\triangle B = (A\setminus B)\cup(B\setminus A)$ où $\triangle$ est la différence symétrique.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Soit $x\in\overline{A\cup B}$. Alors $x\notin A\cup B$, i.e. $x\notin A$ et $x\notin B$, donc $x\in\overline A\cap\overline B$. Réciproquement identique.
+
+\textbf{2.} S'en déduit en appliquant (1) à $\overline A$ et $\overline B$ : $\overline{\overline A\cap\overline B} = \overline{\overline A}\cup\overline{\overline B} = A\cup B$.
+
+\textbf{3.} $x\in A\setminus B \iff x\in A\wedge x\notin B \iff x\in A\cap\overline B$.
+
+\textbf{4.} Par définition $A\triangle B = (A\cup B)\setminus(A\cap B)$. Or
+\[
+A\triangle B = \{x : x\in A \text{ ou } x\in B\}\setminus\{x : x\in A\cap B\} = (A\setminus B)\cup(B\setminus A).
+\]
+\reponse{$A\triangle B = (A\cap\overline B)\cup(B\cap\overline A)$}
+\end{boitecorrige}
+
+\subsection*{Exercice 19 - Relation d'ordre \niveau{\moyen}}
+
+\begin{boiteexercice}
+Sur $\mathbb{N}\times\mathbb{N}$, on définit la relation $(a,b)\preccurlyeq (c,d)$ si $a < c$, ou ($a = c$ et $b\leq d$) (ordre lexicographique).
+\begin{enumerate}
+  \item Montrer que $\preccurlyeq$ est une relation d'ordre.
+  \item Est-elle totale ? Donner un exemple.
+  \item Comparer $(1,5)$, $(2,3)$ et $(1,2)$.
+  \item L'ordre usuel $\leq$ sur $\mathbb{N}$ est-il compatible avec $\preccurlyeq$ ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\textit{Réflexivité :} $(a,b)\preccurlyeq(a,b)$ car $a=a$ et $b\leq b$.
+\textit{Antisymétrie :} si $(a,b)\preccurlyeq(c,d)$ et $(c,d)\preccurlyeq(a,b)$, nécessairement $a=c$ (sinon l'un des $a<c$ ou $c<a$), puis $b\leq d$ et $d\leq b$ donc $b=d$.
+\textit{Transitivité :} si $(a,b)\preccurlyeq(c,d)$ et $(c,d)\preccurlyeq(e,f)$ :
+\begin{itemize}[nosep]
+  \item si $a<c$ ou $c<e$, alors $a<e$ ou ($a=e$ et $b\leq d\leq f$), d'où $(a,b)\preccurlyeq(e,f)$ ;
+  \item si $a=c$ et $c=e$, alors $a=e$, $b\leq d$, $d\leq f$ donc $b\leq f$ et $(a,b)\preccurlyeq(e,f)$.
+\end{itemize}
+
+\textbf{2.} Oui, totale : pour $(a,b)$ et $(c,d)$, soit $a<c$ (donc $(a,b)\preccurlyeq(c,d)$), soit $a>c$ (l'inverse), soit $a=c$ et l'ordre $\leq$ sur $\mathbb{N}$ permet de comparer $b$ et $d$.
+
+\textbf{3.} $(1,2) \preccurlyeq (1,5) \preccurlyeq (2,3)$ (même première coordonnée pour les deux premiers, puis $1<2$).
+
+\textbf{4.} Non au sens strict : $(1,5)\preccurlyeq(2,3)$ bien que $5 > 3$. Mais l'ordre est compatible si l'on regarde la première coordonnée.
+\reponse{$\preccurlyeq$ est un ordre total sur $\mathbb{N}\times\mathbb{N}$}
+\end{boitecorrige}
+
+\subsection*{Exercice 20 - Composition d'applications et bijection \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soient $f : \mathbb{R}\to\mathbb{R}$, $x\mapsto 2x+1$, et $g : \mathbb{R}\to\mathbb{R}$, $x\mapsto x^2$.
+\begin{enumerate}
+  \item Déterminer $f\circ g$ et $g\circ f$. Sont-elles égales ?
+  \item $f$ est-elle bijective ? Donner sa réciproque.
+  \item $g$ est-elle injective ? surjective ? bijective ?
+  \item Déterminer une restriction de $g$ à un intervalle $I\subset\mathbb{R}$ telle que $g|_I : I\to[0,+\infty[$ soit bijective, et donner sa réciproque.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $(f\circ g)(x) = f(x^2) = 2x^2+1$. $(g\circ f)(x) = g(2x+1) = (2x+1)^2 = 4x^2+4x+1$. Elles ne sont pas égales (la composition n'est pas commutative).
+
+\textbf{2.} $f$ est affine de pente $2\neq0$ donc bijective. Sa réciproque est $f^{-1}(y) = \dfrac{y-1}{2}$.
+
+\textbf{3.} $g$ n'est pas injective ($g(-1)=g(1)=1$), donc pas bijective. Elle est surjective sur $[0,+\infty[$ mais $g:\mathbb{R}\to\mathbb{R}$ n'est pas surjective (les réels négatifs ne sont pas atteints).
+
+\textbf{4.} En restreignant à $I = [0,+\infty[$, $g|_I : [0,+\infty[\to[0,+\infty[$ est strictement croissante, donc bijective. Sa réciproque est $g^{-1}(y) = \sqrt{y}$.
+\reponse{$g|_{[0,+\infty[}^{-1}(y) = \sqrt{y}$}
+\end{boitecorrige}
+
+\subsection*{Exercice 21 - Cardinal d'ensembles finis \niveau{\moyen}}
+
+\begin{boiteexercice}
+Dans un groupe de 30 étudiants, 18 étudient l'anglais, 15 l'allemand et 10 l'espagnol. On sait que 6 étudient à la fois anglais et allemand, 5 l'anglais et l'espagnol, 4 l'allemand et l'espagnol, et 2 étudient les trois langues.
+\begin{enumerate}
+  \item Combien d'étudiants n'étudient aucune de ces langues ?
+  \item Combien étudient exactement une langue ?
+  \item Combien étudient exactement deux langues ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Notons $A$, $B$, $C$ les ensembles d'étudiants en anglais, allemand, espagnol.
+
+\textbf{1.} Par inclusion-exclusion :
+\[
+|A\cup B\cup C| = |A|+|B|+|C| - |A\cap B| - |A\cap C| - |B\cap C| + |A\cap B\cap C|
+\]
+\[
+|A\cup B\cup C| = 18+15+10 - 6 - 5 - 4 + 2 = 30.
+\]
+Tous les étudiants étudient au moins une langue. Donc $30 - 30 = \mathbf{0}$ étudiant n'étudie aucune langue.
+
+\textbf{2.} Exactement une langue :
+\begin{align*}
+|A\text{ seul}| &= 18-6-5+2 = 9,\\
+|B\text{ seul}| &= 15-6-4+2 = 7,\\
+|C\text{ seul}| &= 10-5-4+2 = 3.
+\end{align*}
+Total : $9+7+3 = \mathbf{19}$.
+
+\textbf{3.} Exactement deux langues :
+\[
+|A\cap B\text{ seul}| = 6-2 = 4,\quad |A\cap C\text{ seul}| = 5-2 = 3,\quad |B\cap C\text{ seul}| = 4-2 = 2.
+\]
+Total : $4+3+2 = \mathbf{9}$.
+
+Vérification : $19 + 9 + 2 = 30$. \checkmark
+\reponse{0 aucune, 19 une seule, 9 deux langues}
+\end{boitecorrige}
+
+\subsection*{Exercice 22 - Forme normale disjonctive \niveau{\difficile}}
+
+\begin{boiteexercice}
+Soit la fonction booléenne $f(a,b,c) = (a\wedge b)\vee(\neg a \wedge c) \vee (b\wedge c)$.
+\begin{enumerate}
+  \item Donner la table de vérité de $f$.
+  \item Donner la forme normale disjonctive (DNF) canonique de $f$.
+  \item Simplifier $f$ en utilisant les identités booléennes.
+  \item Construire le circuit logique correspondant.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Table de vérité :
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$a$ & $b$ & $c$ & $f$\\
+\hline
+0 & 0 & 0 & 0\\
+0 & 0 & 1 & 1\\
+0 & 1 & 0 & 0\\
+0 & 1 & 1 & 1\\
+1 & 0 & 0 & 0\\
+1 & 0 & 1 & 0\\
+1 & 1 & 0 & 1\\
+1 & 1 & 1 & 1\\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{2.} DNF canonique (somme de mintermes) :
+\[
+f = \bar a\bar b c \vee \bar a b c \vee a b \bar c \vee a b c.
+\]
+
+\textbf{3.} Simplification par Karnaugh ou algébrique :
+\begin{align*}
+f &= \bar a c(\bar b \vee b) \vee ab(\bar c \vee c) = \bar a c \vee ab.
+\end{align*}
+Le terme $b\wedge c$ est absorbé par $\bar a c \vee ab$ (consensus).
+
+\textbf{4.} Circuit : deux portes AND (une pour $\bar a\wedge c$ avec inverseur sur $a$, une pour $a\wedge b$), reliées par une porte OR.
+\reponse{$f(a,b,c) = \bar a\,c \vee a\,b$}
+\end{boitecorrige}
+
+\subsection*{Exercice 23 - Récurrence double \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $(u_n)$ définie par $u_0 = 1$, $u_1 = 3$ et $u_{n+2} = 2u_{n+1} + 3u_n$ pour tout $n\in\mathbb{N}$.
+\begin{enumerate}
+  \item Calculer $u_2, u_3, u_4$.
+  \item Montrer par récurrence que $u_n = 3^n$ pour tout $n$.
+  \item Vérifier que $v_n = (-1)^n$ est également solution de la même récurrence, et en déduire la solution générale.
+  \item Déterminer la solution vérifiant $u_0 = 1$ et $u_1 = -1$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $u_2 = 2u_1 + 3u_0 = 6 + 3 = 9$. $u_3 = 2u_2 + 3u_1 = 18 + 9 = 27$. $u_4 = 2u_3 + 3u_2 = 54 + 27 = 81$.
+
+\textbf{2.} Posons $P(n) : u_n = 3^n$.
+\textit{Initialisation :} $u_0 = 1 = 3^0$, $u_1 = 3 = 3^1$.
+\textit{Hérédité :} si $u_n = 3^n$ et $u_{n+1} = 3^{n+1}$, alors $u_{n+2} = 2\cdot 3^{n+1} + 3\cdot 3^n = 3^n(6+3) = 3^n\cdot 9 = 3^{n+2}$.
+Donc $P(n)$ vraie pour tout $n$.
+
+\textbf{3.} $v_{n+2} = (-1)^{n+2} = (-1)^n$. $2v_{n+1}+3v_n = 2(-1)^{n+1}+3(-1)^n = (-1)^n(-2+3) = (-1)^n$. Donc $v$ vérifie la récurrence. Solution générale : $u_n = A\cdot 3^n + B\cdot(-1)^n$.
+
+\textbf{4.} $u_0 = A+B = 1$, $u_1 = 3A - B = -1$. On additionne : $4A = 0$ donc $A = 0$, $B = 1$. Solution : $u_n = (-1)^n$.
+\reponse{$u_n = (-1)^n$ pour $u_0=1, u_1=-1$}
+\end{boitecorrige}
+
+\subsection*{Exercice 24 - Dénombrement : anagrammes \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Combien d'anagrammes du mot \textsc{KARA} ? (lettres non nécessairement distinctes)
+  \item Combien d'anagrammes du mot \textsc{ANANAS} ?
+  \item Combien de mots de 4 lettres peut-on former avec les lettres de \textsc{KARA} ?
+  \item Combien de mots de 5 lettres avec au moins une voyelle du mot \textsc{BANANE} ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} \textsc{KARA} : 4 lettres dont 2 A. Nombre d'anagrammes : $\dfrac{4!}{2!} = \mathbf{12}$.
+
+\textbf{2.} \textsc{ANANAS} : 6 lettres dont 3 A, 2 N, 1 S. Nombre : $\dfrac{6!}{3!\,2!\,1!} = \dfrac{720}{12} = \mathbf{60}$.
+
+\textbf{3.} Pour former un mot de 4 lettres avec K, A, R, A (en utilisant exactement ces lettres) : c'est équivalent au nombre d'anagrammes, soit 12.
+
+Si l'on peut réutiliser les lettres, il y a $4^4 = 256$ mots. (Question ambiguë ; la première interprétation est plus classique.)
+
+\textbf{4.} Lettres de \textsc{BANANE} : B, A, N, A, N, E (3 voyelles : A, A, E). Mots de 5 lettres :
+\begin{itemize}[nosep]
+  \item Total (sans contrainte) : $6^5 = 7776$ si répétition autorisée.
+  \item Mots sans voyelle (uniquement B, N, N) : $3^5 = 243$.
+  \item Mots avec au moins une voyelle : $7776 - 243 = \mathbf{7533}$.
+\end{itemize}
+\reponse{KARA : 12, ANANAS : 60, mots 5 lettres : 7533}
+\end{boitecorrige}
+
+\subsection*{Exercice 25 - Tribu et probabilités \niveau{\difficile}}
+
+\begin{boiteexercice}
+On lance deux dés équilibrés à 6 faces. Soit $\Omega = \{1,\ldots,6\}^2$ l'univers, $\mathcal{P}(\Omega)$ la tribu des événements.
+\begin{enumerate}
+  \item Donner $|\Omega|$ et la probabilité d'un événement élémentaire.
+  \item Soit $A$ = « la somme est 7 ». Calculer $P(A)$.
+  \item Soit $B$ = « au moins un dé donne 6 ». Calculer $P(B)$ et $P(A\cap B)$.
+  \item $A$ et $B$ sont-ils indépendants ?
+  \item Calculer $P(A\mid B)$ et interpréter.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $|\Omega| = 6\times 6 = 36$. Chaque événement élémentaire a probabilité $\dfrac{1}{36}$.
+
+\textbf{2.} Combinaisons donnant somme 7 : $(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)$, soit 6 issues. $P(A) = \dfrac{6}{36} = \dfrac{1}{6}$.
+
+\textbf{3.} $B$ = au moins un 6. L'événement contraire $\overline B$ = aucun 6, soit $5\times 5 = 25$ issues. $P(B) = 1 - \dfrac{25}{36} = \dfrac{11}{36}$.
+
+$A\cap B$ = somme 7 et au moins un 6 : issues $(1,6)$ et $(6,1)$, soit 2 issues. $P(A\cap B) = \dfrac{2}{36} = \dfrac{1}{18}$.
+
+\textbf{4.} $P(A)\cdot P(B) = \dfrac{1}{6}\cdot\dfrac{11}{36} = \dfrac{11}{216} \neq \dfrac{1}{18} = \dfrac{12}{216} = P(A\cap B)$. Donc $A$ et $B$ \textbf{ne sont pas indépendants}.
+
+\textbf{5.} $P(A\mid B) = \dfrac{P(A\cap B)}{P(B)} = \dfrac{2/36}{11/36} = \dfrac{2}{11}$.
+
+Sachant qu'au moins un dé vaut 6, la probabilité que la somme soit 7 diminue par rapport à $1/6 \approx 0{,}167$ : $2/11 \approx 0{,}182$. Elle augmente légèrement car le 6 est nécessaire à plusieurs issues de somme 7.
+\reponse{$P(A)=1/6,\ P(B)=11/36,\ P(A\mid B)=2/11$}
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

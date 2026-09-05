@@ -1,0 +1,690 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+\lhead{\small\textit{Optique Géométrique - Licence 1}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries OPTIQUE GÉOMÉTRIQUE}\\[0.3cm]
+  {\normalsize Licence 1 - Mathématiques, Physique et Chimie}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Lois de Snell-Descartes.} À l'interface entre deux milieux d'indices $n_1$ et $n_2$, pour un rayon incident faisant un angle $\theta_1$ avec la normale :
+\[
+n_1\sin\theta_1 = n_2\sin\theta_2
+\]
+La réflexion totale interne se produit quand $\theta_1 \geq \theta_c$ avec $\sin\theta_c = n_2/n_1$ (si $n_1 > n_2$).
+
+\textbf{2. Miroirs plans et sphériques.} Pour un miroir plan, l'image est symétrique par rapport au plan du miroir. Pour un miroir sphérique de rayon $R$ et de focale $f = R/2$, la relation de conjugaison (convention algébrique, origines au sommet $S$) :
+\[
+\frac{1}{\overline{SA'}} + \frac{1}{\overline{SA}} = \frac{2}{R} = \frac{1}{f}
+\]
+Grandissement transversal : $\gamma = \overline{SA'}/\overline{SA}$.
+
+\textbf{3. Lentilles minces.} Pour une lentille de vergence $V = 1/f$ (en dioptries, $f$ en mètres), avec $\overline{OA}=u$ (objet) et $\overline{OA'}=v$ (image) :
+\[
+\frac{1}{v} - \frac{1}{u} = \frac{1}{f} = V
+\]
+Grandissement : $\gamma = v/u$. Lentille convergente : $f > 0$, $V > 0$. Lentille divergente : $f < 0$, $V < 0$.
+
+\textbf{4. Association de lentilles.} Pour deux lentilles séparées d'une distance $d$, la vergence équivalente est :
+\[
+V_{eq} = V_1 + V_2 - d\,V_1 V_2
+\]
+
+\textbf{5. Instruments d'optique.}
+\begin{itemize}
+  \item Loupe : grossissement commercial $G = D/f$ avec $D = \qty{25}{cm}$ (distance de vision distincte).
+  \item Lunette astronomique afocale : grossissement $G = -f_1/f_2$ (objectif/oculaire), longueur du tube $L = f_1 + f_2$.
+  \item Microscope : grossissement $G = -\Delta \cdot D/(f_{obj} \cdot f_{oc})$ avec $\Delta$ l'intervalle optique.
+\end{itemize}
+
+\textbf{6. Formation des images.}
+Une image est \textit{réelle} si les rayons convergent réellement (image du même côté que la lumière sortante) ; elle est \textit{virtuelle} sinon. L'objet est réel si situé avant la lentille (dans le sens de propagation).
+
+\end{boiteresume}
+
+\newpage
+\section{Lois de Snell-Descartes}
+
+\subsection*{Exercice 1 - Réfraction à l'interface verre-air \niveau{\facile}}
+
+\begin{boiteexercice}
+Un rayon lumineux passe d'un milieu de verre d'indice $n_1 = 1{,}5$ vers l'air ($n_2 = 1{,}0$).
+\begin{enumerate}
+  \item Un rayon arrive avec un angle d'incidence $\theta_1 = 30°$ par rapport à la normale. Calculer l'angle de réfraction $\theta_2$.
+  \item Calculer l'angle limite de réflexion totale interne $\theta_c$.
+  \item Que se passe-t-il si $\theta_1 = 50°$ ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On applique la loi de Snell-Descartes :
+\[
+n_1\sin\theta_1 = n_2\sin\theta_2
+\]
+\[
+1{,}5 \times \sin(30°) = 1{,}0 \times \sin\theta_2
+\]
+\[
+\sin\theta_2 = 1{,}5 \times 0{,}5 = 0{,}75 \quad \Rightarrow \quad \theta_2 = \arcsin(0{,}75) \approx 48{,}6°
+\]
+Le rayon réfracté s'éloigne de la normale car $n_1 > n_2$.
+
+\textbf{2.} L'angle critique $\theta_c$ correspond à $\theta_2 = 90°$ :
+\[
+\sin\theta_c = \frac{n_2}{n_1} = \frac{1{,}0}{1{,}5} = \frac{2}{3} \approx 0{,}667
+\]
+\[
+\theta_c = \arcsin(2/3) \approx 41{,}8°
+\]
+
+\textbf{3.} Comme $\theta_1 = 50° > \theta_c \approx 41{,}8°$, il y a \textbf{réflexion totale interne} : aucun rayon ne traverse l'interface, la totalité de la lumière est réfléchie avec $\theta_r = 50°$.
+\end{boitecorrige}
+
+\subsection*{Exercice 2 - Prisme équilatéral \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un prisme équilatéral ($A = 60°$) est taillé dans un verre d'indice $n = 1{,}6$.
+\begin{enumerate}
+  \item Rappeler la relation entre l'angle de déviation minimale $D_m$ et les indices : $n\sin\!\left(\dfrac{A+D_m}{2}\right) = \sin\!\left(\dfrac{A}{2}\right)$.
+  \item Calculer numériquement $D_m$.
+  \item En déduire l'angle d'incidence correspondant à la déviation minimale.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} À la déviation minimale, le rayon traverse le prisme symétriquement. En appliquant Snell-Descartes aux deux faces et la géométrie du prisme, on obtient :
+\[
+n\sin\!\left(\frac{A+D_m}{2}\right) = \sin\!\left(\frac{A}{2}\right)
+\]
+Attention : cette relation s'écrit aussi parfois $\sin\!\left(\dfrac{A+D_m}{2}\right) = n\sin\!\left(\dfrac{A}{2}\right)$ selon la convention (indice extérieur = 1).
+
+Avec $n_{verre}=1{,}6$ et $n_{air}=1$, la formule correcte est :
+\[
+\sin\!\left(\frac{A+D_m}{2}\right) = n\sin\!\left(\frac{A}{2}\right)
+\]
+
+\textbf{2.} Calcul numérique avec $A = 60°$ :
+\[
+\sin\!\left(\frac{60°+D_m}{2}\right) = 1{,}6 \times \sin(30°) = 1{,}6 \times 0{,}5 = 0{,}8
+\]
+\[
+\frac{60°+D_m}{2} = \arcsin(0{,}8) \approx 53{,}13°
+\]
+\[
+60° + D_m = 106{,}26° \quad \Rightarrow \quad \boxed{D_m \approx 46{,}3°}
+\]
+
+\textbf{3.} À la déviation minimale, l'angle d'incidence sur la première face est :
+\[
+i_1 = \frac{A + D_m}{2} = \frac{60° + 46{,}3°}{2} \approx 53{,}1°
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 3 - Fibre optique à saut d'indice \niveau{\moyen}}
+
+\begin{boiteexercice}
+Une fibre optique est constituée d'un c\oe{}ur d'indice $n_1 = 1{,}48$ entouré d'une gaine d'indice $n_2 = 1{,}45$.
+\begin{enumerate}
+  \item Calculer l'angle critique de réflexion totale interne $\theta_c$ à l'interface c\oe{}ur-gaine.
+  \item L'ouverture numérique est définie par $\text{ON} = \sqrt{n_1^2 - n_2^2}$. Calculer ON.
+  \item En déduire l'angle d'acceptance $\theta_a$ (angle maximum d'entrée dans la fibre depuis l'air).
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} À l'interface c\oe{}ur-gaine ($n_1 > n_2$) :
+\[
+\sin\theta_c = \frac{n_2}{n_1} = \frac{1{,}45}{1{,}48} \approx 0{,}9797
+\]
+\[
+\theta_c = \arcsin(0{,}9797) \approx 78{,}5°
+\]
+
+\textbf{2.} Ouverture numérique :
+\begin{align}
+\text{ON} &= \sqrt{n_1^2 - n_2^2} = \sqrt{(1{,}48)^2 - (1{,}45)^2} \notag \\
+&= \sqrt{2{,}1904 - 2{,}1025} = \sqrt{0{,}0879} \approx 0{,}296
+\end{align}
+
+\textbf{3.} L'angle d'acceptance $\theta_a$ depuis l'air ($n_{air}=1$) est donné par $\sin\theta_a = \text{ON}$ :
+\[
+\sin\theta_a = \text{ON} \approx 0{,}296 \quad \Rightarrow \quad \theta_a = \arcsin(0{,}296) \approx 17{,}2°
+\]
+Tout rayon entrant dans la fibre avec un angle inférieur à $17{,}2°$ subira la réflexion totale interne et sera guidé dans le c\oe{}ur.
+\end{boitecorrige}
+
+\newpage
+\section{Miroirs}
+
+\subsection*{Exercice 4 - Miroir plan \niveau{\facile}}
+
+\begin{boiteexercice}
+Un objet ponctuel $A$ est placé à $d = \qty{20}{cm}$ devant un miroir plan.
+\begin{enumerate}
+  \item Construire géométriquement l'image $A'$ en utilisant la propriété de symétrie.
+  \item Décrire les caractéristiques de l'image : position, nature (réelle ou virtuelle), grandissement.
+  \item Si l'objet s'éloigne du miroir à une vitesse $v = \qty{5}{cm/s}$, à quelle vitesse l'image s'éloigne-t-elle ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Construction géométrique :} L'image $A'$ dans un miroir plan est le symétrique de $A$ par rapport au plan du miroir. On trace la perpendiculaire de $A$ au miroir (qui coupe le miroir en $H$), puis on reporte $A'$ de l'autre côté tel que $HA' = HA$.
+
+\textbf{2. Caractéristiques :}
+\begin{itemize}
+  \item Position : $A'$ est à $\qty{20}{cm}$ derrière le miroir (côté non réfléchissant).
+  \item Nature : image \textbf{virtuelle} (les rayons réfléchis divergent ; leur prolongement converge en $A'$).
+  \item Le grandissement transversal $\gamma = +1$ : l'image est de même taille que l'objet, droite.
+\end{itemize}
+
+\textbf{3. Vitesse de l'image :} Si $A$ s'éloigne à $v = \qty{5}{cm/s}$, $A'$ s'éloigne également à $\qty{5}{cm/s}$ (symétrie du miroir plan). La distance $AA'$ augmente donc à $\qty{10}{cm/s}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 5 - Miroir concave \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un miroir concave a un rayon de courbure $R = \qty{30}{cm}$, donc une focale $f = R/2 = \qty{15}{cm}$.
+Un objet réel est placé à $\overline{SA} = -\qty{25}{cm}$ (convention algébrique, objet devant le miroir).
+\begin{enumerate}
+  \item Calculer la position de l'image $\overline{SA'}$ à l'aide de la formule $\dfrac{1}{\overline{SA'}} + \dfrac{1}{\overline{SA}} = \dfrac{1}{f}$.
+  \item Calculer le grandissement $\gamma = \overline{SA'}/\overline{SA}$.
+  \item L'image est-elle réelle ou virtuelle ? Droite ou renversée ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On applique la formule des miroirs avec $f = +\qty{15}{cm}$ (miroir concave, $f > 0$ en convention miroir) et $\overline{SA} = -25\,\text{cm}$ :
+\[
+\frac{1}{\overline{SA'}} = \frac{1}{f} - \frac{1}{\overline{SA}} = \frac{1}{15} - \frac{1}{-25} = \frac{1}{15} + \frac{1}{25}
+\]
+\[
+\frac{1}{\overline{SA'}} = \frac{5}{75} + \frac{3}{75} = \frac{8}{75}
+\]
+\[
+\overline{SA'} = \frac{75}{8} = +9{,}375\,\text{cm}
+\]
+
+\textbf{2.} Grandissement :
+\[
+\gamma = \frac{\overline{SA'}}{\overline{SA}} = \frac{+9{,}375}{-25} = -0{,}375
+\]
+
+\textbf{3.} $\overline{SA'} = +9{,}375\,\text{cm} > 0$ : l'image est du même côté que l'objet (devant le miroir), donc \textbf{réelle}. $\gamma = -0{,}375 < 0$ : l'image est \textbf{renversée} et réduite ($|\gamma| < 1$).
+\end{boitecorrige}
+
+\subsection*{Exercice 6 - Miroir convexe \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un miroir convexe a une focale $f = -\qty{20}{cm}$. Un objet réel est placé à $\qty{60}{cm}$ devant le miroir ($\overline{SA} = -\qty{60}{cm}$).
+\begin{enumerate}
+  \item Calculer la position de l'image $\overline{SA'}$.
+  \item Calculer le grandissement $\gamma$.
+  \item Discuter la nature et les caractéristiques de l'image.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On applique la formule des miroirs avec $f = -20\,\text{cm}$ (miroir convexe) et $\overline{SA} = -60\,\text{cm}$ :
+\[
+\frac{1}{\overline{SA'}} = \frac{1}{f} - \frac{1}{\overline{SA}} = \frac{1}{-20} - \frac{1}{-60} = -\frac{3}{60} + \frac{1}{60} = -\frac{2}{60} = -\frac{1}{30}
+\]
+\[
+\boxed{\overline{SA'} = -30\,\text{cm}}
+\]
+
+\textbf{2.} Grandissement :
+\[
+\gamma = \frac{\overline{SA'}}{\overline{SA}} = \frac{-30}{-60} = +\frac{1}{2}
+\]
+
+\textbf{3.} $\overline{SA'} = -30\,\text{cm} < 0$ : l'image est \textbf{derrière le miroir}, donc \textbf{virtuelle}. $\gamma = +1/2 > 0$ : l'image est \textbf{droite} et \textbf{réduite} (taille moitié de l'objet). C'est la propriété caractéristique des miroirs convexes : ils donnent toujours des images virtuelles, droites et réduites pour des objets réels, ce qui les rend utiles comme rétroviseurs.
+\end{boitecorrige}
+
+\newpage
+\section{Lentilles minces}
+
+\subsection*{Exercice 7 - Lentille convergente \niveau{\facile}}
+
+\begin{boiteexercice}
+Une lentille convergente a une distance focale $f = \qty{10}{cm}$ (vergence $V = 10\,\text{D}$).
+Un objet réel $AB$ est placé à $\overline{OA} = u = -\qty{15}{cm}$ de la lentille.
+\begin{enumerate}
+  \item Calculer la position de l'image $\overline{OA'} = v$ à l'aide de la formule $\dfrac{1}{v} - \dfrac{1}{u} = \dfrac{1}{f}$.
+  \item Calculer le grandissement transversal $\gamma = v/u$.
+  \item L'image est-elle réelle ou virtuelle ? Droite ou renversée ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Avec $u = -15\,\text{cm}$ et $f = +10\,\text{cm}$ :
+\[
+\frac{1}{v} = \frac{1}{f} + \frac{1}{u} = \frac{1}{10} + \frac{1}{-15} = \frac{3}{30} - \frac{2}{30} = \frac{1}{30}
+\]
+\[
+\boxed{v = \overline{OA'} = +30\,\text{cm}}
+\]
+L'image est à $30\,\text{cm}$ de l'autre côté de la lentille.
+
+\textbf{2.} Grandissement :
+\[
+\gamma = \frac{v}{u} = \frac{+30}{-15} = -2
+\]
+
+\textbf{3.} $v = +30\,\text{cm} > 0$ : l'image est \textbf{réelle} (du côté opposé à l'objet). $\gamma = -2 < 0$ : l'image est \textbf{renversée} et agrandie (de facteur 2).
+\end{boitecorrige}
+
+\subsection*{Exercice 8 - Lentille divergente \niveau{\facile}}
+
+\begin{boiteexercice}
+Une lentille divergente a une distance focale $f = -\qty{12}{cm}$. Un objet réel est placé à $u = -\qty{20}{cm}$.
+\begin{enumerate}
+  \item Calculer la position de l'image.
+  \item Calculer le grandissement $\gamma$.
+  \item Décrire les caractéristiques de l'image.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Avec $u = -20\,\text{cm}$ et $f = -12\,\text{cm}$ :
+\[
+\frac{1}{v} = \frac{1}{f} + \frac{1}{u} = \frac{1}{-12} + \frac{1}{-20} = -\frac{5}{60} - \frac{3}{60} = -\frac{8}{60} = -\frac{2}{15}
+\]
+\[
+v = -\frac{15}{2} = -7{,}5\,\text{cm}
+\]
+
+\textbf{2.} Grandissement :
+\[
+\gamma = \frac{v}{u} = \frac{-7{,}5}{-20} = +0{,}375
+\]
+
+\textbf{3.} $v = -7{,}5\,\text{cm} < 0$ : l'image est \textbf{virtuelle} (même côté que l'objet). $\gamma = +0{,}375 > 0$ : l'image est \textbf{droite} et \textbf{réduite}. C'est la propriété des lentilles divergentes pour des objets réels : elles donnent toujours des images virtuelles, droites et réduites.
+\end{boitecorrige}
+
+\subsection*{Exercice 9 - Association de deux lentilles \niveau{\moyen}}
+
+\begin{boiteexercice}
+Deux lentilles minces de focales $f_1 = \qty{15}{cm}$ et $f_2 = \qty{20}{cm}$ sont séparées d'une distance $d = \qty{10}{cm}$. Un objet réel est à $\qty{30}{cm}$ de la première lentille.
+\begin{enumerate}
+  \item Calculer la vergence équivalente du système : $V_{eq} = V_1 + V_2 - d\,V_1 V_2$ (avec $d$ en mètres).
+  \item Calculer la distance focale équivalente $f_{eq}$.
+  \item Calculer la position de l'image finale par construction successive (image intermédiaire puis image finale).
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Vergences : $V_1 = 1/f_1 = 1/0{,}15 \approx 6{,}67\,\text{D}$, $V_2 = 1/f_2 = 1/0{,}20 = 5\,\text{D}$, $d = 0{,}10\,\text{m}$ :
+\begin{align}
+V_{eq} &= V_1 + V_2 - d\,V_1 V_2 \notag \\
+&= 6{,}67 + 5 - 0{,}10 \times 6{,}67 \times 5 \notag \\
+&= 11{,}67 - 3{,}33 = 8{,}33\,\text{D}
+\end{align}
+
+\textbf{2.} Focale équivalente :
+\[
+f_{eq} = \frac{1}{V_{eq}} = \frac{1}{8{,}33} \approx 12{,}0\,\text{cm}
+\]
+
+\textbf{3.} Construction successive :
+
+\textit{Image par la lentille $L_1$} : $u_1 = -30\,\text{cm}$, $f_1 = +15\,\text{cm}$ :
+\[
+\frac{1}{v_1} = \frac{1}{15} + \frac{1}{-30} = \frac{2}{30} - \frac{1}{30} = \frac{1}{30} \quad \Rightarrow \quad v_1 = +30\,\text{cm}
+\]
+L'image intermédiaire $A_1'$ est à $30\,\text{cm}$ à droite de $L_1$, soit à $30 - 10 = 20\,\text{cm}$ à droite de $L_2$ (donc objet virtuel pour $L_2$).
+
+\textit{Image par la lentille $L_2$} : $u_2 = +20\,\text{cm}$ (objet virtuel), $f_2 = +20\,\text{cm}$ :
+\[
+\frac{1}{v_2} = \frac{1}{20} + \frac{1}{20} = \frac{2}{20} = \frac{1}{10} \quad \Rightarrow \quad v_2 = +10\,\text{cm}
+\]
+L'image finale est à $\qty{10}{cm}$ à droite de $L_2$ : image réelle.
+\end{boitecorrige}
+
+\subsection*{Exercice 10 - Loupe \niveau{\facile}}
+
+\begin{boiteexercice}
+Une loupe est une lentille convergente de focale $f = \qty{5}{cm}$.
+\begin{enumerate}
+  \item Calculer le grossissement commercial $G = D/f$ avec $D = \qty{25}{cm}$ (distance conventionnelle de vision distincte).
+  \item À quelle distance de la loupe doit-on placer l'objet pour que l'image soit à l'infini (observation sans accommodation) ?
+  \item À quelle distance pour que l'image soit à $D = \qty{25}{cm}$ (accommodation maximale) ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Grossissement commercial :
+\[
+G = \frac{D}{f} = \frac{25\,\text{cm}}{5\,\text{cm}} = 5
+\]
+La loupe grossit 5 fois par rapport à la vision à l'\oe{}il nu.
+
+\textbf{2.} Image à l'infini : on place l'objet au foyer objet de la loupe, soit à $|u| = f = \qty{5}{cm}$ en avant de la lentille ($u = -5\,\text{cm}$). On vérifie :
+\[
+\frac{1}{v} = \frac{1}{f} + \frac{1}{u} = \frac{1}{5} + \frac{1}{-5} = 0 \quad \Rightarrow \quad v = \infty
+\]
+
+\textbf{3.} Image à $-25\,\text{cm}$ (image virtuelle du même côté que l'objet) : $v = -25\,\text{cm}$, $f = +5\,\text{cm}$ :
+\[
+\frac{1}{u} = \frac{1}{v} - \frac{1}{f} = \frac{1}{-25} - \frac{1}{5} = -\frac{1}{25} - \frac{5}{25} = -\frac{6}{25}
+\]
+\[
+u = -\frac{25}{6} \approx -4{,}17\,\text{cm}
+\]
+L'objet doit être à $4{,}17\,\text{cm}$ de la loupe (entre la loupe et son foyer).
+\end{boitecorrige}
+
+\subsection*{Exercice 11 - Lunette astronomique \niveau{\moyen}}
+
+\begin{boiteexercice}
+Une lunette astronomique afocale est constituée d'un objectif de focale $f_1 = \qty{100}{cm}$ et d'un oculaire de focale $f_2 = \qty{5}{cm}$.
+\begin{enumerate}
+  \item Calculer le grossissement angulaire $G = -f_1/f_2$.
+  \item Calculer la longueur du tube optique $L = f_1 + f_2$.
+  \item Expliquer pourquoi l'image finale est renversée pour une lunette astronomique simple.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Grossissement de la lunette afocale :
+\[
+G = -\frac{f_1}{f_2} = -\frac{100}{5} = -20
+\]
+La lunette grossit 20 fois. Le signe négatif indique que l'image est renversée.
+
+\textbf{2.} Longueur du tube :
+\[
+L = f_1 + f_2 = 100 + 5 = \qty{105}{cm}
+\]
+Pour un système afocal, le foyer image de l'objectif coïncide avec le foyer objet de l'oculaire.
+
+\textbf{3.} L'objectif forme une image réelle et renversée de l'objet à l'infini (au plan focal image de l'objectif). L'oculaire, fonctionnant comme une loupe, agrandit cette image renversée sans la retourner à nouveau. L'image finale est donc \textbf{renversée}. Pour les lunettes terrestres, on ajoute un système redresseur (prisme ou lentille supplémentaire) pour redresser l'image.
+\end{boitecorrige}
+
+\newpage
+\section{\OE{}il et instruments d'optique}
+
+\subsection*{Exercice 12 - Modèle de l'\oe{}il réduit \niveau{\moyen}}
+
+\begin{boiteexercice}
+L'\oe{}il réduit est modélisé par une unique lentille d'indice $n = 4/3$ et de rayon de courbure $R = \qty{5.6}{mm}$, avec une distance lentille-rétine de $\qty{17}{mm}$.
+\begin{enumerate}
+  \item Calculer la puissance (vergence) de l'\oe{}il à l'aide de la formule $P = (n-1)/R$.
+  \item Vérifier que l'image d'un objet à l'infini se forme bien sur la rétine.
+  \item Quel est le punctum remotum (point le plus éloigné vu nettement) d'un \oe{}il normal ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Puissance de l'\oe{}il (interface sphérique d'un seul dioptre) :
+\[
+P = \frac{n_{\text{sortie}} - n_{\text{entrée}}}{R} = \frac{4/3 - 1}{5{,}6\times10^{-3}} = \frac{1/3}{5{,}6\times10^{-3}} \approx \frac{0{,}3333}{0{,}0056} \approx 59{,}5\,\text{D}
+\]
+
+\textbf{2.} Pour un objet à l'infini, les rayons incidents sont parallèles ($u = -\infty$, donc $1/u = 0$). La formule de conjugaison dans le milieu d'indice $n$ donne :
+\[
+\frac{n}{v} - \frac{1}{u} = P \quad \Rightarrow \quad \frac{n}{v} = P \quad \Rightarrow \quad v = \frac{n}{P} = \frac{4/3}{59{,}5} \approx 0{,}0224\,\text{m} = \qty{22.4}{mm}
+\]
+Cette valeur n'est pas exactement $17\,\text{mm}$ car le modèle simplifié utilise ici $P=(n-1)/R$ pour un seul dioptre. En réalité la puissance réelle de l'\oe{}il est d'environ $60\,\text{D}$ et tient compte de la cornée, du cristallin et des différents milieux de l'\oe{}il.
+
+\textbf{3.} Le punctum remotum de l'\oe{}il normal est à l'infini : un \oe{}il emmétrope (normal, sans défaut) voit nettement jusqu'à l'infini sans accommodation.
+\end{boitecorrige}
+
+\subsection*{Exercice 13 - Microscope \niveau{\difficile}}
+
+\begin{boiteexercice}
+Un microscope est constitué d'un objectif de focale $f_{obj} = \qty{4}{mm}$ et d'un oculaire de focale $f_{oc} = \qty{25}{mm}$. L'intervalle optique (distance entre le foyer image de l'objectif et le foyer objet de l'oculaire) est $\Delta = \qty{160}{mm}$. La distance de vision distincte conventionnelle est $D = \qty{250}{mm}$.
+\begin{enumerate}
+  \item Calculer le grossissement total du microscope : $G = -\dfrac{\Delta \cdot D}{f_{obj} \cdot f_{oc}}$.
+  \item Calculer la longueur totale du tube du microscope $L_{tube} = f_{obj} + \Delta + f_{oc}$.
+  \item À quelle distance de l'objectif doit-on placer l'objet pour que l'image intermédiaire soit dans le plan focal objet de l'oculaire ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Grossissement du microscope :
+\begin{align}
+G &= -\frac{\Delta \cdot D}{f_{obj} \cdot f_{oc}} \notag \\
+&= -\frac{160 \times 250}{4 \times 25} \notag \\
+&= -\frac{40000}{100} = -400
+\end{align}
+Le microscope grossit 400 fois (image renversée, d'où le signe négatif).
+
+\textbf{2.} Longueur du tube :
+\[
+L_{tube} = f_{obj} + \Delta + f_{oc} = 4 + 160 + 25 = \qty{189}{mm}
+\]
+
+\textbf{3.} Pour que l'image intermédiaire (formée par l'objectif) coïncide avec le foyer objet de l'oculaire, l'image doit être à $\Delta = \qty{160}{mm}$ au-delà du foyer image de l'objectif, soit à $v = f_{obj} + \Delta = 4 + 160 = \qty{164}{mm}$ de l'objectif.
+
+Par la formule des lentilles ($v = +164\,\text{mm}$, $f = +4\,\text{mm}$) :
+\[
+\frac{1}{u} = \frac{1}{v} - \frac{1}{f} = \frac{1}{164} - \frac{1}{4} = \frac{1 - 41}{164} = -\frac{40}{164} \approx -\frac{1}{4{,}1}
+\]
+\[
+u \approx -4{,}1\,\text{mm}
+\]
+L'objet est à environ $4{,}1\,\text{mm}$ devant l'objectif (légèrement au-delà du foyer objet de l'objectif).
+\end{boitecorrige}
+
+\subsection*{Exercice 14 - Correction des défauts de l'\oe{}il \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Un myope voit nettement jusqu'à $\qty{50}{cm}$ au maximum (punctum remotum à $50\,\text{cm}$). Calculer la vergence du verre correcteur permettant à cet \oe{}il de voir nettement à l'infini.
+  \item Un hypermétrope doit accommoder pour voir à $\qty{25}{cm}$ avec une vergence d'accommodation de $+4\,\text{D}$. Quelle lentille doit-on lui prescrire pour qu'il voie à $\qty{25}{cm}$ sans accommodation ?
+  \item Qu'est-ce que la presbytie ? Comment la corriger ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Correction de la myopie :}
+
+Le myope a son punctum remotum à $PR = \qty{50}{cm} = \qty{0.50}{m}$. La lentille correctrice doit former l'image d'un objet à l'infini au punctum remotum (l'image devient l'objet de l'\oe{}il). On veut donc $v = -50\,\text{cm}$ (image virtuelle côté objet) pour $u = -\infty$ :
+\[
+V_{verre} = \frac{1}{f} = \frac{1}{v} - \frac{1}{u} = \frac{1}{-0{,}50} - 0 = -2\,\text{D}
+\]
+Le myope doit porter des verres \textbf{divergents} de vergence $-2\,\text{D}$.
+
+\textbf{2. Correction de l'hypermétropie :}
+
+L'hypermétrope doit accommoder de $+4\,\text{D}$ pour voir à $\qty{25}{cm}$. La lentille correctrice doit prendre en charge cette accommodation, soit fournir $+4\,\text{D}$ supplémentaires. On prescrit une lentille \textbf{convergente} de vergence $V = +4\,\text{D}$ (focale $f = 25\,\text{cm}$).
+
+\textbf{3. La presbytie :}
+
+La presbytie est un défaut de l'\oe{}il lié au vieillissement : le cristallin perd son élasticité et la capacité d'accommodation diminue progressivement. Elle touche les personnes de plus de 40-45 ans. La correction se fait par des \textbf{verres convergents} pour la vision de près (lire à $\qty{25}{-35}{cm}$) ou par des verres progressifs qui corrigent à la fois la vision de loin et la vision de près.
+\end{boitecorrige}
+
+\subsection*{Exercice 15 - Système combiné miroir et lentille \niveau{\difficile}}
+
+\begin{boiteexercice}
+Un objet ponctuel $O$ est placé à $\qty{30}{cm}$ devant un miroir concave de focale $f_m = \qty{20}{cm}$. À $\qty{15}{cm}$ du miroir (entre l'objet et le miroir), on place une lentille divergente de focale $f_L = -\qty{10}{cm}$.
+\begin{enumerate}
+  \item Calculer la position de l'image $A_1'$ formée par la lentille divergente.
+  \item L'image $A_1'$ sert d'objet pour le miroir concave. Calculer la position de l'image finale $A_2'$.
+  \item Donner les caractéristiques (réelle/virtuelle, droite/renversée) de l'image finale.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{Étape 1 : Image par la lentille divergente.}
+
+L'objet $O$ est à $\qty{30}{cm}$ devant la lentille ($u_L = -30\,\text{cm}$), $f_L = -10\,\text{cm}$ :
+\[
+\frac{1}{v_L} = \frac{1}{f_L} + \frac{1}{u_L} = \frac{1}{-10} + \frac{1}{-30} = -\frac{3}{30} - \frac{1}{30} = -\frac{4}{30} = -\frac{2}{15}
+\]
+\[
+v_L = -\frac{15}{2} = -7{,}5\,\text{cm}
+\]
+L'image $A_1'$ est à $7{,}5\,\text{cm}$ du même côté que l'objet (image virtuelle), soit à $15 + 7{,}5 = 22{,}5\,\text{cm}$ devant le miroir.
+
+\textbf{Étape 2 : Image par le miroir concave.}
+
+L'objet pour le miroir est $A_1'$ à $\overline{SA} = -22{,}5\,\text{cm}$, $f_m = +20\,\text{cm}$ :
+\[
+\frac{1}{\overline{SA_2'}} = \frac{1}{f_m} - \frac{1}{\overline{SA}} = \frac{1}{20} - \frac{1}{-22{,}5} = \frac{1}{20} + \frac{1}{22{,}5}
+\]
+\[
+= \frac{22{,}5 + 20}{20 \times 22{,}5} = \frac{42{,}5}{450} \approx 0{,}09444
+\]
+\[
+\overline{SA_2'} \approx +10{,}6\,\text{cm}
+\]
+
+\textbf{Étape 3 : Caractéristiques.}
+
+$\overline{SA_2'} > 0$ : l'image finale est devant le miroir, donc \textbf{réelle}. Le grandissement global est :
+\[
+\gamma_{total} = \gamma_L \times \gamma_m = \frac{v_L}{u_L} \times \frac{\overline{SA_2'}}{\overline{SA}} = \frac{-7{,}5}{-30} \times \frac{+10{,}6}{-22{,}5} \approx 0{,}25 \times (-0{,}471) \approx -0{,}118
+\]
+L'image finale est \textbf{renversée} et très réduite.
+\end{boitecorrige}
+
+\section{Dispersion et couleurs}
+
+\subsection*{Exercice 16 - Dispersion de la lumière dans un prisme \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un prisme équilatéral (angle au sommet $A = 60^\circ$) est en verre avec les indices de réfraction :
+$n_{violet} = 1{,}530$ et $n_{rouge} = 1{,}515$.
+\begin{enumerate}
+  \item Pour le rayon rouge, calculer l'angle de déviation minimale $D_{min}$ tel que
+  \[
+  \sin\!\left(\frac{A+D_{min}}{2}\right) = n\sin\!\left(\frac{A}{2}\right).
+  \]
+  \item Même calcul pour le rayon violet.
+  \item Calculer la dispersion angulaire $\delta D = D_{min}^{violet} - D_{min}^{rouge}$.
+  \item Expliquer pourquoi le violet est dévié davantage que le rouge.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Rayon rouge} ($n = 1{,}515$) :
+
+À la déviation minimale, $i_1 = i_2$ et $r_1 = r_2 = A/2 = 30^\circ$.
+\[
+\sin\!\left(\frac{A+D_{min}}{2}\right) = n\sin\!\left(\frac{A}{2}\right) = 1{,}515\times\sin30^\circ = 1{,}515\times0{,}5 = 0{,}7575
+\]
+\[
+\frac{A+D_{min}}{2} = \arcsin(0{,}7575) = 49{,}26^\circ \quad \Rightarrow \quad D_{min}^{rouge} = 2\times49{,}26^\circ - 60^\circ = 38{,}5^\circ
+\]
+
+\textbf{2. Rayon violet} ($n = 1{,}530$) :
+\[
+\sin\!\left(\frac{A+D_{min}}{2}\right) = 1{,}530\times0{,}5 = 0{,}765
+\]
+\[
+\frac{A+D_{min}}{2} = \arcsin(0{,}765) = 49{,}86^\circ \quad \Rightarrow \quad D_{min}^{violet} = 2\times49{,}86^\circ - 60^\circ = 39{,}7^\circ
+\]
+
+\textbf{3.} Dispersion angulaire :
+\[
+\delta D = D_{min}^{violet} - D_{min}^{rouge} = 39{,}7^\circ - 38{,}5^\circ = 1{,}2^\circ
+\]
+
+\textbf{4.} Le violet est dévié davantage car son indice de réfraction est plus grand. En général, $n$ décroît quand la longueur d'onde augmente (dispersion normale) : $n_{violet} > n_{rouge}$ car $\lambda_{violet} < \lambda_{rouge}$. Un indice plus élevé implique une réfraction plus forte et donc une déviation plus importante.
+\end{boitecorrige}
+
+\subsection*{Exercice 17 - Dioptre sphérique et vergence \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un dioptre sphérique convexe (centre de courbure $C$ à droite, rayon $R = \qty{10}{cm}$) sépare l'air ($n_1 = 1$) du verre ($n_2 = 1{,}5$). La formule du dioptre sphérique est :
+\[
+\frac{n_2}{\overline{SA'}} - \frac{n_1}{\overline{SA}} = \frac{n_2 - n_1}{R}
+\]
+où $S$ est le sommet du dioptre, $\overline{SA} < 0$ si l'objet est à gauche.
+\begin{enumerate}
+  \item Un objet est placé à $\qty{30}{cm}$ à gauche du dioptre ($\overline{SA} = -30\,\text{cm}$). Calculer $\overline{SA'}$.
+  \item L'image est-elle réelle ou virtuelle ?
+  \item Calculer le grandissement transversal $\gamma = \frac{n_1\,\overline{SA'}}{n_2\,\overline{SA}}$.
+  \item Un objet est à l'infini. Calculer la distance focale image $f' = \frac{n_2 R}{n_2 - n_1}$ et la vergence $V = n_2/f'$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Application de la formule avec $n_1 = 1$, $n_2 = 1{,}5$, $R = +10\,\text{cm}$, $\overline{SA} = -30\,\text{cm}$ :
+\[
+\frac{1{,}5}{\overline{SA'}} = \frac{n_2 - n_1}{R} + \frac{n_1}{\overline{SA}} = \frac{1{,}5-1}{10} + \frac{1}{-30} = 0{,}05 - 0{,}0333 = 0{,}01667\,\text{cm}^{-1}
+\]
+\[
+\overline{SA'} = \frac{1{,}5}{0{,}01667} = \qty{90}{cm}
+\]
+
+\textbf{2.} $\overline{SA'} = +90\,\text{cm} > 0$ : l'image est à droite du dioptre, du côté du réfracté. Elle est \textbf{réelle}.
+
+\textbf{3.} Grandissement transversal :
+\[
+\gamma = \frac{n_1\,\overline{SA'}}{n_2\,\overline{SA}} = \frac{1\times90}{1{,}5\times(-30)} = \frac{90}{-45} = -2
+\]
+L'image est renversée et agrandie d'un facteur 2.
+
+\textbf{4.} Objet à l'infini ($\overline{SA}\to-\infty$) :
+\[
+f' = \frac{n_2 R}{n_2 - n_1} = \frac{1{,}5\times10}{1{,}5-1} = \frac{15}{0{,}5} = \qty{30}{cm}
+\]
+\[
+V = \frac{n_2}{f'} = \frac{1{,}5}{0{,}30} = \qty{5}{dioptries}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 18 - Télescope de Newton \niveau{\difficile}}
+
+\begin{boiteexercice}
+Un télescope de Newton est constitué d'un miroir parabolique primaire concave de distance focale $f_1 = \qty{1200}{mm}$ et d'un oculaire de distance focale $f_2 = \qty{20}{mm}$.
+\begin{enumerate}
+  \item Calculer le grossissement commercial $G = f_1/f_2$ du télescope.
+  \item La limite de résolution angulaire (critère de Rayleigh) est $\theta_{min} = 1{,}22\,\lambda/D$ où $D$ est le diamètre du miroir. Pour $D = \qty{150}{mm}$ et $\lambda = \qty{550}{nm}$, calculer $\theta_{min}$ en secondes d'arc ($1\,\text{rad} = 206265''$).
+  \item Calculer le diamètre de la pupille de sortie $d = D/G$.
+  \item Pour observer la Lune ($\theta_{Lune} \approx 31'$), quel est le diamètre apparent vu à travers le télescope ?
+  \item Un étoile est à une distance $d = \qty{4.2}{al}$ (années-lumière, $\qty{1}{al} = \qty{9.461e15}{m}$). Calculer son parallaxe annuelle $\pi = \qty{1}{UA}/d$ avec $\qty{1}{UA} = \qty{1.496e11}{m}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Grossissement commercial :
+\[
+G = \frac{f_1}{f_2} = \frac{1200}{20} = 60\times
+\]
+
+\textbf{2.} Limite de résolution angulaire :
+\[
+\theta_{min} = \frac{1{,}22\times\lambda}{D} = \frac{1{,}22\times550\times10^{-9}}{150\times10^{-3}} = \frac{6{,}71\times10^{-7}}{0{,}15} = 4{,}47\times10^{-6}\,\text{rad}
+\]
+En secondes d'arc :
+\[
+\theta_{min} = 4{,}47\times10^{-6}\times206265 \approx 0{,}92''
+\]
+C'est la résolution angulaire limite théorique du télescope.
+
+\textbf{3.} Diamètre de la pupille de sortie :
+\[
+d = \frac{D}{G} = \frac{150}{60} = \qty{2.5}{mm}
+\]
+Cette valeur est compatible avec le diamètre de la pupille de l'\oe{}il humain la nuit ($\approx 6\,\text{mm}$).
+
+\textbf{4.} Diamètre apparent de la Lune à travers le télescope :
+\[
+\theta_{obs} = G\times\theta_{Lune} = 60\times31' = 1860' = 31^\circ
+\]
+La Lune apparaît avec un diamètre de $31^\circ$, ce qui est très grand (pour comparaison, la Lune à l'\oe{}il nu couvre $0{,}5^\circ$).
+
+\textbf{5.} Parallaxe annuelle de l'étoile (à $d = 4{,}2\,\text{al}$) :
+\[
+d = 4{,}2 \times 9{,}461\times10^{15} = 3{,}97\times10^{16}\,\text{m}
+\]
+\[
+\pi = \frac{1\,\text{UA}}{d} = \frac{1{,}496\times10^{11}}{3{,}97\times10^{16}} = 3{,}77\times10^{-6}\,\text{rad}
+\]
+En secondes d'arc : $\pi = 3{,}77\times10^{-6}\times206265 \approx 0{,}78''$. (L'étoile la plus proche, Proxima Centauri, a une parallaxe de $0{,}77''$, ce qui est cohérent avec $d = 4{,}24\,\text{al}$.)
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

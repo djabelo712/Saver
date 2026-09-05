@@ -1,0 +1,541 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Thermodynamique - Licence 2}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries THERMODYNAMIQUE CLASSIQUE}\\[0.3cm]
+  {\normalsize Licence 2 - Mathématiques, Physique et Chimie}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\vspace{0.3cm}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Premier principe de la thermodynamique.}
+\[
+\d U = \delta W + \delta Q \qquad \text{ou sous forme finie :} \qquad \Delta U = W + Q
+\]
+Pour une transformation réversible : $\delta W = -P\,\d V$ et $\delta Q = T\,\d S$.
+
+\textbf{2. Fonctions d'état dérivées.}
+\begin{itemize}[nosep]
+  \item Enthalpie : $H = U + PV$ ; $\d H = T\,\d S + V\,\d P$.
+  \item Énergie libre (Helmholtz) : $F = U - TS$ ; $\d F = -S\,\d T - P\,\d V$.
+  \item Enthalpie libre (Gibbs) : $G = H - TS$ ; $\d G = -S\,\d T + V\,\d P$.
+\end{itemize}
+
+\textbf{3. Relations de Maxwell.} Elles découlent de l'égalité des dérivées croisées :
+\[
+\left(\dpart{S}{V}\right)_T = \left(\dpart{P}{T}\right)_V \qquad \left(\dpart{S}{P}\right)_T = -\left(\dpart{V}{T}\right)_P
+\]
+
+\textbf{4. Coefficients thermoélastiques.}
+\[
+\alpha = \frac{1}{V}\left(\dpart{V}{T}\right)_P \quad (\text{dilat. isobare}) \qquad \chi_T = -\frac{1}{V}\left(\dpart{V}{P}\right)_T \quad (\text{compress. isoth.})
+\]
+
+\textbf{5. Gaz de van der Waals.}
+\[
+\left(P + \frac{a}{V^2}\right)(V - b) = nRT
+\]
+où $a$ tient compte des interactions attractives et $b$ du volume propre des molécules.
+
+\textbf{6. Transformations des gaz parfaits.} Pour un gaz parfait diatomique ($\gamma = 7/5$), lors d'une détente adiabatique réversible : $TV^{\gamma-1} = \text{cste}$ et $TP^{(1-\gamma)/\gamma} = \text{cste}$.
+
+\end{boiteresume}
+
+\newpage
+
+\section{Fonctions d'état et relations thermodynamiques}
+
+\subsection*{Exercice 1 \niveau{\moyen}}
+
+\begin{boiteexercice}
+On considère la fonction $F(x,y,z)$ dont la différentielle est :
+\[
+\d F = (2x-y)\,\d x - (x-2y)\,\d y - 4z\,\d z
+\]
+\begin{enumerate}
+  \item Retrouver $F(x,y,z)$ à une constante $a$ près.
+  \item Déterminer les valeurs de $a$ si $F(a,2,-1) = 2$.
+  \item Écrire les formes possibles de $F$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On identifie les dérivées partielles :
+\[
+\dpart{F}{x} = 2x-y, \qquad \dpart{F}{y} = 2y-x, \qquad \dpart{F}{z} = -4z
+\]
+En intégrant la première relation par rapport à $x$ :
+\[
+F = x^2 - xy + C(y,z)
+\]
+En substituant dans la deuxième : $\partial C/\partial y = 2y$, donc $C(y,z) = y^2 + k(z)$.
+
+En substituant dans la troisième : $k'(z) = -4z$, donc $k(z) = -2z^2 + a$.
+
+\[
+\boxed{F(x,y,z) = x^2 + y^2 - 2z^2 - xy + a}
+\]
+
+\textbf{2.} En appliquant la condition $F(a,2,-1) = 2$ :
+\[
+a^2 + 4 - 2 - 2a + a = 2 \quad \Rightarrow \quad a^2 - a = 0 \quad \Rightarrow \quad a(a-1) = 0
+\]
+Donc $a = 0$ ou $a = 1$.
+
+\textbf{3.}
+\begin{itemize}
+  \item Pour $a=0$ : $F(x,y,z) = x^2 + y^2 - 2z^2 - xy$.
+  \item Pour $a=1$ : $F(x,y,z) = x^2 + y^2 - 2z^2 - xy + 1$.
+\end{itemize}
+\end{boitecorrige}
+
+\subsection*{Exercice 2 - Compressions successives d'un gaz parfait diatomique \niveau{\difficile}}
+
+\begin{boiteexercice}
+On comprime isotherme un gaz parfait diatomique de $P_0$ à $P_1$ à la température $T_0$, puis on le détend adiabatiquement et réversiblement jusqu'à $P_0$.
+
+\begin{enumerate}
+  \item Exprimer la température $T_1$ atteinte après cette double opération.
+  \item (a) Après une deuxième double opération depuis $T_1$, exprimer $T_2$. \newline
+        (b) Donner une expression générale de $T_n$. \newline
+        (c) Calculer $T_1$, $T_2$ et $T_{100}$ pour $P_1/P_0 = 2$ et $T_0 = \qty{300}{K}$, $\gamma = 7/5$. \newline
+        (d) $T_\infty$ est-elle en accord avec le troisième principe ?
+  \item Pour la $n$-ième double opération, exprimer la chaleur $Q_n$, le travail $W_n$ et $\Delta U_n$.
+  \item Après $n$ doubles opérations, calculer $Q$, $W$ et $\Delta U$ totaux.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} L'isotherme amène de $(P_0, T_0)$ à $(P_1, T_0)$ : la température ne change pas. La détente adiabatique réversible de $(P_1, T_0)$ à $(P_0, T_1)$ suit $T P^{(1-\gamma)/\gamma} = \text{cste}$ :
+\[
+T_1 P_0^{(1-\gamma)/\gamma} = T_0 P_1^{(1-\gamma)/\gamma} \quad \Rightarrow \quad \boxed{T_1 = T_0\left(\frac{P_1}{P_0}\right)^{(1-\gamma)/\gamma}}
+\]
+Comme $P_1 > P_0$ et $(1-\gamma)/\gamma < 0$, on a $T_1 < T_0$ : le gaz se refroidit.
+
+\textbf{2.(a)} En répétant la même logique depuis $T_1$ :
+\[
+T_2 = T_1\left(\frac{P_1}{P_0}\right)^{(1-\gamma)/\gamma} = T_0\left(\frac{P_1}{P_0}\right)^{2(1-\gamma)/\gamma}
+\]
+
+\textbf{2.(b)} Par récurrence :
+\[
+\boxed{T_n = T_0\left(\frac{P_1}{P_0}\right)^{n(1-\gamma)/\gamma}}
+\]
+
+\textbf{2.(c)} Avec $P_1/P_0 = 2$, $\gamma = 7/5$ : $(1-\gamma)/\gamma = (1-7/5)/(7/5) = (-2/5)/(7/5) = -2/7$.
+\[
+T_1 = 300\times 2^{-2/7} \approx 300\times 0{,}820 \approx \qty{246}{K}
+\]
+\[
+T_2 \approx 246\times 0{,}820 \approx \qty{202}{K} \qquad T_{100} = 300\times 2^{-200/7} \approx \qty{0}{K}
+\]
+
+\textbf{2.(d)} $T_\infty = 0$, ce qui serait atteindre le zéro absolu par un processus cyclique. Ceci est en accord avec la direction imposée par le troisième principe (on tend vers $0\,K$), mais le troisième principe affirme qu'on ne peut pas atteindre $0\,K$ en un nombre fini d'opérations ; ici, $n\to\infty$ est requis, ce qui est physiquement inaccessible. Il n'y a donc pas de contradiction.
+
+\textbf{3.} Pour la $n$-ième double opération (isotherme puis adiabatique) :
+
+\emph{\'Etape isotherme} $(T_{n-1},\, P_0 \to P_1)$ :
+$\Delta U = 0$ pour un gaz parfait.
+Le travail et la chaleur sont
+\[
+W_{\text{isoth}} = nRT_{n-1}\ln(P_0/P_1),
+\qquad
+Q_n = -W_{\text{isoth}} = nRT_{n-1}\ln(P_1/P_0).
+\]
+
+\emph{\'Etape adiabatique} $(P_1,\, T_{n-1} \to P_0,\, T_n)$ :
+$Q = 0$ et $W_{\text{adia}} = nC_v(T_n - T_{n-1})$.
+
+Bilan de la $n$-ième double opération :
+\[
+Q_n = nRT_{n-1}\ln\!\left(\frac{P_1}{P_0}\right), \quad W_n = nC_v(T_n-T_{n-1}) - nRT_{n-1}\ln\!\left(\frac{P_1}{P_0}\right)
+\]
+\[
+\Delta U_n = nC_v(T_n - T_{n-1})
+\]
+
+\textbf{4.} En sommant sur $n$ opérations :
+\[
+\Delta U = nC_v(T_n - T_0) \qquad Q = nR\ln\!\left(\frac{P_1}{P_0}\right)\sum_{k=0}^{n-1}T_k \qquad W = \Delta U - Q
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 3 - Coefficients thermoélastiques et équation d'état \niveau{\difficile}}
+
+\begin{boiteexercice}
+Des mesures sur une mole d'azote ont donné :
+\[
+\alpha = \frac{R}{RT+bP} \qquad (1) \qquad \chi_T = \frac{RT}{(RT+bP)P} \qquad (2)
+\]
+où $b$ est une constante positive homogène à un volume.
+
+\begin{enumerate}
+  \item Rappeler les expressions de $\alpha$ et $\chi_T$.
+  \item Montrer que (1) après intégration donne $V = (RT+bP)\varphi(P)$ où $\varphi$ est une fonction de $P$ seul.
+  \item Vérifier la cohérence avec (2).
+  \item Déduire que $\varphi(P) = a/P$ et donner la valeur de $a$ pour que le gaz soit parfait à basse pression.
+  \item Écrire l'équation d'état d'une mole.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\[
+\alpha = \frac{1}{V}\left(\dpart{V}{T}\right)_P \qquad \chi_T = -\frac{1}{V}\left(\dpart{V}{P}\right)_T
+\]
+
+\textbf{2.} De $\alpha = R/(RT+bP)$, on tire $\left(\dpart{V}{T}\right)_P = \alpha V = \frac{RV}{RT+bP}$, donc $\frac{\d V}{V} = \frac{R\,\d T}{RT+bP}$ à $P$ constant. En intégrant par rapport à $T$ : $\ln V = \ln(RT+bP) + f(P)$, soit $V = (RT+bP)\e^{f(P)} = (RT+bP)\varphi(P)$ avec $\varphi(P) = \e^{f(P)}$.
+
+\textbf{3.} $\left(\dpart{V}{P}\right)_T = (b\cdot\varphi + (RT+bP)\varphi')$. Le coefficient $\chi_T$ vaut :
+\[
+\chi_T = -\frac{1}{V}\left(\dpart{V}{P}\right)_T = -\frac{b\varphi + (RT+bP)\varphi'}{(RT+bP)\varphi}
+\]
+En égalant avec (2) : $b/(RT+bP) + \varphi'/\varphi = -RT/[(RT+bP)P]$, d'où $\varphi'/\varphi = -1/P$, soit $\varphi(P) = a/P$ (après intégration).
+
+\textbf{4.} Pour $b\to0$ : $V = aRT/P$. La loi des gaz parfaits donne $PV = RT$, donc $a = 1$.
+
+\textbf{5.} L'équation d'état d'une mole est :
+\[
+\boxed{V = \frac{RT+bP}{P} = \frac{RT}{P} + b}
+\]
+Ce qui s'écrit aussi $P(V-b) = RT$ : c'est un modèle simplifié qui tient compte du volume propre mais pas des interactions attractives.
+\end{boitecorrige}
+
+\subsection*{Exercice 4 - Fluide homogène monophasé \niveau{\difficile}}
+
+\begin{boiteexercice}
+On considère $n$ moles d'un fluide homogène monophasé.
+
+\textbf{Partie A.}
+\begin{enumerate}
+  \item Écrire $\d U$ en fonction de $\d T, \d V$, puis en fonction de $\d V, \d S$.
+  \item En déduire $(\partial S/\partial T)_V$ et $(\partial S/\partial V)_T$.
+  \item Montrer que $(\partial S/\partial V)_T = (\partial P/\partial T)_V$ et que la chaleur latente $\ell = T(\partial P/\partial T)_V$.
+\end{enumerate}
+
+\textbf{Partie B.} Le fluide est un gaz de van der Waals : $P = \dfrac{nRT}{V-nb} - \dfrac{n^2 a}{V^2}$.
+\begin{enumerate}
+  \item Calculer le travail $W_{R,T}$ et la variation d'énergie interne $\Delta U_{R,T}$ lors d'une transformation réversible isotherme de $V_i$ à $V_f$.
+  \item En déduire la chaleur échangée $Q_{R,T}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{A.1.} En utilisant $U = U(T,V)$ :
+\[
+\d U = \left(\dpart{U}{T}\right)_V\d T + \left(\dpart{U}{V}\right)_T\d V = nC_v\d T + \ell_v\d V
+\]
+où $\ell_v = (\partial U/\partial V)_T$ est la chaleur latente volumique. En thermodynamique des processus réversibles : $\d U = T\d S - P\d V$.
+
+\textbf{A.2.} Par identification des deux expressions de $\d U$ :
+\[
+\left(\dpart{S}{T}\right)_V = \frac{nC_v}{T} \qquad \left(\dpart{S}{V}\right)_T = \frac{\ell_v + P}{T}
+\]
+
+\textbf{A.3.} L'énergie libre $F = U - TS$ donne $\d F = -S\d T - P\d V$. L'égalité des dérivées croisées conduit à $(\partial S/\partial V)_T = (\partial P/\partial T)_V$ (relation de Maxwell). Or $\ell_v + P = T(\partial P/\partial T)_V$, d'où $\ell = \ell_v = T(\partial P/\partial T)_V - P$.
+
+\textbf{B.1.} Pour van der Waals : $(\partial P/\partial T)_V = nR/(V-nb)$, donc $\ell_v = T\cdot nR/(V-nb) - P = n^2a/V^2$ (substitution de $P$). Ainsi $\d U = nC_v\d T + (n^2a/V^2)\d V$.
+
+Lors d'une transformation isotherme ($\d T = 0$) :
+\[
+\Delta U_{R,T} = \int_{V_i}^{V_f}\frac{n^2 a}{V^2}\d V = n^2 a\left(\frac{1}{V_i}-\frac{1}{V_f}\right)
+\]
+
+Le travail échangé :
+\begin{align*}
+W_{R,T} &= -\int_{V_i}^{V_f}P\,\d V\\
+        &= -\int_{V_i}^{V_f}\!\left(\frac{nRT}{V-nb}-\frac{n^2 a}{V^2}\right)\d V\\
+        &= -nRT\ln\frac{V_f-nb}{V_i-nb} - n^2 a\!\left(\frac{1}{V_i}-\frac{1}{V_f}\right)
+\end{align*}
+
+\textbf{B.2.} Par le premier principe : $Q_{R,T} = \Delta U_{R,T} - W_{R,T} = nRT\ln\dfrac{V_f-nb}{V_i-nb}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 5 - Gaz de van der Waals : transformations \niveau{\difficile}}
+
+\begin{boiteexercice}
+On considère une mole de gaz : $(P+a/V^2)(V-b) = RT$.
+\begin{enumerate}
+  \item Donner les expressions différentielles de $\d U$ et $\d S$ en fonction de $C_V$, $\ell$, $P$, $T$, $\d T$ et $\d V$.
+  \item Exprimer $\ell$ en fonction de $P$, $a$ et $V$.
+  \item Calculer $\Delta U$ entre $(P_1,V_1,T_1)$ et $(P_2,V_2,T_2)$ avec $C_V$ constant.
+  \item Calculer $\Delta S$ pour la même transformation.
+  \item Établir l'équation de l'adiabatique réversible. La simplifier si $a/V^2 \ll P$ et $b \ll V$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Les expressions générales des différentielles en variables $(T,V)$ sont :
+\[
+\d U = C_V\,\d T + \ell\,\d V \qquad \d S = \frac{C_V}{T}\,\d T + \frac{\ell+P}{T}\,\d V
+\]
+
+\textbf{2.} Pour van der Waals : $\ell = T\left(\dpart{P}{T}\right)_V - P = \frac{T\cdot R}{V-b} - P = \frac{TR}{V-b} - \frac{RT}{V-b} + \frac{a}{V^2} = \frac{a}{V^2}$.
+
+\textbf{3.}
+\[
+\Delta U = C_V(T_2-T_1) + a\!\left(\frac{1}{V_1}-\frac{1}{V_2}\right)
+\]
+
+\textbf{4.}
+\[
+\Delta S = C_V\ln\frac{T_2}{T_1} + R\ln\frac{V_2-b}{V_1-b}
+\]
+
+\textbf{5.} Pour une adiabatique réversible $\d S = 0$ :
+\[
+C_V\,\d T + \frac{a}{V^2}\,\d V = 0 \quad \text{(énergie interne)} \quad \text{et} \quad C_V\frac{\d T}{T} + R\frac{\d V}{V-b} = 0
+\]
+En intégrant la deuxième relation : $T(V-b)^R/C_V = \text{cste}$, soit $T(V-b)^{\gamma-1} = \text{cste}$.
+
+Pour $a/V^2 \ll P$ et $b \ll V$ : $T V^{\gamma-1} = \text{cste}$ (loi de Poisson classique pour un gaz parfait).
+\end{boitecorrige}
+
+\section{Entropie et second principe}
+
+\subsection*{Exercice 6 - Échange thermique irréversible \niveau{\facile}}
+
+\begin{boiteexercice}
+Un morceau d'aluminium froid $A$ de masse $m = \qty{100}{g}$ à la température $T_1 = \qty{10}{\celsius}$ est mis en contact thermique avec l'air ambiant $B$ (thermostat) à $T_2 = \qty{20}{\celsius}$.
+\begin{enumerate}
+  \item Calculer la variation d'entropie $\Delta S_A$ du morceau d'aluminium.
+  \item Calculer la variation d'entropie $\Delta S_B$ de l'air ambiant.
+  \item Déduire $\Delta S_{A+B}$ de l'univers. La transformation est-elle réversible ?
+\end{enumerate}
+Donnée : $C_{\rm Al} = \qty{896}{J.kg^{-1}.K^{-1}}$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La température finale de l'aluminium est $T_f = T_2 = \qty{293}{K}$, et $T_1 = \qty{283}{K}$.
+\[
+\Delta S_A = \int_{T_1}^{T_f}\frac{mC\,\mathrm{d}T}{T} = mC\ln\frac{T_f}{T_1} = 0{,}100\times896\times\ln\frac{293}{283}
+\]
+\[
+\boxed{\Delta S_A \approx \qty{3.11e-1}{J.K^{-1}}}
+\]
+
+\textbf{2.} $B$ est un thermostat ; la chaleur cédée par $B$ est $Q_B = -Q_A = -mC(T_f-T_1)$.
+\[
+\Delta S_B = \frac{Q_B}{T_2} = -\frac{mC(T_f-T_1)}{T_2} = -\frac{0{,}100\times896\times10}{293}
+\]
+\[
+\boxed{\Delta S_B \approx -\qty{3.06e-1}{J.K^{-1}}}
+\]
+
+\textbf{3.}
+\[
+\Delta S_{A+B} = \Delta S_A + \Delta S_B \approx 3{,}11\times10^{-1} - 3{,}06\times10^{-1} = \qty{5.4e-3}{J.K^{-1}} > 0
+\]
+$\Delta S_{A+B} > 0$ pour ce système isolé : la transformation est \textbf{irréversible}, conformément au second principe.
+\end{boitecorrige}
+
+\subsection*{Exercice 7 - Cycle d'Ericsson \niveau{\difficile}}
+
+\begin{boiteexercice}
+Un moteur thermique contenant $n$ moles de gaz parfait ($\gamma$ constant) décrit le cycle d'Ericsson :
+\begin{itemize}[nosep]
+  \item $AB$ : isotherme à $T_2$ de $P_A=P_1$ à $P_B=P_2$ ($P_2>P_1$)
+  \item $BC$ : isobare $P_2$ de $T_2$ à $T_1$ ($T_1>T_2$)
+  \item $CD$ : isotherme à $T_1$ jusqu'à $P_D=P_1$
+  \item $DA$ : isobare $P_1$ de $T_1$ à $T_2$
+\end{itemize}
+\begin{enumerate}
+  \item Représenter le cycle dans les diagrammes $(P,V)$ et $(T,S)$.
+  \item Montrer que $W = -nRT_1\!\left(1-\dfrac{T_2}{T_1}\right)\ln\dfrac{P_2}{P_1}$.
+  \item Calculer le rendement du moteur.
+  \item Avec un régénérateur (récupération totale de la chaleur isobare), calculer $Q_1$ et $Q_2$ et le rendement. Comparer au rendement de Carnot.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Dans le diagramme $(P,V)$ : deux isothermes hyperboliques (AB et CD) reliées par deux isobares. Dans le diagramme $(T,S)$ : les isobares sont des exponentielles ($T = \text{cste}\cdot e^{S/(nC_P)}$) et les isothermes sont des segments horizontaux.
+
+\textbf{2.} Calcul des travaux élémentaires :
+\begin{align*}
+W_{A\to B} &= -nRT_2\ln\frac{V_B}{V_A} = -nRT_2\ln\frac{P_1}{P_2} = nRT_2\ln\frac{P_2}{P_1}\\
+W_{B\to C} &= -P_2(V_C-V_B) = -nR(T_1-T_2)\\
+W_{C\to D} &= -nRT_1\ln\frac{P_1}{P_2} = nRT_1\ln\frac{P_1}{P_2}\\
+W_{D\to A} &= -P_1(V_A-V_D) = -nR(T_2-T_1) = nR(T_1-T_2)
+\end{align*}
+Les contributions isobares s'annulent ($W_{BC}+W_{DA}=0$), et :
+\[
+\boxed{W = nRT_2\ln\frac{P_2}{P_1} + nRT_1\ln\frac{P_1}{P_2} = -nR(T_1-T_2)\ln\frac{P_2}{P_1} = -nRT_1\!\left(1-\frac{T_2}{T_1}\right)\ln\frac{P_2}{P_1}}
+\]
+
+\textbf{3.} Les chaleurs reçues : $Q_{CD} = nRT_1\ln(P_2/P_1)$ (source chaude) et $Q_{BC} = nC_P(T_1-T_2)$ (chauffage isobare). Le rendement est :
+\[
+\eta = \frac{|W|}{Q_{CD}+Q_{BC}} = \frac{(T_1-T_2)\ln(P_2/P_1)}{T_1\ln(P_2/P_1)+\frac{\gamma}{\gamma-1}(T_1-T_2)} < 1-\frac{T_2}{T_1}
+\]
+
+\textbf{4.} Avec régénérateur, $Q_{BC}$ est récupéré lors de $DA$ : seules les isothermes échangent avec les sources.
+\[
+Q_1 = Q_{CD} = nRT_1\ln\frac{P_2}{P_1}, \qquad Q_2 = Q_{AB} = nRT_2\ln\frac{P_1}{P_2}
+\]
+\[
+\eta = \frac{|W|}{Q_1} = 1 + \frac{Q_2}{Q_1} = 1 - \frac{T_2}{T_1} = \eta_{\rm Carnot}
+\]
+Le cycle d'Ericsson avec régénérateur est aussi efficace qu'un cycle de Carnot.
+\end{boitecorrige}
+
+\subsection*{Exercice 8 - Machine à vapeur et rendement de Carnot \niveau{\facile}}
+
+\begin{boiteexercice}
+Une machine à vapeur fonctionne entre $T_1 = \qty{550}{\celsius}$ (source chaude) et $T_2 = \qty{250}{\celsius}$ (source froide).
+\begin{enumerate}
+  \item Rappeler la définition du rendement $\eta$ d'un moteur thermique.
+  \item Exprimer $\eta$ en fonction de $Q_1$ et $Q_2$.
+  \item Donner l'expression de $\eta$ dans le cas réversible (Carnot) en fonction de $T_1$ et $T_2$.
+  \item En pratique, le moteur a une efficacité de 70\% de l'efficacité maximale. Calculer $\eta_{\rm réel}$ numériquement.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Le rendement est le rapport du travail utile fourni sur la chaleur reçue de la source chaude :
+\[
+\eta = \frac{|W|}{Q_1}
+\]
+
+\textbf{2.} Par le premier principe sur un cycle ($\Delta U = 0$) : $W + Q_1 + Q_2 = 0$, d'où $|W| = Q_1 + Q_2$ (en convention moteur, $Q_1 > 0$, $Q_2 < 0$). Ainsi :
+\[
+\eta = 1 + \frac{Q_2}{Q_1}
+\]
+
+\textbf{3.} Pour un cycle réversible, $\Delta S = Q_1/T_1 + Q_2/T_2 = 0$, donc $Q_2/Q_1 = -T_2/T_1$, et :
+\[
+\eta_{\rm Carnot} = 1 - \frac{T_2}{T_1}
+\]
+
+\textbf{4.} En Kelvin : $T_1 = 823\,\text{K}$, $T_2 = 523\,\text{K}$.
+\[
+\eta_{\rm Carnot} = 1 - \frac{523}{823} \approx 0{,}365
+\]
+\[
+\boxed{\eta_{\rm réel} = 0{,}70\times 0{,}365 \approx 0{,}255 = 25{,}5\%}
+\]
+\end{boitecorrige}
+
+\section{Cycles thermodynamiques}
+
+\subsection*{Exercice 9 - Cycle Diesel \niveau{\difficile}}
+
+\begin{boiteexercice}
+Un moteur Diesel à combustion interne décrit le cycle suivant pour une mole de gaz parfait :
+\begin{itemize}[nosep]
+  \item $A_1A_2$ : compression adiabatique réversible de rapport volumique $x = V_1/V_2 = 14$.
+  \item $A_2A_3$ : combustion à pression constante jusqu'à $T_3 = \qty{2260}{K}$.
+  \item $A_3A_4$ : détente adiabatique réversible jusqu'à $V_4 = V_1$.
+  \item $A_4A_1$ : refroidissement isochore.
+\end{itemize}
+Données : $P_1 = \qty{1}{bar}$, $T_1 = \qty{330}{K}$, $R = \qty{8.32}{J.K^{-1}.mol^{-1}}$, $C_P = \qty{29}{J.K^{-1}.mol^{-1}}$, $\gamma = 1{,}40$.
+\begin{enumerate}
+  \item Calculer $V_1$, $P_2$ et $T_2$.
+  \item Calculer $V_3$ et $Q_{23}$.
+  \item Calculer $P_4$ et $T_4$.
+  \item Calculer $Q_{41}$, $W_{\rm cycle}$ et $\eta$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Loi des gaz parfaits pour une mole : $V_1 = RT_1/P_1 = 8{,}32\times330/10^5 \approx \qty{27.5}{L}$.
+
+Compression adiabatique $A_1A_2$ : $P_2 = P_1 x^\gamma = 10^5\times14^{1{,}4} \approx \qty{40}{bar}$.
+
+$T_2 = P_2 V_2/R = P_2 V_1/(xR) = 40\times10^5\times27{,}5\times10^{-3}/(14\times8{,}32) \approx \boxed{\qty{948}{K}}$.
+
+\textbf{2.} Isobare $P_3 = P_2$ : $V_3 = RT_3/P_2 = 8{,}32\times2260/(40\times10^5) \approx \qty{4.7}{L}$.
+\[
+Q_{23} = C_P(T_3-T_2) = 29\times(2260-948) \approx \boxed{\qty{38}{kJ}}
+\]
+
+\textbf{3.} Adiabatique $A_3A_4$ avec $V_4=V_1$ :
+\[
+P_4 = P_2\!\left(\frac{V_3}{V_1}\right)^\gamma = 40\times10^5\times\!\left(\frac{4{,}7}{27{,}5}\right)^{1{,}4} \approx \boxed{\qty{3.4}{bar}}
+\]
+\[
+T_4 = P_4 V_1/R = 3{,}4\times10^5\times27{,}5\times10^{-3}/8{,}32 \approx \boxed{\qty{1123}{K}}
+\]
+
+\textbf{4.} Isochore $A_4A_1$ ($C_v = C_P/\gamma$) :
+\[
+Q_{41} = C_v(T_1-T_4) = \frac{29}{1{,}4}\times(330-1123) \approx \qty{-16.4}{kJ}
+\]
+Pour un cycle $\Delta U = 0$ :
+\[
+W_{\rm cycle} = -(Q_{23}+Q_{41}) = -(38-16{,}4) \approx \boxed{\qty{-21.6}{kJ}}
+\]
+\[
+\eta = \frac{|W_{\rm cycle}|}{Q_{23}} = \frac{21{,}6}{38} \approx \boxed{57\%}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 10 - Machine frigorifique \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un réfrigérateur fonctionne entre une source chaude ($T_c = \qty{293}{K}$) et une source froide ($T_f = \qty{268}{K}$). On constate que :
+\[
+\frac{Q_c}{Q_f} = -k\frac{T_c}{T_f}, \quad k = 1{,}2
+\]
+\begin{enumerate}
+  \item Exprimer l'efficacité frigorifique $e_c = Q_f/W$ en fonction de $k$, $T_c$, $T_f$.
+  \item Calculer $e_c$ numériquement. Comparer à l'efficacité maximale (Carnot, $k=1$).
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Par le premier principe : $W + Q_c + Q_f = 0$. L'efficacité frigorifique est :
+\[
+e_c = \frac{Q_f}{W} = \frac{Q_f}{-Q_c-Q_f} = \frac{1}{-Q_c/Q_f - 1} = \frac{1}{k\,T_c/T_f - 1}
+\]
+
+\textbf{2.} Numériquement :
+\[
+e_c = \frac{1}{1{,}2\times293/268 - 1} = \frac{1}{1{,}312 - 1} = \frac{1}{0{,}312} \approx \boxed{3{,}2}
+\]
+Pour le cycle de Carnot ($k=1$) :
+\[
+e_c^{\rm Carnot} = \frac{T_f}{T_c-T_f} = \frac{268}{293-268} = \frac{268}{25} = \boxed{10{,}7}
+\]
+La machine réelle est moins efficace que la machine de Carnot, conformément au second principe.
+\end{boitecorrige}
+
+\subsection*{Exercice 11 - Pompe à chaleur \niveau{\moyen}}
+
+\begin{boiteexercice}
+Une pompe à chaleur (PAC) utilise l'air d'une cave à $T_1 = \qty{11}{\celsius}$ pour chauffer un ballon d'eau à $T_2 = \qty{55}{\celsius}$.
+\begin{enumerate}
+  \item Rappeler la définition du coefficient de performance (COP) d'une PAC.
+  \item Calculer le COP théorique maximal de cette installation.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Pour une pompe à chaleur, le COP est le rapport de la chaleur fournie au réservoir chaud sur le travail consommé :
+\[
+\mathrm{COP} = \frac{Q_c}{|W|}
+\]
+
+\textbf{2.} Par le premier principe ($W + Q_c + Q_f = 0$) et le second principe pour un cycle réversible ($Q_c/T_c + Q_f/T_f = 0$) :
+\[
+\frac{Q_f}{Q_c} = -\frac{T_f}{T_c} \quad \Rightarrow \quad \mathrm{COP}_{\rm max} = \frac{T_c}{T_c-T_f}
+\]
+En Kelvin : $T_1 = \qty{284}{K}$ (source froide) et $T_2 = \qty{328}{K}$ (réservoir chaud) :
+\[
+\boxed{\mathrm{COP}_{\rm max} = \frac{328}{328-284} = \frac{328}{44} \approx 7{,}45}
+\]
+Pour chaque joule de travail électrique consommé, la PAC fournit théoriquement 7,45 J de chaleur. En pratique, le COP réel est inférieur à cette valeur.
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

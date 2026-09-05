@@ -1,0 +1,747 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Programmation en langage C - Licence 1}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+% Pour le code source C
+\usepackage{listings}
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape,
+  stringstyle=\ttfamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=8pt,
+  frame=single,
+  breaklines=true,
+  tabsize=4,
+  showstringspaces=false,
+  literate={é}{{\'{e}}}1 {è}{{\`{e}}}1 {ê}{{\^{e}}}1 {ë}{{\"e}}1
+           {à}{{\`a}}1 {â}{{\^a}}1 {ù}{{\`u}}1 {û}{{\^u}}1
+           {î}{{\^i}}1 {ï}{{\"i}}1 {ô}{{\^o}}1 {\oe{}}{{\oe}}1
+           {ç}{{\c{c}}}1
+}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries PROGRAMMATION EN LANGAGE C}\\[0.3cm]
+  {\normalsize Licence 1 - Mathématiques, Physique et Chimie}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Structure d'un programme C.}
+\begin{lstlisting}
+#include <stdio.h>
+int main() {
+    /* instructions */
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{2. Types de base.} \texttt{int} (entier), \texttt{float} (flottant simple précision), \texttt{double} (double précision), \texttt{char} (caractère). Déclaration : \texttt{type nom = valeur;}.
+
+\textbf{3. Entrées/Sorties.} \texttt{printf("\%d \%f \%c \%s", i, x, c, s);} affiche entier, flottant, caractère, chaîne. \texttt{scanf("\%d", \&i);} lit un entier.
+
+\textbf{4. Structures de contrôle.}
+\begin{itemize}[nosep]
+  \item Conditionnelle : \texttt{if (cond) \{...\} else \{...\}}
+  \item Boucle \texttt{for} : \texttt{for (init; cond; increment) \{...\}}
+  \item Boucle \texttt{while} : \texttt{while (cond) \{...\}}
+  \item Boucle \texttt{do...while} : \texttt{do \{...\} while (cond);}
+\end{itemize}
+
+\textbf{5. Tableaux.} \texttt{int tab[10];} déclare un tableau de 10 entiers. Accès : \texttt{tab[i]} pour l'indice $i$ (de 0 à $n-1$).
+
+\textbf{6. Fonctions.} \texttt{type\_retour nom(params) \{...; return val;\}}. Passage par valeur (copie) ou par pointeur (modification de l'original).
+
+\textbf{7. Pointeurs.} \texttt{int *p = \&a;} : $p$ contient l'adresse de $a$. \texttt{*p} accède à la valeur pointée. \texttt{p++} passe à l'élément suivant.
+
+\end{boiteresume}
+
+\newpage
+\section{Bases du langage C}
+
+\subsection*{Exercice 1 - Variables et opérations \niveau{\facile}}
+
+\begin{boiteexercice}
+Écrire un programme C qui :
+\begin{enumerate}
+  \item Demande à l'utilisateur de saisir deux entiers $a$ et $b$.
+  \item Calcule et affiche leur somme, différence, produit et quotient entier.
+  \item Affiche également le reste de la division entière de $a$ par $b$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+#include <stdio.h>
+
+int main() {
+    int a, b;
+
+    printf("Entrez deux entiers a et b : ");
+    scanf("%d %d", &a, &b);
+
+    printf("Somme      : %d + %d = %d\n", a, b, a + b);
+    printf("Difference : %d - %d = %d\n", a, b, a - b);
+    printf("Produit    : %d * %d = %d\n", a, b, a * b);
+
+    if (b != 0) {
+        printf("Quotient   : %d / %d = %d\n", a, b, a / b);
+        printf("Reste      : %d %% %d = %d\n", a, b, a % b);
+    } else {
+        printf("Erreur : division par zero impossible.\n");
+    }
+
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{Points importants :}
+\begin{itemize}[nosep]
+  \item En C, la division entière \texttt{a/b} tronque vers zéro.
+  \item L'opérateur \texttt{\%} donne le reste de la division euclidienne.
+  \item Il faut vérifier que $b\neq0$ avant de diviser.
+  \item \texttt{scanf} prend l'adresse des variables avec \texttt{\&}.
+  \item Pour afficher le caractère \texttt{\%} avec \texttt{printf}, on écrit \texttt{\%\%}.
+\end{itemize}
+\end{boitecorrige}
+
+\subsection*{Exercice 2 - Structures conditionnelles \niveau{\facile}}
+
+\begin{boiteexercice}
+Écrire un programme C qui :
+\begin{enumerate}
+  \item Lit un entier $n$.
+  \item Affiche si $n$ est positif, négatif ou nul.
+  \item Détermine si $n$ est pair ou impair.
+  \item Affiche la valeur absolue de $n$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+#include <stdio.h>
+
+int main() {
+    int n;
+
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    /* Signe */
+    if (n > 0) {
+        printf("%d est positif.\n", n);
+    } else if (n < 0) {
+        printf("%d est negatif.\n", n);
+    } else {
+        printf("Le nombre est nul.\n");
+    }
+
+    /* Parite */
+    if (n % 2 == 0) {
+        printf("%d est pair.\n", n);
+    } else {
+        printf("%d est impair.\n", n);
+    }
+
+    /* Valeur absolue */
+    int abs_n = (n >= 0) ? n : -n;
+    printf("Valeur absolue de %d : %d\n", n, abs_n);
+
+    return 0;
+}
+\end{lstlisting}
+
+L'opérateur ternaire \texttt{(cond) ? val\_vrai : val\_faux} est une façon concise d'écrire un \texttt{if-else} sur une expression.
+\end{boitecorrige}
+
+\section{Boucles et tableaux}
+
+\subsection*{Exercice 3 - Boucles et calculs \niveau{\moyen}}
+
+\begin{boiteexercice}
+Écrire des programmes C pour :
+\begin{enumerate}[label=(\alph*)]
+  \item Calculer la factorielle $n!$ pour un $n$ saisi par l'utilisateur.
+  \item Afficher la table de multiplication de 1 à 10 pour un entier $k$ donné.
+  \item Calculer la somme $S = 1 + 2 + \cdots + n$ et vérifier avec la formule $n(n+1)/2$.
+  \item Déterminer si un entier $n$ est premier.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a) Factorielle :}
+\begin{lstlisting}
+#include <stdio.h>
+int main() {
+    int n;
+    long long fact = 1;
+    printf("n = "); scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        fact *= i;
+    }
+    printf("%d! = %lld\n", n, fact);
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{(b) Table de multiplication :}
+\begin{lstlisting}
+int k;
+printf("k = "); scanf("%d", &k);
+for (int i = 1; i <= 10; i++) {
+    printf("%d x %d = %d\n", k, i, k * i);
+}
+\end{lstlisting}
+
+\textbf{(c) Somme avec vérification :}
+\begin{lstlisting}
+int n, S = 0;
+printf("n = "); scanf("%d", &n);
+for (int i = 1; i <= n; i++) S += i;
+printf("Somme boucle   : %d\n", S);
+printf("Formule n(n+1)/2 : %d\n", n * (n + 1) / 2);
+\end{lstlisting}
+
+\textbf{(d) Test de primalité :}
+\begin{lstlisting}
+#include <stdio.h>
+int est_premier(int n) {
+    if (n < 2) return 0;
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) return 0;  /* divisible */
+    }
+    return 1;
+}
+int main() {
+    int n;
+    printf("n = "); scanf("%d", &n);
+    if (est_premier(n))
+        printf("%d est premier.\n", n);
+    else
+        printf("%d n'est pas premier.\n", n);
+    return 0;
+}
+\end{lstlisting}
+L'optimisation clé : on teste les diviseurs jusqu'à $\sqrt{n}$ seulement.
+\end{boitecorrige}
+
+\subsection*{Exercice 4 - Tableaux et tri \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Écrire un programme qui remplit un tableau de $n$ entiers, puis calcule et affiche la somme, la moyenne, le maximum et le minimum.
+  \item Implémenter le tri à bulles (\textit{bubble sort}) pour trier un tableau dans l'ordre croissant.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\begin{lstlisting}
+#include <stdio.h>
+#define N 10
+int main() {
+    int tab[N], somme = 0, max, min;
+    printf("Entrez %d entiers :\n", N);
+    for (int i = 0; i < N; i++) scanf("%d", &tab[i]);
+
+    max = min = tab[0];
+    for (int i = 0; i < N; i++) {
+        somme += tab[i];
+        if (tab[i] > max) max = tab[i];
+        if (tab[i] < min) min = tab[i];
+    }
+    printf("Somme   = %d\n", somme);
+    printf("Moyenne = %.2f\n", (double)somme / N);
+    printf("Max     = %d\n", max);
+    printf("Min     = %d\n", min);
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{2. Tri à bulles :}
+\begin{lstlisting}
+void tri_bulles(int tab[], int n) {
+    int tmp;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (tab[j] > tab[j + 1]) {
+                /* echange */
+                tmp = tab[j];
+                tab[j] = tab[j + 1];
+                tab[j + 1] = tmp;
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+Le tri à bulles a une complexité $O(n^2)$ : à chaque passage, le plus grand élément non trié remonte à sa place (comme une bulle).
+\end{boitecorrige}
+
+\section{Fonctions et pointeurs}
+
+\subsection*{Exercice 5 - Fonctions \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Écrire une fonction \texttt{puissance(double base, int n)} qui calcule $\text{base}^n$ par multiplications successives.
+  \item Écrire une fonction récursive \texttt{fibonacci(int n)} qui calcule le $n$-ième terme de la suite de Fibonacci définie par $F_0=0$, $F_1=1$, $F_n=F_{n-1}+F_{n-2}$.
+  \item Écrire une fonction \texttt{pgcd(int a, int b)} qui calcule le PGCD par l'algorithme d'Euclide.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+#include <stdio.h>
+
+/* (1) Puissance iterative */
+double puissance(double base, int n) {
+    double resultat = 1.0;
+    int exp = (n >= 0) ? n : -n;
+    for (int i = 0; i < exp; i++) resultat *= base;
+    return (n >= 0) ? resultat : 1.0 / resultat;
+}
+
+/* (2) Fibonacci recursif */
+long long fibonacci(int n) {
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+/* (3) PGCD par algorithme d'Euclide */
+int pgcd(int a, int b) {
+    while (b != 0) {
+        int r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+int main() {
+    printf("2^10 = %.0f\n", puissance(2, 10));
+    printf("F(10) = %lld\n", fibonacci(10));
+    printf("pgcd(48, 18) = %d\n", pgcd(48, 18));
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{Attention :} la version récursive de Fibonacci est très inefficace pour les grands $n$ (complexité exponentielle). En pratique, on utilise une version itérative ou la mémoïsation.
+\end{boitecorrige}
+
+\subsection*{Exercice 6 - Pointeurs et passage par adresse \niveau{\difficile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Écrire une fonction \texttt{echange(int *a, int *b)} qui échange les valeurs de deux variables. Expliquer pourquoi le passage par valeur ne fonctionnerait pas.
+  \item Écrire une fonction qui calcule simultanément le minimum et le maximum d'un tableau et les retourne via des pointeurs.
+  \item Qu'affiche le programme suivant ?
+\begin{lstlisting}
+int main() {
+    int t[] = {10, 20, 30, 40, 50};
+    int *p = t;
+    printf("%d\n", *p);
+    printf("%d\n", *(p + 2));
+    p++;
+    printf("%d\n", *p);
+    printf("%d\n", p[2]);
+    return 0;
+}
+\end{lstlisting}
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\begin{lstlisting}
+void echange(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+\end{lstlisting}
+Si on passait par valeur (\texttt{void echange(int a, int b)}), la fonction travaillerait sur des copies locales ; les variables originales dans \texttt{main} resteraient inchangées. Avec les pointeurs, on accède directement aux emplacements mémoire d'origine.
+
+\textbf{2.}
+\begin{lstlisting}
+void min_max(int tab[], int n, int *min, int *max) {
+    *min = *max = tab[0];
+    for (int i = 1; i < n; i++) {
+        if (tab[i] < *min) *min = tab[i];
+        if (tab[i] > *max) *max = tab[i];
+    }
+}
+/* Appel : int mn, mx; min_max(t, 5, &mn, &mx); */
+\end{lstlisting}
+
+\textbf{3.} Analyse pas à pas :
+\begin{itemize}[nosep]
+  \item \texttt{p = t} : $p$ pointe sur \texttt{t[0]} (valeur 10).
+  \item \texttt{*p} : valeur à l'adresse $p$ = \textbf{10}.
+  \item \texttt{*(p+2)} : adresse de \texttt{t[2]}, valeur = \textbf{30}.
+  \item \texttt{p++} : $p$ avance d'un entier, pointe maintenant sur \texttt{t[1]} (valeur 20).
+  \item \texttt{*p} = \textbf{20}.
+  \item \texttt{p[2]} $\equiv$ \texttt{*(p+2)} : deux cases après \texttt{t[1]}, soit \texttt{t[3]} = \textbf{40}.
+\end{itemize}
+Le programme affiche : 10, 30, 20, 40.
+\end{boitecorrige}
+
+
+\subsection*{Exercice 7 - Récursivité : suite de Fibonacci \niveau{\moyen}}
+
+\begin{boiteexercice}
+La suite de Fibonacci est définie par $F_0=0$, $F_1=1$, $F_n=F_{n-1}+F_{n-2}$ pour $n\geq2$.
+\begin{enumerate}
+  \item Écrire une fonction C récursive \texttt{fib\_rec(int n)} qui calcule $F_n$.
+  \item Écrire une fonction C itérative \texttt{fib\_iter(int n)} qui calcule $F_n$.
+  \item Comparer les complexités temporelles des deux approches. Pourquoi la version récursive est-elle très lente pour $n$ grand ?
+  \item Écrire un programme \texttt{main} qui affiche les 15 premiers termes avec les deux méthodes.
+  \item Modifier \texttt{fib\_iter} pour qu'elle calcule également la somme $S_n = \sum_{k=0}^n F_k$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Version récursive :
+\begin{lstlisting}
+int fib_rec(int n) {
+    if (n <= 0) return 0;
+    if (n == 1) return 1;
+    return fib_rec(n-1) + fib_rec(n-2);
+}
+\end{lstlisting}
+
+\textbf{2.} Version itérative :
+\begin{lstlisting}
+int fib_iter(int n) {
+    if (n <= 0) return 0;
+    if (n == 1) return 1;
+    int a = 0, b = 1, c;
+    for (int i = 2; i <= n; i++) {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+    return b;
+}
+\end{lstlisting}
+
+\textbf{3.} Complexité :
+\begin{itemize}[nosep]
+  \item \texttt{fib\_rec} : complexité $O(\varphi^n)$ où $\varphi=(1+\sqrt{5})/2\approx1{,}618$ (nombre d'or). Chaque appel engendre 2 sous-appels ; de nombreux sous-problèmes sont recalculés plusieurs fois (arbre d'appels exponentiel).
+  \item \texttt{fib\_iter} : complexité $O(n)$ en temps, $O(1)$ en espace. Elle est donc exponentiellement plus rapide.
+\end{itemize}
+Pour $n=40$, \texttt{fib\_rec} effectue $\approx 10^8$ appels tandis que \texttt{fib\_iter} effectue 40 itérations.
+
+\textbf{4.} Programme principal :
+\begin{lstlisting}
+#include <stdio.h>
+int main(void) {
+    printf("n   fib_rec  fib_iter\n");
+    for (int i = 0; i < 15; i++)
+        printf("%2d  %6d   %6d\n", i, fib_rec(i), fib_iter(i));
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{5.} Calcul simultané de la somme ($S_n = F_{n+2}-1$) :
+\begin{lstlisting}
+int fib_iter_sum(int n, int *somme) {
+    if (n <= 0) { *somme = 0; return 0; }
+    int a = 0, b = 1, c, s = 1;
+    for (int i = 2; i <= n; i++) {
+        c = a + b; a = b; b = c; s += c;
+    }
+    *somme = s;
+    return b;
+}
+\end{lstlisting}
+\end{boitecorrige}
+
+\subsection*{Exercice 8 - Tableaux 2D et algèbre matricielle \niveau{\moyen}}
+
+\begin{boiteexercice}
+On travaille avec des matrices $4\times4$ stockées comme tableaux 2D en C.
+\begin{enumerate}
+  \item Écrire une fonction \texttt{init\_identite(int M[4][4])} qui initialise $M$ à la matrice identité.
+  \item Écrire une fonction \texttt{trace(int M[4][4])} qui retourne la trace de $M$.
+  \item Écrire une fonction \texttt{transposee(int A[4][4], int B[4][4])} qui stocke dans $B$ la transposée de $A$.
+  \item Écrire une fonction \texttt{produit\_mat\_vec(int A[4][4], int v[4], int res[4])} qui calcule $\vec{res} = A\vec{v}$.
+  \item Tester avec la matrice $A_{ij}=i+j$ ($i,j$ de 0 à 3) et le vecteur $\vec{v}=(1,0,0,0)^T$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\begin{lstlisting}
+void init_identite(int M[4][4]) {
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
+            M[i][j] = (i == j) ? 1 : 0;
+}
+\end{lstlisting}
+
+\textbf{2.}
+\begin{lstlisting}
+int trace(int M[4][4]) {
+    int t = 0;
+    for (int i = 0; i < 4; i++) t += M[i][i];
+    return t;
+}
+\end{lstlisting}
+
+\textbf{3.}
+\begin{lstlisting}
+void transposee(int A[4][4], int B[4][4]) {
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
+            B[j][i] = A[i][j];
+}
+\end{lstlisting}
+
+\textbf{4.}
+\begin{lstlisting}
+void produit_mat_vec(int A[4][4], int v[4], int res[4]) {
+    for (int i = 0; i < 4; i++) {
+        res[i] = 0;
+        for (int j = 0; j < 4; j++)
+            res[i] += A[i][j] * v[j];
+    }
+}
+\end{lstlisting}
+
+\textbf{5.} Pour $A_{ij}=i+j$ : $A = \begin{pmatrix}0&1&2&3\\1&2&3&4\\2&3&4&5\\3&4&5&6\end{pmatrix}$.
+Trace : $0+2+4+6=12$. Produit $A\vec{v}$ avec $\vec{v}=(1,0,0,0)^T$ donne la première colonne de $A$ : $(0,1,2,3)^T$.
+\begin{lstlisting}
+int main(void) {
+    int A[4][4], v[4]={1,0,0,0}, res[4], B[4][4];
+    for (int i=0;i<4;i++) for(int j=0;j<4;j++) A[i][j]=i+j;
+    printf("Trace = %d\n", trace(A));          /* 12 */
+    produit_mat_vec(A, v, res);
+    printf("Av = (%d,%d,%d,%d)\n", res[0],res[1],res[2],res[3]);
+    return 0;
+}
+\end{lstlisting}
+\end{boitecorrige}
+
+\subsection*{Exercice 9 - Allocation dynamique et pointeurs sur fonctions \niveau{\difficile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Écrire une fonction \texttt{swap(int *a, int *b)} qui échange les valeurs de deux variables entières. Expliquer pourquoi le passage par pointeur est nécessaire.
+  \item Écrire une fonction \texttt{creer\_tableau(int n)} qui alloue dynamiquement un tableau de $n$ entiers, les initialise à $0,1,2,\ldots,n-1$ et retourne le pointeur.
+  \item Écrire une fonction \texttt{appliquer(int *t, int n, int (*f)(int))} qui applique la fonction \texttt{f} à chaque élément du tableau.
+  \item Tester avec les fonctions $f(x)=x^2$ et $g(x)=2x+1$ sur un tableau de 6 éléments.
+  \item Expliquer ce que fait le code suivant et identifier l'erreur :\\
+  \texttt{int *p = malloc(10*sizeof(int)); p[10] = 5;}
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\begin{lstlisting}
+void swap(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+\end{lstlisting}
+Sans pointeurs, C passe les arguments par valeur : la fonction travaillerait sur des copies et les variables originales resteraient inchangées.
+
+\textbf{2.}
+\begin{lstlisting}
+int *creer_tableau(int n) {
+    int *t = malloc(n * sizeof(int));
+    if (t == NULL) { fprintf(stderr, "Erreur malloc\n"); exit(1); }
+    for (int i = 0; i < n; i++) t[i] = i;
+    return t;
+}
+\end{lstlisting}
+Remarque : le tableau alloué doit être libéré par l'appelant avec \texttt{free(t)}.
+
+\textbf{3.}
+\begin{lstlisting}
+void appliquer(int *t, int n, int (*f)(int)) {
+    for (int i = 0; i < n; i++) t[i] = f(t[i]);
+}
+\end{lstlisting}
+
+\textbf{4.}
+\begin{lstlisting}
+int carre(int x) { return x * x; }
+int double_plus_un(int x) { return 2*x + 1; }
+
+int main(void) {
+    int *t = creer_tableau(6);  /* {0,1,2,3,4,5} */
+    appliquer(t, 6, carre);     /* {0,1,4,9,16,25} */
+    for (int i=0;i<6;i++) printf("%d ", t[i]);
+    free(t);
+    t = creer_tableau(6);
+    appliquer(t, 6, double_plus_un); /* {1,3,5,7,9,11} */
+    for (int i=0;i<6;i++) printf("%d ", t[i]);
+    free(t);
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{5.} \texttt{malloc(10*sizeof(int))} alloue 10 entiers aux indices $0$ à $9$. \texttt{p[10]=5} écrit en dehors de la zone allouée (\textbf{dépassement de tampon} -- \textit{buffer overflow}). C'est un comportement indéfini qui peut provoquer une corruption mémoire, un segfault ou des failles de sécurité.
+\end{boitecorrige}
+
+\subsection*{Exercice 10 - Lecture de fichier et statistiques \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un fichier texte \texttt{donnees.txt} contient des entiers séparés par des espaces ou sauts de ligne.
+\begin{enumerate}
+  \item Écrire une fonction \texttt{lire\_fichier(const char *nom, int *t, int max)} qui lit les entiers du fichier dans le tableau \texttt{t} (de taille maximale \texttt{max}) et retourne le nombre de valeurs lues.
+  \item Écrire une fonction \texttt{moyenne(int *t, int n)} qui retourne la moyenne sous forme de \texttt{double}.
+  \item Écrire une fonction \texttt{ecart\_type(int *t, int n, double moy)} qui retourne l'écart-type $\sigma = \sqrt{\frac{1}{n}\sum_{i=1}^n(x_i-\bar x)^2}$.
+  \item Écrire le programme principal qui affiche $n$, $\bar x$, $\sigma_x$, le minimum et le maximum.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\begin{lstlisting}
+#include <stdio.h>
+#include <math.h>
+
+int lire_fichier(const char *nom, int *t, int max) {
+    FILE *f = fopen(nom, "r");
+    if (f == NULL) { perror("fopen"); return -1; }
+    int n = 0;
+    while (n < max && fscanf(f, "%d", &t[n]) == 1) n++;
+    fclose(f);
+    return n;
+}
+\end{lstlisting}
+
+\textbf{2.}
+\begin{lstlisting}
+double moyenne(int *t, int n) {
+    double s = 0.0;
+    for (int i = 0; i < n; i++) s += t[i];
+    return s / n;
+}
+\end{lstlisting}
+
+\textbf{3.}
+\begin{lstlisting}
+double ecart_type(int *t, int n, double moy) {
+    double s = 0.0;
+    for (int i = 0; i < n; i++) {
+        double d = t[i] - moy;
+        s += d * d;
+    }
+    return sqrt(s / n);
+}
+\end{lstlisting}
+
+\textbf{4.}
+\begin{lstlisting}
+int main(void) {
+    int t[1000];
+    int n = lire_fichier("donnees.txt", t, 1000);
+    if (n <= 0) return 1;
+    double moy = moyenne(t, n);
+    double sigma = ecart_type(t, n, moy);
+    int mn = t[0], mx = t[0];
+    for (int i = 1; i < n; i++) {
+        if (t[i] < mn) mn = t[i];
+        if (t[i] > mx) mx = t[i];
+    }
+    printf("n     = %d\n", n);
+    printf("moy   = %.4f\n", moy);
+    printf("sigma = %.4f\n", sigma);
+    printf("min   = %d, max = %d\n", mn, mx);
+    return 0;
+}
+\end{lstlisting}
+\end{boitecorrige}
+
+\subsection*{Exercice 11 - Structures et tri de points \niveau{\moyen}}
+
+\begin{boiteexercice}
+On souhaite manipuler des points du plan.
+\begin{enumerate}
+  \item Définir une structure \texttt{Point} avec deux champs \texttt{double x} et \texttt{double y}.
+  \item Écrire une fonction \texttt{distance(Point a, Point b)} qui retourne la distance euclidienne entre deux points.
+  \item Écrire une fonction de comparaison \texttt{cmp\_x} utilisable avec \texttt{qsort} pour trier un tableau de points par abscisse croissante.
+  \item Dans \texttt{main}, créer un tableau de 5 points, le trier par abscisse avec \texttt{qsort}, puis afficher les points triés.
+  \item Écrire une fonction \texttt{barycentre(Point *t, int n)} qui retourne le barycentre de $n$ points.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+typedef struct {
+    double x, y;
+} Point;
+\end{lstlisting}
+
+\textbf{2.}
+\begin{lstlisting}
+double distance(Point a, Point b) {
+    double dx = a.x - b.x;
+    double dy = a.y - b.y;
+    return sqrt(dx*dx + dy*dy);
+}
+\end{lstlisting}
+
+\textbf{3.} La fonction de comparaison pour \texttt{qsort} reçoit des pointeurs génériques \texttt{void*} :
+\begin{lstlisting}
+int cmp_x(const void *p1, const void *p2) {
+    const Point *a = (const Point *)p1;
+    const Point *b = (const Point *)p2;
+    if (a->x < b->x) return -1;
+    if (a->x > b->x) return  1;
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{4.}
+\begin{lstlisting}
+int main(void) {
+    Point pts[5] = {{3,1},{1,4},{4,1},{1,5},{9,2}};
+    qsort(pts, 5, sizeof(Point), cmp_x);
+    for (int i = 0; i < 5; i++)
+        printf("(%.1f, %.1f)\n", pts[i].x, pts[i].y);
+    /* Affiche dans l'ordre des x : 1,1,3,4,9 */
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{5.}
+\begin{lstlisting}
+Point barycentre(Point *t, int n) {
+    Point g = {0.0, 0.0};
+    for (int i = 0; i < n; i++) {
+        g.x += t[i].x;
+        g.y += t[i].y;
+    }
+    g.x /= n;
+    g.y /= n;
+    return g;
+}
+\end{lstlisting}
+Pour les 5 points ci-dessus, le barycentre est $G=(18/5, 13/5)=(3{,}6;\;2{,}6)$.
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

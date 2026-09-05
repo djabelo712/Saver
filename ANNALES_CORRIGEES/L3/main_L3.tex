@@ -1,0 +1,476 @@
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+\def\inMainDoc{}
+
+\lhead{\small\textit{Annale corrigée - Licence 3 - Physique}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\graphicspath{{images/}}
+
+\usepackage{listings}
+\lstset{
+  language=[90]Fortran,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape,
+  stringstyle=\ttfamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=8pt,
+  frame=single,
+  breaklines=true,
+  tabsize=4,
+  showstringspaces=false,
+  literate={é}{{\'{e}}}1 {è}{{\`{e}}}1 {ê}{{\^{e}}}1
+           {à}{{\`a}}1 {ù}{{\`u}}1 {î}{{\^i}}1 {ô}{{\^o}}1
+           {ç}{{\c{c}}}1
+}
+
+\begin{document}
+
+% ================================================================
+%  PAGE DE GARDE
+% ================================================================
+\begin{titlepage}
+\centering
+\thispagestyle{empty}
+
+\includegraphics[width=0.22\textwidth]{../L1/images/logo1.png}\\[0.4cm]
+{\large\bfseries UNIVERSITÉ DE KARA}\\[0.1cm]
+{\normalsize Faculté des Sciences et Techniques (FaST)}\\[0.1cm]
+{\normalsize Département de Physique}\\[0.3cm]
+\rule{\textwidth}{1.5pt}\\[0.1cm]
+\rule{\textwidth}{0.4pt}\\[0.8cm]
+
+\begin{tikzpicture}
+  \draw[line width=2pt] (-7.5,-2.6) rectangle (7.5,2.6);
+  \draw[line width=0.6pt] (-7.2,-2.3) rectangle (7.2,2.3);
+  \node at (0, 1.2) {\Huge\bfseries ANNALE D'EXERCICES};
+  \node at (0, 0.2) {\Huge\bfseries ET EXAMENS CORRIGÉS};
+  \node at (0,-0.9) {\large\bfseries Semestres 5 et 6};
+  \node at (0,-1.7) {\normalsize Exercices classiques, annales et examens résolus avec méthode};
+\end{tikzpicture}
+
+\vspace{0.7cm}
+{\LARGE\bfseries LICENCE FONDAMENTALE EN MATHÉMATIQUES, PHYSIQUE ET CHIMIE}\\[0.2cm]
+{\Large\bfseries PARCOURS TROISIÈME ANNÉE (L3)}\\[0.3cm]
+\rule{0.6\textwidth}{0.4pt}\\[0.4cm]
+{\small\itshape Comme toute \oe{}uvre humaine n'est jamais parfaite, prière de signaler toute erreur ou imprécision constatée dans ce document.}
+
+\vspace{0.7cm}
+\rule{\textwidth}{0.4pt}\\[0.5cm]
+
+\begin{flushleft}
+{\large\bfseries\underline{AUTEURS}}\\[0.3cm]
+\hspace{1cm}{\bfseries DJABON Ounimborbitibou}\\
+\hspace{1.5cm}{\itshape Master en Physique Théorique}\\
+\hspace{1.5cm}{\itshape Master in Mathematical Sciences, AIMS Ghana}\\[0.25cm]
+\hspace{1cm}{\bfseries BOUTCHOKA Malaki}\\
+\hspace{1.5cm}{\itshape Master en Matériaux Avancés en Électricité}\\
+\hspace{1.5cm}{\itshape Université de Lomé}
+\end{flushleft}
+
+\vspace{0.5cm}
+\rule{\textwidth}{0.4pt}\\[0.15cm]
+{\small Université de Kara, FaST \hfill Octobre 2025}
+
+\end{titlepage}
+
+% ================================================================
+%  AVANT-PROPOS
+% ================================================================
+\newpage
+\thispagestyle{plain}
+\pagestyle{fancy}
+
+\section*{Avant-propos}
+
+Chères étudiantes, chers étudiants de troisième année en Mathématiques, Physique et Chimie,
+
+Vous voici parvenus au terme de votre licence, une étape décisive qui marque la fin du cycle fondamental et l'entrée vers des formations plus spécialisées. Cette troisième année vous confronte à des théories parmi les plus élégantes et les plus profondes de la physique moderne : la physique statistique, la physique nucléaire, la mécanique analytique, et bien d'autres encore.
+
+Ce volume unique rassemble l'ensemble des Unités d'Enseignement de votre troisième année :
+
+\begin{itemize}
+  \item Physique statistique
+  \item Équations différentielles ordinaires
+  \item Physique nucléaire
+  \item Analyse complexe
+  \item Cristallographie
+  \item Électromagnétisme dans la matière
+  \item Mécanique analytique
+  \item Mécanique des milieux continus
+  \item Optique physique
+  \item Physique mathématique
+  \item Programmation en Fortran
+  \item Propagation des ondes électromagnétiques
+  \item Vibrations mécaniques
+\end{itemize}
+
+Chaque UE s'articule de la même manière : un \textbf{résumé de cours} condensé rappelle les résultats essentiels à maîtriser, suivi d'exercices progressifs dont le degré de difficulté est indiqué par des étoiles ($\star$ : accessible, $\star\star$ : intermédiaire, $\star\star\star$ : difficile). Chaque exercice est suivi de son corrigé détaillé, rédigé étape par étape.
+
+La troisième année est celle de la maturité intellectuelle. Les concepts que vous étudierez ici forment le socle de la physique contemporaine et vous prépareront, selon votre choix, aux masters de recherche, aux concours de l'enseignement, ou aux métiers de l'ingénierie.
+
+\begin{flushright}
+\emph{«\,La nature parle en mathématiques.\,»}\\
+\textbf{Galilée}
+\end{flushright}
+
+Nous vous souhaitons une excellente utilisation de cette annale et plein succès dans vos études scientifiques.
+
+\vspace{1cm}
+\begin{flushright}
+\textit{DJABON Ounimborbitibou \& BOUTCHOKA Malaki}
+\end{flushright}
+
+% ================================================================
+%  TABLE DES MATIÈRES
+% ================================================================
+\newpage
+\tableofcontents
+\newpage
+
+% ================================================================
+%  UE 1 : PHYSIQUE STATISTIQUE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{30}{38}\bfseries\selectfont PHYSIQUE STATISTIQUE}\\[1.2cm]
+    {\large\itshape Ensembles statistiques - Entropie}\\[0.4cm]
+    {\large\itshape Statistiques de Boltzmann, Fermi, Bose}\\[1.8cm]
+    {\normalsize Licence 3 - UE 1}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 1};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{PHYSIQUE STATISTIQUE}
+\input{Physique_Statistique_L3.tex}
+
+% ================================================================
+%  UE 2 : ÉQUATIONS DIFFÉRENTIELLES ORDINAIRES
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{26}{34}\bfseries\selectfont ÉQUATIONS DIFFÉRENTIELLES}\\[0.3cm]
+    {\fontsize{26}{34}\bfseries\selectfont ORDINAIRES}\\[1.0cm]
+    {\large\itshape EDO linéaires d'ordre $n$ - Systèmes}\\[0.4cm]
+    {\large\itshape Stabilité - Méthodes de résolution}\\[1.5cm]
+    {\normalsize Licence 3 - UE 2}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 2};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{ÉQUATIONS DIFFÉRENTIELLES ORDINAIRES}
+\input{EDO_L3.tex}
+
+% ================================================================
+%  UE 3 : PHYSIQUE NUCLÉAIRE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{34}{42}\bfseries\selectfont PHYSIQUE NUCLÉAIRE}\\[1.2cm]
+    {\large\itshape Structure du noyau - Radioactivité}\\[0.4cm]
+    {\large\itshape Réactions nucléaires - Fission et fusion}\\[1.8cm]
+    {\normalsize Licence 3 - UE 3}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 3};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{PHYSIQUE NUCLÉAIRE}
+\input{Physique_Nucleaire_L3.tex}
+
+% ================================================================
+%  UE 4 : ANALYSE COMPLEXE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{34}{42}\bfseries\selectfont ANALYSE COMPLEXE}\\[1.2cm]
+    {\large\itshape Fonctions holomorphes - Résidus}\\[0.4cm]
+    {\large\itshape Intégration dans le plan complexe}\\[1.8cm]
+    {\normalsize Licence 3 - UE 4}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 4};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{ANALYSE COMPLEXE}
+\input{Analyse_Complexe_L3.tex}
+
+% ================================================================
+%  UE 5 : CRISTALLOGRAPHIE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{34}{42}\bfseries\selectfont CRISTALLOGRAPHIE}\\[1.2cm]
+    {\large\itshape Réseaux cristallins - Groupes de symétrie}\\[0.4cm]
+    {\large\itshape Diffraction de Bragg - Structures}\\[1.8cm]
+    {\normalsize Licence 3 - UE 5}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 5};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{CRISTALLOGRAPHIE}
+\input{Cristallographie_L3.tex}
+
+% ================================================================
+%  UE 6 : ÉLECTROMAGNÉTISME DANS LA MATIÈRE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{24}{32}\bfseries\selectfont ÉLECTROMAGNÉTISME}\\[0.3cm]
+    {\fontsize{24}{32}\bfseries\selectfont DANS LA MATIÈRE}\\[1.0cm]
+    {\large\itshape Milieux diélectriques et magnétiques}\\[0.4cm]
+    {\large\itshape Conditions aux interfaces}\\[1.5cm]
+    {\normalsize Licence 3 - UE 6}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 6};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{ÉLECTROMAGNÉTISME DANS LA MATIÈRE}
+\input{Electromagnetisme_Matiere_L3.tex}
+
+% ================================================================
+%  UE 7 : MÉCANIQUE ANALYTIQUE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{30}{38}\bfseries\selectfont MÉCANIQUE ANALYTIQUE}\\[1.2cm]
+    {\large\itshape Formalisme de Lagrange}\\[0.4cm]
+    {\large\itshape Formalisme de Hamilton - Variables cycliques}\\[1.8cm]
+    {\normalsize Licence 3 - UE 7}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 7};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{MÉCANIQUE ANALYTIQUE}
+\input{Mecanique_Analytique_L3.tex}
+
+% ================================================================
+%  UE 8 : MÉCANIQUE DES MILIEUX CONTINUS
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{24}{32}\bfseries\selectfont MÉCANIQUE DES MILIEUX}\\[0.3cm]
+    {\fontsize{24}{32}\bfseries\selectfont CONTINUS}\\[1.0cm]
+    {\large\itshape Tenseurs - Cinématique}\\[0.4cm]
+    {\large\itshape Déformation - Contraintes}\\[1.5cm]
+    {\normalsize Licence 3 - UE 8}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 8};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{MÉCANIQUE DES MILIEUX CONTINUS}
+\input{MMC_L3.tex}
+
+% ================================================================
+%  UE 9 : OPTIQUE PHYSIQUE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{34}{42}\bfseries\selectfont OPTIQUE PHYSIQUE}\\[1.2cm]
+    {\large\itshape Interférences - Diffraction}\\[0.4cm]
+    {\large\itshape Réseaux - Polarisation}\\[1.8cm]
+    {\normalsize Licence 3 - UE 9}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 9};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{OPTIQUE PHYSIQUE}
+\input{Optique_Physique_L3.tex}
+
+% ================================================================
+%  UE 10 : PHYSIQUE MATHÉMATIQUE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{30}{38}\bfseries\selectfont PHYSIQUE MATHÉMATIQUE}\\[1.2cm]
+    {\large\itshape Formes différentielles - EDP}\\[0.4cm]
+    {\large\itshape Green-Riemann - Transformée de Fourier}\\[1.8cm]
+    {\normalsize Licence 3 - UE 10}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 10};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{PHYSIQUE MATHÉMATIQUE}
+\input{Physique_Mathematique_L3.tex}
+
+% ================================================================
+%  UE 11 : PROGRAMMATION EN FORTRAN
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{30}{38}\bfseries\selectfont PROGRAMMATION EN FORTRAN}\\[1.2cm]
+    {\large\itshape Fortran 90/95 - Calcul scientifique}\\[0.4cm]
+    {\large\itshape Tableaux - Sous-programmes - E/S}\\[1.8cm]
+    {\normalsize Licence 3 - UE 11}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 11};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{PROGRAMMATION EN FORTRAN}
+\input{Programmation_Fortran_L3.tex}
+
+% ================================================================
+%  UE 12 : PROPAGATION DES ONDES EM
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{26}{34}\bfseries\selectfont PROPAGATION DES ONDES}\\[0.3cm]
+    {\fontsize{26}{34}\bfseries\selectfont ÉLECTROMAGNÉTIQUES}\\[1.0cm]
+    {\large\itshape Ondes planes - Équation de d'Alembert}\\[0.4cm]
+    {\large\itshape Énergie - Interfaces}\\[1.5cm]
+    {\normalsize Licence 3 - UE 12}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 12};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{PROPAGATION DES ONDES ÉLECTROMAGNÉTIQUES}
+\input{Propagation_L3.tex}
+
+% ================================================================
+%  UE 13 : VIBRATIONS MÉCANIQUES
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{30}{38}\bfseries\selectfont VIBRATIONS MÉCANIQUES}\\[1.2cm]
+    {\large\itshape Oscillateurs libres et amortis}\\[0.4cm]
+    {\large\itshape Résonance - Systèmes couplés}\\[1.8cm]
+    {\normalsize Licence 3 - UE 13}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 13};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{VIBRATIONS MÉCANIQUES}
+\input{Vibrations_L3.tex}
+
+\end{document}

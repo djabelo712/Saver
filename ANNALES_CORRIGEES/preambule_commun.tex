@@ -1,0 +1,205 @@
+% ================================================================
+%  PRÉAMBULE COMMUN - ANNALES CORRIGÉES
+%  Université de Kara - FaST - Licence Fondamentale MPC
+%  Design optimisé impression noir et blanc
+% ================================================================
+
+% -- ENCODAGE & LANGUE --
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% -- MISE EN PAGE --
+\usepackage[a4paper, top=2.8cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headheight=14pt]{geometry}
+\usepackage{setspace}
+\setstretch{1.2}
+\usepackage{parskip}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{4pt}
+
+% -- MATHS --
+\usepackage{amsmath, amssymb, mathtools, amsthm}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{bm}
+\usepackage{cancel}
+\usepackage{textcomp}
+% Définition de \oiint (intégrale de surface fermée) sans package supplémentaire
+\newcommand{\oiint}{\mathop{\iint\!\!\!\!\!\!\!\bigcirc}\limits}
+
+% -- PHYSIQUE & CHIMIE --
+\usepackage{physics}
+\usepackage{siunitx}
+% Lorsque physics est chargé, siunitx omet \qty. On le restaure ici :
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\sisetup{locale = FR, detect-all, output-decimal-marker={,}}
+% Commande de substitution pour les unités posant problème avec pdflatex
+% (ohm, degreeCelsius, micro, angstrom, percent utilisent des caractères non-ASCII)
+\newcommand{\qtyohm}[1]{\ensuremath{\num{#1}\,\Omega}}
+\newcommand{\qtydegc}[1]{\ensuremath{\num{#1}\,{}^\circ\text{C}}}
+\newcommand{\qtyangstrom}[1]{\ensuremath{\num{#1}\,\text{\AA}}}
+\newcommand{\qtypercent}[1]{\ensuremath{\num{#1}\,\%}}
+\newcommand{\qtyum}[1]{\ensuremath{\num{#1}\,\mu\text{m}}}
+\usepackage[version=4]{mhchem}
+
+% -- GRAPHISMES --
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{calc, arrows.meta, patterns, shapes.geometric}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% -- TABLEAUX --
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+% -- LISTES --
+\usepackage{enumitem}
+\setlist[enumerate]{topsep=3pt, itemsep=2pt, parsep=0pt}
+\setlist[itemize]{topsep=3pt, itemsep=2pt, parsep=0pt, label={.}}
+
+% -- BOÎTES (noir et blanc) --
+\usepackage{mdframed}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable, theorems}
+
+% Boîte EXERCICE : encadré avec filet épais, fond blanc
+\newmdenv[
+  linewidth=1.2pt,
+  linecolor=black,
+  roundcorner=3pt,
+  skipabove=10pt,
+  skipbelow=6pt,
+  innertopmargin=8pt,
+  innerbottommargin=8pt,
+  innerleftmargin=10pt,
+  innerrightmargin=10pt,
+  backgroundcolor=white,
+  frametitle={\bfseries\small Exercice},
+  frametitlealignment=\raggedright,
+  frametitleaboveskip=4pt,
+  frametitlebelowskip=4pt,
+]{boiteexercice}
+
+% Boîte CORRIGÉ : fond gris très clair + filet fin
+\newmdenv[
+  linewidth=0.6pt,
+  linecolor=black,
+  leftline=true,
+  rightline=false,
+  topline=false,
+  bottomline=false,
+  linecolor=black,
+  innerleftmargin=12pt,
+  innerrightmargin=8pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt,
+  backgroundcolor=gray!8,
+  skipabove=4pt,
+  skipbelow=8pt,
+]{boitecorrige}
+
+% Boîte RÉSUMÉ DE COURS : double encadré
+\newmdenv[
+  linewidth=0.8pt,
+  linecolor=black,
+  roundcorner=2pt,
+  backgroundcolor=gray!12,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerleftmargin=12pt,
+  innerrightmargin=12pt,
+  skipabove=12pt,
+  skipbelow=8pt,
+]{boiteresume}
+
+% Boîte ATTENTION/REMARQUE : barre gauche épaisse
+\newmdenv[
+  leftline=true,
+  rightline=false,
+  topline=false,
+  bottomline=false,
+  linewidth=3pt,
+  linecolor=black,
+  backgroundcolor=gray!5,
+  innerleftmargin=12pt,
+  innerrightmargin=8pt,
+  innertopmargin=5pt,
+  innerbottommargin=5pt,
+  skipabove=6pt,
+  skipbelow=6pt,
+]{boiteremarque}
+
+% -- DIFFICULTÉ DES EXERCICES --
+\newcommand{\facile}{$\star$}
+\newcommand{\moyen}{$\star\!\star$}
+\newcommand{\difficile}{$\star\!\star\!\star$}
+\newcommand{\niveau}[1]{\hfill\textbf{#1}\hspace{2pt}}
+
+% -- EN-TÊTES ET PIEDS DE PAGE --
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+% -- HYPERLIENS --
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+    colorlinks=false,
+    pdftitle={Annale Corrigée - Licence MPC - Université de Kara}
+}
+
+% -- TITRES --
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries}{\thesection.}{0.8em}{}[\vspace{2pt}\hrule\vspace{4pt}]
+\titleformat{\subsection}{\large\bfseries}{\thesubsection.}{0.7em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection.}{0.6em}{}
+
+% -- THÉORÈMES --
+\theoremstyle{definition}
+\newtheorem{defn}{Définition}[section]
+\newtheorem{prop}{Propriété}[section]
+\newtheorem{thm}{Théorème}[section]
+\newtheorem{corol}{Corollaire}[section]
+\newtheorem{exemple}{Exemple}[section]
+
+% -- COMMANDES MATHÉMATIQUES UTILES --
+\newcommand{\vect}[1]{\overrightarrow{#1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\deriv}[2]{\dfrac{\d #1}{\d #2}}
+\newcommand{\dpart}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\rot}{\overrightarrow{\mathrm{rot}}\,}
+\renewcommand{\div}{\mathrm{div}\,}
+\renewcommand{\grad}{\overrightarrow{\mathrm{grad}}\,}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\renewcommand{\Tr}{\mathrm{Tr}}
+
+% Numérotation des équations par section
+\numberwithin{equation}{section}
+
+% -- RÉSULTATS ENCADRÉS --
+\newcommand{\res}[1]{\[\boxed{#1}\]}
+
+% -- REMARQUE INLINE --
+\newcommand{\rmq}[1]{\begin{boiteremarque}\textbf{Remarque.} #1\end{boiteremarque}}
+
+% -- MISE EN VALEUR DU RÉSULTAT FINAL --
+\newcommand{\reponse}[1]{%
+  \begin{center}
+    \fbox{\begin{minipage}{0.92\textwidth}\centering #1\end{minipage}}
+  \end{center}%
+}

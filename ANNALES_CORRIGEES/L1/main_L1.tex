@@ -1,0 +1,426 @@
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+\def\inMainDoc{}
+
+% En-têtes générales de l'annale L1
+\lhead{\small\textit{Annale corrigée - Licence 1 - MPC}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\graphicspath{{images/}}
+
+\usepackage{listings}
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=8pt,
+  frame=single,
+  breaklines=true,
+  tabsize=4,
+  showstringspaces=false
+}
+\begin{document}
+
+% ================================================================
+%  PAGE DE GARDE
+% ================================================================
+\begin{titlepage}
+\centering
+\thispagestyle{empty}
+
+\includegraphics[width=0.22\textwidth]{images/logo1.png}\\[0.4cm]
+{\large\bfseries UNIVERSITÉ DE KARA}\\[0.1cm]
+{\normalsize Faculté des Sciences et Techniques (FaST)}\\[0.1cm]
+{\normalsize Département de Physique}\\[0.3cm]
+\rule{\textwidth}{1.5pt}\\[0.1cm]
+\rule{\textwidth}{0.4pt}\\[0.8cm]
+
+\begin{tikzpicture}
+  \draw[line width=2pt] (-7.5,-2.6) rectangle (7.5,2.6);
+  \draw[line width=0.6pt] (-7.2,-2.3) rectangle (7.2,2.3);
+  \node at (0, 1.2) {\Huge\bfseries ANNALE D'EXERCICES};
+  \node at (0, 0.2) {\Huge\bfseries ET EXAMENS CORRIGÉS};
+  \node at (0,-0.9) {\large\bfseries Semestres 1 et 2};
+  \node at (0,-1.7) {\normalsize Exercices classiques, annales et examens résolus avec méthode};
+\end{tikzpicture}
+
+\vspace{0.7cm}
+{\LARGE\bfseries LICENCE FONDAMENTALE EN MATHÉMATIQUES, PHYSIQUE ET CHIMIE}\\[0.2cm]
+{\Large\bfseries PARCOURS PREMIÈRE ANNÉE (L1)}\\[0.3cm]
+\rule{0.6\textwidth}{0.4pt}\\[0.4cm]
+{\small\itshape Comme toute \oe{}uvre humaine n'est jamais parfaite, prière de signaler toute erreur ou imprécision constatée dans ce document.}
+
+\vspace{0.7cm}
+\rule{\textwidth}{0.4pt}\\[0.5cm]
+
+\begin{flushleft}
+{\large\bfseries\underline{AUTEURS}}\\[0.3cm]
+\hspace{1cm}{\bfseries DJABON Ounimborbitibou}\\
+\hspace{1.5cm}{\itshape Master en Physique Théorique}\\
+\hspace{1.5cm}{\itshape Master in Mathematical Sciences, AIMS Ghana}\\[0.25cm]
+\hspace{1cm}{\bfseries BOUTCHOKA Malaki}\\
+\hspace{1.5cm}{\itshape Master en Matériaux Avancés en Électricité}\\
+\hspace{1.5cm}{\itshape Université de Lomé}
+\end{flushleft}
+
+\vspace{0.5cm}
+\rule{\textwidth}{0.4pt}\\[0.15cm]
+{\small Université de Kara, FaST \hfill Octobre 2025}
+
+\end{titlepage}
+
+% ================================================================
+%  AVANT-PROPOS
+% ================================================================
+\newpage
+\thispagestyle{plain}
+\pagestyle{fancy}
+
+\section*{Avant-propos}
+
+Chères étudiantes, chers étudiants de première année en Mathématiques, Physique et Chimie,
+
+Cet ouvrage a été conçu spécialement pour vous accompagner tout au long de votre parcours universitaire. Il représente bien plus qu'un simple recueil d'exercices et d'examens : il se veut un outil de formation rigoureux, un compagnon de travail fidèle dans votre découverte des sciences fondamentales.
+
+Vous trouverez dans cette annale l'ensemble des Unités d'Enseignement qui constituent le socle de votre première année :
+
+\begin{itemize}
+  \item Atomistique
+  \item Algèbre linéaire
+  \item Analyse vectorielle
+  \item Calcul différentiel dans $\mathbb{R}$
+  \item Calcul intégral dans $\mathbb{R}$
+  \item Électrocinétique et régime variable
+  \item Électrostatique et magnétostatique
+  \item Logique et algèbre de base
+  \item Mécanique du point matériel
+  \item Programmation en langage C
+  \item Optique géométrique
+\end{itemize}
+
+Chaque UE s'articule de la même manière : un \textbf{résumé de cours} condensé rappelle les résultats essentiels à maîtriser, suivi d'exercices progressifs dont le degré de difficulté est indiqué par des étoiles ($\star$ : accessible, $\star\star$ : intermédiaire, $\star\star\star$ : difficile). Chaque exercice est suivi de son corrigé détaillé, rédigé étape par étape.
+
+Pour tirer le meilleur parti de cet outil, nous vous conseillons de :
+
+\begin{enumerate}
+  \item \textbf{Revoir d'abord le résumé de cours} avant d'aborder les exercices.
+  \item \textbf{Chercher activement} chaque problème avant de consulter la solution.
+  \item \textbf{Analyser les méthodes} de résolution plutôt que de simplement recopier.
+  \item \textbf{Identifier vos points faibles} pour y remédier efficacement.
+\end{enumerate}
+
+Retenez ceci : aucun ouvrage, aussi complet soit-il, ne peut remplacer votre curiosité intellectuelle et votre engagement personnel. Les sciences exactes demandent de la persévérance, de la rigueur et, parfois, beaucoup d'efforts. Mais c'est précisément ce dépassement de soi qui fera de vous des scientifiques accomplis.
+
+\begin{flushright}
+\emph{«\,Le génie est fait d'un pour cent d'inspiration et de quatre-vingt-dix-neuf pour cent de transpiration.\,»}\\
+\textbf{Thomas Edison}
+\end{flushright}
+
+Nous vous souhaitons une excellente utilisation de cette annale et plein succès dans vos études scientifiques.
+
+\vspace{1cm}
+\begin{flushright}
+\textit{DJABON Ounimborbitibou \& BOUTCHOKA Malaki}
+\end{flushright}
+
+% ================================================================
+%  TABLE DES MATIÈRES
+% ================================================================
+\newpage
+\tableofcontents
+\newpage
+
+% ================================================================
+%  UE 1 : ATOMISTIQUE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{36}{44}\bfseries\selectfont ATOMISTIQUE}\\[1.2cm]
+    {\large\itshape Structure de l'atome - Modèle de Bohr}\\[0.4cm]
+    {\large\itshape Configurations électroniques}\\[1.8cm]
+    {\normalsize Licence 1 - UE 1}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 1};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{ATOMISTIQUE}
+\input{Atomistique_L1.tex}
+
+% ================================================================
+%  UE 2 : ALGÈBRE LINÉAIRE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{36}{44}\bfseries\selectfont ALGÈBRE LINÉAIRE}\\[1.2cm]
+    {\large\itshape Espaces vectoriels - Matrices - Déterminants}\\[0.4cm]
+    {\large\itshape Valeurs propres et diagonalisation}\\[1.8cm]
+    {\normalsize Licence 1 - UE 2}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 2};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{ALGÈBRE LINÉAIRE}
+\input{Algebre_Lineaire_L1.tex}
+
+% ================================================================
+%  UE 3 : ANALYSE VECTORIELLE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{34}{42}\bfseries\selectfont ANALYSE VECTORIELLE}\\[1.2cm]
+    {\large\itshape Gradient - Divergence - Rotationnel}\\[0.4cm]
+    {\large\itshape Théorèmes de Stokes et de Green-Ostrogradski}\\[1.8cm]
+    {\normalsize Licence 1 - UE 3}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 3};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{ANALYSE VECTORIELLE}
+\input{Analyse_Vectorielle_L1.tex}
+
+% ================================================================
+%  UE 4 : CALCUL DIFFÉRENTIEL
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{30}{38}\bfseries\selectfont CALCUL DIFFÉRENTIEL DANS $\mathbb{R}$}\\[1.2cm]
+    {\large\itshape Limites - Dérivées - Développements limités}\\[0.4cm]
+    {\large\itshape Étude de fonctions et optimisation}\\[1.8cm]
+    {\normalsize Licence 1 - UE 4}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 4};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{CALCUL DIFFÉRENTIEL DANS $\mathbb{R}$}
+\input{Calcul_Differentiel_L1.tex}
+
+% ================================================================
+%  UE 5 : CALCUL INTÉGRAL
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{30}{38}\bfseries\selectfont CALCUL INTÉGRAL DANS $\mathbb{R}$}\\[1.2cm]
+    {\large\itshape Primitives - Intégration par parties}\\[0.4cm]
+    {\large\itshape Changement de variable - Intégrales impropres}\\[1.8cm]
+    {\normalsize Licence 1 - UE 5}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 5};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{CALCUL INTÉGRAL DANS $\mathbb{R}$}
+\input{Calcul_Integral_L1.tex}
+
+% ================================================================
+%  UE 6 : ÉLECTROCINÉTIQUE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{32}{40}\bfseries\selectfont ÉLECTROCINÉTIQUE}\\[0.4cm]
+    {\fontsize{22}{28}\bfseries\selectfont ET RÉGIME VARIABLE}\\[1.2cm]
+    {\large\itshape Circuits résistifs - Théorèmes de Thévenin et Norton}\\[0.4cm]
+    {\large\itshape Régime sinusoïdal}\\[1.8cm]
+    {\normalsize Licence 1 - UE 6}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 6};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{ÉLECTROCINÉTIQUE ET RÉGIME VARIABLE}
+\input{Electrocinetique_L1.tex}
+
+% ================================================================
+%  UE 7 : ÉLECTROSTATIQUE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{32}{40}\bfseries\selectfont ÉLECTROSTATIQUE}\\[0.4cm]
+    {\fontsize{22}{28}\bfseries\selectfont ET MAGNÉTOSTATIQUE}\\[1.2cm]
+    {\large\itshape Loi de Coulomb - Théorème de Gauss}\\[0.4cm]
+    {\large\itshape Condensateurs - Champ magnétostatique}\\[1.8cm]
+    {\normalsize Licence 1 - UE 7}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 7};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{ÉLECTROSTATIQUE ET MAGNÉTOSTATIQUE}
+\input{Electrostatique_L1.tex}
+
+% ================================================================
+%  UE 8 : LOGIQUE ET ALGÈBRE DE BASE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{28}{36}\bfseries\selectfont LOGIQUE ET ALGÈBRE DE BASE}\\[1.2cm]
+    {\large\itshape Logique propositionnelle - Théorie des ensembles}\\[0.4cm]
+    {\large\itshape Relations - Applications - Algèbre de Boole}\\[1.8cm]
+    {\normalsize Licence 1 - UE 8}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 8};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{LOGIQUE ET ALGÈBRE DE BASE}
+\input{Logique_L1.tex}
+
+% ================================================================
+%  UE 9 : MÉCANIQUE DU POINT MATÉRIEL
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{28}{36}\bfseries\selectfont MÉCANIQUE DU POINT MATÉRIEL}\\[1.2cm]
+    {\large\itshape Cinématique et dynamique newtonienne}\\[0.4cm]
+    {\large\itshape Énergie - Moment cinétique - Oscillations}\\[1.8cm]
+    {\normalsize Licence 1 - UE 9}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 9};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{MÉCANIQUE DU POINT MATÉRIEL}
+\input{MPM_L1.tex}
+
+% ================================================================
+%  UE 10 : PROGRAMMATION EN LANGAGE C
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{28}{36}\bfseries\selectfont PROGRAMMATION}\\[0.4cm]
+    {\fontsize{28}{36}\bfseries\selectfont EN LANGAGE C}\\[1.2cm]
+    {\large\itshape Types - Variables - Boucles - Fonctions}\\[0.4cm]
+    {\large\itshape Tableaux - Pointeurs - Algorithmes}\\[1.8cm]
+    {\normalsize Licence 1 - UE 10}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 10};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{PROGRAMMATION EN LANGAGE C}
+\input{Programmation_C_L1.tex}
+
+% ================================================================
+%  UE 11 : OPTIQUE GÉOMÉTRIQUE
+% ================================================================
+\newpage
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gray!12] ([xshift=1.5cm, yshift=3cm]current page.south west)
+    rectangle ([xshift=-1.5cm, yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=-3cm]current page.north west)
+    -- ([xshift=-1.5cm,yshift=-3cm]current page.north east);
+  \draw[line width=3pt] ([xshift=1.5cm,yshift=3cm]current page.south west)
+    -- ([xshift=-1.5cm,yshift=3cm]current page.south east);
+  \node[align=center] at (current page.center) {%
+    {\fontsize{32}{40}\bfseries\selectfont OPTIQUE GÉOMÉTRIQUE}\\[1.2cm]
+    {\large\itshape Lois de Snell-Descartes - Miroirs}\\[0.4cm]
+    {\large\itshape Lentilles minces - Instruments d'optique}\\[1.8cm]
+    {\normalsize Licence 1 - UE 11}
+  };
+  \node[anchor=south west] at ([xshift=2cm,yshift=2cm]current page.south west)
+    {\large\bfseries UE 11};
+\end{tikzpicture}
+\newpage
+
+\addcontentsline{toc}{section}{OPTIQUE GÉOMÉTRIQUE}
+\input{Optique_Geometrique_L1.tex}
+
+\end{document}

@@ -1,0 +1,586 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Séries de Fourier et Transformée de Laplace - Licence 2}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries SÉRIES DE FOURIER ET TRANSFORMÉE DE LAPLACE}\\[0.3cm]
+  {\normalsize Licence 2 - Mathématiques, Physique et Chimie}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Série de Fourier.} Toute fonction $f$ périodique de période $T=2\pi/\omega_0$, intégrable sur une période, admet un développement en série de Fourier :
+\[
+f(t) = \frac{a_0}{2} + \sum_{n=1}^{+\infty}\left[a_n\cos(n\omega_0 t) + b_n\sin(n\omega_0 t)\right]
+\]
+avec $a_n = \frac{2}{T}\int_{-T/2}^{T/2} f(t)\cos(n\omega_0 t)\,\d t$ et $b_n = \frac{2}{T}\int_{-T/2}^{T/2} f(t)\sin(n\omega_0 t)\,\d t$.
+
+\textbf{2. Parité.} Si $f$ est paire, $b_n=0$ (série en cosinus). Si $f$ est impaire, $a_n=0$ (série en sinus).
+
+\textbf{3. Convergence.} Si $f$ est continue par morceaux sur $\mathbb{R}$, la série converge vers $\frac{f(t^+)+f(t^-)}{2}$ en tout point, et vers $f(t)$ aux points de continuité.
+
+\textbf{4. Égalité de Parseval.} $\frac{1}{T}\int_0^T |f(t)|^2\,\d t = \frac{a_0^2}{4}+\frac{1}{2}\sum_{n=1}^{+\infty}(a_n^2+b_n^2)$.
+
+\textbf{5. Transformée de Laplace.} $\mathcal{L}\{f\}(s) = F(s) = \int_0^{+\infty} f(t)\,\e^{-st}\,\d t$ (converge pour $\text{Re}(s)>\alpha_0$). Propriétés clés :
+\begin{itemize}[nosep]
+  \item $\mathcal{L}\{f'\} = sF(s)-f(0)$ ; $\mathcal{L}\{f''\} = s^2F(s)-sf(0)-f'(0)$
+  \item $\mathcal{L}\{\e^{at}f\} = F(s-a)$ (décalage en fréquence)
+  \item $\mathcal{L}\{f*g\} = F(s)\cdot G(s)$ (convolution)
+\end{itemize}
+Transformées usuelles : $\mathcal{L}\{1\}=\frac{1}{s}$, $\mathcal{L}\{\e^{at}\}=\frac{1}{s-a}$, $\mathcal{L}\{\sin(\omega t)\}=\frac{\omega}{s^2+\omega^2}$, $\mathcal{L}\{\cos(\omega t)\}=\frac{s}{s^2+\omega^2}$.
+
+\end{boiteresume}
+
+\newpage
+\section{Séries de Fourier}
+
+\subsection*{Exercice 1 - Série de Fourier d'un signal créneau \niveau{\facile}}
+
+\begin{boiteexercice}
+Soit $f$ la fonction $2\pi$-périodique définie sur $[-\pi,\pi[$ par :
+\[
+f(t) = \begin{cases}1 & \text{si } t\in[0,\pi[\\-1 & \text{si } t\in[-\pi,0[\end{cases}
+\]
+\begin{enumerate}
+  \item Calculer les coefficients de Fourier $a_n$ et $b_n$.
+  \item Écrire le développement en série de Fourier de $f$.
+  \item Vers quoi converge la série en $t=0$ et en $t=\pi$ ?
+  \item Déduire la valeur de la série $1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} + \cdots$
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $f$ est impaire, donc $a_n = 0$ pour tout $n\geq0$.
+
+$b_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(t)\sin(nt)\,\d t = \frac{2}{\pi}\int_0^\pi \sin(nt)\,\d t = \frac{2}{\pi}\left[-\frac{\cos(nt)}{n}\right]_0^\pi = \frac{2}{n\pi}(1-\cos(n\pi)) = \frac{2}{n\pi}(1-(-1)^n)$.
+
+Donc $b_n = \begin{cases}\frac{4}{n\pi} & \text{si } n \text{ impair}\\0 & \text{si } n \text{ pair}\end{cases}$.
+
+\textbf{2.} Développement :
+\[
+f(t) = \frac{4}{\pi}\left(\sin t + \frac{\sin 3t}{3} + \frac{\sin 5t}{5} + \cdots\right) = \frac{4}{\pi}\sum_{k=0}^{+\infty}\frac{\sin((2k+1)t)}{2k+1}
+\]
+
+\textbf{3.} En $t=0$ : $f$ est continue en 0 avec $f(0^+)=1$ et $f(0^-)=-1$, la série converge vers $\frac{1+(-1)}{2}=0$.
+
+En $t=\pi$ : de même, la série converge vers $\frac{-1+1}{2}=0$.
+
+\textbf{4.} En $t=\pi/2$, $f(\pi/2)=1$ et la série converge vers $f(\pi/2)=1$ (point de continuité) :
+\[
+\frac{4}{\pi}\left(1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7}+\cdots\right) = 1 \quad\Rightarrow\quad \sum_{k=0}^{+\infty}\frac{(-1)^k}{2k+1} = \frac{\pi}{4}
+\]
+C'est la formule de Leibniz-Gregory.
+\end{boitecorrige}
+
+\subsection*{Exercice 2 - Série de Fourier d'une fonction triangulaire \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $f$ la fonction $2\pi$-périodique définie sur $(-\pi,\pi]$ par $f(t) = |t|$.
+\begin{enumerate}
+  \item Calculer les coefficients $a_n$ et $b_n$.
+  \item Écrire le développement en série de Fourier.
+  \item Déduire la valeur de $\sum_{n=0}^{+\infty}\frac{1}{(2n+1)^2}$.
+  \item Appliquer l'égalité de Parseval et en déduire $\sum_{n=1}^{+\infty}\frac{1}{n^2}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $f$ est paire, donc $b_n=0$. $a_0 = \frac{2}{\pi}\int_0^\pi t\,\d t = \frac{2}{\pi}\cdot\frac{\pi^2}{2} = \pi$.
+
+Pour $n\geq1$ : $a_n = \frac{2}{\pi}\int_0^\pi t\cos(nt)\,\d t$. Par parties :
+\[
+a_n = \frac{2}{\pi}\left[\frac{t\sin(nt)}{n}\right]_0^\pi - \frac{2}{n\pi}\int_0^\pi\sin(nt)\,\d t = 0 + \frac{2}{n^2\pi}[\cos(nt)]_0^\pi = \frac{2((-1)^n-1)}{n^2\pi}
+\]
+Donc $a_n=0$ si $n$ est pair, et $a_n = -\frac{4}{n^2\pi}$ si $n$ est impair.
+
+\textbf{2.}
+\[
+f(t) = \frac{\pi}{2} - \frac{4}{\pi}\left(\cos t + \frac{\cos 3t}{9} + \frac{\cos 5t}{25}+\cdots\right) = \frac{\pi}{2} - \frac{4}{\pi}\sum_{k=0}^{+\infty}\frac{\cos((2k+1)t)}{(2k+1)^2}
+\]
+
+\textbf{3.} En $t=0$ : $f(0)=0$, donc $0 = \frac{\pi}{2} - \frac{4}{\pi}\sum_{k=0}^{+\infty}\frac{1}{(2k+1)^2}$, d'où $\displaystyle\sum_{k=0}^{+\infty}\frac{1}{(2k+1)^2} = \frac{\pi^2}{8}$.
+
+\textbf{4.} Parseval : $\frac{1}{2\pi}\int_{-\pi}^\pi t^2\,\d t = \frac{a_0^2}{4}+\frac{1}{2}\sum_{n\text{ impair}}\frac{16}{n^4\pi^2}$.
+
+LHS : $\frac{\pi^2}{3}$. On en déduit $\frac{\pi^2}{3} - \frac{\pi^2}{4} = \frac{8}{\pi^2}\sum_{n=0}^{+\infty}\frac{1}{(2n+1)^4}$... En utilisant $\sum_{n=1}^\infty\frac{1}{n^2} = \sum_{n=1}^\infty\frac{1}{(2n)^2}+\sum_{n=0}^\infty\frac{1}{(2n+1)^2} = \frac{1}{4}\sum_{n=1}^\infty\frac{1}{n^2}+\frac{\pi^2}{8}$, on obtient $\frac{3}{4}\sum_{n=1}^\infty\frac{1}{n^2}=\frac{\pi^2}{8}$ d'où :
+\[
+\sum_{n=1}^{+\infty}\frac{1}{n^2} = \frac{\pi^2}{6}
+\]
+\end{boitecorrige}
+
+\section{Transformée de Laplace}
+
+\subsection*{Exercice 3 - Calcul de transformées \niveau{\facile}}
+
+\begin{boiteexercice}
+Calculer les transformées de Laplace suivantes :
+\begin{enumerate}[label=(\alph*)]
+  \item $\mathcal{L}\{t^2\}(s)$
+  \item $\mathcal{L}\{\e^{-2t}\sin(3t)\}(s)$
+  \item $\mathcal{L}\{t\e^{at}\}(s)$
+  \item $\mathcal{L}\{\cosh(at)\}(s)$
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} $\mathcal{L}\{t^n\}(s) = n!/s^{n+1}$, donc $\mathcal{L}\{t^2\} = \dfrac{2}{s^3}$.
+
+\textbf{(b)} $\mathcal{L}\{\sin(3t)\} = \frac{3}{s^2+9}$. Par décalage ($a=-2$) : $\mathcal{L}\{\e^{-2t}\sin(3t)\} = \dfrac{3}{(s+2)^2+9}$.
+
+\textbf{(c)} $\mathcal{L}\{t\} = 1/s^2$. Par décalage : $\mathcal{L}\{t\e^{at}\} = \dfrac{1}{(s-a)^2}$.
+
+\textbf{(d)} $\cosh(at)=\frac{\e^{at}+\e^{-at}}{2}$, donc $\mathcal{L}\{\cosh(at)\} = \frac{1}{2}\left(\frac{1}{s-a}+\frac{1}{s+a}\right) = \dfrac{s}{s^2-a^2}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 4 - Résolution d'EDO par Laplace \niveau{\moyen}}
+
+\begin{boiteexercice}
+Résoudre par la transformée de Laplace :
+\begin{enumerate}[label=(\alph*)]
+  \item $y''-3y'+2y=0$, avec $y(0)=1$, $y'(0)=0$.
+  \item $y''+4y=\sin(2t)$, avec $y(0)=0$, $y'(0)=1$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} Notons $Y=\mathcal{L}\{y\}$. On applique $\mathcal{L}$ à l'équation :
+\[
+s^2Y-s\cdot1-0 - 3(sY-1) + 2Y = 0 \quad\Rightarrow\quad Y(s^2-3s+2) = s-3
+\]
+\[
+Y = \frac{s-3}{(s-1)(s-2)} = \frac{A}{s-1}+\frac{B}{s-2}
+\]
+$A = \frac{1-3}{1-2}=2$, $B=\frac{2-3}{2-1}=-1$. Par transformée inverse :
+\[
+\boxed{y(t) = 2\e^t - \e^{2t}}
+\]
+
+\textbf{(b)} $s^2Y - s\cdot0 - 1 + 4Y = \frac{2}{s^2+4}$ :
+\[
+Y(s^2+4) = 1+\frac{2}{s^2+4} \quad\Rightarrow\quad Y = \frac{1}{s^2+4}+\frac{2}{(s^2+4)^2}
+\]
+$\mathcal{L}^{-1}\left\{\frac{1}{s^2+4}\right\} = \frac{\sin(2t)}{2}$.
+
+$\mathcal{L}^{-1}\left\{\frac{2}{(s^2+4)^2}\right\}$ : par la table, $\mathcal{L}^{-1}\left\{\frac{2\omega}{(s^2+\omega^2)^2}\right\} = \frac{\sin(\omega t)-\omega t\cos(\omega t)}{2\omega^2}$. Avec $\omega=2$ :
+
+$\mathcal{L}^{-1}\left\{\frac{2}{(s^2+4)^2}\right\} = \frac{\sin(2t)-2t\cos(2t)}{8}$.
+
+\[
+\boxed{y(t) = \frac{\sin(2t)}{2} + \frac{\sin(2t)-2t\cos(2t)}{8} = \frac{5\sin(2t)}{8} - \frac{t\cos(2t)}{4}}
+\]
+Le terme $t\cos(2t)$ traduit le phénomène de résonance.
+\end{boitecorrige}
+
+\subsection*{Exercice 5 - Application : circuit RLC \niveau{\difficile}}
+
+\begin{boiteexercice}
+Un circuit RLC série est décrit par $L\ddot{q} + R\dot{q} + q/C = e(t)$ avec $L=1$\,H, $R=2$\,$\Omega$, $C=1$\,F, $e(t)=U_0[1-\e^{-t}]$ pour $t>0$, et les conditions initiales nulles $q(0)=\dot{q}(0)=0$.
+\begin{enumerate}
+  \item Écrire l'équation en $q$.
+  \item Résoudre par la transformée de Laplace.
+  \item Interpréter physiquement la solution.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $\ddot{q} + 2\dot{q} + q = U_0(1-\e^{-t})$.
+
+\textbf{2.} Avec $Q=\mathcal{L}\{q\}$ et $E(s)=\mathcal{L}\{U_0(1-\e^{-t})\}=U_0\left(\frac{1}{s}-\frac{1}{s+1}\right)=\frac{U_0}{s(s+1)}$ :
+\[
+(s^2+2s+1)Q = \frac{U_0}{s(s+1)} \quad\Rightarrow\quad Q = \frac{U_0}{s(s+1)^3}
+\]
+Par décomposition en éléments simples :
+\[
+Q = U_0\left[\frac{1}{s} - \frac{1}{s+1} - \frac{1}{(s+1)^2} - \frac{1}{2(s+1)^3}\right]
+\]
+En inversant :
+\[
+q(t) = U_0\left[1 - \e^{-t} - t\e^{-t} - \frac{t^2}{2}\e^{-t}\right] = U_0\left[1 - \e^{-t}\left(1+t+\frac{t^2}{2}\right)\right]
+\]
+
+\textbf{3.} Le système est amorti ($R=2\Omega$, racine double $s=-1$). La charge $q(t)$ tend asymptotiquement vers $U_0$ (régime permanent). Le terme $\e^{-t}(1+t+t^2/2)$ représente le régime transitoire qui s'atténue exponentiellement.
+\end{boitecorrige}
+
+\section{Transformée de Fourier}
+
+\subsection*{Exercice 6 - Transformée de Fourier : signal porte et signal exponentiel \niveau{\moyen}}
+
+\begin{boiteexercice}
+On rappelle que la transformée de Fourier est définie par $\hat{f}(\nu) = \int_{-\infty}^{+\infty} f(t)\,\e^{-2\pi i\nu t}\,\d t$.
+\begin{enumerate}
+  \item Calculer la TF du signal porte : $f(t) = \begin{cases}1 & \text{si } |t| \leq T/2\\0 & \text{sinon}\end{cases}$.
+  \item Calculer la TF du signal exponentiel causal : $g(t) = \e^{-at}\mathbf{1}_{t\geq0}$, $a > 0$.
+  \item Vérifier que $|\hat{g}(\nu)|^2$ représente un spectre lorentzien et interpréter $a$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Signal porte :
+\[
+\hat{f}(\nu) = \int_{-T/2}^{T/2} \e^{-2\pi i\nu t}\,\d t = \left[\frac{\e^{-2\pi i\nu t}}{-2\pi i\nu}\right]_{-T/2}^{T/2} = \frac{\e^{-i\pi\nu T} - \e^{i\pi\nu T}}{-2\pi i\nu} = \frac{2\sin(\pi\nu T)}{2\pi\nu}
+\]
+\[
+\boxed{\hat{f}(\nu) = T\,\mathrm{sinc}(\pi\nu T) = \frac{\sin(\pi\nu T)}{\pi\nu}}
+\]
+où $\mathrm{sinc}(x) = \sin(x)/x$. La TF d'une porte est un sinus cardinal. Plus la porte est large (grand $T$), plus le spectre est étroit (principe d'incertitude).
+
+\textbf{2.} Signal exponentiel causal :
+\[
+\hat{g}(\nu) = \int_0^{+\infty}\e^{-at}\e^{-2\pi i\nu t}\,\d t = \int_0^{+\infty}\e^{-(a+2\pi i\nu)t}\,\d t = \left[\frac{\e^{-(a+2\pi i\nu)t}}{-(a+2\pi i\nu)}\right]_0^{+\infty} = \frac{1}{a+2\pi i\nu}
+\]
+(converge car $a > 0$). Donc :
+\[
+\boxed{\hat{g}(\nu) = \frac{1}{a+2\pi i\nu}}
+\]
+
+\textbf{3.} Le module au carré (densité spectrale de puissance) :
+\[
+|\hat{g}(\nu)|^2 = \frac{1}{a^2+(2\pi\nu)^2} = \frac{1}{a^2}\cdot\frac{1}{1+(\nu/(\frac{a}{2\pi}))^2}
+\]
+C'est une lorentzienne centrée en $\nu = 0$ de largeur à mi-hauteur $\Delta\nu = a/\pi$. Le paramètre $a$ est l'inverse du temps de vie : plus $a$ est petit (signal qui dure longtemps), plus le spectre est étroit.
+\end{boitecorrige}
+
+\subsection*{Exercice 7 - Propriétés de la transformée de Fourier \niveau{\moyen}}
+
+\begin{boiteexercice}
+On note $\hat{f}(\nu) = \mathcal{F}\{f\}(\nu)$ et on rappelle les propriétés :
+\begin{itemize}[nosep]
+  \item Décalage temporel : $\mathcal{F}\{f(t-t_0)\}(\nu) = \e^{-2\pi i\nu t_0}\hat{f}(\nu)$.
+  \item Dérivation : $\mathcal{F}\{f'(t)\}(\nu) = 2\pi i\nu\,\hat{f}(\nu)$.
+  \item Homothétie : $\mathcal{F}\{f(at)\}(\nu) = \dfrac{1}{|a|}\hat{f}(\nu/a)$.
+\end{itemize}
+\begin{enumerate}
+  \item On sait que $\mathcal{F}\{\e^{-\pi t^2}\}(\nu) = \e^{-\pi\nu^2}$ (gaussienne auto-transformée). En déduire $\mathcal{F}\{\e^{-\pi t^2/\sigma^2}\}(\nu)$.
+  \item En utilisant la propriété de dérivation, calculer $\mathcal{F}\{t\,\e^{-\pi t^2}\}(\nu)$ en dérivant par rapport à $\nu$ l'identité $\hat{f}(\nu) = \e^{-\pi\nu^2}$.
+  \item Soit $f(t) = \cos(2\pi f_0 t)\,\e^{-at}$ pour $t\geq0$ et 0 sinon. Exprimer $\hat{f}(\nu)$ en utilisant la propriété de décalage fréquentiel (modulation).
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On utilise la propriété d'homothétie avec $a = 1/\sigma$ :
+\[
+\mathcal{F}\!\left\{\e^{-\pi t^2/\sigma^2}\right\}(\nu) = \mathcal{F}\!\left\{\e^{-\pi (t/\sigma)^2}\right\}(\nu) = |\sigma|\,\hat{f}(\sigma\nu) = \sigma\,\e^{-\pi\sigma^2\nu^2}
+\]
+
+\textbf{2.} En dérivant $\hat{f}(\nu) = \int_{-\infty}^{+\infty}\e^{-\pi t^2}\e^{-2\pi i\nu t}\,\d t$ par rapport à $\nu$ (dérivation sous le signe intégral) :
+\[
+\frac{\d\hat{f}}{\d\nu} = \int_{-\infty}^{+\infty}\e^{-\pi t^2}(-2\pi it)\e^{-2\pi i\nu t}\,\d t = -2\pi i\,\mathcal{F}\{t\,\e^{-\pi t^2}\}(\nu)
+\]
+Or $\hat{f}(\nu) = \e^{-\pi\nu^2}$, donc $\dfrac{\d\hat{f}}{\d\nu} = -2\pi\nu\,\e^{-\pi\nu^2}$, d'où :
+\[
+\mathcal{F}\{t\,\e^{-\pi t^2}\}(\nu) = \frac{-(-2\pi\nu)\e^{-\pi\nu^2}}{2\pi i} = \frac{-i\nu\,\e^{-\pi\nu^2}}{1} = -i\nu\,\e^{-\pi\nu^2}
+\]
+
+\textbf{3.} On écrit $\cos(2\pi f_0 t) = \dfrac{\e^{2\pi if_0 t}+\e^{-2\pi if_0 t}}{2}$. Alors :
+\[
+f(t) = \frac{1}{2}\left(\e^{(2\pi if_0 - a)t} + \e^{-(2\pi if_0+a)t}\right)\mathbf{1}_{t\geq0}
+\]
+\[
+\hat{f}(\nu) = \frac{1}{2}\left(\frac{1}{a-2\pi if_0 + 2\pi i\nu} + \frac{1}{a+2\pi if_0+2\pi i\nu}\right)\cdot(-1)\times(-1)
+\]
+En utilisant $\hat{g}(\nu) = 1/(a+2\pi i\nu)$ et le décalage en fréquence :
+\[
+\hat{f}(\nu) = \frac{1}{2}\left[\frac{1}{a+2\pi i(\nu-f_0)} + \frac{1}{a+2\pi i(\nu+f_0)}\right]
+\]
+Le spectre est une superposition de deux lorentziennes centrées en $\pm f_0$.
+\end{boitecorrige}
+
+\subsection*{Exercice 8 - Convolution et théorème de convolution \niveau{\difficile}}
+
+\begin{boiteexercice}
+La convolution est définie par $(f*g)(t) = \int_{-\infty}^{+\infty}f(\tau)g(t-\tau)\,\d\tau$. Le théorème de convolution affirme : $\mathcal{F}\{f*g\} = \hat{f}\cdot\hat{g}$.
+\begin{enumerate}
+  \item Calculer la convolution $h = f*f$ où $f(t) = \mathbf{1}_{[0,1]}(t)$ (indicatrice de $[0,1]$) en discutant les cas.
+  \item Vérifier par la transformée de Fourier : calculer $\hat{f}(\nu)^2$ et identifier la TF inverse.
+  \item Soit un système LTI (linéaire invariant dans le temps) de réponse impulsionnelle $h(t) = \e^{-t}\mathbf{1}_{t\geq0}$. Calculer sa fonction de transfert $H(\nu) = \hat{h}(\nu)$.
+  \item Quelle est la sortie $y(t)$ si l'entrée est $x(t) = \e^{-2t}\mathbf{1}_{t\geq0}$ ? (Utiliser la TF.)
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $h(t) = (f*f)(t) = \int_0^1 f(t-\tau)\,\d\tau = \int_0^1 \mathbf{1}_{[0,1]}(t-\tau)\,\d\tau$.
+
+$t-\tau\in[0,1] \Leftrightarrow t-1\leq\tau\leq t$. On distingue :
+\begin{itemize}[nosep]
+  \item $t < 0$ ou $t > 2$ : $h(t) = 0$.
+  \item $0 \leq t \leq 1$ : $\int_0^t\d\tau = t$.
+  \item $1 < t \leq 2$ : $\int_{t-1}^1\d\tau = 2-t$.
+\end{itemize}
+Donc $h(t) = \begin{cases}t & 0\leq t\leq1\\2-t & 1<t\leq2\\0 & \text{sinon}\end{cases}$ : c'est une fonction chapeau (triangle).
+
+\textbf{2.} $\hat{f}(\nu) = \dfrac{1-\e^{-2\pi i\nu}}{2\pi i\nu}$ (porte de largeur 1). Alors :
+\[
+\hat{f}(\nu)^2 = \frac{(1-\e^{-2\pi i\nu})^2}{(2\pi i\nu)^2} = \frac{1-2\e^{-2\pi i\nu}+\e^{-4\pi i\nu}}{-4\pi^2\nu^2}
+\]
+On peut vérifier que la TF inverse donne bien la fonction chapeau.
+
+\textbf{3.} $H(\nu) = \hat{h}(\nu) = \dfrac{1}{1+2\pi i\nu}$.
+
+\textbf{4.} $X(\nu) = \hat{x}(\nu) = \dfrac{1}{2+2\pi i\nu}$. Par le théorème de convolution :
+\[
+Y(\nu) = H(\nu)\cdot X(\nu) = \frac{1}{(1+2\pi i\nu)(2+2\pi i\nu)}
+\]
+Décomposition en éléments simples : $Y(\nu) = \dfrac{1}{1+2\pi i\nu} - \dfrac{1}{2+2\pi i\nu}$. Par TF inverse :
+\[
+y(t) = (\e^{-t} - \e^{-2t})\,\mathbf{1}_{t\geq0}
+\]
+Ce résultat est cohérent avec la résolution directe de l'équation différentielle $y' + y = x$.
+\end{boitecorrige}
+
+\subsection*{Exercice 9 - Parseval et calcul de sommes \niveau{\moyen}}
+
+\begin{boiteexercice}
+On rappelle l'égalité de Parseval pour les séries de Fourier : si $f$ a pour développement de Fourier $\dfrac{a_0}{2}+\sum_{n=1}^\infty(a_n\cos(nt)+b_n\sin(nt))$, alors :
+\[
+\frac{1}{\pi}\int_0^{2\pi}|f(t)|^2\,\d t = \frac{a_0^2}{2} + \sum_{n=1}^{+\infty}(a_n^2+b_n^2)
+\]
+\begin{enumerate}
+  \item En appliquant Parseval à la série de Fourier du signal créneau (exercice 1), calculer $\displaystyle\sum_{n=0}^{+\infty}\frac{1}{(2n+1)^2}$.
+  \item En appliquant Parseval à $f(t) = t$ sur $[-\pi,\pi]$ (dont le développement est $f(t)=2\sum_{n=1}^\infty\dfrac{(-1)^{n+1}}{n}\sin(nt)$), calculer $\displaystyle\sum_{n=1}^{+\infty}\frac{1}{n^2}$.
+  \item Déduire la valeur de $\displaystyle\sum_{n=1}^{+\infty}\frac{1}{n^4}$ en appliquant Parseval à $f(t)=t^2$ sur $[-\pi,\pi]$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Le signal créneau a $a_n = 0$ et $b_n = 4/(n\pi)$ pour $n$ impair, $b_n = 0$ pour $n$ pair. Parseval donne :
+\[
+\frac{1}{\pi}\int_{-\pi}^\pi 1^2\,\d t = \sum_{k=0}^{+\infty}b_{2k+1}^2 \quad\Rightarrow\quad 2 = \sum_{k=0}^{+\infty}\frac{16}{(2k+1)^2\pi^2}
+\]
+\[
+\boxed{\sum_{k=0}^{+\infty}\frac{1}{(2k+1)^2} = \frac{\pi^2}{8}}
+\]
+
+\textbf{2.} Pour $f(t)=t$ : Parseval donne $\dfrac{1}{\pi}\int_{-\pi}^\pi t^2\,\d t = \sum_{n=1}^\infty\frac{4}{n^2}$. LHS $= \dfrac{1}{\pi}\cdot\dfrac{2\pi^3}{3} = \dfrac{2\pi^2}{3}$. Donc :
+\[
+\frac{2\pi^2}{3} = 4\sum_{n=1}^\infty\frac{1}{n^2} \quad\Rightarrow\quad \boxed{\sum_{n=1}^{+\infty}\frac{1}{n^2} = \frac{\pi^2}{6}}
+\]
+
+\textbf{3.} Pour $f(t) = t^2$ sur $[-\pi,\pi]$, le développement
+en série de Fourier est :
+\[
+\dfrac{\pi^2}{3}+4\sum_{n=1}^\infty\dfrac{(-1)^n}{n^2}\cos(nt).
+\]
+Parseval :
+\[
+\frac{1}{\pi}\int_{-\pi}^\pi t^4\,\d t = \frac{a_0^2}{2}+\sum_{n=1}^\infty a_n^2
+\]
+LHS : $\dfrac{1}{\pi}\cdot\dfrac{2\pi^5}{5} = \dfrac{2\pi^4}{5}$. Terme $a_0 = 2\pi^2/3$, $a_n = 4(-1)^n/n^2$.
+\[
+\frac{2\pi^4}{5} = \frac{1}{2}\!\left(\frac{2\pi^2}{3}\right)^2 + \sum_{n=1}^\infty\frac{16}{n^4} = \frac{2\pi^4}{9} + 16\sum_{n=1}^\infty\frac{1}{n^4}
+\]
+\[
+\sum_{n=1}^{+\infty}\frac{1}{n^4} = \frac{1}{16}\!\left(\frac{2\pi^4}{5} - \frac{2\pi^4}{9}\right) = \frac{2\pi^4}{16}\cdot\frac{9-5}{45} = \frac{2\pi^4}{16}\cdot\frac{4}{45} = \boxed{\frac{\pi^4}{90}}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 10 - Série de Fourier d'une fonction affine par morceaux \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $f$ la fonction $2\pi$-périodique définie sur $[0, 2\pi[$ par $f(t) = \pi - t$.
+\begin{enumerate}
+  \item Calculer $a_0$, $a_n$ et $b_n$ (pour $n\geq1$).
+  \item Écrire le développement de Fourier de $f$.
+  \item Vers quoi converge la série en $t = 0$ ? Interpréter graphiquement (phénomène de Gibbs).
+  \item En appliquant l'identité de Parseval, calculer $\displaystyle\sum_{n=1}^{+\infty}\frac{1}{n^2}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $a_0 = \dfrac{1}{\pi}\int_0^{2\pi}(\pi-t)\,\d t = \dfrac{1}{\pi}\left[\pi t - \dfrac{t^2}{2}\right]_0^{2\pi} = \dfrac{1}{\pi}(2\pi^2 - 2\pi^2) = 0$.
+
+Pour $n\geq1$ :
+\[
+a_n = \frac{1}{\pi}\int_0^{2\pi}(\pi-t)\cos(nt)\,\d t = \frac{1}{\pi}\left[(\pi-t)\frac{\sin(nt)}{n}\right]_0^{2\pi} + \frac{1}{n\pi}\int_0^{2\pi}\sin(nt)\,\d t = 0
+\]
+\[
+b_n = \frac{1}{\pi}\int_0^{2\pi}(\pi-t)\sin(nt)\,\d t = \frac{1}{\pi}\left[-(\pi-t)\frac{\cos(nt)}{n}\right]_0^{2\pi} - \frac{1}{n\pi}\int_0^{2\pi}\cos(nt)\,\d t
+\]
+\[
+= \frac{1}{\pi n}\left[-(\pi-2\pi)(1) + (\pi-0)(1)\right] = \frac{1}{\pi n}(\pi + \pi)\cdot\frac{1}{1}
+\]
+
+Calcul direct : $b_n = \frac{1}{\pi}\left[-\frac{(\pi-t)\cos(nt)}{n}\right]_0^{2\pi} - \frac{1}{n\pi}\left[\frac{\sin(nt)}{n}\right]_0^{2\pi} = \frac{1}{n\pi}\left[\pi(-1) + \pi \right] + 0 = \dfrac{2}{n}$.
+
+\textbf{2.} $f(t) = \displaystyle\sum_{n=1}^{+\infty}\frac{2}{n}\sin(nt) = 2\sin(t) + \sin(2t) + \frac{2}{3}\sin(3t)+\cdots$
+
+\textbf{3.} En $t = 0$ : $f(0^+) = \pi$ et $f(2\pi^-) = \pi - 2\pi = -\pi$. La série converge vers $\dfrac{\pi + (-\pi)}{2} = 0$ (valeur moyenne). La discontinuité produit le phénomène de Gibbs : les sommes partielles oscillent d'environ 9\% au-dessus et en dessous de la discontinuité.
+
+\textbf{4.} Parseval : $\dfrac{1}{2\pi}\int_0^{2\pi}(\pi-t)^2\,\d t = \dfrac{1}{2}\sum_{n=1}^\infty b_n^2$.
+
+LHS : $\dfrac{1}{2\pi}\cdot\dfrac{[\text{-}(\pi\text{-}t)^3/3]_0^{2\pi}}{1} = \dfrac{1}{2\pi}\cdot\dfrac{\pi^3+\pi^3}{3} = \dfrac{\pi^2}{3}$.
+
+RHS : $\dfrac{1}{2}\sum_{n=1}^\infty\dfrac{4}{n^2} = 2\sum_{n=1}^\infty\dfrac{1}{n^2}$.
+
+Donc $\displaystyle\sum_{n=1}^{+\infty}\dfrac{1}{n^2} = \dfrac{\pi^2}{6}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 11 - Résolution d'EDO par les séries de Fourier \niveau{\difficile}}
+
+\begin{boiteexercice}
+On cherche la solution $2\pi$-périodique de l'équation différentielle :
+\[
+y''(t) + \omega_0^2\,y(t) = f(t) = \frac{4}{\pi}\sum_{k=0}^{+\infty}\frac{\sin((2k+1)t)}{2k+1}
+\]
+où $f$ est le signal créneau (exercice 1) et $\omega_0 \notin \{1,3,5,\ldots\}$.
+\begin{enumerate}
+  \item En cherchant $y(t) = \sum_{n=1}^\infty B_n\sin(nt)$, substituer dans l'équation et identifier les $B_n$.
+  \item Écrire la solution $y(t)$ sous forme de série.
+  \item Que se passe-t-il si $\omega_0 = 1$ ? (phénomène de résonance)
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On cherche $y(t) = \sum_{n=1}^\infty B_n\sin(nt)$. Alors $y'' = -\sum n^2 B_n\sin(nt)$. En substituant :
+\[
+\sum_{n=1}^\infty(-n^2+\omega_0^2)B_n\sin(nt) = \frac{4}{\pi}\sum_{k=0}^\infty\frac{\sin((2k+1)t)}{2k+1}
+\]
+Par identification des coefficients de $\sin(nt)$ :
+\begin{itemize}[nosep]
+  \item Pour $n = 2k+1$ (impair) : $(\omega_0^2 - n^2)B_n = \dfrac{4}{\pi n}$, donc $B_n = \dfrac{4}{\pi n(\omega_0^2 - n^2)}$.
+  \item Pour $n$ pair : $B_n = 0$.
+\end{itemize}
+
+\textbf{2.} La solution est :
+\[
+\boxed{y(t) = \frac{4}{\pi}\sum_{k=0}^{+\infty}\frac{\sin((2k+1)t)}{(2k+1)(\omega_0^2-(2k+1)^2)}}
+\]
+Cette série converge si $\omega_0$ n'est pas un entier impair (pas de résonance).
+
+\textbf{3.} Si $\omega_0 = 1$ : le terme $k=0$ donne un dénominateur nul : $\omega_0^2 - 1 = 0$. L'équation $y'' + y = \sin(t)$ est en résonance. La solution particulière n'est plus sinusoïdale mais de la forme $y_p = -\dfrac{t}{2}\cos(t)$, dont l'amplitude croît sans borne. C'est le phénomène de résonance.
+\end{boitecorrige}
+
+
+\subsection*{Exercice 12 - Signal carré et identité de Parseval \niveau{\moyen}}
+
+\begin{boiteexercice}
+Le signal créneau $f(t)$ de période $2\pi$, défini par $f(t) = +1$ pour $t \in ]0,\pi[$ et $f(t) = -1$ pour $t \in ]-\pi,0[$, admet la série de Fourier :
+\[
+f(t) = \frac{4}{\pi}\sum_{k=0}^{+\infty}\frac{\sin((2k+1)t)}{2k+1}
+\]
+\begin{enumerate}
+  \item Rappeler l'identité de Parseval pour une série de Fourier : $\dfrac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,\d t = \dfrac{a_0^2}{4} + \dfrac{1}{2}\sum_{n=1}^{+\infty}(a_n^2+b_n^2)$.
+  \item Calculer le membre de gauche (valeur efficace du signal créneau).
+  \item Identifier les coefficients $b_{2k+1} = \dfrac{4}{\pi(2k+1)}$ et appliquer Parseval pour obtenir :
+  \[
+  \sum_{k=0}^{+\infty}\frac{1}{(2k+1)^2} = \frac{\pi^2}{8}
+  \]
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Pour une fonction $2\pi$-périodique de coefficients de Fourier $a_0, a_n, b_n$, l'identité de Parseval s'écrit :
+\[
+\frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,\d t = \frac{a_0^2}{4} + \frac{1}{2}\sum_{n=1}^{+\infty}(a_n^2+b_n^2)
+\]
+
+\textbf{2.} Pour le signal créneau, $|f(t)|^2 = 1$ sur tout $]-\pi,\pi[$ (puisque $f(t) = \pm 1$). Donc :
+\[
+\frac{1}{2\pi}\int_{-\pi}^{\pi} 1\,\d t = \frac{1}{2\pi}\times 2\pi = 1
+\]
+
+\textbf{3.} Le signal créneau est impair, donc $a_0 = 0$ et tous les $a_n = 0$. Seuls les $b_{2k+1} = \dfrac{4}{\pi(2k+1)}$ sont non nuls (coefficients impairs). Parseval donne :
+\[
+1 = \frac{1}{2}\sum_{k=0}^{+\infty}b_{2k+1}^2 = \frac{1}{2}\sum_{k=0}^{+\infty}\left(\frac{4}{\pi(2k+1)}\right)^2 = \frac{1}{2}\cdot\frac{16}{\pi^2}\sum_{k=0}^{+\infty}\frac{1}{(2k+1)^2}
+\]
+\[
+\boxed{\sum_{k=0}^{+\infty}\frac{1}{(2k+1)^2} = \frac{\pi^2}{8}}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 13 - Transformée de Fourier d'un signal exponentiel \niveau{\moyen}}
+
+\begin{boiteexercice}
+On considère le signal causal $f(t) = e^{-at}\,u(t)$ où $a > 0$ et $u(t)$ est l'échelon de Heaviside ($u(t) = 1$ pour $t \geq 0$, $u(t) = 0$ pour $t < 0$).
+\begin{enumerate}
+  \item Rappeler la définition de la transformée de Fourier $F(\omega) = \displaystyle\int_{-\infty}^{+\infty} f(t)\,e^{-j\omega t}\,\d t$.
+  \item Calculer $F(\omega)$ et montrer que $F(\omega) = \dfrac{1}{a + j\omega}$.
+  \item Calculer le module $|F(\omega)| = \dfrac{1}{\sqrt{a^2+\omega^2}}$ et la phase $\arg(F(\omega)) = -\arctan(\omega/a)$.
+  \item Pour $a = 1$, calculer $|F(0)|$, $|F(a)|$ et $|F(10a)|$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La transformée de Fourier est définie par :
+\[
+F(\omega) = \int_{-\infty}^{+\infty} f(t)\,e^{-j\omega t}\,\d t
+\]
+
+\textbf{2.} Comme $f(t) = 0$ pour $t < 0$ et $f(t) = e^{-at}$ pour $t \geq 0$ :
+\[
+F(\omega) = \int_0^{+\infty} e^{-at}\,e^{-j\omega t}\,\d t = \int_0^{+\infty} e^{-(a+j\omega)t}\,\d t = \left[\frac{e^{-(a+j\omega)t}}{-(a+j\omega)}\right]_0^{+\infty}
+\]
+Comme $a > 0$, l'exponentielle converge vers $0$ à l'infini :
+\[
+\boxed{F(\omega) = \frac{1}{a+j\omega}}
+\]
+
+\textbf{3.} Module et phase :
+\[
+|F(\omega)| = \frac{1}{|a+j\omega|} = \frac{1}{\sqrt{a^2+\omega^2}}
+\]
+\[
+\arg(F(\omega)) = \arg(1) - \arg(a+j\omega) = 0 - \arctan\!\left(\frac{\omega}{a}\right) = -\arctan\!\left(\frac{\omega}{a}\right)
+\]
+
+\textbf{4.} Pour $a = 1$ :
+\begin{align*}
+|F(0)|  &= 1,\\
+|F(1)|  &= \frac{1}{\sqrt{2}} \approx 0{,}707,\\
+|F(10)| &\approx 0{,}0995
+\end{align*}
+La fréquence de coupure est $\omega_c = a$
+(le module est divisé par $\sqrt{2}$ par rapport à la valeur en $\omega = 0$).
+\end{boitecorrige}
+
+\subsection*{Exercice 14 - Convolution par transformée de Fourier \niveau{\difficile}}
+
+\begin{boiteexercice}
+On donne deux signaux causaux : $x(t) = e^{-2t}\,u(t)$ et $h(t) = e^{-t}\,u(t)$.
+\begin{enumerate}
+  \item Calculer les transformées de Fourier $X(\omega)$ et $H(\omega)$.
+  \item En utilisant la propriété de convolution ($\mathcal{F}\{x*h\} = X\cdot H$), exprimer $Y(\omega) = X(\omega)\cdot H(\omega)$.
+  \item Décomposer $Y(\omega)$ en éléments simples.
+  \item En utilisant le résultat de l'exercice précédent, calculer la transformée de Fourier inverse $y(t) = (x*h)(t)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Par l'exercice précédent (formule $e^{-at}u(t) \xrightarrow{\mathcal{F}} 1/(a+j\omega)$) :
+\[
+X(\omega) = \frac{1}{2+j\omega}, \qquad H(\omega) = \frac{1}{1+j\omega}
+\]
+
+\textbf{2.} Produit :
+\[
+Y(\omega) = X(\omega)\cdot H(\omega) = \frac{1}{(2+j\omega)(1+j\omega)}
+\]
+
+\textbf{3.} Décomposition en éléments simples (en posant $p = j\omega$) :
+\[
+\frac{1}{(1+p)(2+p)} = \frac{A}{1+p} + \frac{B}{2+p}
+\]
+Calcul des résidus : $A = \displaystyle\lim_{p\to-1}(1+p)\cdot\frac{1}{(1+p)(2+p)} = \frac{1}{1} = 1$ et $B = \displaystyle\lim_{p\to-2}\frac{1}{1+p} = \frac{1}{-1} = -1$.
+
+Donc :
+\[
+Y(\omega) = \frac{1}{1+j\omega} - \frac{1}{2+j\omega}
+\]
+
+\textbf{4.} Par linéarité et en utilisant le résultat $1/(a+j\omega) \xrightarrow{\mathcal{F}^{-1}} e^{-at}u(t)$ :
+\[
+\boxed{y(t) = e^{-t}u(t) - e^{-2t}u(t) = \left(e^{-t} - e^{-2t}\right)u(t)}
+\]
+Vérification : $y(0) = 1 - 1 = 0$, $y(t) > 0$ pour $t > 0$ (car $e^{-t} > e^{-2t}$), $y(t) \to 0$ pour $t \to +\infty$.
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

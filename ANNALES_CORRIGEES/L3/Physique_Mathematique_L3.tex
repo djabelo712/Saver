@@ -1,0 +1,956 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Physique Mathématique - Licence 3}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries PHYSIQUE MATHÉMATIQUE}\\[0.3cm]
+  {\normalsize Licence 3 - Physique}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Formes différentielles de degré 1.} Une forme différentielle $\omega = P(x,y)\,\d x + Q(x,y)\,\d y$ est \textit{fermée} si $\frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x}$, et \textit{exacte} s'il existe $f$ (une primitive) telle que $\d f = \omega$. Toute forme exacte est fermée. Sur un ouvert étoilé, la réciproque est vraie (théorème de Poincaré). L'intégrale curviligne d'une forme exacte le long d'un chemin ne dépend que des extrémités.
+
+\textbf{2. Formule de Green-Riemann.} Pour une forme $\omega = P\,\d x + Q\,\d y$ de classe $\mathcal{C}^1$ sur un domaine $K$ de frontière $\gamma$ orientée positivement :
+\[
+\oint_\gamma P\,\d x + Q\,\d y = \iint_K \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right)\d x\,\d y
+\]
+Application : aire $A = \frac{1}{2}\oint_\gamma x\,\d y - y\,\d x$.
+
+\textbf{3. Équations aux dérivées partielles (EDP) du 2\textsuperscript{e} ordre.} Pour $au_{xx}+2bu_{xy}+cu_{yy}+\cdots=0$, le discriminant $\Delta = b^2 - ac$ détermine le type : $\Delta>0$ (hyperbolique), $\Delta=0$ (parabolique), $\Delta<0$ (elliptique). La réduction à la forme canonique se fait par un changement de variables basé sur les courbes caractéristiques.
+
+\textbf{4. Transformée de Fourier.} $\hat{f}(\xi) = \int_{-\infty}^{+\infty} f(x)\,\e^{-2\pi\ii x\xi}\,\d x$. Propriétés : linéarité, décalage, dérivation ($\widehat{f'} = 2\pi\ii\xi\,\hat{f}$), convolution ($\widehat{f*g} = \hat{f}\cdot\hat{g}$).
+
+\textbf{5. Intégrale de Fourier.} Théorème de Parseval : $\int_{-\infty}^{+\infty}|f(x)|^2\,\d x = \int_{-\infty}^{+\infty}|\hat{f}(\xi)|^2\,\d\xi$.
+
+\end{boiteresume}
+
+\newpage
+\section{Formes différentielles}
+
+\subsection*{Exercice 1 - Forme exacte sur un ouvert étoilé \niveau{\facile}}
+
+\begin{boiteexercice}
+Soit $\omega = \dfrac{x\,\d y - y\,\d x}{x^2+y^2}$ définie sur $U=\{(x,y)\in\mathbb{R}^2,\;x>0\}$.
+\begin{enumerate}
+  \item Montrer que $\omega$ est fermée sur $U$.
+  \item Montrer que $U$ est étoilé, puis en déduire que $\omega$ est exacte.
+  \item Déterminer toutes les primitives de $\omega$ sur $U$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Posons $P = \frac{-y}{x^2+y^2}$ et $Q = \frac{x}{x^2+y^2}$. On calcule :
+\[
+\frac{\partial P}{\partial y} = \frac{-(x^2+y^2)+2y^2}{(x^2+y^2)^2} = \frac{y^2-x^2}{(x^2+y^2)^2}
+\]
+\[
+\frac{\partial Q}{\partial x} = \frac{(x^2+y^2)-2x^2}{(x^2+y^2)^2} = \frac{y^2-x^2}{(x^2+y^2)^2}
+\]
+Les dérivées croisées sont égales : $\omega$ est fermée sur $U$.
+
+\textbf{2.} $U$ est étoilé (convexe, donc étoilé par rapport à tout point, par exemple $(1,0)$). Par le théorème de Poincaré, toute forme fermée sur un ouvert étoilé est exacte. Donc $\omega$ est exacte sur $U$.
+
+\textbf{3.} On cherche $f$ telle que $\partial f/\partial x = -y/(x^2+y^2)$ et $\partial f/\partial y = x/(x^2+y^2)$.
+
+En intégrant la seconde équation par rapport à $y$ :
+\[
+f(x,y) = \arctan\!\left(\frac{y}{x}\right) + H(x)
+\]
+On substitue dans la première : $\frac{\partial}{\partial x}\arctan(y/x) = \frac{-y/x^2}{1+(y/x)^2} = \frac{-y}{x^2+y^2}$, donc $H'(x)=0$, $H=\text{cste}$.
+
+Les primitives sont $f(x,y) = \arctan(y/x) + C$, $C\in\mathbb{R}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 2 - Primitive d'une forme exacte \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $\omega = \dfrac{2x}{y}\,\d x - \dfrac{x^2}{y^2}\,\d y$ sur $U=\{(x,y)\in\mathbb{R}^2,\;y>0\}$.
+\begin{enumerate}
+  \item Montrer que $\omega$ est exacte sur $U$.
+  \item Déterminer une primitive de $\omega$.
+  \item Calculer $\int_C \omega$ où $C$ est un chemin de classe $\mathcal{C}^1$ allant de $A(1,2)$ à $B(3,8)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $\frac{\partial P}{\partial y} = \frac{2x \cdot (-1)}{y^2} = \frac{-2x}{y^2}$ et $\frac{\partial Q}{\partial x} = \frac{-2x}{y^2}$. Formes fermées. $U$ est étoilé (convexe), donc $\omega$ est exacte.
+
+\textbf{2.} On intègre $\partial f/\partial x = 2x/y$ : $f(x,y) = x^2/y + H(y)$. On vérifie $\partial f/\partial y = -x^2/y^2 + H'(y) = -x^2/y^2$, donc $H'(y)=0$, $H=\text{cste}$.
+
+Primitive : $f(x,y) = \dfrac{x^2}{y}$.
+
+\textbf{3.} Comme $\omega$ est exacte et $f$ en est une primitive :
+\[
+\int_C \omega = f(B) - f(A) = \frac{9}{8} - \frac{1}{2} = \frac{5}{8}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 3 - Facteur intégrant \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $\omega = (x^2+y^2-a^2)\,\d x - 2ay\,\d y$ sur $\mathbb{R}^2$, où $a\neq0$.
+\begin{enumerate}
+  \item Montrer que $\omega$ n'est pas exacte.
+  \item Chercher une fonction $f:\mathbb{R}\to\mathbb{R}$ de classe $\mathcal{C}^1$ telle que $\alpha = f(x)\omega$ soit exacte sur $\mathbb{R}^2$.
+  \item Calculer une primitive de $\alpha$.
+  \item En déduire $\int_C \alpha$ sur le cercle de rayon $R$ centré à l'origine.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $P = x^2+y^2-a^2$, $Q=-2ay$. $\partial P/\partial y = 2y \neq \partial Q/\partial x = 0$. Non exacte.
+
+\textbf{2.} On pose $P_1 = f(x)(x^2+y^2-a^2)$ et $Q_1 = -2ayf(x)$. Pour que $\alpha$ soit fermée :
+\[
+\frac{\partial P_1}{\partial y} = 2yf(x) = \frac{\partial Q_1}{\partial x} = -2ayf'(x)
+\]
+Donc $f'(x) = -\frac{f(x)}{a}$, d'où $f(x) = \e^{-x/a}$. La forme est fermée sur l'ouvert étoilé $\mathbb{R}^2$, donc exacte.
+
+\textbf{3.} On cherche $F$ telle que $\partial F/\partial y = -2ay\e^{-x/a}$ : $F = -ay^2\e^{-x/a} + H(x)$. En substituant : $H'(x) = (x^2-a^2)\e^{-x/a}$. Par intégrations par parties : $H(x) = (-ax^2 - 2a^2x - a^3)\e^{-x/a}$.
+
+Primitive : $F(x,y) = -(ay^2 + ax^2 + 2a^2x + a^3)\e^{-x/a}$.
+
+\textbf{4.} La forme $\alpha$ est exacte et $C$ est fermée, donc $\int_C \alpha = F(\text{retour}) - F(\text{départ}) = 0$.
+\end{boitecorrige}
+
+\subsection*{Exercice 4 - Formule de Green-Riemann \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $K = \{(x,y)\in\mathbb{R}^2,\;x\geq0,\;y\geq0,\;x^2+y^2\leq1\}$ et $\omega = xy^2\,\d x + 2xy\,\d y$.
+
+Calculer $\int_\gamma \omega$ (où $\gamma = \partial K$ orienté positivement) de deux façons : par une paramétrisation de $\gamma$, puis par la formule de Green-Riemann.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{Méthode 1 - Paramétrisation.} Le bord $\gamma$ se décompose en trois arcs :
+\begin{itemize}[nosep]
+  \item $C_1$ : $(t,0)$, $t\in[0,1]$ : $\omega|_{C_1}=0$ (car $y=0$).
+  \item $C_3$ : $(0,t)$, $t\in[1,0]$ : $\omega|_{C_3}=0$ (car $x=0$).
+  \item $C_2$ : $(\cos t,\sin t)$, $t\in[0,\pi/2]$.
+\end{itemize}
+Sur $C_2$ :
+\begin{align*}
+\int_{C_2}\omega &= \int_0^{\pi/2}\bigl[\cos t\sin^2 t(-\sin t) + 2\cos t\sin t\cos t\bigr]\d t\\
+&= \int_0^{\pi/2}\bigl(-\cos t\sin^3 t + 2\cos^2 t\sin t\bigr)\d t
+\end{align*}
+\[
+= \left[-\frac{\sin^4 t}{4}\right]_0^{\pi/2} + \left[-\frac{2\cos^3 t}{3}\right]_0^{\pi/2}
+= -\frac{1}{4} + \frac{2}{3} = \frac{5}{12}
+\]
+
+\textbf{Méthode 2 - Green-Riemann.}
+\[
+\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} = 2y - 2xy
+\]
+En coordonnées polaires ($x=r\cos\theta$, $y=r\sin\theta$, $r\in[0,1]$, $\theta\in[0,\pi/2]$) :
+\begin{align*}
+\iint_K(2y-2xy)\,\d x\,\d y &= \int_0^1\!\int_0^{\pi/2}(2r\sin\theta - 2r^2\sin\theta\cos\theta)\,r\,\d\theta\,\d r\\
+&= \int_0^1(2r^2-r^3)\,\d r = \frac{2}{3}-\frac{1}{4} = \frac{5}{12}
+\end{align*}
+Les deux méthodes donnent bien $\dfrac{5}{12}$.
+\end{boitecorrige}
+
+\section{Équations aux dérivées partielles}
+
+\subsection*{Exercice 5 - EDP parabolique \niveau{\difficile}}
+
+\begin{boiteexercice}
+Considérer le problème de Cauchy :
+\[
+\begin{cases}
+\dfrac{\partial^2 u}{\partial x^2} - 2\dfrac{\partial^2 u}{\partial x\partial y} + \dfrac{\partial^2 u}{\partial y^2} + \dfrac{\partial u}{\partial x} - \dfrac{\partial u}{\partial y} = 0\\[4pt]
+u(x,0)=f(x),\quad \dfrac{\partial u}{\partial y}(x,0)=g(x)
+\end{cases}
+\]
+\begin{enumerate}
+  \item Indiquer le type de l'EDP.
+  \item Réduire à la forme canonique avec $\eta=y$.
+  \item Déterminer la solution générale.
+  \item Résoudre le PCIs. Traiter les cas $f=g=1$ et $f(x)=x^2$, $g(x)=0$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Ici $a=1$, $b=-1$, $c=1$, donc $\Delta = b^2-ac = 1-1=0$. EDP \textbf{parabolique}.
+
+L'équation caractéristique est $(\d y + \d x)^2 = 0$, soit $x+y = \text{cste}$.
+
+\textbf{2.} On pose $\xi = x+y$ et $\eta = y$. Les dérivées deviennent :
+\[
+\frac{\partial u}{\partial x} = \frac{\partial v}{\partial\xi},\quad \frac{\partial u}{\partial y} = \frac{\partial v}{\partial\xi}+\frac{\partial v}{\partial\eta},\quad \frac{\partial^2 u}{\partial y^2} = \frac{\partial^2 v}{\partial\xi^2}+2\frac{\partial^2 v}{\partial\xi\partial\eta}+\frac{\partial^2 v}{\partial\eta^2}
+\]
+En substituant dans l'EDP, les termes en $\partial^2v/\partial\xi^2$ et $\partial^2v/\partial\xi\partial\eta$ s'annulent. La forme canonique est :
+\[
+\frac{\partial^2 v}{\partial\eta^2} - \frac{\partial v}{\partial\eta} = 0
+\]
+
+\textbf{3.} En posant $w=\partial v/\partial\eta$, on obtient $\partial w/\partial\eta = w$, d'où $w = \Phi(\xi)\e^\eta$. En intégrant : $v(\xi,\eta)=\Phi(\xi)\e^\eta+\Psi(\xi)$. La solution générale est :
+\[
+u(x,y) = \Phi(x+y)\e^y + \Psi(x+y)
+\]
+
+\textbf{4.} Conditions initiales :
+$u(x,0) = \Phi(x)+\Psi(x) = f(x)$.
+$\partial u/\partial y(x,0) = \Phi'(x)+\Phi(x)+\Psi'(x) = g(x)$.
+
+Résolution : $[\Phi+\Psi]'=f'(x)$ et $\Phi'+\Phi+\Psi'=g(x)$, soit $\Phi = g-f'$ et $\Psi = f-g+f'$.
+
+Solution du PCIs : $u(x,y) = [g(x+y)-f'(x+y)]\e^y + f(x+y)-g(x+y)+f'(x+y)$.
+
+\textit{Cas 1 :} $f=g=1$, $f'=0$. $u(x,y) = \e^y$.
+
+\textit{Cas 2 :} $f(x)=x^2$, $g(x)=0$, $f'(x)=2x$. $u(x,y) = -2(x+y)\e^y + (x+y)^2 + 2(x+y) = (x+y)[(x+y)+2(1-\e^y)]$.
+\end{boitecorrige}
+
+\subsection*{Exercice 6 - Aire par Green-Riemann \niveau{\moyen}}
+
+\begin{boiteexercice}
+Calculer l'aire du domaine délimité par un quart de l'astroïde $x=a\cos^3 t$, $y=a\sin^3 t$ pour $t\in[0,\pi/2]$, et les deux axes de coordonnées, en utilisant la formule de Green-Riemann.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+L'aire s'exprime par $A = \frac{1}{2}\oint_\gamma x\,\d y - y\,\d x$ où $\gamma$ est le contour orienté positivement.
+
+Sur l'arc de l'astroïde ($t$ de 0 à $\pi/2$) : $\d x = -3a\cos^2 t\sin t\,\d t$, $\d y = 3a\sin^2 t\cos t\,\d t$.
+
+\[
+A = \frac{1}{2}\int_0^{\pi/2}\left[a\cos^3 t\cdot3a\sin^2 t\cos t - a\sin^3 t\cdot(-3a\sin t\cos^2 t)\right]\d t
+\]
+\[
+= \frac{3a^2}{2}\int_0^{\pi/2}\left(\cos^4 t\sin^2 t + \sin^4 t\cos^2 t\right)\d t
+= \frac{3a^2}{2}\int_0^{\pi/2}\cos^2 t\sin^2 t\,\d t
+\]
+\[
+= \frac{3a^2}{2}\int_0^{\pi/2}\frac{\sin^2(2t)}{4}\,\d t = \frac{3a^2}{8}\int_0^{\pi/2}\frac{1-\cos(4t)}{2}\,\d t = \frac{3a^2}{16}\left[\frac{\pi}{2}\right] = \frac{3\pi a^2}{32}
+\]
+
+L'aire d'un quart de l'astroïde est $\dfrac{3\pi a^2}{32}$, donc l'aire totale est $A_{total} = \dfrac{3\pi a^2}{8}$.
+\end{boitecorrige}
+
+
+\subsection*{Exercice 7 - Forme différentielle exacte et intégrale curviligne \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $\omega = (y^3 - 6xy^2)\,\d x + (3xy^2 - 6x^2y)\,\d y$. Montrer que $\omega$ est une forme différentielle exacte sur $\mathbb{R}^2$. En déduire l'intégrale curviligne le long du demi-cercle supérieur de diamètre $[AB]$ de $A(1,2)$ vers $B(3,4)$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+On pose $P = y^3 - 6xy^2$ et $Q = 3xy^2 - 6x^2y$.
+\[
+\frac{\partial P}{\partial y} = 3y^2 - 12xy = \frac{\partial Q}{\partial x}
+\]
+Donc $\omega$ est fermée. $\mathbb{R}^2$ est étoilé, donc $\omega$ est exacte (théorème de Poincaré).
+
+On cherche une primitive $f$ telle que $\partial f/\partial x = P$ et $\partial f/\partial y = Q$.
+En intégrant la première : $f(x,y) = xy^3 - 3x^2y^2 + H(y)$.
+En substituant dans la seconde : $3xy^2 - 6x^2y + H'(y) = 3xy^2 - 6x^2y$, donc $H'(y) = 0$, $H = \text{cste}$.
+
+Primitive : $f(x,y) = xy^3 - 3x^2y^2$.
+
+Comme $\omega$ est exacte, l'intégrale ne dépend que des extrémités :
+\begin{align*}
+\int_C \omega &= f(B) - f(A) = f(3,4) - f(1,2)\\
+&= (3\cdot64 - 3\cdot9\cdot16) - (1\cdot8 - 3\cdot4)\\
+&= (192 - 432) - (8-12) = -240 + 4 = -236
+\end{align*}
+\end{boitecorrige}
+
+\subsection*{Exercice 8 - Intégrale le long d'une cardioïde \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $\omega = (x+y)\,\d x + (x-y)\,\d y$. Calculer l'intégrale curviligne le long de la demi-cardioïde d'équation polaire $r = 1 + \cos\theta$ avec $\theta$ allant de $0$ à $\pi$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+On vérifie que $\omega$ est exacte : $\partial P/\partial y = 1 = \partial Q/\partial x$. La forme est fermée sur $\mathbb{R}^2$ étoilé, donc exacte.
+
+On cherche une primitive : en intégrant $\partial f/\partial x = x+y$, on obtient $f(x,y) = \frac{x^2}{2} + xy + H(y)$. Puis $\partial f/\partial y = x + H'(y) = x - y$, donc $H'(y) = -y$, $H(y) = -y^2/2$.
+
+Primitive : $f(x,y) = \dfrac{x^2}{2} + xy - \dfrac{y^2}{2}$.
+
+La demi-cardioïde commence en $\theta=0$ : $r=2$, point $(2,0)$, et finit en $\theta=\pi$ : $r=0$, point $(0,0)$.
+\[
+\int_C \omega = f(0,0) - f(2,0) = 0 - \frac{4}{2} = -2
+\]
+\end{boitecorrige}
+
+\newpage
+\section{Transformée de Fourier et de Laplace}
+
+\subsection*{Exercice 9 - Transformée de Laplace \niveau{\moyen}}
+
+\begin{boiteexercice}
+Calculer les transformées de Laplace suivantes :
+\begin{enumerate}[label=(\alph*)]
+  \item $\mathcal{L}\!\left[(t^2+t-\e^{-3t})\mathbb{H}(t)\right]$
+  \item $\mathcal{L}\!\left[(t+2)\mathbb{H}(t)+(t+3)\mathbb{H}(t-2)\right]$
+  \item $\mathcal{L}\!\left[(t^2+t+1)\e^{-2t}\mathbb{H}(t)\right]$
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} Par linéarité :
+\[
+F(p) = \frac{2}{p^3} + \frac{1}{p^2} - \frac{1}{p+3}
+\]
+
+\textbf{(b)} On réécrit $(t+3)\mathbb{H}(t-2) = ((t-2)+5)\mathbb{H}(t-2)$ :
+\begin{align*}
+\mathcal{L}[(t+2)\mathbb{H}(t)] &= \frac{1}{p^2} + \frac{2}{p} \\
+\mathcal{L}[((t-2)+5)\mathbb{H}(t-2)] &= \left(\frac{1}{p^2}+\frac{5}{p}\right)\e^{-2p}
+\end{align*}
+\[
+F(p) = \frac{2p+1}{p^2} + \left(\frac{1+5p}{p^2}\right)\e^{-2p}
+\]
+
+\textbf{(c)} Par le théorème du glissement ($\mathcal{L}[f(t)\e^{at}] = F(p-a)$) :
+\[
+\mathcal{L}[(t^2+t+1)\mathbb{H}(t)] = \frac{2}{p^3}+\frac{1}{p^2}+\frac{1}{p}
+\]
+Donc $F(p) = \dfrac{(p+2)^2+(p+2)+2}{(p+2)^3} = \dfrac{p^2+5p+8}{(p+2)^3}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 10 - Transformée de Laplace inverse \niveau{\moyen}}
+
+\begin{boiteexercice}
+Calculer les originaux suivants :
+\begin{enumerate}[label=(\alph*)]
+  \item $\mathcal{L}^{-1}\!\left[\dfrac{p+2}{(p+3)(p+4)}\right]$
+  \item $\mathcal{L}^{-1}\!\left[\dfrac{3}{(p+5)^2}\right]$
+  \item $\mathcal{L}^{-1}\!\left[\dfrac{p-1}{p^2+2p+5}\right]$
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} Décomposition en éléments simples : $\dfrac{p+2}{(p+3)(p+4)} = \dfrac{-1}{p+3}+\dfrac{2}{p+4}$. D'où :
+\[
+f(t) = (-\e^{-3t}+2\e^{-4t})\mathbb{H}(t)
+\]
+
+\textbf{(b)} En utilisant $\mathcal{L}^{-1}[1/p^2] = t$ et le théorème du glissement :
+\[
+f(t) = 3t\e^{-5t}\mathbb{H}(t)
+\]
+
+\textbf{(c)} On complète le carré au dénominateur : $(p+1)^2+4$. Alors :
+\[
+\frac{p-1}{(p+1)^2+4} = \frac{p+1}{(p+1)^2+4} - \frac{2}{(p+1)^2+4}
+\]
+\[
+f(t) = \e^{-t}(\cos 2t - \sin 2t)\mathbb{H}(t)
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 11 - Résolution d'une EDO par Laplace \niveau{\difficile}}
+
+\begin{boiteexercice}
+On désigne par $F(p)$ et $G(p)$ les transformées de Laplace de $f(t)$ et $g(t)$ :
+\[
+F(p) = \frac{3p+7}{(p+2)(p+4)^2}, \quad G(p) = \frac{5p+27}{(p+4)^2+9}
+\]
+\begin{enumerate}
+  \item Déterminer l'original $h(t)$ dont l'image est $[F(p)-G(p)]\e^{-2p}$.
+  \item En utilisant la transformée de Laplace, résoudre $y'' + 3y' + 2y = 3\e^{-4t}$, $y(0)=2$, $y'(0)=-1$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Décomposition de $F(p)$ en éléments simples :
+\[
+F(p) = \frac{1/4}{p+2} - \frac{1/4}{p+4} + \frac{5/2}{(p+4)^2}
+\]
+Donc $f(t) = \frac{1}{4}\e^{-2t} - \frac{1}{4}\e^{-4t} + \frac{5}{2}t\e^{-4t}$.
+
+Pour $G(p) = 5\dfrac{p+4}{(p+4)^2+9} + \dfrac{7}{(p+4)^2+9}$, on obtient :
+$g(t) = 5\e^{-4t}\cos(3t) + \dfrac{7}{3}\e^{-4t}\sin(3t)$.
+
+Par le théorème du décalage temporel : $h(t) = [f(t-2)-g(t-2)]\mathbb{H}(t-2)$.
+
+\textbf{2.} Application de la transformée de Laplace avec les conditions initiales :
+\[
+(s^2+3s+2)Y(s) - 2s - 5 = \frac{3}{s+4}
+\]
+\[
+Y(s) = \frac{2s+5}{(s+1)(s+2)} + \frac{3}{(s+1)(s+2)(s+4)} = \frac{4}{s+1} - \frac{5}{2(s+2)} + \frac{1}{2(s+4)}
+\]
+\[
+\boxed{y(t) = 4\e^{-t} - \frac{5}{2}\e^{-2t} + \frac{1}{2}\e^{-4t}}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 12 - Jacobien d'un changement de variables \niveau{\facile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Calculer la matrice jacobienne et le jacobien du changement de variables en coordonnées polaires :
+  $x = r\cos\theta$, $y = r\sin\theta$.
+  \item Calculer le jacobien du changement de variables $u = x+y$, $v = \dfrac{x}{x+y}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La matrice jacobienne est :
+\[
+J(r,\theta) = \begin{pmatrix} \cos\theta & -r\sin\theta \\ \sin\theta & r\cos\theta \end{pmatrix}
+\]
+\[
+\det(J) = r\cos^2\theta + r\sin^2\theta = r
+\]
+
+\textbf{2.} La matrice jacobienne de $(u,v)$ par rapport à $(x,y)$ :
+\[
+J = \begin{pmatrix} 1 & 1 \\ \dfrac{y}{(x+y)^2} & \dfrac{-x}{(x+y)^2} \end{pmatrix}
+\]
+\[
+\det(J) = \frac{-x}{(x+y)^2} - \frac{y}{(x+y)^2} = \frac{-(x+y)}{(x+y)^2} = \frac{-1}{x+y} = \frac{-1}{u}
+\]
+\end{boitecorrige}
+
+\newpage
+\subsection*{Exercice 13 - Fonctions Gamma et Bêta \niveau{\difficile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Démontrer la relation :
+  \[
+  \int_0^{\pi/2} \cos^{2x-1}\theta\,\sin^{2y-1}\theta\,\d\theta = \frac{\Gamma(x)\Gamma(y)}{2\,\Gamma(x+y)}
+  \]
+  \item Calculer $\beta(1,n)$ et prouver le résultat par récurrence.
+  \item Calculer $\beta(1,1)$ et $\beta\!\left(\tfrac{1}{2},\tfrac{1}{2}\right)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} En utilisant $\Gamma(x) = 2\int_0^{+\infty}\e^{-t^2}t^{2x-1}\,\d t$ :
+\begin{align*}
+\Gamma(x)\Gamma(y) &= 4\int_0^{+\infty}\int_0^{+\infty}\e^{-(t^2+u^2)}t^{2x-1}u^{2y-1}\,\d t\,\d u
+\end{align*}
+On effectue le changement polaire $t = r\cos\theta$, $u = r\sin\theta$, jacobien $r$ :
+\begin{align*}
+\Gamma(x)\Gamma(y) &= 4\left(\int_0^{+\infty}\e^{-r^2}r^{2(x+y)-1}\,\d r\right)\left(\int_0^{\pi/2}\cos^{2x-1}\theta\,\sin^{2y-1}\theta\,\d\theta\right) \\
+&= 2\,\Gamma(x+y)\int_0^{\pi/2}\cos^{2x-1}\theta\,\sin^{2y-1}\theta\,\d\theta
+\end{align*}
+D'où la relation cherchée.
+
+\textbf{2.} Pour $x=1$ : $\beta(1,n) = \int_0^1(1-t)^{n-1}\,\d t = \dfrac{1}{n}$.
+
+Par récurrence, en utilisant $\beta(x,y+1) = \frac{y}{x+y}\beta(x,y)$ :
+$\beta(1,k+1) = \frac{k}{k+1}\cdot\frac{1}{k} = \frac{1}{k+1}$. Résultat prouvé.
+
+\textbf{3.} $\beta(1,1) = 1$.
+\[
+\beta\!\left(\tfrac{1}{2},\tfrac{1}{2}\right) = \frac{\Gamma(1/2)^2}{\Gamma(1)} = \frac{(\sqrt{\pi})^2}{1} = \pi
+\]
+\end{boitecorrige}
+
+\newpage
+\subsection*{Exercice 14 - EDP : équation de transport \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Montrer que la fonction $u(x,y) = f(x+iy) + g(x-iy)$, où $f$ et $g$ sont deux fois dérivables sur $\mathbb{R}$, est harmonique ($\Delta u = 0$).
+  \item Trouver les solutions particulières réelles de l'équation de Laplace correspondant aux cas : (a) $f(x) = x^2$, $g = 0$ ; (b) $f(x) = \e^x$, $g = 0$.
+  \item Résoudre $u_t + 2u_x = 0$ avec $u(0,x) = \frac{1}{x^2+1}$. Évaluer $u\!\left(\frac{1}{2},x\right)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On calcule :
+\[
+\frac{\partial^2 u}{\partial x^2} = f''(x+iy) + g''(x-iy), \quad \frac{\partial^2 u}{\partial y^2} = -\bigl(f''(x+iy) + g''(x-iy)\bigr)
+\]
+Donc $\Delta u = 0$ : $u$ est harmonique.
+
+\textbf{2.} (a) $f(x+iy) = (x+iy)^2 = x^2 - y^2 + 2ixy$. Les parties réelles et imaginaires sont les solutions $x^2 - y^2$ et $xy$.
+
+(b) $f(x+iy) = \e^x(\cos y + i\sin y)$. Solutions : $\e^x\cos y$ et $\e^x\sin y$.
+
+\textbf{3.} C'est une équation de transport. La solution est $u(t,x) = g(x-2t)$ avec la condition initiale :
+\[
+u(t,x) = \frac{1}{(x-2t)^2+1}
+\]
+\[
+u\!\left(\tfrac{1}{2},x\right) = \frac{1}{(x-1)^2+1}
+\]
+\end{boitecorrige}
+
+\newpage
+\subsection*{Exercice 15 - EDP : type et classification \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Dire si l'EDP $\left(\dfrac{\partial u}{\partial x}\right)^2 - u\,\dfrac{\partial u}{\partial y} = 0$ est linéaire ou non linéaire. Justifier.
+  \item Résoudre l'EDP :
+  \[
+  4\frac{\partial u}{\partial t} - 3\frac{\partial u}{\partial x} = 0, \quad u(0,x) = x^3
+  \]
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} L'EDP est \textbf{non linéaire}. En effet, si $L$ désigne l'opérateur associé, alors $L(\alpha u) \neq \alpha L(u)$ car le terme $(\partial u/\partial x)^2$ est quadratique en $u$. On vérifie : $L(\alpha u) = \alpha^2(\partial u/\partial x)^2 - \alpha u(\partial u/\partial y) \neq \alpha L(u)$ en général.
+
+\textbf{2.} C'est une équation de transport $u_t + au_x = 0$ avec $a = -3/4$ (après division par 4). La solution générale est $u(t,x) = g(x + \frac{3}{4}t)$. La condition initiale donne $g(x) = x^3$, donc :
+\[
+\boxed{u(t,x) = \left(x + \frac{3}{4}t\right)^3}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 16 - Résolution par Laplace d'un système \niveau{\difficile}}
+
+\begin{boiteexercice}
+Utiliser la transformée de Laplace pour résoudre les équations différentielles suivantes :
+\begin{enumerate}[label=(\alph*)]
+  \item $x'(t) + x(t) = t\mathbb{H}(t) - t\mathbb{H}(t-1)$, avec $x(0) = 0$.
+  \item $x''(t) + x'(t) = \mathbb{H}(t)$, avec $x(0) = 0$, $x'(0) = 0$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} Application de la transformée de Laplace :
+\[
+(p+1)X(p) = \frac{1}{p^2} - \left(\frac{1}{p^2}+\frac{1}{p}\right)\e^{-p}
+\]
+\[
+X(p) = \frac{1}{p^2(p+1)} - \frac{\e^{-p}}{p^2} = \left(\frac{1}{p^2} - \frac{1}{p} + \frac{1}{p+1}\right) - \frac{\e^{-p}}{p^2}
+\]
+\[
+x(t) = (t-1+\e^{-t})\mathbb{H}(t) - (t-1)\mathbb{H}(t-1)
+\]
+
+\textbf{(b)} Application de la transformée de Laplace :
+\[
+(p^2+p)X(p) = \frac{1}{p} \implies X(p) = \frac{1}{p^2(p+1)} = \frac{1}{p^2} - \frac{1}{p} + \frac{1}{p+1}
+\]
+\[
+\boxed{x(t) = (t-1+\e^{-t})\mathbb{H}(t)}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 17 - Intégrale de Fourier et forme canonique d'une EDP \niveau{\difficile}}
+
+\begin{boiteexercice}
+Considérer l'EDP linéaire du second ordre :
+\[
+u_{xx} + 4u_{xy} + 4u_{yy} + u_x + 2u_y = 0
+\]
+\begin{enumerate}
+  \item Déterminer le type (elliptique, parabolique, hyperbolique).
+  \item Trouver les équations caractéristiques.
+  \item Effectuer le changement de variables approprié et écrire la forme canonique.
+  \item Donner la solution générale.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Ici $a = 1$, $b = 2$, $c = 4$. Le discriminant : $\Delta = b^2 - ac = 4 - 4 = 0$. L'EDP est \textbf{parabolique}.
+
+\textbf{2.} L'équation caractéristique est $(dy)^2 - 2\cdot 2\,dx\,dy + 1\cdot(dx)^2 = 0$, soit $(dy - 2\,dx)^2 = 0$, d'où $y - 2x = \text{cste}$.
+
+\textbf{3.} Changement de variables : $\xi = y - 2x$, $\eta = y$. Les dérivées partielles deviennent :
+\[
+u_x = -2v_\xi, \quad u_y = v_\xi + v_\eta, \quad u_{xx} = 4v_{\xi\xi}
+\]
+Après substitution, les termes croisés $v_{\xi\xi}$ s'annulent (cas parabolique), et on obtient la forme canonique :
+\[
+v_{\eta\eta} - v_\eta = 0
+\]
+
+\textbf{4.} En posant $w = v_\eta$, on a $w_\eta = w$, d'où $w = \Phi(\xi)\e^\eta$. Puis $v = \Phi(\xi)\e^\eta + \Psi(\xi)$, et :
+\[
+u(x,y) = \Phi(y-2x)\e^y + \Psi(y-2x)
+\]
+où $\Phi$ et $\Psi$ sont des fonctions arbitraires.
+\end{boitecorrige}
+
+\subsection*{Exercice 18 - Séries de Fourier \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $f$ la fonction $2\pi$-périodique définie sur $[-\pi, \pi]$ par $f(x) = x$.
+\begin{enumerate}
+  \item Calculer les coefficients de Fourier $a_n$ et $b_n$.
+  \item Écrire la série de Fourier de $f$.
+  \item En utilisant le théorème de Parseval, calculer $\displaystyle\sum_{n=1}^{+\infty} \frac{1}{n^2}$.
+  \item En déduire $\displaystyle\sum_{n=1}^{+\infty} \frac{(-1)^{n+1}}{n}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La fonction $f(x) = x$ est impaire sur $[-\pi,\pi]$, donc $a_n = 0$ pour tout $n$.
+\[
+b_n = \frac{1}{\pi}\int_{-\pi}^{\pi} x\sin(nx)\,\d x = \frac{2}{\pi}\int_0^{\pi} x\sin(nx)\,\d x
+\]
+Par intégration par parties : $b_n = \dfrac{2(-1)^{n+1}}{n}$.
+
+\textbf{2.} Série de Fourier : $f(x) \sim \displaystyle 2\sum_{n=1}^{+\infty} \frac{(-1)^{n+1}}{n}\sin(nx)$.
+
+\textbf{3.} Théorème de Parseval : $\dfrac{1}{\pi}\int_{-\pi}^{\pi}|f(x)|^2\,\d x = \dfrac{a_0^2}{2} + \sum_{n=1}^{+\infty}(a_n^2+b_n^2)$.
+\[
+\frac{1}{\pi}\int_{-\pi}^{\pi} x^2\,\d x = \frac{2\pi^2}{3} = \sum_{n=1}^{+\infty} \frac{4}{n^2}
+\]
+\[
+\sum_{n=1}^{+\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
+\]
+
+\textbf{4.} En $x = \pi/2$ (point de continuité) : $f(\pi/2) = \pi/2 = 2\sum_{n=1}^{+\infty}\frac{(-1)^{n+1}}{n}\sin(n\pi/2)$.
+
+Cette série donne $\dfrac{\pi}{4} = 1 - \dfrac{1}{3} + \dfrac{1}{5} - \cdots = \sum_{n=0}^{+\infty}\dfrac{(-1)^n}{2n+1}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 19 - Équation de Laplace en coordonnées polaires \niveau{\moyen}}
+
+\begin{boiteexercice}
+On cherche les solutions harmoniques (solutions de $\Delta u = 0$) dans le disque de rayon $R$ centré en $O$, en coordonnées polaires $(r,\theta)$.
+\begin{enumerate}
+  \item Écrire l'opérateur laplacien en polaires et chercher les solutions sous forme séparée $u(r,\theta) = f(r)g(\theta)$.
+  \item Montrer que $g(\theta)$ est une combinaison de $\cos(n\theta)$ et $\sin(n\theta)$, et que $f(r) = r^n$ ou $r^{-n}$.
+  \item Pour un problème intérieur régulier en $r=0$, donner la solution générale. Comment s'écrit-elle si $u(R,\theta) = h(\theta)$ (condition au bord de Dirichlet) ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Laplacien en polaires et séparation.}
+
+En coordonnées polaires :
+\[
+\Delta u = \frac{\partial^2 u}{\partial r^2} + \frac{1}{r}\frac{\partial u}{\partial r} + \frac{1}{r^2}\frac{\partial^2 u}{\partial\theta^2}.
+\]
+En posant $u = f(r)g(\theta)$, l'équation $\Delta u = 0$ devient, après division par $fg$ :
+\[
+\frac{r^2 f'' + r f'}{f} = -\frac{g''}{g} = n^2 \quad (\text{constante de séparation}).
+\]
+On a posé la constante égale à $n^2$ pour assurer la $2\pi$-périodicité de $g$.
+
+\textbf{2. Solutions angulaires et radiales.}
+
+L'équation angulaire $g'' + n^2 g = 0$ donne $g(\theta) = A_n\cos(n\theta) + B_n\sin(n\theta)$ pour $n\ge 1$ et $g = C_0$ pour $n=0$.
+
+L'équation radiale $r^2 f'' + r f' - n^2 f = 0$ est de type Euler. En cherchant $f = r^\alpha$, on obtient $\alpha(\alpha-1) + \alpha - n^2 = \alpha^2 - n^2 = 0$, soit $\alpha = \pm n$. Donc $f(r) = r^n$ ou $r^{-n}$ (et $f(r) = C + D\ln r$ pour $n=0$).
+
+\textbf{3. Problème intérieur.}
+
+Pour un disque contenant $r=0$, les solutions $r^{-n}$ et $\ln r$ divergent en $r=0$ : on les écarte. La solution générale harmonique dans le disque est :
+\[
+u(r,\theta) = a_0 + \sum_{n=1}^{+\infty} r^n\!\left(a_n\cos(n\theta) + b_n\sin(n\theta)\right).
+\]
+Avec la condition au bord $u(R,\theta) = h(\theta)$ (développable en série de Fourier $h(\theta) = \alpha_0 + \sum_n (\alpha_n\cos n\theta + \beta_n\sin n\theta)$), on identifie :
+\[
+a_0 = \alpha_0, \quad a_n = \frac{\alpha_n}{R^n}, \quad b_n = \frac{\beta_n}{R^n}.
+\]
+C'est la \emph{formule de Poisson} pour le disque : la solution est la projection harmonique du bord vers l'intérieur. Par exemple, $u(0,\theta) = a_0 = \frac{1}{2\pi}\int_0^{2\pi} h(\theta)\d\theta$ (valeur moyenne au bord), ce qui est la \emph{propriété de la moyenne} des fonctions harmoniques.
+
+\reponse{$u(r,\theta) = a_0 + \sum_{n=1}^{+\infty} r^n(a_n\cos n\theta + b_n\sin n\theta)$}
+\end{boitecorrige}
+
+\subsection*{Exercice 20 - Équation des cordes vibrantes et séparation de variables \niveau{\difficile}}
+
+\begin{boiteexercice}
+On considère une corde vibrante de longueur $L$, fixée à ses extrémités, régie par l'équation d'onde :
+\[
+\frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}, \quad u(0,t) = u(L,t) = 0, \quad u(x,0) = f(x), \quad \frac{\partial u}{\partial t}(x,0) = 0.
+\]
+\begin{enumerate}
+  \item Chercher les solutions séparées $u(x,t) = X(x)T(t)$ et déterminer les modes propres.
+  \item Écrire la solution générale satisfaisant les conditions aux limites.
+  \item Donner la solution pour $f(x) = \epsilon\sin(\pi x/L)$ (mode fondamental).
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Séparation et modes propres.}
+
+En posant $u = X(x)T(t)$ dans l'équation d'onde et en divisant par $XT$ :
+\[
+\frac{T''}{c^2 T} = \frac{X''}{X} = -\lambda \quad (\lambda > 0).
+\]
+L'équation spatiale $X'' + \lambda X = 0$ avec $X(0) = X(L) = 0$ donne les valeurs propres :
+\[
+\lambda_n = \frac{n^2\pi^2}{L^2}, \quad X_n(x) = \sin\!\left(\frac{n\pi x}{L}\right), \quad n=1,2,\ldots
+\]
+L'équation temporelle $T'' + c^2\lambda_n T = 0$ donne :
+\[
+T_n(t) = A_n\cos\!\left(\frac{n\pi c t}{L}\right) + B_n\sin\!\left(\frac{n\pi c t}{L}\right).
+\]
+
+\textbf{2. Solution générale.}
+
+\[
+u(x,t) = \sum_{n=1}^{+\infty}\!\left[A_n\cos\!\left(\frac{n\pi c t}{L}\right) + B_n\sin\!\left(\frac{n\pi c t}{L}\right)\right]\sin\!\left(\frac{n\pi x}{L}\right).
+\]
+Les coefficients sont déterminés par les conditions initiales :
+\[
+A_n = \frac{2}{L}\int_0^L f(x)\sin\!\left(\frac{n\pi x}{L}\right)\d x, \qquad B_n = \frac{2L}{n\pi c}\int_0^L g(x)\sin\!\left(\frac{n\pi x}{L}\right)\d x,
+\]
+où $g(x) = \partial_t u(x,0)$. Comme $g=0$ ici, $B_n = 0$.
+
+\textbf{3. Mode fondamental $f(x) = \epsilon\sin(\pi x/L)$.}
+
+On a $A_1 = \epsilon$ et $A_n = 0$ pour $n\ge 2$ (par orthogonalité des sinus). La solution se réduit au mode fondamental :
+\[
+u(x,t) = \epsilon\cos\!\left(\frac{\pi c t}{L}\right)\sin\!\left(\frac{\pi x}{L}\right).
+\]
+La corde vibre à la fréquence fondamentale $f_1 = c/(2L)$, sans aucune harmonique supérieure. C'est le principe de la corde de Melde : en excitant une corde à sa fréquence propre, on obtient un mode pur.
+
+\reponse{$u(x,t) = \sum_n A_n\cos(n\pi c t/L)\sin(n\pi x/L)$ ; mode fondamental $f_1 = c/(2L)$}
+\end{boitecorrige}
+
+\subsection*{Exercice 21 - Fonctions de Green et solution d'une EDO linéaire \niveau{\difficile}}
+
+\begin{boiteexercice}
+On considère l'EDO avec conditions aux limites :
+\[
+u''(x) = f(x), \quad u(0) = u(1) = 0.
+\]
+\begin{enumerate}
+  \item Déterminer la fonction de Green $G(x,\xi)$ solution de $G'' = \delta(x-\xi)$ avec $G(0,\xi) = G(1,\xi) = 0$.
+  \item Vérifier que $u(x) = \int_0^1 G(x,\xi) f(\xi)\,\d\xi$ résout le problème.
+  \item Application : $f(x) = -1$ (charge uniforme). Donner $u(x)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Fonction de Green.}
+
+Pour $x\neq\xi$, $G''=0$, donc $G$ est affine par morceaux. Avec $G(0,\xi)=0$ : $G(x,\xi) = A x$ pour $x<\xi$. Avec $G(1,\xi)=0$ : $G(x,\xi) = B(1-x)$ pour $x>\xi$.
+
+Continuité en $x=\xi$ : $A\xi = B(1-\xi)$, soit $B = A\xi/(1-\xi)$.
+
+Saut de la dérivée : en intégrant $G''=\delta$ sur un petit voisinage de $\xi$ :
+\[
+G'(\xi^+,\xi) - G'(\xi^-,\xi) = 1.
+\]
+Comme $G' = A$ pour $x<\xi$ et $G' = -B$ pour $x>\xi$ : $-B - A = 1$, soit $A = -1-B = -1-A\xi/(1-\xi)$, donc :
+\[
+A\!\left(1 + \frac{\xi}{1-\xi}\right) = -1 \quad\Rightarrow\quad A = -(1-\xi), \quad B = \xi.
+\]
+Finalement :
+\[
+G(x,\xi) = \begin{cases}
+-\xi(1-x) & \text{si } x\ge\xi,\\
+-x(1-\xi) & \text{si } x\le\xi.
+\end{cases}
+\]
+On peut réécrire symétriquement : $G(x,\xi) = -\min(x,\xi)\,(1-\max(x,\xi))$. $G$ est symétrique en $x$ et $\xi$ (propriété d'auto-adjonction).
+
+\textbf{2. Solution.}
+
+L'opérateur $\partial_x^2$ appliqué à $u(x) = \int_0^1 G(x,\xi)f(\xi)\d\xi$ donne, par la propriété de la dérivée de $G$ :
+\[
+u''(x) = \int_0^1 G''(x,\xi) f(\xi)\d\xi = \int_0^1 \delta(x-\xi) f(\xi)\d\xi = f(x).
+\]
+Les conditions aux limites : $u(0) = \int_0^1 G(0,\xi) f(\xi)\d\xi = 0$ car $G(0,\xi)=0$, et de même $u(1)=0$.
+
+\textbf{3. Application $f(x) = -1$.}
+
+\[
+u(x) = \int_0^1 G(x,\xi)(-1)\,\d\xi = (1-x)\int_0^x \xi\,\d\xi + x\int_x^1 (1-\xi)\,\d\xi.
+\]
+Calcul : $\int_0^x \xi\,\d\xi = x^2/2$ et $\int_x^1 (1-\xi)\,\d\xi = (1-x)^2/2$. Donc :
+\[
+u(x) = (1-x)\frac{x^2}{2} + x\frac{(1-x)^2}{2} = \frac{x(1-x)}{2}\,[x + (1-x)] = \frac{x(1-x)}{2}.
+\]
+C'est une parabole (élément fini P1 classique), maximale en $x=1/2$ avec $u_\text{max} = 1/8$.
+
+\reponse{$G(x,\xi) = -\min(x,\xi)(1-\max(x,\xi))$ ; pour $f=-1$, $u(x) = x(1-x)/2$}
+\end{boitecorrige}
+
+\subsection*{Exercice 22 - Théorème de Stokes et champ à circulation conservative \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit le champ vectoriel $\vec{F}(x,y,z) = (yz,\, xz,\, xy)$ dans $\R^3$.
+\begin{enumerate}
+  \item Calculer $\rot\vec{F}$ et $\div\vec{F}$.
+  \item Déduire que $\vec{F}$ dérive d'un potentiel scalaire $\phi$ que l'on déterminera.
+  \item Vérifier le théorème de Stokes sur la portion de sphère de rayon $R$ au-dessus du plan $z=0$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Rotationnel et divergence.}
+
+\[
+\rot\vec{F} = \begin{vmatrix} \hat{e}_x & \hat{e}_y & \hat{e}_z \\
+\partial_x & \partial_y & \partial_z \\
+yz & xz & xy \end{vmatrix}
+\]
+\[
+\rot\vec{F} = \bigl(\partial_y(xy) - \partial_z(xz),\;\partial_z(yz)-\partial_x(xy),\;\partial_x(xz)-\partial_y(yz)\bigr) = (x-x,\, y-y,\, z-z) = \vec{0}.
+\]
+Le champ est irrotationnel. Divergence : $\div\vec{F} = \partial_x(yz) + \partial_y(xz) + \partial_z(xy) = 0$.
+
+\textbf{2. Potentiel scalaire.}
+
+Comme $\rot\vec{F} = \vec{0}$ sur $\R^3$ (simplement connexe), il existe $\phi$ tel que $\vec{F} = \grad\phi$ :
+\[
+\partial_x\phi = yz \;\Rightarrow\; \phi = xyz + g(y,z).
+\]
+Alors $\partial_y\phi = xz + \partial_y g = xz \;\Rightarrow\; \partial_y g = 0$, donc $g = h(z)$. Enfin $\partial_z\phi = xy + h'(z) = xy \;\Rightarrow\; h'(z) = 0$, donc $h = \text{cste}$.
+
+On choisit $\phi(x,y,z) = xyz$ (à constante additive près), et on vérifie : $\grad\phi = (yz, xz, xy) = \vec{F}$. $\checkmark$
+
+\textbf{3. Théorème de Stokes.}
+
+Le théorème affirme : $\oint_\mathcal{C}\vec{F}\cdot\d\vec{\ell} = \iint_\mathcal{S}(\rot\vec{F})\cdot\d\vec{S}$, où $\mathcal{C}$ est le bord de la surface $\mathcal{S}$ (ici, le cercle équatorial de rayon $R$ dans le plan $z=0$).
+
+Comme $\rot\vec{F} = \vec{0}$, l'intégrale de surface est nulle, donc :
+\[
+\oint_\mathcal{C} \vec{F}\cdot\d\vec{\ell} = 0.
+\]
+Vérification directe : paramétrons $\mathcal{C}$ par $(R\cos\theta, R\sin\theta, 0)$, $\theta\in[0,2\pi]$. Sur $\mathcal{C}$, $\vec{F} = (0, 0, R^2\cos\theta\sin\theta)$. Le vecteur tangent $\d\vec{\ell} = (-R\sin\theta, R\cos\theta, 0)\,\d\theta$, donc $\vec{F}\cdot\d\vec{\ell} = 0$ (la composante $z$ de $\vec{F}$ ne contribue pas). L'intégrale est bien nulle, conformément au théorème de Stokes. C'est aussi une illustration directe du fait que $\vec{F} = \grad\phi$ implique $\vec{F}\cdot\d\vec{\ell} = \d\phi$, dont l'intégrale sur une courbe fermée est nulle (théorème fondamentale du gradient).
+
+\reponse{$\phi(x,y,z) = xyz$, \quad $\oint_\mathcal{C}\vec{F}\cdot\d\vec{\ell} = 0$}
+\end{boitecorrige}
+
+\subsection*{Exercice 23 - Distribution de Dirac et dérivées faibles \niveau{\difficile}}
+
+\begin{boiteexercice}
+On rappelle qu'une distribution $T$ sur $\R$ est une forme linéaire continue sur l'espace des fonctions test $\mathcal{D}(\R)$ (fonctions $C^\infty$ à support compact). La distribution de Dirac est $\delta : \varphi\mapsto\varphi(0)$.
+\begin{enumerate}
+  \item Calculer la dérivée au sens des distributions de la fonction de Heaviside $H(x) = \mathbf{1}_{x>0}$.
+  \item Montrer que $x\,\delta = 0$ au sens des distributions.
+  \item Calculer $x\,\delta'$ et $\delta'$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Dérivée de Heaviside.}
+
+La dérivée distributionnelle de $H$ est définie par $\langle H', \varphi\rangle = -\langle H, \varphi'\rangle$ pour toute fonction test $\varphi$ :
+\[
+\langle H', \varphi\rangle = -\int_0^{+\infty} \varphi'(x)\,\d x = -[\varphi(x)]_0^{+\infty} = -0 + \varphi(0) = \varphi(0) = \langle\delta, \varphi\rangle.
+\]
+Donc $H' = \delta$ au sens des distributions.
+
+\textbf{2. Produit $x\,\delta$.}
+
+Par définition, $\langle x\,\delta, \varphi\rangle = \langle\delta, x\,\varphi\rangle = (x\,\varphi)(0) = 0\cdot\varphi(0) = 0$. Donc $x\,\delta = 0$.
+
+\textbf{3. Dérivée $\delta'$ et produit $x\,\delta'$.}
+
+La dérivée de $\delta$ : $\langle\delta', \varphi\rangle = -\langle\delta, \varphi'\rangle = -\varphi'(0)$.
+
+Pour le produit $x\,\delta'$, on utilise la formule de Leibniz distributions : $x\,\delta' = (x\,\delta)' - x'\,\delta = 0' - 1\cdot\delta = -\delta$. Vérification directe :
+\[
+\langle x\,\delta', \varphi\rangle = \langle\delta', x\,\varphi\rangle = -(x\,\varphi)'(0) = -\varphi(0) - 0\cdot\varphi'(0) = -\varphi(0) = \langle -\delta, \varphi\rangle.
+\]
+Donc $x\,\delta' = -\delta$.
+
+Ces relations sont fondamentales en théorie des distributions. Elles justifient par exemple que $\delta(ax) = \delta(x)/|a|$ (changement d'échelle) et que la distribution de Dirac est l'élément neutre de la convolution : $f * \delta = f$.
+
+\reponse{$H' = \delta$, \quad $x\,\delta = 0$, \quad $x\,\delta' = -\delta$}
+\end{boitecorrige}
+
+\subsection*{Exercice 24 - Équation de la chaleur sur un segment \niveau{\difficile}}
+
+\begin{boiteexercice}
+On considère l'équation de la chaleur sur le segment $[0,L]$ avec conditions de Dirichlet homogènes :
+\[
+\frac{\partial u}{\partial t} = D\,\frac{\partial^2 u}{\partial x^2}, \quad u(0,t) = u(L,t) = 0, \quad u(x,0) = f(x).
+\]
+\begin{enumerate}
+  \item Chercher les solutions séparées $u = X(x)T(t)$ et identifier les modes propres.
+  \item Donner la solution générale comme superposition de modes.
+  \item Application : $f(x) = u_0\sin(\pi x/L)$. Donner $u(x,t)$ et commenter la décroissance.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Séparation et modes.}
+
+En posant $u = X(x)T(t)$ dans l'équation et en divisant par $DTX$ :
+\[
+\frac{T'}{DT} = \frac{X''}{X} = -\lambda, \quad \lambda > 0.
+\]
+Équation spatiale : $X'' + \lambda X = 0$ avec $X(0) = X(L) = 0$. Valeurs propres et fonctions propres :
+\[
+\lambda_n = \frac{n^2\pi^2}{L^2}, \quad X_n(x) = \sin\!\left(\frac{n\pi x}{L}\right), \quad n\ge 1.
+\]
+Équation temporelle : $T' + D\lambda_n T = 0$, donc $T_n(t) = \e^{-D\lambda_n t} = \e^{-n^2\pi^2 D t/L^2}$.
+
+\textbf{2. Solution générale.}
+
+\[
+u(x,t) = \sum_{n=1}^{+\infty} a_n\,\e^{-n^2\pi^2 D t/L^2}\,\sin\!\left(\frac{n\pi x}{L}\right),
+\]
+avec $a_n = \dfrac{2}{L}\int_0^L f(x)\sin(n\pi x/L)\,\d x$ (coefficients de Fourier sinus de $f$).
+
+\textbf{3. Application $f(x) = u_0\sin(\pi x/L)$.}
+
+Par orthogonalité, seul $a_1 = u_0$ est non nul. La solution est :
+\[
+u(x,t) = u_0\,\e^{-\pi^2 D t/L^2}\,\sin\!\left(\frac{\pi x}{L}\right).
+\]
+Le profil spatial reste sinusoïdal (le mode fondamental), et l'amplitude décroît exponentiellement avec le temps caractéristique $\tau_1 = L^2/(\pi^2 D)$. Pour les modes supérieurs, $\tau_n = L^2/(n^2\pi^2 D) \ll \tau_1$ : les hautes fréquences spatiales sont dissipées beaucoup plus rapidement (le « lissage » de la chaleur). À temps long, seul le mode fondamental persiste.
+
+\reponse{$u(x,t) = \sum_n a_n e^{-n^2\pi^2 Dt/L^2}\sin(n\pi x/L)$ ; temps caractéristique $\tau_n = L^2/(n^2\pi^2 D)$}
+\end{boitecorrige}
+
+\subsection*{Exercice 25 - Conformité et intégrale complexe : théorème de Jordan \niveau{\difficile}}
+
+\begin{boiteexercice}
+On veut calculer l'intégrale réelle :
+\[
+I = \int_{-\infty}^{+\infty} \frac{\d x}{(x^2+a^2)(x^2+b^2)}, \quad a, b > 0,\; a\neq b.
+\]
+\begin{enumerate}
+  \item Identifier les pôles dans le demi-plan supérieur et justifier le choix du contour (demi-cercle supérieur).
+  \item Appliquer le théorème des résidus pour calculer $I$.
+  \item Vérifier par décomposition en éléments simples.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Pôles et contour.}
+
+L'intégrand $f(z) = 1/[(z^2+a^2)(z^2+b^2)]$ a quatre pôles simples : $z=\pm ia$, $z=\pm ib$. Dans le demi-plan supérieur : $z_1 = ia$ et $z_2 = ib$.
+
+On ferme le contour par un demi-cercle supérieur $\mathcal{C}_R$ de rayon $R\to\infty$. Comme $|f(z)| \sim 1/R^4$ sur le demi-cercle et la longueur est $\pi R$, l'intégrale sur $\mathcal{C}_R$ tend vers 0 (lemme de Jordan). L'intégrale totale le long de l'axe réel + le demi-cercle vaut $2\pi i$ fois la somme des résidus.
+
+\textbf{2. Résidus.}
+
+Les résidus aux pôles simples $z_1 = ia$ et $z_2 = ib$ :
+\[
+\text{Res}(f, ia) = \frac{1}{(z+ia)(z^2+b^2)}\bigg|_{z=ia} = \frac{1}{(2ia)((ia)^2+b^2)} = \frac{1}{2ia(b^2-a^2)} = \frac{1}{2ia(b^2-a^2)}.
+\]
+De même : $\text{Res}(f, ib) = \dfrac{1}{2ib(a^2-b^2)} = -\dfrac{1}{2ib(b^2-a^2)}$.
+
+\textbf{Calcul de $I$.}
+
+\[
+I = 2\pi i\!\left[\frac{1}{2ia(b^2-a^2)} - \frac{1}{2ib(b^2-a^2)}\right] = \frac{\pi}{b^2-a^2}\!\left[\frac{1}{a} - \frac{1}{b}\right] = \frac{\pi}{b^2-a^2}\cdot\frac{b-a}{ab} = \frac{\pi}{ab(a+b)}.
+\]
+
+\textbf{3. Vérification.}
+
+Décomposition en éléments simples :
+\[
+\frac{1}{(x^2+a^2)(x^2+b^2)} = \frac{1}{b^2-a^2}\!\left[\frac{1}{x^2+a^2} - \frac{1}{x^2+b^2}\right].
+\]
+En intégrant de $-\infty$ à $+\infty$ et utilisant $\int_{-\infty}^{+\infty}\d x/(x^2+c^2) = \pi/c$ :
+\[
+I = \frac{1}{b^2-a^2}\!\left[\frac{\pi}{a} - \frac{\pi}{b}\right] = \frac{\pi(b-a)}{ab(b^2-a^2)} = \frac{\pi}{ab(a+b)}.
+\]
+On retrouve bien le résultat du calcul par résidus, ce qui valide la méthode.
+
+\reponse{$I = \dfrac{\pi}{ab(a+b)}$}
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

@@ -1,0 +1,565 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Suites et Séries de Fonctions - Licence 2}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries SUITES ET SÉRIES DE FONCTIONS}\\[0.3cm]
+  {\normalsize Licence 2 - Mathématiques, Physique et Chimie}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Convergence simple et uniforme.} Une suite $(f_n)$ de fonctions sur $I$ converge \textit{simplement} vers $f$ si $\forall x\in I$, $\lim_{n\to\infty}f_n(x)=f(x)$. Elle converge \textit{uniformément} si $\sup_{x\in I}|f_n(x)-f(x)|\to0$.
+
+La convergence uniforme implique la convergence simple, mais la réciproque est fausse.
+
+\textbf{2. Critère de convergence uniforme.} $(f_n)$ converge uniformément sur $I$ si et seulement si $\lim_{n\to\infty}\sup_{x\in I}|f_n(x)-f(x)|=0$.
+
+\textbf{3. Propriétés transmises par la convergence uniforme.}
+\begin{itemize}[nosep]
+  \item Si les $f_n$ sont continues et $f_n\rightrightarrows f$, alors $f$ est continue.
+  \item Si les $f_n$ sont intégrables et $f_n\rightrightarrows f$, alors $\int_a^b f_n(x)\,\d x\to\int_a^b f(x)\,\d x$.
+  \item Si les $f_n$ sont de classe $\mathcal{C}^1$ et si $f_n\to f$ simplement et $f_n'\rightrightarrows g$, alors $f'=g$.
+\end{itemize}
+
+\textbf{4. Séries de fonctions.} La série $\sum f_n$ converge uniformément si et seulement si la suite des sommes partielles converge uniformément.
+
+\textbf{Critère de Weierstrass.} Si $|f_n(x)|\leq M_n$ sur $I$ et si $\sum M_n<+\infty$, alors $\sum f_n$ converge normalement (et donc uniformément) sur $I$.
+
+\textbf{5. Séries entières.} Une série entière $\sum a_n x^n$ a un rayon de convergence $R = \frac{1}{\limsup_{n\to\infty}|a_n|^{1/n}}$. Elle converge absolument pour $|x|<R$, diverge pour $|x|>R$. Sur tout compact de $(-R,R)$, la convergence est uniforme.
+
+\end{boiteresume}
+
+\newpage
+\section{Suites de fonctions}
+
+\subsection*{Exercice 1 - Convergence simple et uniforme \niveau{\facile}}
+
+\begin{boiteexercice}
+Pour chacune des suites suivantes, étudier la convergence simple puis la convergence uniforme sur l'intervalle indiqué :
+\begin{enumerate}[label=(\alph*)]
+  \item $f_n(x) = x^n$ sur $[0,1]$.
+  \item $f_n(x) = \dfrac{x}{1+nx^2}$ sur $\mathbb{R}$.
+  \item $f_n(x) = n x\,\e^{-nx^2}$ sur $[0,+\infty[$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} Pour $x\in[0,1[$, $x^n\to0$. Pour $x=1$, $x^n=1\to1$. Limite simple $f(x) = \begin{cases}0 & x\in[0,1[\\1 & x=1\end{cases}$.
+
+$\sup_{x\in[0,1]}|f_n(x)-f(x)| = \sup_{x\in[0,1[}x^n = \lim_{x\to1^-}x^n = 1 \not\to0$.
+
+La convergence n'est \textbf{pas uniforme} sur $[0,1]$ (la limite $f$ n'est pas continue alors que les $f_n$ le sont).
+
+\textbf{(b)} Limite simple : $f_n(x)\to0$ pour tout $x\in\mathbb{R}$ (évident pour $x=0$ ; pour $x\neq0$, $1+nx^2\to+\infty$).
+
+$\sup_{x}|f_n(x)| = \max f_n$. On cherche $f_n'(x)=\frac{1-nx^2}{(1+nx^2)^2}=0$ en $x=1/\sqrt{n}$. Le max vaut $f_n(1/\sqrt{n})=\frac{1/\sqrt{n}}{2}=\frac{1}{2\sqrt{n}}\to0$.
+
+La convergence est \textbf{uniforme} sur $\mathbb{R}$.
+
+\textbf{(c)} $f_n(0)=0\to0$. Pour $x>0$ : $f_n(x)=nx\e^{-nx^2}\to0$ (l'exponentielle l'emporte). Limite $f=0$.
+
+Max de $f_n$ : $f_n'(x)=n\e^{-nx^2}(1-2nx^2)=0$ en $x=1/\sqrt{2n}$, max $= n\cdot\frac{1}{\sqrt{2n}}\e^{-1/2}=\sqrt{\frac{n}{2}}\e^{-1/2}\to+\infty$.
+
+La convergence \textbf{n'est pas uniforme} sur $[0,+\infty[$. (Remarque : $\int_0^{+\infty}f_n=1/2$ mais $\int_0^{+\infty}f=0$ : le passage à la limite sous l'intégrale est invalide ici.)
+\end{boitecorrige}
+
+\subsection*{Exercice 2 - Régularité de la limite \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $f_n(x) = \frac{\sin(nx)}{n}$ sur $\mathbb{R}$.
+\begin{enumerate}
+  \item Montrer que $(f_n)$ converge uniformément vers $f=0$ sur $\mathbb{R}$.
+  \item Calculer $f_n'(x)$.
+  \item La suite $(f_n')$ converge-t-elle vers $f'=0$ ? Y a-t-il convergence uniforme ?
+  \item Cela contredit-il les théorèmes de dérivation des suites de fonctions ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $\sup_x|f_n(x)| = \sup_x\frac{|\sin(nx)|}{n} \leq \frac{1}{n}\to0$. Convergence uniforme sur $\mathbb{R}$ vers $f=0$.
+
+\textbf{2.} $f_n'(x) = \cos(nx)$.
+
+\textbf{3.} En $x=0$ : $f_n'(0)=\cos(0)=1\to1\neq f'(0)=0$. Donc $(f_n')$ ne converge même pas simplement vers $0$ partout. $\sup_x|f_n'(x)-0|=1\not\to0$ : pas de convergence uniforme.
+
+\textbf{4.} Le théorème de dérivation requiert que $(f_n')$ converge uniformément. Ici ce n'est pas le cas : les hypothèses ne sont pas satisfaites. Aucune contradiction.
+\end{boitecorrige}
+
+\section{Séries de fonctions}
+
+\subsection*{Exercice 3 - Convergence uniforme par Weierstrass \niveau{\moyen}}
+
+\begin{boiteexercice}
+Étudier la convergence de la série $\displaystyle\sum_{n=1}^{+\infty}\frac{\cos(nx)}{n^2}$ sur $\mathbb{R}$.
+\begin{enumerate}
+  \item Montrer que la série converge normalement (et donc uniformément) sur $\mathbb{R}$.
+  \item En déduire que la somme $f(x)=\sum_{n=1}^{+\infty}\frac{\cos(nx)}{n^2}$ est continue sur $\mathbb{R}$.
+  \item Calculer $\int_0^\pi f(x)\,\d x$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $\left|\frac{\cos(nx)}{n^2}\right|\leq\frac{1}{n^2}$ pour tout $x\in\mathbb{R}$. Comme $\sum\frac{1}{n^2}<+\infty$ (série de Riemann convergente), la série converge normalement par le critère de Weierstrass, donc uniformément sur $\mathbb{R}$.
+
+\textbf{2.} Chaque terme $\frac{\cos(nx)}{n^2}$ est continu. Par convergence uniforme d'une série de fonctions continues, la somme $f$ est continue sur $\mathbb{R}$.
+
+\textbf{3.} Par convergence uniforme, on peut intégrer terme à terme :
+\[
+\int_0^\pi f(x)\,\d x = \sum_{n=1}^{+\infty}\int_0^\pi\frac{\cos(nx)}{n^2}\,\d x = \sum_{n=1}^{+\infty}\frac{[\sin(nx)]_0^\pi}{n^3} = \sum_{n=1}^{+\infty}\frac{\sin(n\pi)}{n^3} = 0
+\]
+(car $\sin(n\pi)=0$ pour tout entier $n$).
+\end{boitecorrige}
+
+\section{Séries entières}
+
+\subsection*{Exercice 4 - Rayon de convergence \niveau{\moyen}}
+
+\begin{boiteexercice}
+Déterminer le rayon de convergence et l'intervalle de convergence des séries entières suivantes :
+\begin{enumerate}[label=(\alph*)]
+  \item $\displaystyle\sum_{n=0}^{+\infty}\frac{x^n}{n!}$
+  \item $\displaystyle\sum_{n=1}^{+\infty}\frac{(-1)^n x^n}{n}$
+  \item $\displaystyle\sum_{n=0}^{+\infty}n^2 x^n$
+  \item $\displaystyle\sum_{n=0}^{+\infty}\frac{(2n)!}{(n!)^2}x^n$
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} $R = \lim_{n\to\infty}\left|\frac{a_n}{a_{n+1}}\right| = \lim_{n\to\infty}\frac{n!/(n+1)!}{1} = \lim(n+1)^{-1}$... Mieux par d'Alembert : $\left|\frac{x^{n+1}/(n+1)!}{x^n/n!}\right|=\frac{|x|}{n+1}\to0$ pour tout $x$. $R=+\infty$. Somme $=\e^x$.
+
+\textbf{(b)} $a_n=(-1)^n/n$, $|a_n|^{1/n}=(1/n)^{1/n}\to1$. $R=1$. En $x=1$ : $\sum(-1)^n/n$ converge (Leibniz). En $x=-1$ : $\sum 1/n$ diverge. Intervalle $(-1,1]$.
+
+\textbf{(c)} $a_n=n^2$, $|a_n|^{1/n}=n^{2/n}=(n^{1/n})^2\to1$. $R=1$. En $\pm1$ : $\sum n^2$ diverge. Intervalle $(-1,1)$.
+
+\textbf{(d)} Par Stirling, $\frac{(2n)!}{(n!)^2}\sim\frac{4^n}{\sqrt{\pi n}}$, donc $|a_n|^{1/n}\to4$ et $R=\frac{1}{4}$. Intervalle $|x|<\frac{1}{4}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 5 - Développement en série entière et somme \niveau{\difficile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Développer $f(x)=\ln(1+x)$ en série entière au voisinage de 0 et préciser l'intervalle de convergence.
+  \item Développer $g(x)=\arctan(x)$ en série entière en utilisant $g'(x)=\frac{1}{1+x^2}$.
+  \item En déduire la valeur de $\pi$ à partir de $g(1)$.
+  \item Développer $h(x)=\frac{1}{(1-x)^2}$ en série entière et déduire la valeur de $\sum_{n=1}^{+\infty}n/2^n$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $f'(x)=\frac{1}{1+x}=\sum_{n=0}^{+\infty}(-x)^n=\sum_{n=0}^{+\infty}(-1)^n x^n$ pour $|x|<1$. En intégrant :
+\[
+\ln(1+x) = \sum_{n=0}^{+\infty}\frac{(-1)^n x^{n+1}}{n+1} = x-\frac{x^2}{2}+\frac{x^3}{3}-\cdots, \quad x\in(-1,1]
+\]
+
+\textbf{2.} $g'(x)=\frac{1}{1+x^2}=\sum_{n=0}^{+\infty}(-1)^n x^{2n}$. En intégrant ($g(0)=0$) :
+\[
+\arctan(x) = \sum_{n=0}^{+\infty}\frac{(-1)^n x^{2n+1}}{2n+1} = x-\frac{x^3}{3}+\frac{x^5}{5}-\cdots, \quad x\in[-1,1]
+\]
+
+\textbf{3.} En $x=1$ (la série converge par Leibniz) : $\arctan(1)=\pi/4$, d'où la formule de Leibniz-Gregory :
+\[
+\frac{\pi}{4} = 1-\frac{1}{3}+\frac{1}{5}-\frac{1}{7}+\cdots
+\]
+
+\textbf{4.} $\frac{1}{1-x}=\sum_{n=0}^\infty x^n$. En dérivant : $\frac{1}{(1-x)^2}=\sum_{n=1}^\infty n x^{n-1}$.
+
+En $x=1/2$ : $\frac{1}{(1/2)^2}=4=\sum_{n=1}^\infty n\cdot(1/2)^{n-1}=2\sum_{n=1}^\infty\frac{n}{2^n}$, donc $\displaystyle\sum_{n=1}^{+\infty}\frac{n}{2^n}=2$.
+\end{boitecorrige}
+
+\section{Suites définies par récurrence}
+
+\subsection*{Exercice 6 - Suite récurrente, point fixe et convergence \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit la suite définie par $u_0 = 2$ et $u_{n+1} = \dfrac{1}{2}\left(u_n + \dfrac{3}{u_n}\right)$ pour tout $n\geq0$.
+\begin{enumerate}
+  \item Trouver le(s) point(s) fixe(s) de $f(x) = \dfrac{1}{2}\left(x + \dfrac{3}{x}\right)$.
+  \item Montrer que si $u_n > 0$ alors $u_{n+1} > \sqrt{3}$
+  (inégalité arithmético-géométrique).
+  \item Montrer que $(u_n)_{n\geq1}$ est décroissante.
+  \item En déduire que $(u_n)$ converge et calculer sa limite.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Les points fixes vérifient $f(x) = x$, soit $\dfrac{1}{2}(x+3/x) = x$, d'où $x+3/x = 2x$, puis $3/x = x$, et enfin $x^2 = 3$. Les points fixes sont $\ell = \sqrt{3}$ et $\ell = -\sqrt{3}$ (exclu car $u_n > 0$).
+
+\textbf{2.} Pour $u_n > 0$, par l'inégalité arithmético-géométrique $\dfrac{a+b}{2} \geq \sqrt{ab}$ :
+\[
+u_{n+1} = \frac{1}{2}\!\left(u_n + \frac{3}{u_n}\right) \geq \sqrt{u_n\cdot\frac{3}{u_n}} = \sqrt{3}
+\]
+L'égalité n'a lieu que si $u_n = \sqrt{3}$. Donc $u_{n+1} \geq \sqrt{3}$ pour tout $n\geq0$.
+
+\textbf{3.} Pour $n\geq1$, on a $u_n \geq \sqrt{3}$. Montrons $u_{n+1} \leq u_n$ :
+\[
+u_{n+1} - u_n = \frac{1}{2}\!\left(u_n+\frac{3}{u_n}\right) - u_n = \frac{1}{2}\!\left(\frac{3}{u_n}-u_n\right) = \frac{3-u_n^2}{2u_n} \leq 0
+\]
+car $u_n \geq \sqrt{3}$ implique $u_n^2 \geq 3$. Donc $(u_n)_{n\geq1}$ est décroissante.
+
+\textbf{4.} $(u_n)_{n\geq1}$ est décroissante et minorée par $\sqrt{3}$ : elle converge. Sa limite $\ell$ vérifie $f(\ell) = \ell$, donc $\ell = \sqrt{3}$.
+
+\[
+\boxed{\lim_{n\to\infty} u_n = \sqrt{3}}
+\]
+Cet algorithme est la méthode de Héron pour calculer $\sqrt{3}$ : convergence quadratique.
+\end{boitecorrige}
+
+\subsection*{Exercice 7 - Critères de convergence des séries \niveau{\moyen}}
+
+\begin{boiteexercice}
+Étudier la convergence des séries suivantes en précisant le critère utilisé :
+\begin{enumerate}[label=(\alph*)]
+  \item $\displaystyle\sum_{n=1}^{+\infty}\frac{n!}{n^n}$ \quad (critère de Cauchy ou d'Alembert)
+  \item $\displaystyle\sum_{n=1}^{+\infty}\frac{1}{n^\alpha}$ avec $\alpha\in\mathbb{R}$ \quad (séries de Riemann)
+  \item $\displaystyle\sum_{n=1}^{+\infty}\frac{(-1)^{n+1}}{\sqrt{n}}$ \quad (critère de Leibniz)
+  \item $\displaystyle\sum_{n=2}^{+\infty}\frac{1}{n(\ln n)^2}$ \quad (comparaison série-intégrale)
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} Critère de d'Alembert : $a_n = n!/n^n$.
+\[
+\frac{a_{n+1}}{a_n} = \frac{(n+1)!}{(n+1)^{n+1}}\cdot\frac{n^n}{n!} = \frac{(n+1)\cdot n^n}{(n+1)^{n+1}} = \frac{n^n}{(n+1)^n} = \left(\frac{n}{n+1}\right)^n = \left(1-\frac{1}{n+1}\right)^n
+\]
+\[
+\to \e^{-1} = \frac{1}{\e} < 1 \quad\Rightarrow\quad \text{la série \textbf{converge}.}
+\]
+
+\textbf{(b)} Séries de Riemann : $\sum 1/n^\alpha$ converge si et seulement si $\alpha > 1$.
+\begin{itemize}[nosep]
+  \item $\alpha > 1$ : converge.
+  \item $\alpha \leq 1$ : diverge (en particulier $\sum 1/n$ diverge, $\sum 1/\sqrt{n}$ diverge).
+\end{itemize}
+
+\textbf{(c)} Critère des séries alternées (Leibniz). On pose $b_n = 1/\sqrt{n}$. On vérifie : (i) $b_n > 0$, (ii) $(b_n)$ décroissante (car $1/\sqrt{n}$ est décroissante), (iii) $b_n \to 0$. Les trois conditions étant satisfaites, la série $\sum(-1)^{n+1}/\sqrt{n}$ \textbf{converge}.
+
+\textbf{(d)} Comparaison série-intégrale. La fonction $f(x) = 1/(x(\ln x)^2)$ est positive et décroissante sur $[2,+\infty[$. On étudie l'intégrale :
+\[
+\int_2^{+\infty}\frac{\d x}{x(\ln x)^2} = \left[-\frac{1}{\ln x}\right]_2^{+\infty} = 0 - \left(-\frac{1}{\ln 2}\right) = \frac{1}{\ln 2} < +\infty
+\]
+L'intégrale converge, donc par le critère de comparaison série-intégrale, $\sum\dfrac{1}{n(\ln n)^2}$ \textbf{converge}.
+\end{boitecorrige}
+
+\subsection*{Exercice 8 - Développements de Taylor et applications \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Écrire les développements limités en 0 à l'ordre indiqué :
+  \begin{enumerate}[label=(\alph*)]
+    \item $\e^x$ à l'ordre 4.
+    \item $\sin(x)$ à l'ordre 5.
+    \item $\ln(1+x)$ à l'ordre 4.
+  \end{enumerate}
+  \item En utilisant le développement de $\ln(1+x)$ et $\ln(1-x)$, déduire un développement de $\ln\dfrac{1+x}{1-x}$.
+  \item Calculer la limite $\displaystyle\lim_{x\to0}\frac{\e^x - 1 - x - x^2/2}{x^3}$.
+  \item Montrer que $\cos(x) \geq 1 - x^2/2$ pour tout $x\in\mathbb{R}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.(a)} $\e^x = 1 + x + \dfrac{x^2}{2!} + \dfrac{x^3}{3!} + \dfrac{x^4}{4!} + o(x^4)$.
+
+\textbf{1.(b)} $\sin(x) = x - \dfrac{x^3}{6} + \dfrac{x^5}{120} + o(x^5)$.
+
+\textbf{1.(c)} $\ln(1+x) = x - \dfrac{x^2}{2} + \dfrac{x^3}{3} - \dfrac{x^4}{4} + o(x^4)$ (valable pour $|x| < 1$).
+
+\textbf{2.} On a $\ln(1-x) = -x - \dfrac{x^2}{2} - \dfrac{x^3}{3} - \dfrac{x^4}{4} - \cdots$ En soustrayant :
+\[
+\ln\frac{1+x}{1-x} = \ln(1+x) - \ln(1-x) = 2x + \frac{2x^3}{3} + \frac{2x^5}{5} + \cdots = 2\sum_{k=0}^{+\infty}\frac{x^{2k+1}}{2k+1}
+\]
+Cette série converge pour $|x|<1$ et permet de calculer $\ln$ efficacement.
+
+\textbf{3.} On développe le numérateur au voisinage de 0 :
+\[
+\e^x - 1 - x - \frac{x^2}{2} = \left(1+x+\frac{x^2}{2}+\frac{x^3}{6}+o(x^3)\right) - 1 - x - \frac{x^2}{2} = \frac{x^3}{6} + o(x^3)
+\]
+Donc :
+\[
+\lim_{x\to0}\frac{\e^x-1-x-x^2/2}{x^3} = \lim_{x\to0}\frac{x^3/6+o(x^3)}{x^3} = \boxed{\frac{1}{6}}
+\]
+
+\textbf{4.} Le DL de $\cos x$ à l'ordre 2 est $\cos x = 1 - x^2/2 + x^4/24 - \cdots$ Le terme d'ordre 4 ($+x^4/24$) est positif. Plus précisément, la série de Taylor de $\cos x$ est alternée et à termes décroissants pour $|x|$ pas trop grand. On peut montrer par intégrations successives de $\sin t \geq 0$ que $\cos x \geq 1 - x^2/2$ pour tout $x$.
+\end{boitecorrige}
+
+\subsection*{Exercice 9 - Séries de Riemann et comparaison \niveau{\facile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Rappeler le résultat général sur les séries de Riemann $\sum_{n=1}^{+\infty}\dfrac{1}{n^\alpha}$.
+  \item Pour chaque valeur de $\alpha$, indiquer si la série converge et pourquoi :
+  \begin{enumerate}[label=(\alph*)]
+    \item $\alpha = 2$ : $\sum\dfrac{1}{n^2}$.
+    \item $\alpha = 1/2$ : $\sum\dfrac{1}{\sqrt{n}}$.
+    \item $\alpha = 1$ : $\sum\dfrac{1}{n}$ (série harmonique).
+    \item $\alpha = 3/2$ : $\sum\dfrac{1}{n^{3/2}}$.
+  \end{enumerate}
+  \item En utilisant une comparaison, étudier la convergence de $\sum_{n=2}^{+\infty}\dfrac{1}{n^2-1}$.
+  \item Décomposer $\dfrac{1}{n^2-1} = \dfrac{1}{(n-1)(n+1)}$ en éléments simples et calculer la somme de la série.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La série de Riemann $\sum\dfrac{1}{n^\alpha}$ converge si et seulement si $\alpha > 1$.
+
+\textbf{2.}
+\begin{enumerate}[label=(\alph*)]
+  \item $\alpha = 2 > 1$ : \textbf{converge}. La somme est le célèbre résultat de Bâle : $\sum_{n=1}^\infty 1/n^2 = \pi^2/6$.
+  \item $\alpha = 1/2 < 1$ : \textbf{diverge}.
+  \item $\alpha = 1$ : \textbf{diverge} (série harmonique). Preuve classique par blocs : $H_{2^n} \geq 1 + n/2 \to\infty$.
+  \item $\alpha = 3/2 > 1$ : \textbf{converge}.
+\end{enumerate}
+
+\textbf{3.} Pour $n\geq2$ : $n^2-1 = n^2(1-1/n^2) \leq n^2$, donc $\dfrac{1}{n^2-1}\geq\dfrac{1}{n^2}$. Par ailleurs, $\dfrac{1}{n^2-1}\leq\dfrac{1}{n^2-n^2/4} = \dfrac{4}{3n^2}$ pour $n\geq2$... Mieux : $\dfrac{1}{n^2-1}\sim\dfrac{1}{n^2}$ quand $n\to\infty$, donc par équivalence, la série \textbf{converge}.
+
+\textbf{4.} Décomposition en éléments simples :
+\[
+\frac{1}{n^2-1} = \frac{1}{(n-1)(n+1)} = \frac{1}{2}\!\left(\frac{1}{n-1}-\frac{1}{n+1}\right)
+\]
+Somme partielle télescopique :
+\[
+S_N = \frac{1}{2}\sum_{n=2}^{N}\!\left(\frac{1}{n-1}-\frac{1}{n+1}\right) = \frac{1}{2}\!\left(1+\frac{1}{2}-\frac{1}{N}-\frac{1}{N+1}\right)\xrightarrow[N\to\infty]{}\frac{1}{2}\cdot\frac{3}{2}
+\]
+\[
+\boxed{\sum_{n=2}^{+\infty}\frac{1}{n^2-1} = \frac{3}{4}}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 10 - Suite définie par récurrence, étude complète \niveau{\difficile}}
+
+\begin{boiteexercice}
+Soit la suite $(u_n)$ définie par $u_0 = 0$ et $u_{n+1} = \ln(1+u_n)$ pour tout $n\geq0$.
+\begin{enumerate}
+  \item Montrer que $0 \leq u_n \leq 1$ pour tout $n\geq0$ (par récurrence).
+  \item Montrer que $(u_n)$ est décroissante pour $n\geq1$ (utiliser $\ln(1+x) \leq x$).
+  \item En déduire que $(u_n)$ converge. Calculer sa limite.
+  \item Étudier la vitesse de convergence : montrer que $u_{n+1}/u_n \to 1$ (convergence lente).
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Par récurrence : $u_0 = 0 \in [0,1]$. Si $u_n \in [0,1]$, alors $u_{n+1} = \ln(1+u_n) \in [\ln 1, \ln 2] = [0, 0{,}693] \subset [0,1]$. Donc $u_n \in [0,1]$ pour tout $n$.
+
+\textbf{2.} Pour tout $x \geq 0$ : $\ln(1+x) \leq x$ (car la fonction $g(x) = x - \ln(1+x)$ vérifie $g(0)=0$ et $g'(x)=1-1/(1+x)\geq0$). Donc pour $n\geq0$ et $u_n \geq 0$ :
+\[
+u_{n+1} = \ln(1+u_n) \leq u_n
+\]
+La suite est décroissante (à partir de $n=1$ car $u_1 = \ln(1+0) = 0 = u_0$, puis $u_2 = \ln(1+0) = 0$...).
+
+En fait $u_0 = 0$ et $u_n = 0$ pour tout $n$ si $u_0 = 0$. Prenons $u_0 = 1/2$ : $u_1 = \ln(3/2) \approx 0{,}405 < u_0$.
+
+\textbf{3.} La suite est décroissante et minorée par 0 : elle converge vers $\ell \geq 0$. Si $\ell = \lim u_n$, alors $\ell = \ln(1+\ell)$, soit $\e^\ell = 1+\ell$, ce qui n'a de solution que $\ell = 0$. Donc $\lim u_n = 0$.
+
+\textbf{4.} La convergence est lente : par le DL $\ln(1+x) \approx x - x^2/2$, on a $u_{n+1} \approx u_n - u_n^2/2$. Donc $u_{n+1}/u_n \approx 1 - u_n/2 \to 1$ (convergence sous-linéaire). On peut montrer que $u_n \sim 2/n$ (convergence en $O(1/n)$, beaucoup plus lente que la convergence géométrique).
+\end{boitecorrige}
+
+\subsection*{Exercice 11 - Rayon de convergence d'une série entière \niveau{\moyen}}
+
+\begin{boiteexercice}
+Déterminer le rayon de convergence $R$ et le comportement aux bornes des séries entières suivantes :
+\begin{enumerate}[label=(\alph*)]
+  \item $\displaystyle\sum_{n=0}^{+\infty}\frac{(2n)!}{(n!)^2}\,x^n$
+  \item $\displaystyle\sum_{n=1}^{+\infty}\frac{x^n}{\sqrt{n}\,2^n}$
+  \item $\displaystyle\sum_{n=0}^{+\infty}\frac{(-1)^n x^{2n+1}}{(2n+1)!}$
+\end{enumerate}
+Pour (c), identifier la somme de la série.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} $a_n = \dfrac{(2n)!}{(n!)^2}$. Par d'Alembert :
+\[
+\frac{a_{n+1}}{a_n} = \frac{(2n+2)!}{((n+1)!)^2}\cdot\frac{(n!)^2}{(2n)!} = \frac{(2n+2)(2n+1)}{(n+1)^2} = \frac{2(2n+1)}{n+1} \to 4
+\]
+Donc $R = 1/4$. En $x = 1/4$ : $a_n\,(1/4)^n \sim 1/(\sqrt{\pi n})$ (Stirling) : diverge. En $x = -1/4$ : série alternée, $a_n(1/4)^n \to 0$ de façon décroissante : converge. Intervalle : $\bigl[-\frac{1}{4}, \frac{1}{4}\bigr[$.
+
+\textbf{(b)} $a_n = \dfrac{1}{\sqrt{n}\,2^n}$, $|a_n|^{1/n} = \dfrac{1}{(n^{1/n})^{1/2}\cdot2} \to \dfrac{1}{2}$. Donc $R = 2$.
+
+En $x = 2$ : $\sum \dfrac{1}{\sqrt{n}}$ diverge. En $x = -2$ : $\sum \dfrac{(-1)^n}{\sqrt{n}}$ converge (Leibniz). Intervalle $[-2, 2[$.
+
+\textbf{(c)} $a_n = \dfrac{(-1)^n}{(2n+1)!}$, $|a_n|^{1/n} \to 0$ (factorielle). Donc $R = +\infty$. La série est :
+\[
+\sum_{n=0}^{+\infty}\frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{6} + \frac{x^5}{120} - \cdots = \boxed{\sin(x)}
+\]
+C'est le développement en série entière de $\sin(x)$, convergent sur $\mathbb{R}$ entier.
+\end{boitecorrige}
+
+\subsection*{Exercice 12 - Comparaison série-intégrale \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Énoncer le théorème de comparaison série-intégrale pour une fonction $f$ positive et décroissante.
+  \item Appliquer ce théorème à $f(x) = 1/x^\alpha$ pour retrouver le critère des séries de Riemann.
+  \item Montrer que $H_N = \sum_{n=1}^N \dfrac{1}{n} \sim \ln N$ quand $N\to+\infty$ (comportement asymptotique de la série harmonique).
+  \item En déduire la valeur approchée de $H_{1000}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Si $f : [1,+\infty[ \to (0,+\infty)$ est positive, continue et décroissante, et si $a_n = f(n)$, alors :
+\[
+\int_{n+1}^{+\infty} f(x)\,\d x \leq \sum_{k=n}^{+\infty} a_k \leq f(n) + \int_n^{+\infty} f(x)\,\d x
+\]
+En particulier, $\sum a_n$ converge si et seulement si $\int_1^{+\infty} f(x)\,\d x < +\infty$.
+
+\textbf{2.} Avec $f(x) = 1/x^\alpha$ : $\int_1^{+\infty} x^{-\alpha}\,\d x$ converge $\Leftrightarrow \alpha > 1$. On retrouve le critère des séries de Riemann.
+
+\textbf{3.} Pour $f(x) = 1/x$, les inégalités de comparaison donnent :
+\[
+\ln(N+1) \leq H_N \leq 1 + \ln N
+\]
+(par encadrement entre intégrales). On en déduit $H_N / \ln N \to 1$, soit $H_N \sim \ln N$. Plus précisément, $H_N = \ln N + \gamma + O(1/N)$ où $\gamma \approx 0{,}5772$ est la constante d'Euler-Mascheroni.
+
+\textbf{4.} $H_{1000} \approx \ln(1000) + \gamma = 6{,}908 + 0{,}577 \approx 7{,}485$.
+\end{boitecorrige}
+
+
+\subsection*{Exercice 13 - Convergence par comparaison \niveau{\facile}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Rappeler pourquoi la série de Riemann $\displaystyle\sum_{n=1}^{+\infty}\frac{1}{n^2}$ converge.
+  \item Montrer que la série $\displaystyle\sum_{n=1}^{+\infty}\frac{1}{n^2+n}$ converge par comparaison.
+  \item Calculer la somme exacte de $\sum_{n=1}^{+\infty}\frac{1}{n(n+1)}$
+  par décomposition en éléments simples.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La série de Riemann $\sum 1/n^p$ converge si et seulement si $p > 1$. Pour $p = 2 > 1$, la série $\sum 1/n^2$ converge (vers $\pi^2/6$, identité de Bâle).
+
+\textbf{2.} Pour tout $n \geq 1$, on a $n^2+n > n^2 > 0$, donc :
+\[
+0 < \frac{1}{n^2+n} < \frac{1}{n^2}
+\]
+Comme $\sum 1/n^2$ converge (série à termes positifs), le \textbf{théorème de comparaison} implique que $\sum 1/(n^2+n)$ converge.
+
+\textbf{3.} Décomposition en éléments simples : $\dfrac{1}{n(n+1)} = \dfrac{1}{n} - \dfrac{1}{n+1}$.
+
+La somme partielle est télescopique :
+\[
+S_N = \sum_{n=1}^{N}\left(\frac{1}{n}-\frac{1}{n+1}\right) = 1 - \frac{1}{N+1} \xrightarrow{N\to+\infty} 1
+\]
+\[
+\boxed{\sum_{n=1}^{+\infty}\frac{1}{n(n+1)} = 1}
+\]
+Notons que $n^2+n = n(n+1)$, donc cette somme exacte est bien cohérente avec la convergence montrée en 2.
+\end{boitecorrige}
+
+\subsection*{Exercice 14 - Suite récurrente : convergence vers 2 \niveau{\moyen}}
+
+\begin{boiteexercice}
+On définit la suite $(u_n)$ par $u_0 = 0$ et $u_{n+1} = \sqrt{2+u_n}$ pour tout $n \geq 0$.
+\begin{enumerate}
+  \item Montrer par récurrence que $0 \leq u_n \leq 2$ pour tout $n$.
+  \item Montrer que la suite est croissante.
+  \item En déduire que la suite converge, puis trouver sa limite $\ell$ en passant à la limite dans la relation de récurrence.
+  \item Calculer les cinq premières valeurs $u_0, u_1, u_2, u_3, u_4$ pour illustrer la convergence.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Récurrence ($0 \leq u_n \leq 2$) :}
+
+\textit{Initialisation :} $u_0 = 0 \in [0,2]$.
+
+\textit{Hérédité :} Supposons $0 \leq u_n \leq 2$. Alors $2 \leq 2+u_n \leq 4$, donc $\sqrt{2} \leq u_{n+1} = \sqrt{2+u_n} \leq 2$. En particulier $u_{n+1} \geq 0$ et $u_{n+1} \leq 2$.
+
+\textbf{2. Croissance :} On étudie $u_{n+1} - u_n = \sqrt{2+u_n} - u_n$. Pour $u_n \in [0,2]$, on a $\sqrt{2+u_n} \geq u_n$ (car $2+u_n \geq u_n^2 \Leftrightarrow u_n^2 - u_n - 2 \leq 0 \Leftrightarrow (u_n-2)(u_n+1) \leq 0$, ce qui est vrai pour $u_n \in [0,2]$). Donc la suite est croissante.
+
+\textbf{3. Convergence :} La suite est croissante et majorée par $2$, donc elle converge vers une limite $\ell \in [0,2]$.
+
+En passant à la limite dans $u_{n+1} = \sqrt{2+u_n}$ :
+\[
+\ell = \sqrt{2+\ell} \quad \Rightarrow \quad \ell^2 = 2+\ell \quad \Rightarrow \quad \ell^2 - \ell - 2 = 0 \quad \Rightarrow \quad (\ell-2)(\ell+1) = 0
+\]
+Puisque $\ell \geq 0$, on retient $\boxed{\ell = 2}$.
+
+\textbf{4.} Calcul des premières valeurs :
+\begin{center}
+\begin{tabular}{c|ccccc}
+$n$ & 0 & 1 & 2 & 3 & 4 \\
+\hline
+$u_n$ & $0$ & $\sqrt{2}\approx 1{,}414$ & $\sqrt{3{,}414}\approx 1{,}848$ & $\sqrt{3{,}848}\approx 1{,}962$ & $\sqrt{3{,}962}\approx 1{,}990$
+\end{tabular}
+\end{center}
+La convergence vers $2$ est rapide (régime quadratique).
+\end{boitecorrige}
+
+\subsection*{Exercice 15 - Rayon de convergence d'une série entière \niveau{\moyen}}
+
+\begin{boiteexercice}
+On considère la série entière $\displaystyle\sum_{n=0}^{+\infty} n(x-1)^n$.
+\begin{enumerate}
+  \item Calculer le rayon de convergence $R$ par la formule
+  de d'Alembert :
+  \[ R = \lim_{n\to+\infty}\left|\dfrac{a_n}{a_{n+1}}\right|. \]
+  \item Préciser l'intervalle ouvert de convergence.
+  \item Étudier la convergence aux deux bornes $x = 0$ et $x = 2$.
+  \item Donner l'intervalle de convergence final.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On a $a_n = n$ (coefficient de $(x-1)^n$). Le rapport de d'Alembert :
+\[
+\frac{a_n}{a_{n+1}} = \frac{n}{n+1} \xrightarrow{n\to+\infty} 1
+\]
+Donc le rayon de convergence est $R = 1$.
+
+\textbf{2.} La série converge pour $|x-1| < 1$, c'est-à-dire $-1 < x-1 < 1$, soit $\boxed{0 < x < 2}$.
+
+\textbf{3.} Étude aux bornes :
+
+\textit{En $x = 0$ :} $|x-1| = 1$, terme général $n(0-1)^n = n(-1)^n$. Comme $|n(-1)^n| = n \to +\infty$, le terme général ne tend pas vers $0$ : la série \textbf{diverge grossièrement}.
+
+\textit{En $x = 2$ :} $|x-1| = 1$, terme général $n(2-1)^n = n\cdot 1^n = n \to +\infty$ : la série \textbf{diverge grossièrement}.
+
+\textbf{4.} L'intervalle de convergence est l'intervalle \textbf{ouvert} $]0, 2[$ (les bornes sont exclues).
+\end{boitecorrige}
+
+\subsection*{Exercice 16 - Développement de Taylor de $\sin(x)/x$ \niveau{\moyen}}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Rappeler le développement en série de Taylor de $\sin(x)$ autour de $x = 0$ jusqu'à l'ordre 5 :
+  $\sin(x) = x - \dfrac{x^3}{6} + \dfrac{x^5}{120} - \cdots$
+  \item En déduire le développement de $\sin(x)/x$ pour $x \neq 0$ jusqu'à l'ordre 4.
+  \item Calculer $\displaystyle\lim_{x\to 0}\frac{\sin x}{x}$.
+  \item Calculer $\displaystyle\lim_{x\to 0}\frac{\sin x - x}{x^3}$ à l'aide du développement obtenu.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Le développement de Taylor de $\sin(x)$ en $0$ est :
+\[
+\sin(x) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots = \sum_{k=0}^{+\infty}\frac{(-1)^k x^{2k+1}}{(2k+1)!}
+\]
+soit $\sin(x) = x - \dfrac{x^3}{6} + \dfrac{x^5}{120} - \cdots$, convergent sur $\mathbb{R}$ entier.
+
+\textbf{2.} Pour $x \neq 0$, on divise terme à terme par $x$ :
+\[
+\frac{\sin x}{x} = 1 - \frac{x^2}{6} + \frac{x^4}{120} - \cdots = \sum_{k=0}^{+\infty}\frac{(-1)^k x^{2k}}{(2k+1)!}
+\]
+
+\textbf{3.} En posant $f(x) = \sin(x)/x$ pour $x \neq 0$, le développement montre que $f(x) \to 1$ quand $x \to 0$ :
+\[
+\lim_{x\to 0}\frac{\sin x}{x} = 1
+\]
+
+\textbf{4.}
+\[
+\frac{\sin x - x}{x^3} = \frac{\left(x - \frac{x^3}{6} + O(x^5)\right) - x}{x^3} = \frac{-\frac{x^3}{6} + O(x^5)}{x^3} = -\frac{1}{6} + O(x^2) \xrightarrow{x\to 0} -\frac{1}{6}
+\]
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

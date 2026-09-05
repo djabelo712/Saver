@@ -1,0 +1,1001 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Programmation Fortran - Licence 3}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+% Configuration pour le code Fortran
+\usepackage{listings}
+\lstset{
+  language=[90]Fortran,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape,
+  stringstyle=\ttfamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=8pt,
+  frame=single,
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false
+}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries PROGRAMMATION EN FORTRAN}\\[0.3cm]
+  {\normalsize Licence 3 - Physique}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Structure d'un programme Fortran.}
+\begin{lstlisting}
+program nom_programme
+  implicit none
+  ! declarations
+  ! instructions
+end program nom_programme
+\end{lstlisting}
+La directive \texttt{implicit none} est indispensable : elle oblige la déclaration explicite de toutes les variables.
+
+\textbf{2. Types de base.} \texttt{integer} (entier), \texttt{real} (flottant simple précision), \texttt{double precision} ou \texttt{real(8)} (double précision), \texttt{complex} (complexe), \texttt{logical} (booléen), \texttt{character} (chaîne).
+
+\textbf{3. Structures de contrôle.}
+\begin{itemize}[nosep]
+  \item Conditionnelle : \texttt{if (cond) then ... else if ... else ... end if}
+  \item Boucle \texttt{do} : \texttt{do i=debut, fin, pas ... end do}
+  \item Boucle \texttt{do while} : \texttt{do while (cond) ... end do}
+  \item Sortie de boucle : \texttt{exit} (sortie) et \texttt{cycle} (passage à l'itération suivante)
+\end{itemize}
+
+\textbf{4. Tableaux.} \texttt{real, dimension(n) :: tab} ou \texttt{real :: tab(n)}. Indices de 1 à $n$ par défaut. Allocation dynamique : \texttt{allocatable}, \texttt{allocate}, \texttt{deallocate}.
+
+\textbf{5. Fonctions et sous-programmes.}
+\begin{itemize}[nosep]
+  \item \texttt{function nom(args) result(res)} : retourne une valeur.
+  \item \texttt{subroutine nom(args)} : ne retourne pas de valeur, modifie les arguments.
+  \item Appel d'une sous-routine : \texttt{call nom(args)}.
+\end{itemize}
+
+\textbf{6. Entrées/Sorties.} \texttt{read(*,*) x} (entrée standard), \texttt{write(*,*) x} ou \texttt{print*, x} (affichage).
+
+Pour un fichier : \texttt{open(10, file='data.txt')}, \texttt{read(10,*) x}, \texttt{close(10)}.
+
+\end{boiteresume}
+
+\newpage
+\section{Exercices fondamentaux}
+
+\subsection*{Exercice 1 - Résolution d'un système linéaire 2×2 \niveau{\facile}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran qui résout le système :
+\[
+\begin{cases}u_1 x + v_1 y = w_1 \\ u_2 x + v_2 y = w_2\end{cases}
+\]
+par la méthode de Cramer. Le programme doit vérifier l'existence d'une solution unique et afficher le résultat.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program systeme
+  implicit none
+  real :: u1, u2, v1, v2, w1, w2
+  real :: delta, delta_x, delta_y, x, y
+
+  ! Valeurs des coefficients
+  u1 = 2.0;  u2 = 4.0
+  v1 = 5.0;  v2 = 11.0
+  w1 = 7.0;  w2 = 6.0
+
+  ! Calcul du determinant principal
+  delta = u1*v2 - u2*v1
+
+  if (abs(delta) < 1.0e-6) then
+    print *, "Le systeme n'a pas de solution unique."
+    stop
+  end if
+
+  ! Determinants de Cramer
+  delta_x = w1*v2 - w2*v1
+  delta_y = u1*w2 - u2*w1
+
+  x = delta_x / delta
+  y = delta_y / delta
+
+  print *, "Solution : x =", x, ", y =", y
+end program systeme
+\end{lstlisting}
+
+\textbf{Résultat pour les valeurs données :} $\delta = 22-20=2$, $\delta_x = 77-30=47$... On trouve $x=47/2=23.5$? Vérifions : $u1=2$, $v1=5$, $u2=4$, $v2=11$, donc $\delta=2\times11-4\times5=22-20=2$. $\delta_x=7\times11-6\times5=77-30=47$, donc $x=23.5$. $\delta_y=2\times6-4\times7=12-28=-16$, donc $y=-8$.
+
+La règle de Cramer : pour $Ax=b$, $x_i = \det(A_i)/\det(A)$ où $A_i$ est la matrice $A$ dont la $i$-ème colonne est remplacée par $b$.
+\end{boitecorrige}
+
+\subsection*{Exercice 2 - Racines d'un trinôme du second degré \niveau{\facile}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran qui calcule les racines (réelles) de $ax^2+bx+c=0$. Le programme doit :
+\begin{enumerate}
+  \item Vérifier que $a\neq0$.
+  \item Calculer le discriminant $\Delta = b^2-4ac$.
+  \item Afficher les racines si elles existent, ou un message approprié.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program trinome
+  implicit none
+  real, parameter :: epsilon = 1.0e-6
+  real :: a, b, c, delta, x1, x2
+
+  ! Valeurs des coefficients
+  a = 1.0;  b = -5.0;  c = 6.0  ! x^2 - 5x + 6 = 0
+
+  if (abs(a) < epsilon) stop "a doit etre non nul."
+
+  delta = b*b - 4.0*a*c
+
+  if (delta < -epsilon) then
+    print *, "Pas de racine reelle (discriminant negatif)."
+  else if (abs(delta) <= epsilon) then
+    x1 = -b / (2.0*a)
+    print *, "Racine double : x =", x1
+  else
+    x1 = (-b - sqrt(delta)) / (2.0*a)
+    x2 = (-b + sqrt(delta)) / (2.0*a)
+    print *, "Deux racines : x1 =", x1, ", x2 =", x2
+  end if
+end program trinome
+\end{lstlisting}
+
+Pour $x^2-5x+6=0$ : $\Delta = 25-24=1>0$, racines $x_1=2$ et $x_2=3$.
+\end{boitecorrige}
+
+\subsection*{Exercice 3 - Suite de Fibonacci et nombre d'or \niveau{\moyen}}
+
+\begin{boiteexercice}
+La suite de Fibonacci est définie par $u_0=u_1=1$ et $u_{n+1}=u_n+u_{n-1}$. Le rapport $u_{n+1}/u_n$ converge vers le nombre d'or $\varphi = (1+\sqrt{5})/2$.
+
+Écrire un programme qui calcule les termes de la suite jusqu'à ce que $|u_{n+1}/u_n - u_n/u_{n-1}| < 10^{-5}$, puis affiche la valeur approchée et la valeur exacte du nombre d'or.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program nombre_dor
+  implicit none
+  real, parameter :: epsilon = 1.0e-5
+  real :: u_prec, u_cour, somme
+  real :: v_prec, v_cour, nombre_or
+  integer :: n
+
+  nombre_or = (1.0 + sqrt(5.0)) / 2.0
+
+  u_prec = 1.0;  u_cour = 1.0
+  v_prec = 1.0;  n = 1
+
+  do
+    somme  = u_cour + u_prec
+    v_cour = (u_cour + u_prec) / u_cour
+    u_prec = u_cour
+    u_cour = somme
+    n = n + 1
+    if (abs(v_cour - v_prec) < epsilon) exit
+    v_prec = v_cour
+  end do
+
+  write(*,'(A,F12.8)') "Approximation (n = ", real(n), " ) :", v_cour
+  write(*,'(A,F12.8)') "Valeur exacte              :", nombre_or
+end program nombre_dor
+\end{lstlisting}
+
+La convergence est atteinte après une vingtaine d'itérations. Le nombre d'or $\varphi \approx 1{,}61803399$.
+\end{boitecorrige}
+
+\subsection*{Exercice 4 - Crible d'Ératosthène \niveau{\moyen}}
+
+\begin{boiteexercice}
+Le crible d'Ératosthène détermine tous les nombres premiers jusqu'à $n$ :
+\begin{enumerate}
+  \item Créer un tableau de tous les entiers de 2 à $n$.
+  \item Pour chaque entier $i$ de 2 à $\sqrt{n}$ : si $i$ n'a pas été rayé, déclarer $i$ premier et rayer tous ses multiples.
+  \item Les entiers non rayés sont premiers.
+\end{enumerate}
+Écrire ce programme en Fortran pour $n=1000$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program eratosthene
+  implicit none
+  integer, parameter    :: n = 1000
+  integer, dimension(n) :: tab
+  integer               :: imax, i, j, nb_premiers
+
+  ! Initialisation
+  do i = 2, n
+    tab(i) = i
+  end do
+  tab(1) = 0  ! 1 n'est pas premier
+
+  ! Crible
+  imax = int(sqrt(real(n)))
+  do i = 2, imax
+    if (tab(i) /= 0) then
+      j = i + i
+      do while (j <= n)
+        tab(j) = 0
+        j = j + i
+      end do
+    end if
+  end do
+
+  ! Affichage et comptage
+  nb_premiers = 0
+  do i = 2, n
+    if (tab(i) /= 0) then
+      nb_premiers = nb_premiers + 1
+      write(*,'(I5)', advance='no') tab(i)
+    end if
+  end do
+  print *
+  write(*,'(A,I4,A,I4)') "Premiers 2 a ", n, " : ", nb_premiers
+end program eratosthene
+\end{lstlisting}
+
+Il y a 168 nombres premiers entre 2 et 1000.
+
+La complexité de l'algorithme est $O(n\log\log n)$.
+\end{boitecorrige}
+
+\subsection*{Exercice 5 - Tri à bulles \niveau{\moyen}}
+
+\begin{boiteexercice}
+Écrire un sous-programme Fortran \texttt{tri\_bulles} qui trie un tableau de réels dans l'ordre croissant. L'algorithme compare des éléments consécutifs et les échange si nécessaire, jusqu'à ce qu'aucun échange ne soit effectué en un passage. Tester avec le tableau $[0.76, 0.38, 0.42, 0.91, 0.25, 0.13, 0.52, 0.69, 0.76, 0.98]$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+subroutine tri_bulles(tab, n)
+  implicit none
+  integer, intent(in)    :: n
+  real, intent(inout)    :: tab(n)
+  real                   :: temp
+  logical                :: tri_termine
+  integer                :: i
+
+  do
+    tri_termine = .true.
+    do i = 1, n-1
+      if (tab(i) > tab(i+1)) then
+        temp      = tab(i)
+        tab(i)    = tab(i+1)
+        tab(i+1)  = temp
+        tri_termine = .false.
+      end if
+    end do
+    if (tri_termine) exit
+  end do
+end subroutine tri_bulles
+
+program test_tri
+  implicit none
+  integer, parameter :: n = 10
+  real :: tab(n) = [0.76, 0.38, 0.42, 0.91, 0.25, &
+                    0.13, 0.52, 0.69, 0.76, 0.98]
+  call tri_bulles(tab, n)
+  print *, "Tableau trie :", tab
+end program test_tri
+\end{lstlisting}
+
+Résultat attendu : $[0.13, 0.25, 0.38, 0.42, 0.52, 0.69, 0.76, 0.76, 0.91, 0.98]$.
+
+Complexité en cas défavorable : $O(n^2)$.
+\end{boitecorrige}
+
+\subsection*{Exercice 6 - Intégration numérique \niveau{\difficile}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran qui calcule numériquement $I = \int_0^\pi \sin(x)\,\d x$ en utilisant la méthode des trapèzes, pour un nombre de subdivisions $N$ donné. Comparer avec la valeur exacte $I=2$.
+
+La règle des trapèzes : $I \approx \frac{h}{2}\left[f(a) + 2\sum_{k=1}^{N-1}f(x_k) + f(b)\right]$ avec $h=(b-a)/N$ et $x_k=a+kh$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program integration_trapeze
+  implicit none
+  real, parameter :: pi = 3.14159265358979
+  integer         :: N, k
+  real            :: a, b, h, x, integrale, valeur_exacte
+
+  a = 0.0;  b = pi
+  valeur_exacte = 2.0  ! valeur exacte de l'integrale de sin sur [0,pi]
+
+  print *, "  N       I_approx      Erreur"
+  print *, "-----------"
+
+  do N = 10, 1000, 100
+    h = (b - a) / real(N)
+    ! Termes extremes
+    integrale = 0.5 * (sin(a) + sin(b))
+    ! Termes intermediaires
+    do k = 1, N-1
+      x = a + k * h
+      integrale = integrale + sin(x)
+    end do
+    integrale = integrale * h
+    write(*,'(I5, 2F14.8)') N, integrale, abs(integrale - valeur_exacte)
+  end do
+end program integration_trapeze
+\end{lstlisting}
+
+Pour $N=10$ : erreur $\approx 0.0082$. Pour $N=1000$ : erreur $\approx 8\times10^{-7}$. La méthode des trapèzes est d'ordre 2 : l'erreur est en $O(h^2) = O(1/N^2)$.
+\end{boitecorrige}
+
+
+\newpage
+\section{Exercices avancés de programmation Fortran}
+
+\subsection*{Exercice 7 - Résolution d'un système linéaire 2×2 \niveau{\facile}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran qui résout le système de 2 équations à 2 inconnues par la règle de Cramer :
+\[
+\begin{cases}u_1 x + v_1 y = w_1 \\ u_2 x + v_2 y = w_2\end{cases}
+\]
+Le programme doit gérer le cas où le déterminant est nul.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program systeme_2x2
+  implicit none
+  real :: u1, v1, w1, u2, v2, w2
+  real :: delta, x, y
+
+  u1=2.0; v1=5.0; w1=7.0
+  u2=4.0; v2=11.0; w2=6.0
+
+  delta = u1*v2 - u2*v1
+  if (abs(delta) < 1.0e-6) then
+    print *, "Determinant nul: pas de solution unique."
+    stop
+  end if
+
+  x = (w1*v2 - w2*v1) / delta
+  y = (u1*w2 - u2*w1) / delta
+  print *, "Solution: x =", x, ", y =", y
+end program systeme_2x2
+\end{lstlisting}
+
+Pour $u_1=2$, $v_1=5$, $w_1=7$, $u_2=4$, $v_2=11$, $w_2=6$ : $\Delta = 22-20=2$, $x = (77-30)/2 = 23{,}5$, $y = (12-28)/2 = -8$.
+\end{boitecorrige}
+
+\subsection*{Exercice 8 - Racines d'un trinôme \niveau{\facile}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran pour calculer les racines d'un trinôme du second degré $ax^2 + bx + c$. Le programme doit vérifier que $a \neq 0$ et gérer les trois cas selon le signe du discriminant.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program trinome
+  implicit none
+  real, parameter :: eps = 1.0e-6
+  real :: a, b, c, delta, x1, x2
+
+  a = 3.0; b = 7.0; c = -11.0
+
+  if (abs(a) < eps) stop "a doit etre non nul."
+
+  delta = b*b - 4.0*a*c
+
+  if (delta < -eps) then
+    print *, "Pas de racine reelle."
+  else if (abs(delta) < eps) then
+    x1 = -b / (2.0*a)
+    print *, "Racine double: x =", x1
+  else
+    x1 = (-b - sqrt(delta)) / (2.0*a)
+    x2 = (-b + sqrt(delta)) / (2.0*a)
+    print *, "Deux racines: x1 =", x1, ", x2 =", x2
+  end if
+end program trinome
+\end{lstlisting}
+
+Pour $a=3$, $b=7$, $c=-11$ : $\Delta = 49+132 = 181 > 0$. $x_1 = (-7-\sqrt{181})/6 \approx -3{,}42$, $x_2 \approx 1{,}08$.
+\end{boitecorrige}
+
+\subsection*{Exercice 9 - Suite de Fibonacci et nombre d'or \niveau{\moyen}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran qui calcule le nombre d'or à partir de la suite de Fibonacci définie par $u_0=1$, $u_1=1$, $u_{n+1}=u_n+u_{n-1}$. Le rapport $u_{n+1}/u_n$ converge vers le nombre d'or $\varphi = (1+\sqrt{5})/2$. Arrêter quand la variation relative est inférieure à $10^{-5}$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program nombre_dor
+  implicit none
+  real, parameter :: eps = 1.0e-5
+  real :: u_prec, u_cour, somme
+  real :: rapport_prec, rapport_cour
+  real :: phi_exact
+  integer :: n
+
+  phi_exact = (1.0 + sqrt(5.0)) / 2.0
+  u_prec = 1.0; u_cour = 1.0
+  rapport_prec = 1.0
+  n = 1
+
+  do
+    somme = u_cour + u_prec
+    u_prec = u_cour
+    u_cour = somme
+    rapport_cour = u_cour / u_prec
+    n = n + 1
+    if (abs(rapport_cour - rapport_prec) < eps) exit
+    rapport_prec = rapport_cour
+  end do
+
+  print *, "Iterations :", n
+  print *, "Approx     :", rapport_cour
+  print *, "Exact      :", phi_exact
+  print *, "Err rel    :", abs(rapport_cour - phi_exact)/phi_exact
+end program nombre_dor
+\end{lstlisting}
+
+La convergence est atteinte en environ 25 itérations.
+
+Le nombre d'or est $\varphi \approx 1{,}61803398\ldots$
+\end{boitecorrige}
+
+\subsection*{Exercice 10 - Crible d'Ératosthène \niveau{\moyen}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran qui détermine tous les nombres premiers dans l'intervalle $[2, N]$ à l'aide du crible d'Ératosthène. On rappelle l'algorithme : former un tableau de $2$ à $N$, puis pour chaque entier non rayé, rayer tous ses multiples. La recherche peut s'arrêter à $\sqrt{N}$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program eratosthene
+  implicit none
+  integer, parameter :: N = 200
+  integer :: tab(N), imax, i, j, count
+
+  ! Initialisation
+  do i = 2, N
+    tab(i) = i
+  end do
+  tab(1) = 0  ! 1 n'est pas premier
+
+  ! Crible
+  imax = int(sqrt(real(N)))
+  do i = 2, imax
+    if (tab(i) /= 0) then
+      j = i + i
+      do while (j <= N)
+        tab(j) = 0
+        j = j + i
+      end do
+    end if
+  end do
+
+  ! Affichage
+  count = 0
+  print *, "Nombres premiers entre 2 et", N, ":"
+  do i = 2, N
+    if (tab(i) /= 0) then
+      write(*,'(I5)', advance='no') tab(i)
+      count = count + 1
+    end if
+  end do
+  print *
+  print *, "Nombre total de premiers:", count
+end program eratosthene
+\end{lstlisting}
+
+Il y a 46 nombres premiers entre 2 et 200. Le dernier est 199 (premier).
+\end{boitecorrige}
+
+\subsection*{Exercice 11 - Méthode de Simpson pour l'intégration \niveau{\difficile}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran qui calcule numériquement $I = \int_0^1 \e^{-x^2}\,\d x$ en utilisant la méthode de Simpson :
+\[
+I \approx \frac{h}{3}\left[f(a) + 4f(x_1) + 2f(x_2) + 4f(x_3) + \cdots + f(b)\right]
+\]
+où $h = (b-a)/N$ et $N$ est pair. Comparer avec la valeur de référence $I \approx 0{,}74682$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program simpson
+  implicit none
+  real, parameter :: pi = 3.14159265358979
+  integer :: N, k
+  real    :: a, b, h, x, integrale, ref
+
+  a = 0.0; b = 1.0
+  ref = 0.74682413  ! valeur de reference
+
+  print *, "   N         I_Simpson     Erreur"
+  print *, "-----------------------------------"
+
+  N = 10
+  do while (N <= 10000)
+    if (mod(N, 2) /= 0) N = N + 1  ! N doit etre pair
+    h = (b - a) / real(N)
+
+    ! Termes extremes
+    integrale = exp(-a**2) + exp(-b**2)
+
+    ! Termes impairs (coefficient 4)
+    do k = 1, N-1, 2
+      x = a + k * h
+      integrale = integrale + 4.0 * exp(-x**2)
+    end do
+
+    ! Termes pairs (coefficient 2)
+    do k = 2, N-2, 2
+      x = a + k * h
+      integrale = integrale + 2.0 * exp(-x**2)
+    end do
+
+    integrale = integrale * h / 3.0
+    write(*,'(I6, 2F14.8)') N, integrale, abs(integrale - ref)
+    N = N * 10
+  end do
+end program simpson
+\end{lstlisting}
+
+La méthode de Simpson est d'ordre 4 : l'erreur est en $O(h^4)$. Pour $N=10$, erreur $\approx 10^{-6}$ ; pour $N=100$, erreur $\approx 10^{-10}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 12 - Produit de deux matrices \niveau{\moyen}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran qui effectue le produit de deux matrices $A$ ($n\times m$) et $B$ ($m\times p$). Définir les dimensions à l'aide de paramètres. Tester avec $n=3$, $m=3$, $p=3$, $A = I_3$ (identité) et $B$ quelconque.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program produit_matrices
+  implicit none
+  integer, parameter :: n = 3, m = 3, p = 3
+  real :: A(n,m), B(m,p), C(n,p)
+  integer :: i, j, k
+
+  ! Initialisation de A = identite
+  A = 0.0
+  do i = 1, min(n, m)
+    A(i,i) = 1.0
+  end do
+
+  ! Initialisation de B (quelconque)
+  data ((B(i,j), j=1,p), i=1,m) / &
+       1.0, 2.0, 3.0, &
+       4.0, 5.0, 6.0, &
+       7.0, 8.0, 9.0/
+
+  ! Produit matriciel
+  do i = 1, n
+    do j = 1, p
+      C(i,j) = 0.0
+      do k = 1, m
+        C(i,j) = C(i,j) + A(i,k) * B(k,j)
+      end do
+    end do
+  end do
+
+  ! Affichage
+  print *, "Matrice C = A * B :"
+  do i = 1, n
+    write(*,'(3F8.2)') (C(i,j), j=1,p)
+  end do
+end program produit_matrices
+\end{lstlisting}
+
+Puisque $A = I_3$, le résultat est $C = B$. Vérification : $C_{ij} = \sum_k \delta_{ik} B_{kj} = B_{ij}$.
+\end{boitecorrige}
+
+
+\newpage
+\section{Exercices avancés : Fichiers, matrices, méthodes numériques}
+
+\subsection*{Exercice 13 - Écrire à l'écran \niveau{\moyen}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran qui demande à l'utilisateur le nom d'un fichier texte, ouvre ce fichier, puis l'affiche à l'écran ligne par ligne en faisant précéder chaque ligne de son numéro. Tester avec le fichier source du programme lui-même.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program ligne_fichier
+  implicit none
+  integer :: i, err
+  character(len=30) :: fich, ncar
+  character(len=250) :: ligne
+  character(len=60)  :: chaine
+
+  print*, 'Donner le nom du fichier : '
+  read*, fich
+
+  open(unit=10, file=fich)
+  err = 0
+  i   = 1
+
+  do while (err == 0)
+    read(10, fmt='(1a250)', iostat=err) ligne
+    if (err /= 0) exit
+    ! Nombre de caracteres utiles (sans blancs debut/fin)
+    write(ncar, '(I3)') len(trim(adjustl(ligne)))
+    ! Construction du format de sortie
+    chaine = '(1I3, 1a, 1a' // trim(adjustl(ncar)) // ')'
+    write(*, fmt=chaine) i, ' ', trim(adjustl(ligne))
+    i = i + 1
+  end do
+
+  close(10)
+end program ligne_fichier
+\end{lstlisting}
+
+Le programme utilise \texttt{iostat=err} pour détecter la fin de fichier (code $\neq 0$) sans provoquer d'erreur. Le format de sortie est construit dynamiquement à partir de la longueur effective de chaque ligne.
+\end{boitecorrige}
+
+\subsection*{Exercice 14 - Produit tensoriel \niveau{\difficile}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran utilisant une fonction interne \texttt{rptens} qui renvoie le produit tensoriel de deux vecteurs réels de même taille $n$ donnés en entrée. La taille des vecteurs n'est pas un argument de la fonction. Tester avec $\vec{u}=(1,2,3)$ et $\vec{v}=(2,1,3)$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Le produit tensoriel de deux vecteurs $\vec{u}$ et $\vec{v}$ est la matrice $W_{ij} = u_i\,v_j$.
+\begin{lstlisting}
+program prog_rptens
+  implicit none
+  integer, parameter :: n = 3
+  integer :: i
+  real, dimension(n)    :: u, v
+  real, dimension(n, n) :: w
+  character(len=30) :: cn, chaine
+
+  u = (/1., 2., 3./);  v = (/2., 1., 3./)
+
+  ! --- appel fonction
+  w = rptens(u, v)
+
+  ! --- affichage
+  write(cn, *) n
+  chaine = '(' // trim(adjustl(cn)) // 'F10.5)'
+  do i = 1, n
+    write(*, fmt=chaine) w(i, :)
+  end do
+
+contains
+
+  function rptens(u, v) result(w)
+    implicit none
+    real, dimension(:), intent(in) :: u, v
+    real, dimension(size(u), size(v)) :: w
+    integer :: i, j
+    do i = 1, size(u)
+      do j = 1, size(v)
+        w(i, j) = u(i) * v(j)
+      end do
+    end do
+  end function rptens
+
+end program prog_rptens
+\end{lstlisting}
+
+Pour $\vec{u}=(1,2,3)$ et $\vec{v}=(2,1,3)$, le résultat est :
+\[
+W = \vec{u}\otimes\vec{v} =
+\begin{pmatrix}2 & 1 & 3\\4 & 2 & 6\\6 & 3 & 9\end{pmatrix}.
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 15 - Produit de matrices (avancé) \niveau{\difficile}}
+
+\begin{boiteexercice}
+Écrire un programme Fortran qui effectue le produit de deux matrices entières $A$ ($m_a \times n_a$) et $B$ ($m_b \times n_b$) via :
+\begin{enumerate}
+  \item Une sous-routine interne \texttt{matrix\_mult} dont les arguments d'entrée sont $A$, $B$ et leurs dimensions, et dont l'argument de sortie est $C$.
+  \item Une sous-routine interne \texttt{matrix\_mult\_bis} qui fait la même chose sans passer les dimensions en argument (tableaux allocatables).
+\end{enumerate}
+Tester avec $m_a=2, n_a=3, m_b=3, n_b=2$.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\begin{lstlisting}
+program prog_mult
+  implicit none
+  integer, parameter :: ma=2, na=3, mb=3, nb=2
+  integer :: i
+  integer, dimension(ma, na) :: A
+  integer, dimension(mb, nb) :: B
+  integer, dimension(ma, nb) :: C
+
+  A = reshape((/1, 6, 4, 5, 2, 8/), (/2, 3/))
+  B = reshape((/6, 4, 2, 8, 4, 9/), (/3, 2/))
+
+  ! --- appel subroutine avec dimensions en arguments
+  call matrix_mult(A, B, C, ma, na, mb, nb)
+  print*, 'calcul avec matrix_mult :'
+  do i = 1, ma
+    print*, C(i, :)
+  end do
+
+  ! --- appel subroutine sans dimensions en arguments
+  call matrix_mult_bis(A, B, C)
+  print*, 'calcul avec matrix_mult_bis :'
+  do i = 1, ma
+    print*, C(i, :)
+  end do
+
+contains
+
+  subroutine matrix_mult(A, B, C, ma, na, mb, nb)
+    implicit none
+    integer, intent(in)  :: ma, na, mb, nb
+    integer, dimension(ma, na), intent(in)  :: A
+    integer, dimension(mb, nb), intent(in)  :: B
+    integer, dimension(ma, nb), intent(out) :: C
+    integer :: i, j, k, coeff
+    do i = 1, ma
+      do j = 1, nb
+        coeff = 0
+        do k = 1, na
+          coeff = coeff + A(i, k) * B(k, j)
+        end do
+        C(i, j) = coeff
+      end do
+    end do
+  end subroutine matrix_mult
+
+  subroutine matrix_mult_bis(A, B, C)
+    implicit none
+    integer, dimension(:, :), intent(in)  :: A
+    integer, dimension(:, :), intent(in)  :: B
+    integer, dimension(:, :), intent(out) :: C
+    integer :: i, j, k, coeff
+    do i = 1, size(A, 1)
+      do j = 1, size(B, 2)
+        coeff = 0
+        do k = 1, size(A, 2)
+          coeff = coeff + A(i, k) * B(k, j)
+        end do
+        C(i, j) = coeff
+      end do
+    end do
+  end subroutine matrix_mult_bis
+
+end program prog_mult
+\end{lstlisting}
+
+Les deux sous-routines donnent le même résultat. La version \texttt{bis} est plus générale car elle utilise \texttt{size()} pour récupérer les dimensions.
+\end{boitecorrige}
+
+\subsection*{Exercice 16 - Résolution par dichotomie et Newton \niveau{\difficile}}
+
+\begin{boiteexercice}
+Soit la fonction $f(x) = x^3 - 4x - 2$ définie sur $\mathbb{R}$.
+\begin{enumerate}
+  \item Montrer que $f$ admet trois racines réelles $x_1, x_2, x_3$ dans les intervalles $[-2,-1]$, $[-1,0]$ et $[2,3]$.
+  \item Rechercher par dichotomie la solution de $f(x) = 0$ dans l'intervalle $[2, 3]$. Effectuer 3 itérations en indiquant la précision à chaque étape.
+  \item Reprendre la deuxième question en utilisant la méthode de Newton avec $x_0 = 4$ : $x_{i+1} = x_i - f(x_i)/f'(x_i)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Vérification des racines.} On calcule les valeurs de $f$ aux bornes :
+\begin{itemize}
+  \item Sur $[-2,-1]$ : $f(-2) = -8+8-2 = -2 < 0$ et $f(-1) = -1+4-2 = 1 > 0$. Signe opposé $\Rightarrow$ racine.
+  \item Sur $[-1,0]$ : $f(-1) = 1 > 0$ et $f(0) = -2 < 0$. Signe opposé $\Rightarrow$ racine.
+  \item Sur $[2,3]$ : $f(2) = 8-8-2 = -2 < 0$ et $f(3) = 27-12-2 = 13 > 0$. Signe opposé $\Rightarrow$ racine.
+\end{itemize}
+
+\textbf{2. Méthode de dichotomie} sur $[a_0, b_0] = [2, 3]$ :
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$i$ & $a_i$ & $b_i$ & $x_i$ & $f(x_i)$ & $e_i = (b_i-a_i)/2$ \\
+\hline
+0 & 2 & 3 & 2.5 & 3.625 & 0.5 \\
+1 & 2 & 2.5 & 2.25 & 0.3906 & 0.25 \\
+2 & 2 & 2.25 & 2.125 & $-0.9043$ & 0.125 \\
+3 & 2.125 & 2.25 & 2.188 & $-0.2825$ & 0.0625 \\
+\hline
+\end{tabular}
+\end{center}
+Après 3 itérations, $x^* \approx 2.188$.
+
+\textbf{3. Méthode de Newton} avec $f'(x) = 3x^2-4$ et $x_0 = 4$ :
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$i$ & $x_i$ & $x_{i+1}$ & $|x_{i+1}-x_i|$ \\
+\hline
+0 & 4 & 2.95455 & 1.04545 \\
+1 & 2.95455 & 2.41493 & 0.53962 \\
+2 & 2.41493 & 2.23533 & 0.1796 \\
+3 & 2.23533 & 2.21459 & 0.02074 \\
+\hline
+\end{tabular}
+\end{center}
+La solution est $x^* \approx 2.21459$. Newton converge plus rapidement que la dichotomie.
+\end{boitecorrige}
+
+\subsection*{Exercice 17 - Mouvement d'un objet en chute libre \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un objet est lâché depuis une hauteur $h_0$ à partir du repos ($v_0 = 0$) sous l'influence de la gravité. On néglige la résistance de l'air. L'équation du mouvement est :
+\[
+h(t) = h_0 - \frac{1}{2}g\,t^2
+\]
+où $h_0$ est la hauteur initiale (en m), $g = \qty{9.81}{m.s^{-2}}$ et $h(t)$ la hauteur à l'instant $t$.
+
+On veut déterminer le temps $t$ nécessaire pour que l'objet atteigne le sol ($h(t) = 0$).
+\begin{enumerate}
+  \item Vérifier s'il existe une racine de $f(t) = h(t) = 0$ dans l'intervalle $[0, 10]$ secondes.
+  \item Combien d'itérations de dichotomie sont nécessaires pour une précision de $10^{-3}$ ?
+  \item Appliquer la méthode de dichotomie pour $h_0 = 100\;\text{m}$ et $g = 9{,}81\;\text{m.s}^{-2}$ avec une tolérance de $0{,}05$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On pose $f(t) = h_0 - \tfrac{1}{2}g\,t^2$. Pour $h_0 = 100\;\text{m}$ :
+\[
+f(0) = 100 > 0, \qquad f(10) = 100 - \tfrac{1}{2}\times9{,}81\times100 = -390{,}5 < 0.
+\]
+$f$ change de signe sur $[0,10]$ $\Rightarrow$ il existe bien une racine.
+
+\textbf{2.} Le nombre d'itérations pour une précision $\varepsilon = 10^{-3}$ :
+\[
+n = \frac{\log(b-a) - \log(\varepsilon)}{\log 2} = \frac{\log(10) + 3}{\log 2} \approx \frac{4}{0{,}301} \approx 13{,}3.
+\]
+Il faut donc environ \textbf{14 itérations}.
+
+\textbf{3.} Application de la dichotomie ($h_0=100$, tolérance $0{,}05$) :
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$i$ & $a_i$ & $x_i$ & $b_i$ & $f(x_i)$ & $e_i$ \\
+\hline
+1 & 0.0000 & 5.0000 & 10.000 & $-22.625$ & 5.0000 \\
+2 & 0.0000 & 2.5000 & 5.0000 & 69.3437 & 2.5000 \\
+3 & 2.5000 & 3.7500 & 5.0000 & 31.0234 & 1.2500 \\
+4 & 3.7500 & 4.3750 & 5.0000 & 6.1152 & 0.6250 \\
+5 & 4.3750 & 4.6875 & 5.0000 & $-7.7759$ & 0.3125 \\
+6 & 4.3750 & 4.5313 & 4.6875 & $-0.7106$ & 0.1562 \\
+7 & 4.3750 & 4.4531 & 4.5312 & 2.7323 & 0.0781 \\
+8 & 4.4531 & 4.4922 & 4.5312 & 1.0183 & 0.0391 \\
+\hline
+\end{tabular}
+\end{center}
+Le temps de chute est $t \approx 4{,}4922\;\text{s}$. La valeur exacte est $t = \sqrt{2h_0/g} = \sqrt{200/9{,}81} \approx 4{,}515\;\text{s}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 18 - Résolution d'une équation non-linéaire \niveau{\difficile}}
+
+\begin{boiteexercice}
+On se propose de résoudre numériquement l'équation $f(x) = 0$ par la méthode de la bissection (dichotomie) et par la méthode de Newton-Raphson.
+\begin{enumerate}
+  \item Écrire un programme Fortran qui résout l'équation par la méthode de la dichotomie.
+  \item Écrire un programme Fortran qui résout l'équation par la méthode de Newton.
+  \item Tester les deux programmes pour l'équation $x - \cos(x) = 0$ sur l'intervalle $[0{,}5\;;\;1{,}5]$ avec une précision $\varepsilon = 10^{-4}$.
+  \item Comparer les résultats des deux méthodes.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Programme Fortran pour la dichotomie :}
+\begin{lstlisting}
+program dichotomie
+  implicit none
+  real :: a, b, eps, x, fa, fx
+  integer :: niter
+
+  print*, 'Donner les deux bornes a et b :'
+  read*, a, b
+  print*, 'Donner la precision eps :'
+  read*, eps
+
+  fa = fct(a)
+  niter = 0
+
+  do while (abs(b - a) > eps)
+    x = (a + b) / 2.0
+    fx = fct(x)
+    if (fa * fx < 0.0) then
+      b = x
+    else
+      a  = x
+      fa = fx
+    end if
+    niter = niter + 1
+  end do
+
+  print*, 'La solution est x =', x
+  print*, 'Nombre d''iterations :', niter
+
+contains
+
+  function fct(x)
+    implicit none
+    real :: fct, x
+    fct = x - cos(x)
+  end function fct
+
+end program dichotomie
+\end{lstlisting}
+
+\textbf{2. Programme Fortran pour Newton-Raphson :}
+\begin{lstlisting}
+program Newton
+  implicit none
+  real :: x, x0, eps, fx, fpx
+  integer :: niter
+
+  print*, 'Donner la valeur initiale x0 :'
+  read*, x0
+  print*, 'Donner la precision eps :'
+  read*, eps
+
+  x = x0
+  niter = 0
+
+  do while (abs(fct(x)) > eps)
+    fx  = fct(x)
+    fpx = fctp(x)
+    if (fpx == 0.0) then
+      print*, 'Derivee nulle, arret.'
+      stop
+    end if
+    x = x - fx / fpx
+    niter = niter + 1
+  end do
+
+  print*, 'La solution est x =', x
+  print*, 'Nombre d''iterations :', niter
+
+contains
+
+  function fct(x)
+    implicit none
+    real :: fct, x
+    fct = x - cos(x)
+  end function fct
+
+  function fctp(x)
+    implicit none
+    real :: fctp, x
+    fctp = 1.0 + sin(x)
+  end function fctp
+
+end program Newton
+\end{lstlisting}
+
+\textbf{3 \& 4. Comparaison.} Sur $[0{,}5\,;\,1{,}5]$ avec $\varepsilon = 10^{-4}$ :
+
+La dichotomie requiert environ $n = \lceil\log_2((1{,}5-0{,}5)/10^{-4})\rceil = 14$ itérations.
+Newton, avec $x_0 = 1$, converge en \textbf{3--4 itérations} vers la solution $x^* \approx 0{,}7391$, qui vérifie $\cos(0{,}7391) \approx 0{,}7391$.
+
+Newton est nettement plus rapide (convergence quadratique) mais nécessite de connaître la dérivée $f'(x) = 1 + \sin(x)$.
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

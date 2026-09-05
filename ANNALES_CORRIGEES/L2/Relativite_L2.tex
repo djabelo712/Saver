@@ -1,0 +1,661 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Relativité restreinte - Licence 2}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries RELATIVITÉ RESTREINTE}\\[0.3cm]
+  {\normalsize Licence 2 - Mathématiques, Physique et Chimie}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Postulats d'Einstein.}
+\begin{itemize}[nosep]
+  \item Les lois de la physique sont identiques dans tous les référentiels galiléens.
+  \item La vitesse de la lumière dans le vide est $c \approx \qty{3e8}{m.s^{-1}}$, indépendante du mouvement de la source et de l'observateur.
+\end{itemize}
+
+\textbf{2. Transformations de Lorentz.} Pour deux référentiels $\mathcal{R}$ et $\mathcal{R}'$ (mouvement de $\mathcal{R}'$ par rapport à $\mathcal{R}$ à la vitesse $v$ selon $x$), avec $\gamma = 1/\sqrt{1-\beta^2}$ et $\beta = v/c$ :
+\[
+x' = \gamma(x-vt), \quad t' = \gamma\!\left(t-\frac{vx}{c^2}\right), \quad y'=y, \quad z'=z
+\]
+
+\textbf{3. Dilatation du temps.} Un intervalle de temps propre $\Delta\tau$ (mesuré dans le référentiel au repos par rapport à l'événement) est vu dilaté dans tout autre référentiel : $\Delta t = \gamma\Delta\tau > \Delta\tau$.
+
+\textbf{4. Contraction des longueurs.} Une longueur propre $L_0$ (mesurée dans le référentiel au repos par rapport à l'objet) est vue contractée : $L = L_0/\gamma < L_0$.
+
+\textbf{5. Composition des vitesses.}
+\[
+V_x = \frac{v_x' + v}{1 + vv_x'/c^2}
+\]
+
+\textbf{6. Énergie et quantité de mouvement relativistes.}
+\[
+E = \gamma mc^2, \quad p = \gamma mv, \quad E^2 = (pc)^2 + (mc^2)^2
+\]
+Énergie au repos : $E_0 = mc^2$. Énergie cinétique : $T = (\gamma-1)mc^2$.
+
+\end{boiteresume}
+
+\newpage
+\section{Cinématique relativiste}
+
+\subsection*{Exercice 1 - Dilatation du temps : muons cosmiques \niveau{\facile}}
+
+\begin{boiteexercice}
+Des muons cosmiques sont produits à $h = \qty{15}{km}$ d'altitude avec une durée de vie propre $\tau_0 = \qty{2.2}{\mu s}$. Ils se déplacent vers la Terre à $v = 0{,}995c$.
+\begin{enumerate}
+  \item Calculer $\gamma$ pour ces muons.
+  \item Quelle est leur durée de vie mesurée dans le référentiel de la Terre ?
+  \item Quelle distance parcourent-ils avant de se désintégrer (selon le référentiel terrestre) ? Est-ce cohérent avec leur détection au sol ?
+  \item Expliquer le même phénomène du point de vue du référentiel des muons.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $\beta = 0{,}995$, donc $\gamma = 1/\sqrt{1-0{,}995^2} = 1/\sqrt{1-0{,}990025} = 1/\sqrt{0{,}009975} \approx 10{,}01$.
+
+\textbf{2.} La durée de vie mesurée dans le référentiel de la Terre (temps dilaté) :
+\[
+\Delta t = \gamma\,\tau_0 = 10{,}01\times2{,}2\times10^{-6} \approx \qty{22}{\mu s}
+\]
+
+\textbf{3.} Distance parcourue (référentiel terrestre) :
+\[
+d = v\cdot\Delta t = 0{,}995\times3\times10^8\times22\times10^{-6} \approx \qty{6570}{m} = \qty{6.57}{km}
+\]
+Sans relativité, $d = v\cdot\tau_0 \approx \qty{657}{m}$, bien inférieur aux \qty{15}{km}.
+Avec la dilatation du temps, le muon parcourt \qty{6.57}{km}, ce qui est encore insuffisant.
+En réalité, $v = 0{,}9997c$ pour certains muons, donnant $\gamma \approx 40$ et
+$d \approx \qty{26}{km}$, rendant leur détection cohérente.
+
+\textbf{4.} Dans le référentiel des muons, ils vivent le temps propre $\tau_0 = \qty{2.2}{\mu s}$,
+mais la distance Terre-point de production est contractée : $h' = h/\gamma \approx \qty{1.5}{km}$,
+parcourable en $h'/(0{,}995c) \approx \qty{5}{\mu s} > \tau_0$.
+\end{boitecorrige}
+
+\subsection*{Exercice 2 - Composition des vitesses \niveau{\moyen}}
+
+\begin{boiteexercice}
+Une fusée $\mathcal{R}'$ se déplace à la vitesse $v = 0{,}8c$ par rapport à la Terre $\mathcal{R}$. Elle tire un projectile vers l'avant à $v' = 0{,}7c$ par rapport à elle.
+\begin{enumerate}
+  \item Quelle est la vitesse $V$ du projectile dans le référentiel terrestre (relativiste) ?
+  \item Comparer avec la réponse newtonienne.
+  \item Refaire le calcul si le projectile est un photon ($v' = c$). Commenter.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Loi de composition relativiste des vitesses :
+\[
+V = \frac{v' + v}{1 + vv'/c^2} = \frac{0{,}7c + 0{,}8c}{1 + 0{,}7\times0{,}8} = \frac{1{,}5c}{1{,}56} \approx 0{,}962c
+\]
+
+\textbf{2.} Newtonian : $V_{Newton} = v' + v = 1{,}5c > c$. Impossible physiquement. La loi de composition relativiste garantit que $V < c$.
+
+\textbf{3.} Pour $v' = c$ :
+\[
+V = \frac{c + v}{1 + v/c} = \frac{c + v}{(c+v)/c} = c
+\]
+La vitesse de la lumière est invariante dans tous les référentiels galiléens, conformément aux postulats.
+\end{boitecorrige}
+
+\subsection*{Exercice 3 - Transformations de Lorentz \niveau{\moyen}}
+
+\begin{boiteexercice}
+Deux événements $A$ et $B$ ont les coordonnées suivantes dans $\mathcal{R}$ : $A = (0,0,0,0)$ et $B = (x_B, 0, 0, t_B)$ avec $x_B = \qty{600}{m}$ et $t_B = \qty{3}{\mu s}$.
+\begin{enumerate}
+  \item Calculer l'intervalle spatio-temporel $\Delta s^2 = c^2\Delta t^2 - \Delta x^2$.
+  \item Ces événements sont-ils de genre temps, espace ou lumière ?
+  \item Un référentiel $\mathcal{R}'$ se déplace à $v = x_B/(ct_B)\cdot c$ par rapport à $\mathcal{R}$. Quelle est la durée propre entre les deux événements ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $\Delta x = x_B = \qty{600}{m}$, $c\Delta t = 3\times10^{-6}\times3\times10^8 = \qty{900}{m}$.
+\[
+\Delta s^2 = (900)^2 - (600)^2 = 810000 - 360000 = 450000\,\text{m}^2 > 0
+\]
+
+\textbf{2.} $\Delta s^2 > 0$ : les événements sont de \textbf{genre temps} (il existe un référentiel où ils se produisent au même endroit).
+
+\textbf{3.} Le référentiel approprié se déplace à $v = x_B/t_B = 600/(3\times10^{-6}) = \qty{2e8}{m.s^{-1}} = 2c/3$. Dans ce référentiel, les deux événements se produisent au même lieu, et le temps mesuré est le temps propre :
+\[
+\Delta\tau = \frac{\Delta s}{c} = \frac{\sqrt{450000}}{3\times10^8} \approx \frac{670}{3\times10^8} \approx \qty{2.24}{\mu s}
+\]
+Vérification : $\Delta\tau = \Delta t/\gamma$, avec $\gamma = 1/\sqrt{1-(2/3)^2} = 1/\sqrt{5/9} = 3/\sqrt{5}\approx1{,}342$. $\Delta\tau = 3/1{,}342 \approx \qty{2.24}{\mu s}$.
+\end{boitecorrige}
+
+\subsection*{Exercice 4 - Dynamique relativiste \niveau{\difficile}}
+
+\begin{boiteexercice}
+Un électron ($m_e = \qty{9.11e-31}{kg}$, $m_ec^2 = \qty{0.511}{MeV}$) est accéléré par une différence de potentiel $U = \qty{1}{MV}$.
+\begin{enumerate}
+  \item Calculer l'énergie cinétique acquise.
+  \item Calculer $\gamma$ et $\beta = v/c$.
+  \item Comparer la vitesse relativiste avec la vitesse classique.
+  \item Calculer la quantité de mouvement relativiste $p$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} L'énergie cinétique acquise est $T = eU = \qty{1}{MeV}$ (l'électron de charge $e$ est accéléré par \qty{1}{MV}).
+
+\textbf{2.} $T = (\gamma - 1)m_ec^2$, donc $\gamma - 1 = T/(m_ec^2) = 1/0{,}511 \approx 1{,}957$, d'où $\gamma \approx 2{,}957$.
+\[
+\beta = \sqrt{1-1/\gamma^2} = \sqrt{1-1/(2{,}957)^2} = \sqrt{1-0{,}1143} \approx \sqrt{0{,}8857} \approx 0{,}941
+\]
+L'électron se déplace à $v \approx 0{,}941c$.
+
+\textbf{3.} Classiquement : $T = \frac{1}{2}m_ev_{cl}^2$, d'où :
+\[
+v_{cl} = \sqrt{\frac{2T}{m_e}}
+     = \sqrt{\frac{2\times1{,}6\times10^{-13}}{9{,}11\times10^{-31}}}
+\]
+\[
+\approx 1{,}87\times10^{10}\,\text{m.s}^{-1} \approx 62c.
+\]
+Vitesse absurde : il faut impérativement le traitement relativiste.
+
+\textbf{4.} $p = \gamma m_e v = \gamma m_ec\cdot\beta$. Avec $\gamma = 2{,}957$, $m_ec = 0{,}511$ MeV/$c$ et $\beta = 0{,}941$ :
+\[
+p \approx 2{,}957\times 0{,}511\times 0{,}941 \approx \qty{1.42}{MeV.c^{-1}}.
+\]
+\end{boitecorrige}
+
+\section{Dynamique relativiste}
+
+\subsection*{Exercice 5 - Voyage stellaire \niveau{\moyen}}
+
+\begin{boiteexercice}
+Vous souhaitez atteindre une étoile à $N$ années-lumière de la Terre. À quelle vitesse devez-vous voyager pour que la durée du voyage mesurée dans votre référentiel propre soit exactement $N$ années ?
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Soit $d = Nc$ (en années) la distance propre Terre-étoile. La durée propre du voyage est $\tau = N$ ans. La durée mesurée depuis la Terre est $T = d/v$. Par la dilatation du temps $T = \gamma\tau$, soit $d/v = \tau/\sqrt{1-v^2/c^2}$.
+
+En développant :
+\begin{align*}
+v &= \frac{d\sqrt{1-v^2/c^2}}{\tau} \quad\Rightarrow\quad v^2 = \frac{d^2(1-v^2/c^2)}{\tau^2} \\
+&\Rightarrow\quad v^2\!\left(1+\frac{d^2}{c^2\tau^2}\right) = \frac{d^2}{\tau^2}
+\end{align*}
+Avec $d/\tau = Nc/(N\,\text{ans}) = c$ (car $N$ a.l. $= Nc\cdot1\,\text{an}$ et $\tau = N$ ans) :
+\[
+v^2(1+1) = c^2 \quad\Rightarrow\quad \boxed{v = \frac{c}{\sqrt{2}} \approx 0{,}707c}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 6 - Collision inélastique relativiste \niveau{\moyen}}
+
+\begin{boiteexercice}
+Une particule de masse $m_0$ et de vitesse $v = 4c/5$ subit une collision inélastique avec une particule identique au repos.
+\begin{enumerate}
+  \item En conservant la quantité de mouvement relativiste et l'énergie totale, trouver la vitesse $v_f$ de la particule résultante.
+  \item Quelle est la masse $M$ de la particule créée ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Avec $\beta = 4/5$, $\gamma = 1/\sqrt{1-16/25} = 1/\sqrt{9/25} = 5/3$.
+
+Conservation de la quantité de mouvement :
+\[
+p_i = \gamma m_0 v + 0 = \frac{5}{3}m_0\cdot\frac{4c}{5} = \frac{4m_0c}{3} = Mv_f\gamma_f
+\]
+Conservation de l'énergie :
+\[
+E_i = \gamma m_0c^2 + m_0c^2 = \frac{5}{3}m_0c^2 + m_0c^2 = \frac{8}{3}m_0c^2 = M\gamma_f c^2
+\]
+En divisant : $v_f = p_i c^2/E_i = (4m_0c/3)c^2/(8m_0c^2/3) = c/2$.
+\[
+\boxed{v_f = \frac{c}{2}}
+\]
+
+\textbf{2.} $\gamma_f = 1/\sqrt{1-1/4} = 2/\sqrt{3}$. La masse est :
+\[
+M = \frac{E_i}{\gamma_f c^2} = \frac{8m_0/3}{2/\sqrt{3}} = \frac{8m_0\sqrt{3}}{6} = \frac{4m_0}{\sqrt{3}} \approx 2{,}31\,m_0
+\]
+La masse augmente : une partie de l'énergie cinétique est convertie en énergie de masse.
+\end{boitecorrige}
+
+\subsection*{Exercice 7 - Voyage vers une étoile lointaine \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un vaisseau spatial doit atteindre une étoile à $d = \qty{50}{a.l.}$ du Soleil.
+\begin{enumerate}
+  \item La distance $d$ est-elle propre ou impropre ?
+  \item Quelle vitesse $v$ doit avoir le vaisseau pour que la durée du voyage dans le référentiel du pilote soit $\Delta t' = \qty{10}{ans}$ ?
+  \item Une fois arrivé, le pilote envoie un signal lumineux. Combien de temps après le départ ce signal sera-t-il reçu sur Terre ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La distance $d = \qty{50}{a.l.}$ est mesurée dans le référentiel terrestre : c'est une \textbf{distance propre} (mesurée dans le référentiel où les deux points sont au repos).
+
+\textbf{2.} La distance vue par le pilote est contractée : $d' = d/\gamma$. La durée propre du pilote est $\Delta t' = d'/v = d/(v\gamma)$. En développant :
+\begin{align*}
+v &= \frac{d}{\Delta t'\gamma} \quad\Rightarrow\quad v = \frac{d\sqrt{1-v^2/c^2}}{\Delta t'} \\
+  &\Rightarrow\quad v^2 = \frac{d^2/\Delta t'^2}{1+d^2/(c^2\Delta t'^2)}
+\end{align*}
+\[
+v = \frac{c}{\sqrt{1+(c\,\Delta t'/d)^2}} = \frac{c}{\sqrt{1+(10/50)^2}} = \frac{c}{\sqrt{1+0{,}04}} \approx \boxed{0{,}9806\,c}
+\]
+
+\textbf{3.} Le temps terrestre du voyage est $T = d/v = 50/(0{,}9806) \approx \qty{51}{ans}$. Le signal lumineux met ensuite $\qty{50}{ans}$ pour revenir. Le signal arrive donc $51 + 50 = \boxed{\qty{101}{ans}}$ après le départ.
+\end{boitecorrige}
+
+\subsection*{Exercice 8 - Paradoxe des jumeaux \niveau{\difficile}}
+
+\begin{boiteexercice}
+Le jour de leur 21\textsuperscript{ème} anniversaire, le jumeau Jekyll quitte son jumeau Hyde (resté sur Terre) à bord d'une fusée de vitesse $V = 0{,}96c$. Jekyll voyage 7 ans (de son temps) vers Sirius, puis fait demi-tour et revient en 7 autres années.
+
+\textbf{A.}
+\begin{enumerate}
+  \item Dans quel cas les conclusions des jumeaux sont-elles réciproques ?
+  \item Pourquoi la situation n'est pas symétrique ici ?
+\end{enumerate}
+\textbf{B.} On modélise le voyage avec deux fusées distinctes (aller et retour). Soit $T$ la durée totale mesurée par Hyde.
+\begin{enumerate}
+  \item Exprimer la durée du voyage aller mesurée par le pilote de la première fusée.
+  \item Jekyll calcule sa durée de voyage en interrogeant les pilotes. Quelle durée totale obtient-il ?
+  \item Quel est l'âge de chacun à la réunion ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{A.1.} Les conclusions sont réciproques uniquement si le mouvement relatif est \textbf{rectiligne et uniforme} à tout moment (référentiels inertiels).
+
+\textbf{A.2.} Jekyll subit des accélérations (décélération, demi-tour) : il est lié à deux référentiels inertiels différents, tandis que Hyde reste dans un seul référentiel galiléen (la Terre). La situation est asymétrique.
+
+\textbf{B.1.} Hyde mesure $T/2$ pour le voyage aller. Par dilatation du temps, le pilote (référentiel propre) mesure :
+\[
+T_{\rm aller} = \frac{T}{2}\sqrt{1-\beta^2}
+\]
+
+\textbf{B.2.} Jekyll obtient du premier pilote : $T_{\rm aller} = \frac{T}{2}\sqrt{1-\beta^2}$, et du second pilote : $T_{\rm retour} = \frac{T}{2}\sqrt{1-\beta^2}$.
+\[
+T_{\rm Jekyll} = T\sqrt{1-\beta^2}
+\]
+Avec $T_{\rm aller} = T_{\rm retour} = 7\,\text{ans}$ (données) : $T_{\rm Jekyll} = \qty{14}{ans}$.
+
+La durée Hyde est $T = T_{\rm Jekyll}/\sqrt{1-0{,}96^2} = 14/\sqrt{1-0{,}9216} = 14/0{,}28 = \qty{50}{ans}$.
+
+\textbf{B.3.}
+\[
+\text{Jekyll : } 21 + 14 = \boxed{35\,\text{ans}}
+\]
+\[
+\text{Hyde : } 21 + 50 = \boxed{71\,\text{ans}}
+\]
+Jekyll est beaucoup plus jeune que son jumeau à la réunion.
+\end{boitecorrige}
+
+\section{Examens corrigés}
+
+\subsection*{Exercice 9 - Événements et intervalle de Minkowski \niveau{\moyen}}
+
+\begin{boiteexercice}
+Deux événements ont pour coordonnées dans $\mathcal{R}$ (en unités où $c=1$) :
+\[
+\mathcal{E}_1 = (ct_1, x_1, y_1, z_1) = (2, 4, 3, 1), \qquad \mathcal{E}_2 = (6, 5, 1, 0).
+\]
+\begin{enumerate}
+  \item Calculer l'intervalle $\Delta s^2 = c^2\Delta t^2 - \Delta x^2 - \Delta y^2 - \Delta z^2$.
+  \item De quel genre est cet intervalle ? Les événements peuvent-ils être liés par causalité ?
+  \item Calculer la vitesse $v$ d'un signal pouvant relier les deux événements.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $c\Delta t = 6-2 = 4$, $\Delta x = 5-4 = 1$, $\Delta y = 1-3 = -2$, $\Delta z = 0-1 = -1$.
+\[
+\Delta s^2 = 4^2 - 1^2 - (-2)^2 - (-1)^2 = 16 - 1 - 4 - 1 = \boxed{10\,\text{m}^2}
+\]
+
+\textbf{2.} $\Delta s^2 > 0$ : intervalle de \textbf{genre temps}. Les événements peuvent être liés par causalité car il existe un référentiel où ils se produisent au même endroit (et un signal plus lent que $c$ peut les relier).
+
+\textbf{3.} La vitesse du signal est :
+\[
+v = \frac{|\Delta\vec{r}|}{c\Delta t/c} = \frac{\sqrt{1+4+1}}{4}c = \frac{\sqrt{6}}{4}c \approx 0{,}61c < c
+\]
+Ce signal subjectif se propage à une vitesse inférieure à $c$, confirmant la causalité.
+\end{boitecorrige}
+
+\subsection*{Exercice 10 - Paradoxe des jumelles \niveau{\moyen}}
+
+\begin{boiteexercice}
+Les jumelles Mayimava et Navakaba ont 19 ans. Mayimava part avec leur mère Akos (38 ans) en vaisseau à $v = 0{,}8c$ vers une étoile à $d = \qty{32}{a.l.}$ (distance mesurée sur Terre), puis revient.
+\begin{enumerate}
+  \item Calculer la durée du voyage aller-retour pour Navakaba (restée sur Terre).
+  \item Calculer la durée vécue par Mayimava et Akos.
+  \item Donner l'âge de chacune à la réunion.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La durée totale pour Navakaba (durée impropre) :
+\[
+T = \frac{2d}{v} = \frac{2\times32}{0{,}8} = \qty{80}{ans}
+\]
+
+\textbf{2.} $\gamma = 1/\sqrt{1-0{,}64} = 1/0{,}6 = 5/3$. La durée propre pour Mayimava et Akos :
+\[
+T' = \frac{T}{\gamma} = T\sqrt{1-\beta^2} = 80\times0{,}6 = \qty{48}{ans}
+\]
+
+\textbf{3.}
+\begin{align*}
+\text{Navakaba} &: 19+80 = \boxed{99\,\text{ans}}\\
+\text{Mayimava}  &: 19+48 = \boxed{67\,\text{ans}}\\
+\text{Akos}      &: 38+48 = \boxed{86\,\text{ans}}
+\end{align*}
+Navakaba est la plus âgée, bien que les jumelles aient le même âge au départ.
+\end{boitecorrige}
+
+\subsection*{Exercice 11 - Rythme cardiaque relativiste \niveau{\facile}}
+
+\begin{boiteexercice}
+Un astronaute a un rythme cardiaque de 72 battements par minute dans son référentiel propre. Il voyage à $v = 0{,}68c$. Quel rythme cardiaque perçoit un observateur terrestre ?
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Le rythme cardiaque est une fréquence d'événements propres. Par dilatation du temps, un observateur terrestre voit une période dilatée, donc un rythme \emph{réduit} :
+\[
+\gamma = \frac{1}{\sqrt{1-0{,}68^2}} = \frac{1}{\sqrt{1-0{,}4624}} = \frac{1}{\sqrt{0{,}5376}} \approx 1{,}363
+\]
+\[
+f' = \frac{f}{\gamma} = \frac{72}{1{,}363} \approx \boxed{53\,\text{battements/min}}
+\]
+L'observateur terrestre perçoit un rythme ralenti : le c\oe{}ur de l'astronaute semble battre plus lentement.
+\end{boitecorrige}
+
+\subsection*{Exercice 12 - Effet Doppler relativiste \niveau{\moyen}}
+
+\begin{boiteexercice}
+Une source lumineuse émet à la fréquence propre $f_0 = \qty{6e14}{Hz}$ (lumière visible). La source se déplace à la vitesse $v = 0{,}6c$ par rapport à un observateur. Calculer la fréquence $f$ reçue par l'observateur dans les deux cas :
+\begin{enumerate}
+  \item La source se rapproche de l'observateur (Doppler bleuté).
+  \item La source s'éloigne de l'observateur (Doppler rougeâtre).
+\end{enumerate}
+L'effet Doppler relativiste longitudinal est donné par :
+\[
+f = f_0\sqrt{\frac{1+\beta}{1-\beta}} \quad \text{(rapprochement)} \qquad f = f_0\sqrt{\frac{1-\beta}{1+\beta}} \quad \text{(éloignement)}
+\]
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Avec $\beta = v/c = 0{,}6$ :
+
+\textbf{1. Rapprochement (décalage vers le bleu) :}
+\[
+f = f_0\sqrt{\frac{1+0{,}6}{1-0{,}6}} = f_0\sqrt{\frac{1{,}6}{0{,}4}} = f_0\sqrt{4} = 2f_0 = 2\times6\times10^{14} = \qty{1.2e15}{Hz}
+\]
+La fréquence est doublée : l'observateur perçoit de l'UV proche.
+
+\textbf{2. Éloignement (décalage vers le rouge) :}
+\[
+f = f_0\sqrt{\frac{1-0{,}6}{1+0{,}6}} = f_0\sqrt{\frac{0{,}4}{1{,}6}} = f_0\sqrt{\frac{1}{4}} = \frac{f_0}{2} = \qty{3e14}{Hz}
+\]
+La fréquence est divisée par 2 : l'observateur perçoit de l'infrarouge.
+
+\textbf{Remarque :} Contrairement à l'effet Doppler classique, l'effet Doppler relativiste est symétrique et dépend uniquement du facteur $\gamma$ et du signe du mouvement relatif. À $v\ll c$, on retrouve le résultat classique $f\approx f_0(1\pm\beta)$.
+\end{boitecorrige}
+
+\subsection*{Exercice 13 - Désintégration radioactive relativiste \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un noyau $A^0$ (baryon) se désintègre en une paire proton-pion $A^0\to p + \pi^-$. Sa durée de vie propre est $\tau_0 = \qty{2.9e-10}{s}$ et il se déplace dans le laboratoire à $v = 0{,}994c$.
+\begin{enumerate}
+  \item Calculer le facteur de Lorentz $\gamma$.
+  \item Calculer la durée de vie $\tau$ du $A^0$ mesurée dans le laboratoire.
+  \item Quelle est la distance moyenne parcourue dans le laboratoire avant désintégration ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $\beta = 0{,}994$, donc :
+\[
+\gamma = \frac{1}{\sqrt{1-\beta^2}} = \frac{1}{\sqrt{1-(0{,}994)^2}} = \frac{1}{\sqrt{1-0{,}988}} = \frac{1}{\sqrt{0{,}012}} \approx \frac{1}{0{,}1095} \approx 9{,}13
+\]
+
+\textbf{2.} Par dilatation du temps :
+\[
+\tau = \gamma\,\tau_0 = 9{,}13\times2{,}9\times10^{-10} \approx \qty{2.65e-9}{s}
+\]
+
+\textbf{3.} La distance moyenne parcourue :
+\[
+d = v\cdot\tau = 0{,}994\times3\times10^8\times2{,}65\times10^{-9} \approx \qty{0.79}{m} \approx \qty{79}{cm}
+\]
+Sans relativité, $d_0 = v\tau_0 = 0{,}994\times3\times10^8\times2{,}9\times10^{-10}\approx\qty{0.087}{m}$. Le facteur $\gamma$ multiplie la portée par environ 9, rendant la particule détectable à l'échelle du laboratoire.
+\end{boitecorrige}
+
+\subsection*{Exercice 14 - Collision et création de particule \niveau{\difficile}}
+
+\begin{boiteexercice}
+Un proton ($m_p c^2 = \qty{938.3}{MeV}$) d'énergie cinétique $T = \qty{938.3}{MeV}$ frappe un proton au repos.
+\begin{enumerate}
+  \item Calculer l'énergie totale et la quantité de mouvement du proton incident.
+  \item Calculer l'énergie totale du système dans le centre de masse.
+  \item Peut-on créer une paire proton-antiproton ($\bar{p}$, de même masse que $p$) dans cette collision ? L'énergie de seuil est $E_{cm} = 4m_pc^2$.
+  \item Calculer l'énergie cinétique de seuil $T_{seuil}$ du proton incident pour créer la paire $p\bar{p}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} L'énergie totale du proton incident (énergie de repos + cinétique) :
+\[
+E_1 = m_pc^2 + T = 938{,}3 + 938{,}3 = \qty{1876.6}{MeV}
+\]
+La quantité de mouvement : $E_1^2 = (p_1c)^2 + (m_pc^2)^2$, donc :
+\begin{align*}
+(p_1c)^2 &= E_1^2 - (m_pc^2)^2\\
+         &= 1876{,}6^2 - 938{,}3^2\\
+         &= (1876{,}6-938{,}3)(1876{,}6+938{,}3)\\
+         &= 938{,}3\times2814{,}9
+\end{align*}
+\[
+p_1c = \sqrt{2{,}641\times10^6} \approx \qty{1624}{MeV}
+\]
+
+\textbf{2.} L'énergie dans le centre de masse (invariant relativiste) :
+\[
+E_{cm}^2 = (E_1 + E_2)^2 - (p_1 + p_2)^2c^2
+\]
+Ici $E_2 = m_pc^2 = \qty{938.3}{MeV}$, $p_2 = 0$ :
+\[
+E_{cm}^2 = (1876{,}6+938{,}3)^2 - 1624^2 = 2814{,}9^2 - 1624^2
+\]
+\[
+= 7{,}924\times10^6 - 2{,}637\times10^6 = 5{,}287\times10^6\,\text{MeV}^2
+\]
+\[
+E_{cm} \approx \qty{2299}{MeV} \approx 2{,}45\,m_pc^2
+\]
+
+\textbf{3.} Pour créer la paire $p\bar{p}$, il faut $E_{cm} \geq 4m_pc^2 = 4\times938{,}3 = \qty{3753}{MeV}$. Ici $E_{cm}\approx\qty{2299}{MeV}<\qty{3753}{MeV}$ : la création de la paire est \textbf{impossible} avec cette énergie.
+
+\textbf{4.} Au seuil : $E_{cm} = 4m_pc^2$, d'où $E_{cm}^2 = 16(m_pc^2)^2$. L'invariant donne :
+\[
+16m_p^2c^4 = 2m_pc^2(E_1 + m_pc^2) \quad\Rightarrow\quad E_1 = \frac{16m_p^2c^4}{2m_pc^2} - m_pc^2 = 8m_pc^2 - m_pc^2 = 7m_pc^2
+\]
+\[
+T_{seuil} = E_1 - m_pc^2 = 6m_pc^2 = 6\times938{,}3 \approx \boxed{\qty{5630}{MeV} \approx \qty{5.63}{GeV}}
+\]
+C'est bien au-dessus des $\qty{938.3}{MeV}$ disponibles.
+\end{boitecorrige}
+
+\subsection*{Exercice 15 - Composition de Lorentz succesives \niveau{\difficile}}
+
+\begin{boiteexercice}
+On effectue deux transformations de Lorentz successives pour des vitesses $v_1 = 0{,}6c$ et $v_2 = 0{,}8c$, toutes deux selon l'axe $Ox$.
+\begin{enumerate}
+  \item En composant les transformations, trouver la vitesse $v$ équivalente à une seule transformation.
+  \item Vérifier en utilisant directement la loi de composition relativiste des vitesses.
+  \item Comparer avec la réponse newtonienne $v_{Newton} = v_1 + v_2$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La composition de deux transformations de Lorentz de vitesses $v_1$ et $v_2$ (même direction) donne une transformation de Lorentz de vitesse :
+\[
+\beta = \frac{\beta_1+\beta_2}{1+\beta_1\beta_2}
+\]
+La formule se démontre en enchaînant les matrices de Lorentz.
+
+\textbf{2.} Application directe de la loi de composition :
+\[
+v = \frac{v_1+v_2}{1+v_1v_2/c^2} = \frac{0{,}6c+0{,}8c}{1+0{,}6\times0{,}8} = \frac{1{,}4c}{1{,}48} \approx \boxed{0{,}946c}
+\]
+
+\textbf{3.} Newtonien : $v_{Newton} = 0{,}6c + 0{,}8c = 1{,}4c > c$ : impossible physiquement. La composition relativiste garantit $v < c$ quel que soit le nombre de transformations enchaînées.
+\end{boitecorrige}
+
+
+\newpage
+\section{Annales d'examens}
+
+\subsection*{Examen 2022-2023 (QCM et exercices)}
+
+\subsubsection*{Questions à choix multiples (10 pts)}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item Soient $\mathcal{R}$ et $\mathcal{R}'$ deux référentiels galiléens, $\mathcal{R}'$ en translation uniforme de vitesse $u\,\vec{e}_x$ par rapport à $\mathcal{R}$.
+
+  \textbf{1.1} Les formules de transformation de Lorentz des coordonnées (axe $x$) :
+  \[
+  \boxed{ct'=\gamma(ct-\beta x),\quad x'=\gamma(x-\beta ct),\quad y'=y,\quad z'=z.}
+  \]
+
+  \textbf{1.2} Loi de composition relativiste des vitesses ($V_x'$ selon $x$) :
+  \[
+  V_x' = \frac{V_x - u}{1-\dfrac{u}{c^2}V_x}, \qquad
+  V_y' = \frac{V_y\sqrt{1-u^2/c^2}}{1-uV_x/c^2}, \qquad
+  V_z' = \frac{V_z\sqrt{1-u^2/c^2}}{1-uV_x/c^2}.
+  \]
+
+  \item Deux événements $\mathcal{E}_1 = (2,\,-4\sqrt{2},\,-2,\,0)$ et $\mathcal{E}_2 = (8,\,-3\sqrt{2},\,1,\,5)$ (en mètres, $ct$ en première position). Déterminer le genre de l'intervalle.
+
+  \item Si $\Delta s$ est l'intervalle entre deux événements dans $\mathcal{R}$, quelle est la valeur de $\Delta s'$ dans $\mathcal{R}'$ ?
+
+  \item Un astronaute avec un rythme cardiaque de 72 bat/min se déplace à $0{,}68c$. Quel rythme perçoit l'observateur terrestre ?
+
+  \item À quelle vitesse voyager pour que le trajet de $N$ années-lumières dure $N$ ans pour le voyageur ?
+
+  \item Une source se déplace à $c$ et émet de la lumière à $c$ par rapport à elle-même. Quelle est la vitesse de la lumière par rapport à $\mathcal{R}$ ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{Tableau des réponses :}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+1.1 & 1.2 & 2 & 3 & 4.1 & 4.2 & 4.3 & 5 & 6 & 7 \\
+\hline
+B & B & B & D & B & C & B & B & A & D \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Question 2 --- Genre de l'intervalle.}
+\[
+\Delta(ct) = 8 - 2 = 6 \text{ m}, \quad \Delta x = -3\sqrt{2}-(-4\sqrt{2}) = \sqrt{2} \text{ m},
+\]
+\[
+\Delta y = 1-(-2) = 3 \text{ m}, \quad \Delta z = 5-0 = 5 \text{ m}.
+\]
+\[
+\Delta s^2 = (\Delta ct)^2 - (\Delta x)^2 - (\Delta y)^2 - (\Delta z)^2 = 36 - 2 - 9 - 25 = 0.
+\]
+L'intervalle est de \textbf{genre lumière} (type nul).
+
+\textbf{Question 3.} L'intervalle de Minkowski est un \textbf{invariant de Lorentz} : $\Delta s' = \Delta s$.
+
+\textbf{Question 5 --- Rythme cardiaque relativiste.}
+\[
+\gamma = \frac{1}{\sqrt{1-0{,}68^2}} \approx 1{,}363, \qquad
+f' = \frac{72}{\gamma} \approx \frac{72}{1{,}363} \approx \boxed{53 \text{ bat/min}}.
+\]
+
+\textbf{Question 6 --- Vitesse pour voyage de durée propre $N$ ans.}
+Le temps propre est $\tau = L/(\gamma v)$. On veut $\tau = N$ ans et $L = N$ a.l. $= Nc$ ans.
+\[
+\frac{Nc}{\gamma v} = N \implies \gamma v = c \implies \frac{v}{\sqrt{1-v^2/c^2}} = c
+\implies v^2 = c^2(1-v^2/c^2) \implies v = \frac{c}{\sqrt{2}}.
+\]
+
+\textbf{Question 7 --- Lumière émise par une source à vitesse $c$.}
+La composition relativiste des vitesses donne :
+\[
+v = \frac{c + c}{1 + c\cdot c/c^2} = \frac{2c}{2} = \boxed{c}.
+\]
+La vitesse de la lumière est invariante, indépendante du mouvement de la source.
+\end{boitecorrige}
+
+\newpage
+\subsection*{Examen 2020-2021 (45 minutes)}
+
+\begin{boiteexercice}
+\begin{enumerate}
+  \item En relativité restreinte, la vitesse de la lumière dans le vide est : absolue, relative, ou dépend du référentiel ?
+  \item L'invariance de $c$ est un postulat de : Galilée, Newton, ou Einstein ?
+  \item Si une particule se déplace à $c$ dans $R$, quelle est sa vitesse dans $R'$ en mouvement à $v$ par rapport à $R$ ?
+  \item Quels sont les postulats de la relativité restreinte ?
+  \item Un atome $A$ se déplace à $2\times10^8\,\text{m/s}$ et émet une particule $B$ à $2{,}8\times10^8\,\text{m/s}$ par rapport à $A$. Quelle est la vitesse de $B$ par rapport au scientifique ?
+  \item Pour un observateur sur l'étoile, Hodabalo vient vers lui en parcourant quelle distance (l'étoile est à 4 a.l. de la Terre) ?
+  \item Deux particules se rapprochent à $0{,}7c$ par rapport au laboratoire. Quelle est leur vitesse relative ?
+  \item Un corps au repos explose et donne deux objets de 2 kg chacun à $0{,}5c$. Quelle est la masse initiale au repos ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La vitesse de la lumière est \textbf{absolue} (identique dans tous les référentiels galiléens).
+
+\textbf{2.} C'est un postulat d'\textbf{Einstein}.
+
+\textbf{3.} Par la loi de composition relativiste, si $v = c$ dans $R$ :
+\[
+v' = \frac{c + u}{1 + cu/c^2} = \frac{c(c+u)}{c+u} = c.
+\]
+La particule se déplace toujours à $c$ dans $R'$.
+
+\textbf{4.} Les deux postulats : (a) les lois de la physique sont les mêmes dans tous les référentiels inertiels ; (b) la vitesse de la lumière est $c$ quel que soit l'observateur ou la source.
+
+\textbf{5.}
+\[
+v_B = \frac{v_A + v_{B/A}}{1 + v_A v_{B/A}/c^2}
+= \frac{2\times10^8 + 2{,}8\times10^8}{1 + \frac{2\times10^8 \times 2{,}8\times10^8}{(3\times10^8)^2}}
+= \frac{4{,}8\times10^8}{1 + 0{,}622}
+\approx \boxed{2{,}96\times10^8\,\text{m/s} \approx 0{,}987c.}
+\]
+
+\textbf{6.} Par contraction des longueurs : la distance parcourue par l'étoile dans le référentiel de Hodabalo est $L = L_0/\gamma < L_0$. Elle est \textbf{inférieure à 4 années-lumière}.
+
+\textbf{7.} Les deux particules se déplacent à $+0{,}7c$ et $-0{,}7c$ dans le laboratoire. La vitesse relative est :
+\[
+v_\text{rel} = \frac{0{,}7c + 0{,}7c}{1 + 0{,}7^2} = \frac{1{,}4c}{1{,}49} \approx \boxed{0{,}940c.}
+\]
+(La valeur $2{,}745c$ de la source était incorrecte car on avait pris $v_2=-0{,}7c$ avec le mauvais signe dans la formule ; la vitesse reste bien inférieure à $c$.)
+
+\textbf{8.} Conservation de l'énergie-impulsion. La masse initiale au repos $M_0$ satisfait :
+\[
+M_0 c^2 = 2\gamma m c^2, \quad \gamma = \frac{1}{\sqrt{1-0{,}25}} = \frac{2}{\sqrt{3}}.
+\]
+\[
+M_0 = 2\gamma m = \frac{4m}{\sqrt{3}} = \frac{4\times2}{\sqrt{3}} \approx \boxed{4{,}62\,\text{kg}.}
+\]
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

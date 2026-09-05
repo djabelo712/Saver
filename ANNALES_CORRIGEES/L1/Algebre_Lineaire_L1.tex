@@ -1,0 +1,724 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Algèbre Linéaire - Licence 1}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries ALGÈBRE LINÉAIRE}\\[0.3cm]
+  {\normalsize Licence 1 - Mathématiques, Physique et Chimie}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Espaces vectoriels.} Un ensemble $E$ muni d'une addition et d'une multiplication scalaire est un espace vectoriel sur $\mathbb{R}$ s'il vérifie les 8 axiomes (associativité, distributivité, élément neutre $\vec{0}$, opposé, etc.). Une famille $(\vec{e}_1,\ldots,\vec{e}_n)$ est une \textit{base} de $E$ si elle est libre (aucun vecteur combinaison des autres) et génératrice ($E = \text{vect}(\vec{e}_1,\ldots,\vec{e}_n)$). La dimension de $E$ est le nombre de vecteurs dans toute base.
+
+\textbf{2. Applications linéaires.} Une application $f : E \to F$ est linéaire si $f(\alpha\vec{u}+\beta\vec{v}) = \alpha f(\vec{u})+\beta f(\vec{v})$ pour tous $\alpha,\beta\in\mathbb{R}$ et $\vec{u},\vec{v}\in E$. Le noyau $\ker f = \{\vec{x}\in E \mid f(\vec{x})=\vec{0}\}$ et l'image $\text{Im}\,f = \{f(\vec{x}) \mid \vec{x}\in E\}$. Théorème du rang : $\dim(\ker f) + \dim(\text{Im}\,f) = \dim E$.
+
+\textbf{3. Matrices.} Une matrice $A\in\mathcal{M}_{m,n}(\mathbb{R})$ représente une application linéaire dans des bases. Le produit $AB$ est défini si le nombre de colonnes de $A$ égale le nombre de lignes de $B$ : $(AB)_{ij} = \sum_k a_{ik}b_{kj}$. Une matrice $A$ est inversible si et seulement si $\det A \neq 0$.
+
+\textbf{4. Déterminants.} Pour $A\in\mathcal{M}_n(\mathbb{R})$, le déterminant vérifie : $\det(AB)=\det A\cdot\det B$, $\det(A^T)=\det A$. Calcul par développement selon une ligne ou cofacteurs.
+
+\textbf{5. Valeurs propres et vecteurs propres.} $\lambda$ est valeur propre de $A$ si $\exists\vec{x}\neq\vec{0}$ tel que $A\vec{x}=\lambda\vec{x}$. Les valeurs propres sont les racines du polynôme caractéristique $P_A(\lambda) = \det(A-\lambda I)$. La matrice est diagonalisable si et seulement si elle possède $n$ vecteurs propres linéairement indépendants.
+
+\textbf{6. Systèmes linéaires.} Le système $A\vec{x}=\vec{b}$ est résolu par la méthode de Gauss (échelonnement). Il admet une solution unique si $\det A\neq 0$, une infinité de solutions si $A$ est singulière et $\vec{b}\in\text{Im}\,A$, ou aucune solution sinon.
+
+\end{boiteresume}
+
+\newpage
+\section{Espaces vectoriels et bases}
+
+\subsection*{Exercice 1 - Sous-espaces vectoriels \niveau{\facile}}
+
+\begin{boiteexercice}
+Dans $\mathbb{R}^3$, déterminer parmi les ensembles suivants lesquels sont des sous-espaces vectoriels :
+\begin{enumerate}[label=(\alph*)]
+  \item $F = \{(x,y,z)\in\mathbb{R}^3 \mid x + 2y - z = 0\}$
+  \item $G = \{(x,y,z)\in\mathbb{R}^3 \mid x^2 + y^2 = 0\}$
+  \item $H = \{(x,y,z)\in\mathbb{R}^3 \mid x + y + z = 1\}$
+  \item $K = \{(x,y,z)\in\mathbb{R}^3 \mid x = y = 0\}$
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Pour être un sous-espace vectoriel, un ensemble doit : (i) contenir $\vec{0}$, (ii) être stable par addition, (iii) être stable par multiplication scalaire.
+
+\textbf{(a) $F$ est un sous-espace vectoriel.}
+$\vec{0}$: $0+2(0)-0=0$. Stabilité: si $\vec{u},\vec{v}\in F$, alors $(x_1+2y_1-z_1)+(x_2+2y_2-z_2)=0+0=0$, donc $\vec{u}+\vec{v}\in F$. Scalaire: $\alpha(x_1+2y_1-z_1)=\alpha\cdot0=0$. C'est le plan de vecteur normal $(1,2,-1)$.
+
+\textbf{(b) $G$ est un sous-espace vectoriel.}
+$x^2+y^2=0$ avec $x,y\in\mathbb{R}$ implique $x=y=0$. Donc $G=\{(0,0,z)\mid z\in\mathbb{R}\}$, qui est l'axe $(Oz)$, bien un sous-espace.
+
+\textbf{(c) $H$ n'est pas un sous-espace vectoriel.}
+$\vec{0}\notin H$ car $0+0+0=0\neq1$.
+
+\textbf{(d) $K$ est un sous-espace vectoriel.}
+$K=\{(0,0,z)\mid z\in\mathbb{R}\}$ est l'axe $(Oz)$. Mêmes vérifications immédiates.
+\end{boitecorrige}
+
+\subsection*{Exercice 2 - Base et dimension \niveau{\facile}}
+
+\begin{boiteexercice}
+On considère les vecteurs $\vec{u}_1=(1,1,0)$, $\vec{u}_2=(0,1,1)$, $\vec{u}_3=(1,0,-1)$ de $\mathbb{R}^3$.
+\begin{enumerate}
+  \item Ces vecteurs forment-ils une base de $\mathbb{R}^3$ ?
+  \item Exprimer $\vec{v}=(2,3,1)$ dans cette base.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On calcule le déterminant :
+\[
+\det\begin{pmatrix}1&0&1\\1&1&0\\0&1&-1\end{pmatrix}
+= 1\cdot(1\cdot(-1)-0\cdot1) - 0 + 1\cdot(1\cdot1-1\cdot0)
+= (-1) + (1) = -2 + 2
+\]
+Développons correctement : $1(1\cdot(-1)-0\cdot1) - 0(1\cdot(-1)-0\cdot0) + 1(1\cdot1-1\cdot0) = -1+0+1=0$.
+
+Hmm, recalculons avec la matrice dont les colonnes sont $\vec{u}_1,\vec{u}_2,\vec{u}_3$ :
+\[
+\det\begin{pmatrix}1&0&1\\1&1&0\\0&1&-1\end{pmatrix}
+= 1\begin{vmatrix}1&0\\1&-1\end{vmatrix} - 0 + 1\begin{vmatrix}1&1\\0&1\end{vmatrix}
+= 1(-1-0) + 1(1-0) = -1+1 = 0
+\]
+Le déterminant est nul : les vecteurs ne forment \textbf{pas} une base de $\mathbb{R}^3$. Ils sont liés.
+
+On vérifie : $\vec{u}_3 = \vec{u}_1 - \vec{u}_2$ (car $(1,0,-1)=(1,1,0)-(0,1,1)$). Les trois vecteurs sont donc coplanaires.
+
+\textbf{2.} Puisque $(\vec{u}_1,\vec{u}_2,\vec{u}_3)$ n'est pas une base, on ne peut pas toujours exprimer $\vec{v}$ de façon unique. On cherche $\alpha,\beta,\gamma$ tels que $\alpha\vec{u}_1+\beta\vec{u}_2+\gamma\vec{u}_3=\vec{v}$ :
+\[
+\begin{cases}\alpha+\gamma=2\\\alpha+\beta=3\\\beta-\gamma=1\end{cases}
+\]
+De la 2e et 3e : $\beta=\gamma+1$, donc $\alpha = 3-\beta = 2-\gamma$. Substitution dans la 1re : $(2-\gamma)+\gamma=2$. La solution a un paramètre libre : $\gamma=t$, $\beta=t+1$, $\alpha=2-t$ pour tout $t\in\mathbb{R}$. Par exemple pour $t=0$ : $\vec{v} = 2\vec{u}_1 + \vec{u}_2 + 0\vec{u}_3$.
+\end{boitecorrige}
+
+\section{Matrices et déterminants}
+
+\subsection*{Exercice 3 - Opérations matricielles \niveau{\facile}}
+
+\begin{boiteexercice}
+Soient $A = \begin{pmatrix}1&2\\3&4\end{pmatrix}$ et $B = \begin{pmatrix}-1&0\\2&1\end{pmatrix}$.
+\begin{enumerate}
+  \item Calculer $AB$, $BA$, $A+2B$ et $A^T$.
+  \item Calculer $\det A$, $\det B$ et $\det(AB)$.
+  \item La matrice $A$ est-elle inversible ? Si oui, calculer $A^{-1}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\[
+AB = \begin{pmatrix}1(-1)+2(2) & 1(0)+2(1)\\ 3(-1)+4(2) & 3(0)+4(1)\end{pmatrix}
+= \begin{pmatrix}3&2\\5&4\end{pmatrix}
+\]
+\[
+BA = \begin{pmatrix}(-1)(1)+0(3) & (-1)(2)+0(4)\\ 2(1)+1(3) & 2(2)+1(4)\end{pmatrix}
+= \begin{pmatrix}-1&-2\\5&8\end{pmatrix}
+\]
+$AB \neq BA$ : le produit matriciel n'est pas commutatif en général.
+\[
+A+2B = \begin{pmatrix}1-2&2+0\\3+4&4+2\end{pmatrix} = \begin{pmatrix}-1&2\\7&6\end{pmatrix}, \quad A^T = \begin{pmatrix}1&3\\2&4\end{pmatrix}
+\]
+
+\textbf{2.} $\det A = 1\times4 - 2\times3 = 4-6 = -2$. $\det B = (-1)(1)-(0)(2) = -1$. $\det(AB) = \det A\cdot\det B = (-2)(-1) = 2$. Vérification : $\det\begin{pmatrix}3&2\\5&4\end{pmatrix}=12-10=2$.
+
+\textbf{3.} $\det A = -2 \neq 0$, donc $A$ est inversible :
+\[
+A^{-1} = \frac{1}{-2}\begin{pmatrix}4&-2\\-3&1\end{pmatrix} = \begin{pmatrix}-2&1\\3/2&-1/2\end{pmatrix}
+\]
+Vérification : $AA^{-1} = \begin{pmatrix}1(- 2)+2(3/2) & 1(1)+2(-1/2)\\ 3(-2)+4(3/2) & 3(1)+4(-1/2)\end{pmatrix} = \begin{pmatrix}-2+3 & 1-1\\ -6+6 & 3-2\end{pmatrix} = I$.
+\end{boitecorrige}
+
+\subsection*{Exercice 4 - Résolution de systèmes linéaires \niveau{\moyen}}
+
+\begin{boiteexercice}
+Résoudre les systèmes suivants par la méthode de Gauss :
+\begin{enumerate}[label=(\alph*)]
+  \item $\begin{cases}2x + y - z = 3\\ x - y + 2z = -1\\ 3x + 2y + z = 4\end{cases}$
+
+  \item $\begin{cases}x + 2y + z = 2\\ 2x + 4y + 2z = 4\\ x + y - z = 1\end{cases}$
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} Matrice augmentée :
+\[
+\begin{pmatrix}2&1&-1&\mid&3\\1&-1&2&\mid&-1\\3&2&1&\mid&4\end{pmatrix}
+\xrightarrow{L_1\leftrightarrow L_2}
+\begin{pmatrix}1&-1&2&\mid&-1\\2&1&-1&\mid&3\\3&2&1&\mid&4\end{pmatrix}
+\]
+\[
+\xrightarrow{L_2-2L_1,\;L_3-3L_1}
+\begin{pmatrix}1&-1&2&\mid&-1\\0&3&-5&\mid&5\\0&5&-5&\mid&7\end{pmatrix}
+\xrightarrow{L_3-\frac{5}{3}L_2}
+\begin{pmatrix}1&-1&2&\mid&-1\\0&3&-5&\mid&5\\0&0&\frac{10}{3}&\mid&\frac{-4}{3}\end{pmatrix}
+\]
+De la 3e ligne : $z = \frac{-4/3}{10/3} = -\frac{2}{5}$. De la 2e : $3y = 5+5z = 5-2 = 3$, donc $y=1$. De la 1re : $x = -1+y-2z = -1+1+\frac{4}{5} = \frac{4}{5}$.
+\[
+\boxed{x = \frac{4}{5},\quad y = 1,\quad z = -\frac{2}{5}}
+\]
+
+\textbf{(b)} La 2e équation est $2\times$ la 1re (dépendante). Après élimination :
+\[
+\begin{pmatrix}1&2&1&\mid&2\\0&0&0&\mid&0\\0&-1&-2&\mid&-1\end{pmatrix}
+\xrightarrow{L_2\leftrightarrow L_3}
+\begin{pmatrix}1&2&1&\mid&2\\0&-1&-2&\mid&-1\\0&0&0&\mid&0\end{pmatrix}
+\]
+De la 2e : $y = 1-2z$. De la 1re : $x = 2-2y-z = 2-2(1-2z)-z = 3z$. Solution à un paramètre libre $z=t\in\mathbb{R}$ :
+\[
+\boxed{(x,y,z) = (3t,\;1-2t,\;t), \quad t\in\mathbb{R}}
+\]
+\end{boitecorrige}
+
+\section{Valeurs propres et diagonalisation}
+
+\subsection*{Exercice 5 - Valeurs propres \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit la matrice $A = \begin{pmatrix}3&1\\1&3\end{pmatrix}$.
+\begin{enumerate}
+  \item Calculer le polynôme caractéristique et les valeurs propres de $A$.
+  \item Déterminer les vecteurs propres associés à chaque valeur propre.
+  \item La matrice est-elle diagonalisable ? Si oui, écrire la décomposition $A = PDP^{-1}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $P_A(\lambda) = \det(A-\lambda I) = \det\begin{pmatrix}3-\lambda&1\\1&3-\lambda\end{pmatrix} = (3-\lambda)^2-1 = \lambda^2-6\lambda+8 = (\lambda-2)(\lambda-4)$.
+
+Valeurs propres : $\lambda_1 = 2$ et $\lambda_2 = 4$.
+
+\textbf{2.}
+Pour $\lambda_1 = 2$ : $(A-2I)\vec{x}=\vec{0}$ donne $\begin{pmatrix}1&1\\1&1\end{pmatrix}\vec{x}=\vec{0}$, soit $x+y=0$. Vecteur propre : $\vec{v}_1 = \begin{pmatrix}1\\-1\end{pmatrix}$.
+
+Pour $\lambda_2 = 4$ : $(A-4I)\vec{x}=\vec{0}$ donne $\begin{pmatrix}-1&1\\1&-1\end{pmatrix}\vec{x}=\vec{0}$, soit $-x+y=0$. Vecteur propre : $\vec{v}_2 = \begin{pmatrix}1\\1\end{pmatrix}$.
+
+\textbf{3.} $A$ est symétrique réelle, donc diagonalisable (théorème spectral). Les deux vecteurs propres sont linéairement indépendants.
+\[
+P = \begin{pmatrix}1&1\\-1&1\end{pmatrix}, \quad D = \begin{pmatrix}2&0\\0&4\end{pmatrix}, \quad P^{-1} = \frac{1}{2}\begin{pmatrix}1&-1\\1&1\end{pmatrix}
+\]
+Vérification : $AP = PD$.
+\end{boitecorrige}
+
+\subsection*{Exercice 6 - Matrice $3\times3$ et diagonalisation \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $A = \begin{pmatrix}2&1&0\\1&2&0\\0&0&3\end{pmatrix}$.
+\begin{enumerate}
+  \item Calculer les valeurs propres et les espaces propres.
+  \item La matrice est-elle diagonalisable ?
+  \item Calculer $A^n$ pour $n\in\mathbb{N}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $P_A(\lambda) = \det(A-\lambda I)$. En développant selon la 3e colonne :
+\begin{align*}
+P_A(\lambda) &= (3-\lambda)\det\begin{pmatrix}2-\lambda&1\\1&2-\lambda\end{pmatrix}\\
+&= (3-\lambda)\bigl[(2-\lambda)^2-1\bigr]\\
+&= (3-\lambda)(\lambda^2-4\lambda+3)\\
+&= (3-\lambda)(3-\lambda)(1-\lambda) = (3-\lambda)^2(1-\lambda)
+\end{align*}
+Valeurs propres : $\lambda_1=1$ (simple) et $\lambda_2=3$ (double).
+
+Pour $\lambda_1=1$ : $(A-I)\vec{x}=\vec{0}$ donne la matrice :
+\[\begin{pmatrix}1&1&0\\1&1&0\\0&0&2\end{pmatrix}\]
+soit $x+y=0$ et $z=0$.
+\[
+E_1 = \text{vect}\begin{pmatrix}1\\-1\\0\end{pmatrix}, \quad \dim E_1=1.
+\]
+
+Pour $\lambda_2=3$ : $(A-3I)\vec{x}=\vec{0}$ donne $\begin{pmatrix}-1&1&0\\1&-1&0\\0&0&0\end{pmatrix}$, soit $-x+y=0$.
+\[
+E_3 = \text{vect}\left\{\begin{pmatrix}1\\1\\0\end{pmatrix},\begin{pmatrix}0\\0\\1\end{pmatrix}\right\}, \quad \dim E_3=2.
+\]
+
+\textbf{2.} $\dim E_1+\dim E_3 = 1+2=3=\dim\mathbb{R}^3$. La matrice est \textbf{diagonalisable}.
+
+\textbf{3.} Avec $P = \begin{pmatrix}1&1&0\\-1&1&0\\0&0&1\end{pmatrix}$, on a $A = PDP^{-1}$ avec $D=\text{diag}(1,3,3)$. Donc $A^n = PD^nP^{-1}$ avec $D^n=\text{diag}(1,3^n,3^n)$. Après calcul :
+\[
+A^n = \frac{1}{2}\begin{pmatrix}1+3^n&3^n-1&0\\3^n-1&1+3^n&0\\0&0&2\cdot3^n\end{pmatrix}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 7 - Application linéaire \niveau{\difficile}}
+
+\begin{boiteexercice}
+Soit $f : \mathbb{R}^3 \to \mathbb{R}^3$ l'application définie par $f(x,y,z) = (x+y, y+z, x+z)$.
+\begin{enumerate}
+  \item Vérifier que $f$ est linéaire.
+  \item Déterminer $\ker f$ et $\text{Im}\,f$.
+  \item Écrire la matrice de $f$ dans la base canonique.
+  \item $f$ est-elle un isomorphisme ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Soient $\vec{u}=(x_1,y_1,z_1)$, $\vec{v}=(x_2,y_2,z_2)$ et $\alpha,\beta\in\mathbb{R}$ :
+\[
+f(\alpha\vec{u}+\beta\vec{v}) = (\alpha x_1+\beta x_2+\alpha y_1+\beta y_2,\;\ldots)
+= \alpha f(\vec{u})+\beta f(\vec{v})
+\]
+Les composantes sont des combinaisons linéaires des coordonnées, donc $f$ est bien linéaire.
+
+\textbf{2.} $\ker f$ : $f(x,y,z)=\vec{0}$ donne
+$\begin{cases}x+y=0\\y+z=0\\x+z=0\end{cases}$. De la 1re et 3e : $y=-x$, $z=-x$. Substitution dans la 2e : $-x+(-x)=-2x=0$, donc $x=0$. Ainsi $\ker f=\{\vec{0}\}$.
+
+$\text{Im}\,f$ : par le théorème du rang, $\dim(\text{Im}\,f)=3-\dim(\ker f)=3-0=3$. Donc $\text{Im}\,f=\mathbb{R}^3$.
+
+\textbf{3.} La matrice dans la base canonique est obtenue en appliquant $f$ aux vecteurs de base :
+\[
+[f] = \begin{pmatrix}1&1&0\\0&1&1\\1&0&1\end{pmatrix}
+\]
+
+\textbf{4.} $\ker f=\{\vec{0}\}$, donc $f$ est injective. Comme $\dim\mathbb{R}^3<\infty$ et $f$ est injective de $\mathbb{R}^3$ dans $\mathbb{R}^3$, elle est surjective, donc c'est un \textbf{isomorphisme}. On peut vérifier : $\det[f]=1(1-0)-1(0-1)+0=1+1=2\neq0$.
+\end{boitecorrige}
+
+\subsection*{Exercice 8 - Rang d'une matrice \niveau{\moyen}}
+
+\begin{boiteexercice}
+Calculer le rang des matrices suivantes :
+\begin{enumerate}[label=(\alph*)]
+  \item $A = \begin{pmatrix}1&2&3\\2&4&6\\1&1&2\end{pmatrix}$
+  \item $B = \begin{pmatrix}1&0&2\\0&1&-1\\2&-1&5\end{pmatrix}$
+  \item $C = \begin{pmatrix}1&2&0&1\\2&4&1&3\\0&0&1&1\end{pmatrix}$
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{(a)} $L_2 \leftarrow L_2 - 2L_1$, $L_3 \leftarrow L_3 - L_1$ :
+\[
+\begin{pmatrix}1&2&3\\0&0&0\\0&-1&-1\end{pmatrix}
+\xrightarrow{L_2\leftrightarrow L_3}
+\begin{pmatrix}1&2&3\\0&-1&-1\\0&0&0\end{pmatrix}
+\]
+Deux lignes non nulles : $\text{rg}(A) = 2$.
+
+\textbf{(b)} $L_3 \leftarrow L_3 - 2L_1$ puis $L_3 \leftarrow L_3 + L_2$ :
+\[
+\begin{pmatrix}1&0&2\\0&1&-1\\0&-1&1\end{pmatrix}
+\to
+\begin{pmatrix}1&0&2\\0&1&-1\\0&0&0\end{pmatrix}
+\]
+$\text{rg}(B) = 2$.
+
+\textbf{(c)} On travaille sur la matrice $C$ (3 lignes, 4 colonnes). $L_2 \leftarrow L_2 - 2L_1$ :
+\[
+\begin{pmatrix}1&2&0&1\\0&0&1&1\\0&0&1&1\end{pmatrix}
+\xrightarrow{L_3 - L_2}
+\begin{pmatrix}1&2&0&1\\0&0&1&1\\0&0&0&0\end{pmatrix}
+\]
+$\text{rg}(C) = 2$.
+\end{boitecorrige}
+
+\subsection*{Exercice 9 - Inverse par la méthode de Gauss-Jordan \niveau{\moyen}}
+
+\begin{boiteexercice}
+Calculer l'inverse de la matrice $A = \begin{pmatrix}1&1&0\\0&1&1\\1&0&1\end{pmatrix}$ par la méthode de Gauss-Jordan.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+On augmente la matrice avec l'identité et on réduit $A$ à $I$ par opérations élémentaires :
+\[
+\left(\begin{array}{ccc|ccc}1&1&0&1&0&0\\0&1&1&0&1&0\\1&0&1&0&0&1\end{array}\right)
+\xrightarrow{L_3-L_1}
+\left(\begin{array}{ccc|ccc}1&1&0&1&0&0\\0&1&1&0&1&0\\0&-1&1&-1&0&1\end{array}\right)
+\]
+\[
+\xrightarrow{L_3+L_2}
+\left(\begin{array}{ccc|ccc}1&1&0&1&0&0\\0&1&1&0&1&0\\0&0&2&-1&1&1\end{array}\right)
+\xrightarrow{L_3/2}
+\left(\begin{array}{ccc|ccc}1&1&0&1&0&0\\0&1&1&0&1&0\\0&0&1&-1/2&1/2&1/2\end{array}\right)
+\]
+\[
+\xrightarrow{L_2-L_3}
+\left(\begin{array}{ccc|ccc}1&1&0&1&0&0\\0&1&0&1/2&1/2&-1/2\\0&0&1&-1/2&1/2&1/2\end{array}\right)
+\xrightarrow{L_1-L_2}
+\left(\begin{array}{ccc|ccc}1&0&0&1/2&-1/2&1/2\\0&1&0&1/2&1/2&-1/2\\0&0&1&-1/2&1/2&1/2\end{array}\right)
+\]
+\[
+A^{-1} = \frac{1}{2}\begin{pmatrix}1&-1&1\\1&1&-1\\-1&1&1\end{pmatrix}
+\]
+Vérification : $\det A = 1(1-0) - 1(0-1) + 0 = 2 \neq 0$.
+\end{boitecorrige}
+
+\section{Systèmes linéaires avancés}
+
+\subsection*{Exercice 10 - Règle de Cramer \niveau{\moyen}}
+
+\begin{boiteexercice}
+Résoudre le système suivant par la règle de Cramer :
+\[
+\begin{cases}2x + y - z = 5\\x - y + z = 0\\x + 2y + z = 3\end{cases}
+\]
+\end{boiteexercice}
+
+\begin{boitecorrige}
+La matrice du système est $A = \begin{pmatrix}2&1&-1\\1&-1&1\\1&2&1\end{pmatrix}$.
+
+$\det A = 2(-1-2) - 1(1-1) + (-1)(2+1) = 2(-3) - 0 - 3 = -9$.
+
+Matrices dérivées (on remplace chaque colonne par le second membre $\vec{b} = (5,0,3)^T$) :
+\[
+D_x = \det\begin{pmatrix}5&1&-1\\0&-1&1\\3&2&1\end{pmatrix} = 5(-1-2)-1(0-3)+(-1)(0+3) = -15+3-3=-15
+\]
+\[
+D_y = \det\begin{pmatrix}2&5&-1\\1&0&1\\1&3&1\end{pmatrix} = 2(0-3)-5(1-1)+(-1)(3-0) = -6-0-3=-9
+\]
+\[
+D_z = \det\begin{pmatrix}2&1&5\\1&-1&0\\1&2&3\end{pmatrix} = 2(-3-0)-1(3-0)+5(2+1) = -6-3+15=6
+\]
+\[
+\boxed{x = \frac{D_x}{\det A} = \frac{-15}{-9} = \frac{5}{3}, \quad y = \frac{D_y}{\det A} = \frac{-9}{-9} = 1, \quad z = \frac{D_z}{\det A} = \frac{6}{-9} = -\frac{2}{3}}
+\]
+Vérification : $2(5/3)+1-(-2/3) = 10/3+1+2/3 = 12/3+1=5$.
+\end{boitecorrige}
+
+\subsection*{Exercice 11 - Déterminant d'une matrice $4\times4$ \niveau{\difficile}}
+
+\begin{boiteexercice}
+Calculer le déterminant de la matrice
+\[
+A = \begin{pmatrix}1&0&2&-1\\3&0&0&5\\2&1&4&-3\\1&0&5&0\end{pmatrix}
+\]
+par développement selon la colonne qui contient le plus de zéros.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+On développe selon la colonne 2 (trois zéros) :
+\[
+\det A = 0\cdot C_{12} + 0\cdot C_{22} + 1\cdot C_{32} + 0\cdot C_{42}
+\]
+Il ne reste que le cofacteur $C_{32} = (-1)^{3+2}M_{32} = -M_{32}$, où $M_{32}$ est le mineur obtenu en supprimant la ligne 3 et la colonne 2 :
+\[
+M_{32} = \det\begin{pmatrix}1&2&-1\\3&0&5\\1&5&0\end{pmatrix}
+\]
+On développe selon la 2e colonne (ou ligne 2) :
+\[
+= 1(0-25) - 2(0-5) + (-1)(15-0) = -25+10-15 = -30
+\]
+\[
+\det A = 1\times(-(-30)) = 1\times30 = 30
+\]
+
+\textbf{Vérification partielle :} Le déterminant d'une matrice triangulaire supérieure serait le produit des termes diagonaux. Ce n'est pas le cas ici, mais on peut vérifier avec le développement selon la ligne 1 comme contrôle.
+\end{boitecorrige}
+
+\subsection*{Exercice 12 - Valeurs propres complexes et réduction \niveau{\difficile}}
+
+\begin{boiteexercice}
+Soit $A = \begin{pmatrix}0&-1&0\\1&0&0\\0&0&2\end{pmatrix}$.
+\begin{enumerate}
+  \item Calculer le polynôme caractéristique de $A$.
+  \item Déterminer les valeurs propres (dans $\mathbb{C}$) et les sous-espaces propres.
+  \item La matrice est-elle diagonalisable sur $\mathbb{R}$ ? Sur $\mathbb{C}$ ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} En développant selon la 3e colonne (terme $2-\lambda$ en bas à droite) :
+\[
+P_A(\lambda) = \det(A-\lambda I) = (2-\lambda)\det\begin{pmatrix}-\lambda&-1\\1&-\lambda\end{pmatrix}
+= (2-\lambda)(\lambda^2+1)
+\]
+
+\textbf{2.} Valeurs propres : $\lambda_1 = 2$ (réelle) et $\lambda_{2,3} = \pm i$ (complexes conjuguées).
+
+Pour $\lambda_1 = 2$ : $(A-2I)\vec{x}=\vec{0}$ : $\begin{pmatrix}-2&-1&0\\1&-2&0\\0&0&0\end{pmatrix}$, soit $-2x-y=0$ et $x-2y=0$. Ces deux équations donnent $x=y=0$, $z$ libre. $E_2 = \text{vect}\begin{pmatrix}0\\0\\1\end{pmatrix}$.
+
+Pour $\lambda_2 = i$ (sur $\mathbb{C}$) : $(A-iI)\vec{x}=\vec{0}$ donne $-ix-y=0$, soit $y=-ix$. Sous-espace propre : $E_i = \text{vect}\begin{pmatrix}1\\-i\\0\end{pmatrix}$.
+
+De même, $E_{-i} = \text{vect}\begin{pmatrix}1\\i\\0\end{pmatrix}$.
+
+\textbf{3.} Les valeurs propres $\pm i$ ne sont pas réelles : $A$ \textbf{n'est pas diagonalisable sur $\mathbb{R}$}. En revanche, elle possède 3 valeurs propres complexes distinctes, donc elle est \textbf{diagonalisable sur $\mathbb{C}$}, avec $D = \text{diag}(2, i, -i)$.
+\end{boitecorrige}
+
+\subsection*{Exercice 13 - Espace vectoriel de polynômes \niveau{\moyen}}
+
+\begin{boiteexercice}
+Soit $E = \mathbb{R}_2[X]$ l'espace des polynômes de degré au plus 2, et $f : E \to \mathbb{R}^3$ définie par $f(P) = (P(0), P(1), P(2))$.
+\begin{enumerate}
+  \item Vérifier que $f$ est linéaire.
+  \item Calculer $\ker f$ et $\text{Im}\, f$.
+  \item En déduire si $f$ est un isomorphisme.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Pour $P, Q \in E$ et $\alpha, \beta \in \mathbb{R}$ :
+\[
+f(\alpha P + \beta Q) = ((\alpha P+\beta Q)(0), (\alpha P+\beta Q)(1), (\alpha P+\beta Q)(2))
+\]
+\[
+= (\alpha P(0)+\beta Q(0), \alpha P(1)+\beta Q(1), \alpha P(2)+\beta Q(2)) = \alpha f(P) + \beta f(Q)
+\]
+Donc $f$ est linéaire.
+
+\textbf{2.} $\ker f = \{P\in E : P(0)=P(1)=P(2)=0\}$. Un polynôme de degré $\leq 2$ ayant 3 racines distinctes est le polynôme nul. Donc $\ker f = \{0\}$.
+
+Par le théorème du rang : $\dim(\text{Im}\,f) = \dim E - \dim(\ker f) = 3 - 0 = 3$. Donc $\text{Im}\,f = \mathbb{R}^3$ (surjective).
+
+\textbf{3.} $f$ est injective ($\ker f = \{0\}$) et surjective. C'est donc un \textbf{isomorphisme}.
+
+Cela signifie que tout triplet $(a, b, c) \in \mathbb{R}^3$ est l'image d'un unique polynôme de degré $\leq 2$ : c'est l'interpolation de Lagrange en $x=0,1,2$.
+\end{boitecorrige}
+
+\subsection*{Exercice 14 - Diagonalisation et puissance de matrice \niveau{\difficile}}
+
+\begin{boiteexercice}
+Soit $A = \begin{pmatrix}4&-2\\1&1\end{pmatrix}$.
+\begin{enumerate}
+  \item Calculer les valeurs propres et les vecteurs propres de $A$.
+  \item Diagonaliser $A$ et exprimer $A^n$ pour tout $n\in\mathbb{N}$.
+  \item Calculer $A^{10}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $P_A(\lambda) = (4-\lambda)(1-\lambda)+2 = \lambda^2-5\lambda+6 = (\lambda-2)(\lambda-3)$.
+
+Valeurs propres : $\lambda_1 = 2$, $\lambda_2 = 3$.
+
+Pour $\lambda_1 = 2$ : $(A-2I)\vec{x}=\vec{0}$ : $2x-2y=0$, soit $\vec{v}_1 = \begin{pmatrix}1\\1\end{pmatrix}$.
+
+Pour $\lambda_2 = 3$ : $(A-3I)\vec{x}=\vec{0}$ : $x-2y=0$, soit $\vec{v}_2 = \begin{pmatrix}2\\1\end{pmatrix}$.
+
+\textbf{2.} $P = \begin{pmatrix}1&2\\1&1\end{pmatrix}$, $D = \begin{pmatrix}2&0\\0&3\end{pmatrix}$, $P^{-1} = \frac{1}{\det P}\begin{pmatrix}1&-2\\-1&1\end{pmatrix} = \begin{pmatrix}-1&2\\1&-1\end{pmatrix}$.
+
+$A^n = PD^nP^{-1} = \begin{pmatrix}1&2\\1&1\end{pmatrix}\begin{pmatrix}2^n&0\\0&3^n\end{pmatrix}\begin{pmatrix}-1&2\\1&-1\end{pmatrix}$
+
+\[
+= \begin{pmatrix}2^n&2\cdot3^n\\2^n&3^n\end{pmatrix}\begin{pmatrix}-1&2\\1&-1\end{pmatrix}
+= \begin{pmatrix}-2^n+2\cdot3^n & 2^{n+1}-2\cdot3^n \\ -2^n+3^n & 2^{n+1}-3^n\end{pmatrix}
+\]
+
+Simplifions : $A^n = \begin{pmatrix}2\cdot3^n-2^n & 2^{n+1}-2\cdot3^n\\3^n-2^n & 2^{n+1}-3^n\end{pmatrix}$.
+
+\textbf{3.} Pour $n=10$ : $2^{10} = 1024$, $3^{10} = 59049$ :
+\[
+A^{10} = \begin{pmatrix}2\times59049-1024 & 2048-2\times59049\\59049-1024 & 2048-59049\end{pmatrix}
+= \begin{pmatrix}117074 & -116050\\58025 & -57001\end{pmatrix}
+\]
+\end{boitecorrige}
+
+
+% ================================================================
+\subsection*{Exercice 15 - Diagonalisation d'une matrice symétrique \niveau{\moyen}}
+% ================================================================
+\begin{boiteexercice}
+Soit la matrice $A = \begin{pmatrix}5 & 2 \\ 2 & 5\end{pmatrix}$.
+
+\begin{enumerate}
+  \item Calculer le polynôme caractéristique de $A$ et en déduire ses valeurs propres.
+  \item Déterminer les vecteurs propres associés à chaque valeur propre.
+  \item Former la matrice de passage $P$ et la matrice diagonale $D = P^{-1}AP$.
+  \item Vérifier que $A = PDP^{-1}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Polynôme caractéristique :}
+\[
+\chi_A(\lambda) = \det(A - \lambda I) = \begin{vmatrix}5-\lambda & 2 \\ 2 & 5-\lambda\end{vmatrix}
+= (5-\lambda)^2 - 4 = \lambda^2 - 10\lambda + 21 = (\lambda-3)(\lambda-7)
+\]
+Les valeurs propres sont $\lambda_1 = 3$ et $\lambda_2 = 7$.
+
+\textbf{2. Vecteurs propres :}
+
+\textit{Pour $\lambda_1 = 3$ :} $(A-3I)\vec{x} = \vec{0}$ :
+\[
+\begin{pmatrix}2 & 2 \\ 2 & 2\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix} = \vec{0} \;\Rightarrow\; x+y=0 \;\Rightarrow\; \vec{v}_1 = \begin{pmatrix}1\\-1\end{pmatrix}
+\]
+
+\textit{Pour $\lambda_2 = 7$ :} $(A-7I)\vec{x} = \vec{0}$ :
+\[
+\begin{pmatrix}-2 & 2 \\ 2 & -2\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix} = \vec{0} \;\Rightarrow\; -x+y=0 \;\Rightarrow\; \vec{v}_2 = \begin{pmatrix}1\\1\end{pmatrix}
+\]
+
+\textbf{3. Matrice de passage et diagonalisation :}
+\[
+P = \begin{pmatrix}1 & 1 \\ -1 & 1\end{pmatrix}, \qquad \det P = 1\cdot1-(-1)\cdot1 = 2
+\]
+\[
+P^{-1} = \frac{1}{2}\begin{pmatrix}1 & -1 \\ 1 & 1\end{pmatrix}
+\]
+\[
+D = P^{-1}AP = \begin{pmatrix}3 & 0 \\ 0 & 7\end{pmatrix}
+\]
+
+\textbf{4. Vérification :}
+\[
+PDP^{-1} = \begin{pmatrix}1&1\\-1&1\end{pmatrix}\begin{pmatrix}3&0\\0&7\end{pmatrix}\frac{1}{2}\begin{pmatrix}1&-1\\1&1\end{pmatrix}
+= \frac{1}{2}\begin{pmatrix}3+7 & -3+7\\-3+7 & 3+7\end{pmatrix} = \begin{pmatrix}5&2\\2&5\end{pmatrix} = A \;
+\]
+
+\textbf{Remarque :} $A$ est symétrique réelle, donc ses vecteurs propres sont bien orthogonaux : $\vec{v}_1\cdot\vec{v}_2 = 1\cdot1+(-1)\cdot1 = 0$.
+\end{boitecorrige}
+
+% ================================================================
+\subsection*{Exercice 16 - Forme de Jordan (matrice non diagonalisable) \niveau{\difficile}}
+% ================================================================
+\begin{boiteexercice}
+Soit la matrice $A = \begin{pmatrix}2 & 1 \\ 0 & 2\end{pmatrix}$.
+
+\begin{enumerate}
+  \item Calculer le polynôme caractéristique. Quelle est la valeur propre (sa multiplicité algébrique) ?
+  \item Trouver le sous-espace propre associé. Quelle est la multiplicité géométrique ?
+  \item La matrice est-elle diagonalisable ? Justifier.
+  \item Déterminer un vecteur propre généralisé $\vec{w}$ tel que $(A-\lambda I)\vec{w} = \vec{v}$ où $\vec{v}$ est le vecteur propre.
+  \item Écrire la forme de Jordan $J$ de $A$ et la matrice de passage $P$ telle que $A = PJP^{-1}$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Polynôme caractéristique :}
+\[
+\chi_A(\lambda) = (2-\lambda)^2
+\]
+Valeur propre unique : $\lambda = 2$ de multiplicité algébrique $m_a = 2$.
+
+\textbf{2. Sous-espace propre :}
+\[
+A - 2I = \begin{pmatrix}0&1\\0&0\end{pmatrix}
+\]
+$(A-2I)\vec{x}=\vec{0}$ donne $y=0$, donc $\vec{v}_1 = \begin{pmatrix}1\\0\end{pmatrix}$.
+Multiplicité géométrique : $m_g = 1$ (un seul vecteur propre indépendant).
+
+\textbf{3.} Puisque $m_g = 1 < m_a = 2$, la matrice \textbf{n'est pas diagonalisable}.
+
+\textbf{4. Vecteur propre généralisé :}
+
+On cherche $\vec{w}$ tel que $(A-2I)\vec{w} = \vec{v}_1$ :
+\[
+\begin{pmatrix}0&1\\0&0\end{pmatrix}\begin{pmatrix}w_1\\w_2\end{pmatrix} = \begin{pmatrix}1\\0\end{pmatrix} \;\Rightarrow\; w_2 = 1, \quad w_1 \text{ libre}
+\]
+On choisit $w_1 = 0$, soit $\vec{w} = \begin{pmatrix}0\\1\end{pmatrix}$.
+
+\textbf{5. Forme de Jordan :}
+
+La base de Jordan est $\mathcal{B} = (\vec{v}_1, \vec{w})$, d'où :
+\[
+P = \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix} = I, \qquad J = \begin{pmatrix}2 & 1 \\ 0 & 2\end{pmatrix} = A
+\]
+Dans ce cas, $A$ est \emph{déjà} sous forme de Jordan. On a bien $J = P^{-1}AP$ avec $P=I$.
+
+\textbf{Propriété utile :} $A^n = \begin{pmatrix}2^n & n\cdot2^{n-1}\\0&2^n\end{pmatrix}$. En effet, $(J)^n = \begin{pmatrix}\lambda^n & n\lambda^{n-1}\\0&\lambda^n\end{pmatrix}$ pour un bloc de Jordan $2\times2$.
+\end{boitecorrige}
+
+% ================================================================
+\subsection*{Exercice 17 - Calcul de $A^n$ par diagonalisation \niveau{\moyen}}
+% ================================================================
+\begin{boiteexercice}
+Soit $A = \begin{pmatrix}2&1\\1&2\end{pmatrix}$.
+
+\begin{enumerate}
+  \item Calculer les valeurs propres $\lambda_1$ et $\lambda_2$ de $A$.
+  \item Trouver les vecteurs propres associés.
+  \item Former la matrice de passage $P$ et calculer $P^{-1}$.
+  \item Exprimer $A^n = PD^nP^{-1}$ et simplifier.
+  \item Application : calculer $A^5$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Valeurs propres :}
+\[
+\chi_A(\lambda) = (2-\lambda)^2 - 1 = \lambda^2 - 4\lambda + 3 = (\lambda-1)(\lambda-3)
+\]
+$\lambda_1 = 1$, $\lambda_2 = 3$.
+
+\textbf{2. Vecteurs propres :}
+
+\textit{Pour $\lambda_1 = 1$ :} $(A-I)\vec{x}=\vec{0}$ : $x+y=0$, donc $\vec{v}_1 = \begin{pmatrix}1\\-1\end{pmatrix}$.
+
+\textit{Pour $\lambda_2 = 3$ :} $(A-3I)\vec{x}=\vec{0}$ : $-x+y=0$, donc $\vec{v}_2 = \begin{pmatrix}1\\1\end{pmatrix}$.
+
+\textbf{3. Matrice de passage :}
+\[
+P = \begin{pmatrix}1&1\\-1&1\end{pmatrix}, \quad \det P = 2, \quad P^{-1} = \frac{1}{2}\begin{pmatrix}1&-1\\1&1\end{pmatrix}
+\]
+
+\textbf{4.} $D^n = \begin{pmatrix}1^n&0\\0&3^n\end{pmatrix} = \begin{pmatrix}1&0\\0&3^n\end{pmatrix}$, donc :
+\[
+A^n = PD^nP^{-1} = \begin{pmatrix}1&1\\-1&1\end{pmatrix}\begin{pmatrix}1&0\\0&3^n\end{pmatrix}\frac{1}{2}\begin{pmatrix}1&-1\\1&1\end{pmatrix}
+\]
+\[
+= \frac{1}{2}\begin{pmatrix}1&3^n\\-1&3^n\end{pmatrix}\begin{pmatrix}1&-1\\1&1\end{pmatrix}
+= \frac{1}{2}\begin{pmatrix}1+3^n & -1+3^n \\ -1+3^n & 1+3^n\end{pmatrix}
+\]
+
+\textbf{5.} Pour $n=5$ : $3^5 = 243$ :
+\[
+A^5 = \frac{1}{2}\begin{pmatrix}244 & 242 \\ 242 & 244\end{pmatrix} = \begin{pmatrix}122 & 121 \\ 121 & 122\end{pmatrix}
+\]
+\end{boitecorrige}
+
+% ================================================================
+\subsection*{Exercice 18 - Système linéaire compatible indéterminé \niveau{\moyen}}
+% ================================================================
+\newpage
+\begin{boiteexercice}
+Résoudre par la méthode de Gauss-Jordan le système suivant à 4 inconnues :
+\[
+\left\{\begin{aligned}
+x_1 + 2x_2 - x_3 + x_4 &= 2 \\
+2x_1 + 4x_2 + x_3 - x_4 &= 5 \\
+x_1 + 2x_2 + 2x_3 - 2x_4 &= 3
+\end{aligned}\right.
+\]
+
+\begin{enumerate}
+  \item Écrire la matrice augmentée et effectuer les opérations élémentaires sur les lignes.
+  \item Identifier le rang du système et les inconnues libres (paramètres).
+  \item Exprimer les inconnues liées en fonction des paramètres.
+  \item Écrire la solution générale sous forme vectorielle.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1. Matrice augmentée et réduction :}
+\[
+\left(\begin{array}{cccc|c}1&2&-1&1&2\\2&4&1&-1&5\\1&2&2&-2&3\end{array}\right)
+\]
+$L_2 \leftarrow L_2 - 2L_1$ ; $L_3 \leftarrow L_3 - L_1$ :
+\[
+\left(\begin{array}{cccc|c}1&2&-1&1&2\\0&0&3&-3&1\\0&0&3&-3&1\end{array}\right)
+\]
+$L_3 \leftarrow L_3 - L_2$ :
+\[
+\left(\begin{array}{cccc|c}1&2&-1&1&2\\0&0&3&-3&1\\0&0&0&0&0\end{array}\right)
+\]
+$L_2 \leftarrow L_2/3$ ; $L_1 \leftarrow L_1 + L_2$ :
+\[
+\left(\begin{array}{cccc|c}1&2&0&0&7/3\\0&0&1&-1&1/3\\0&0&0&0&0\end{array}\right)
+\]
+
+\textbf{2.} Le rang est $r=2$. Les colonnes pivots sont 1 et 3. Les inconnues libres (paramètres) sont $x_2 = s$ et $x_4 = t$ ($s,t\in\mathbb{R}$).
+
+\textbf{3.} Des équations réduites :
+\begin{align*}
+x_1 + 2s &= 7/3 &\Rightarrow& \quad x_1 = 7/3 - 2s \\
+x_3 - t &= 1/3  &\Rightarrow& \quad x_3 = 1/3 + t
+\end{align*}
+
+\textbf{4. Solution générale sous forme vectorielle :}
+\[
+\begin{pmatrix}x_1\\x_2\\x_3\\x_4\end{pmatrix}
+= \begin{pmatrix}7/3\\0\\1/3\\0\end{pmatrix}
++ s\begin{pmatrix}-2\\1\\0\\0\end{pmatrix}
++ t\begin{pmatrix}0\\0\\1\\1\end{pmatrix}, \quad s,t\in\mathbb{R}
+\]
+
+L'espace solution est un \textbf{sous-espace affine} de dimension 2 (plan affine dans $\mathbb{R}^4$). La solution particulière est $\vec{x}_0 = (7/3, 0, 1/3, 0)^T$ et la solution homogène est engendrée par les vecteurs $(-2,1,0,0)^T$ et $(0,0,1,1)^T$.
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi

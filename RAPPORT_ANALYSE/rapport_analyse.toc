@@ -1,0 +1,49 @@
+\babel@toc {french}{}\relax 
+\contentsline {section}{\numberline {1}Présentation générale du projet}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Fichiers analysés}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Résumé exécutif}{3}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Incohérences structurelles et techniques}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Deux templates incompatibles}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}L'option de classe mal formée (tous les fichiers L1/L2)}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Le pied de page erroné systématique}{5}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}L'auteur non renseigné dans les fichiers L3}{6}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Usage incorrect de \texttt {\textbackslash large\{...\}}}{6}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Erreurs scientifiques et mathématiques}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Fichier : Atomistique.tex (L1)}{6}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Exercice 7, question (d) -- Symbole chimique incorrect}{6}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Exercice 8, question (a) -- Configuration électronique erronée}{7}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}Exercice 6, question (2) -- Erreurs grammaticales dans la rédaction}{7}{subsubsection.3.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.4}Exercice 6, question (4) -- Faute de frappe sur le symbole chimique}{7}{subsubsection.3.1.4}%
+\contentsline {subsubsection}{\numberline {3.1.5}Exercice 5, question (c) -- Règle de Klechkowski mal identifiée}{8}{subsubsection.3.1.5}%
+\contentsline {subsection}{\numberline {3.2}Fichier : ELECTROCINETIQUE.tex (L1)}{8}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Corrigé 2 -- Texte tronqué (coupure de phrase)}{8}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Corrigé 2 -- Formule dupliquée avec valeur tronquée}{8}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Corrigé 2 -- Faute d'orthographe}{9}{subsubsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.3}Fichier : Electromagnetisme.tex (L2)}{9}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Exercice 1 -- Formule physique incorrecte pour la portée}{9}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Exercice 6 -- Vitesse de phase sans unité}{10}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3}Titre de section -- Faute d'orthographe}{10}{subsubsection.3.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.4}Exercice 6 -- Répétition inutile}{10}{subsubsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.4}Fichier : Avant-propos.tex (L1)}{10}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Fichier : l3\_physique\_statistique.tex (L3)}{10}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Exercice 2 -- Contradiction dans la simplification de $\sigma ^2$}{11}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Exercice 4 -- Notation Tr incorrecte}{11}{subsubsection.3.5.2}%
+\contentsline {section}{\numberline {4}Problèmes de rédaction et de présentation}{11}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Exercices sans corrigés complets}{11}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Absence de numérotation cohérente des équations}{12}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Listes mal structurées}{12}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Formatage des unités}{12}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Pages de transition}{12}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Recommandations pour le style et le design}{12}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Vision éditoriale globale}{12}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Proposition de charte graphique}{13}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Environnements d'exercice et de correction}{13}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Structure globale du document}{14}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Unification du tome L3}{14}{subsection.5.5}%
+\contentsline {section}{\numberline {6}Tableau récapitulatif des corrections prioritaires}{15}{section.6}%
+\contentsline {section}{\numberline {7}Plan d'action pour la refonte complète}{15}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Phase 1 : Correction des erreurs critiques (urgent)}{15}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Phase 2 : Harmonisation du template (prioritaire)}{16}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Phase 3 : Amélioration du contenu}{16}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Phase 4 : Finalisation éditoriale}{16}{subsection.7.4}%
+\contentsline {section}{\numberline {8}Conclusion}{16}{section.8}%

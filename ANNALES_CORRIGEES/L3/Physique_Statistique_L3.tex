@@ -1,0 +1,830 @@
+\ifdefined\inMainDoc\else
+\documentclass[12pt,a4paper]{article}
+\input{../preambule_commun.tex}
+
+\lhead{\small\textit{Physique Statistique - Licence 3}}
+\rhead{\small\textit{FaST, Université de Kara}}
+\cfoot{\thepage}
+
+\begin{document}
+\fi
+
+\begin{center}
+  {\LARGE\bfseries PHYSIQUE STATISTIQUE}\\[0.3cm]
+  {\normalsize Licence 3 - Physique}\\[0.1cm]
+  \rule{0.7\textwidth}{0.8pt}
+\end{center}
+
+\vspace{0.3cm}
+
+\section*{Résumé du cours}
+
+\begin{boiteresume}
+
+\textbf{1. Ensemble canonique.} Pour un système en contact avec un thermostat à température $T = 1/(k_B\beta)$, la probabilité du microétat d'énergie $E_i$ est la distribution de Boltzmann :
+\[
+p_i = \frac{\e^{-\beta E_i}}{Z}, \qquad Z = \sum_i \e^{-\beta E_i}
+\]
+$Z$ est la \textbf{fonction de partition canonique}. L'énergie libre de Helmholtz est $F = -k_BT\ln Z$.
+
+\textbf{2. Grandeurs thermodynamiques issues de $Z$.}
+\[
+\langle E\rangle = -\dpart{\ln Z}{\beta} \qquad \langle M\rangle = \frac{1}{\beta}\dpart{\ln Z}{B}
+\]
+\[
+C_V = k_B\beta^2\dpart{^2\ln Z}{\beta^2} \qquad S = k_B(\ln Z + \beta\langle E\rangle)
+\]
+
+\textbf{3. Modèle d'Ising 1D.} Pour une chaîne de $N$ spins sans champ extérieur, la fonction de partition de la chaîne ouverte obéit à la récurrence $Z(N) = 2Z(N-1)\cosh(\beta J)$, ce qui donne $Z(N) = 2^N\cosh^{N-1}(\beta J)$.
+
+\textbf{4. Matrice de transfert.} La méthode des matrices de transfert permet de calculer $Z$ pour le modèle d'Ising avec conditions périodiques. Si $T$ est la matrice $2\times 2$ de transfert de valeurs propres $\lambda_+\geq\lambda_-$, alors $Z = \Tr(T^N) = \lambda_+^N + \lambda_-^N$.
+
+\end{boiteresume}
+
+\newpage
+
+\section{Modèle d'Ising - Spins indépendants et sur réseau}
+
+\subsection*{Exercice 1 - Spins indépendants sous champ \niveau{\moyen}}
+
+\begin{boiteexercice}
+On considère $N$ spins indépendants ($J=0$) soumis à un champ extérieur $B$. Le hamiltonien est $H = \sum_i h(\sigma_i)$ avec $h(\sigma) = -B\sigma$.
+
+Calculer la \textbf{fonction de partition} $Z$, l'\textbf{énergie moyenne} $\langle E\rangle$ et la \textbf{magnétisation moyenne} $\langle M\rangle$. Vérifier les limites haute et basse température.
+\end{boiteexercice}
+
+\begin{boitecorrige}
+Comme les spins sont indépendants, la fonction de partition se factorise :
+\[
+Z = z^N, \qquad z = \sum_{\sigma=\pm1}\e^{\beta B\sigma} = \e^{\beta B} + \e^{-\beta B} = 2\cosh(\beta B)
+\]
+\[
+\boxed{Z = \left(2\cosh(\beta B)\right)^N}
+\]
+
+\textbf{Énergie moyenne :}
+\[
+\langle E\rangle = -\dpart{\ln Z}{\beta} = -N\dpart{\ln(2\cosh(\beta B))}{\beta} = -NB\tanh(\beta B)
+\]
+
+\textbf{Magnétisation moyenne :}
+\[
+\langle M\rangle = \frac{1}{\beta}\dpart{\ln Z}{B} = N\tanh(\beta B)
+\]
+
+\textbf{Vérification des limites :}
+\begin{itemize}
+  \item Basse température ($\beta\to\infty$) : $\tanh(\beta B)\to 1$ (pour $B>0$). Tous les spins sont alignés : $\langle M\rangle\to N$, $\langle E\rangle\to -NB$.
+  \item Haute température ($\beta\to 0$) : $\tanh(\beta B)\approx\beta B\to 0$. Désordre total : $\langle M\rangle\to 0$, $\langle E\rangle\to 0$.
+\end{itemize}
+\end{boitecorrige}
+
+\subsection*{Exercice 2 - Modèle d'Ising sur un carré $2\times2$ \niveau{\difficile}}
+
+\begin{boiteexercice}
+On considère 4 spins ($\sigma_i = \pm1$) disposés sur les sommets d'un carré avec des liaisons entre plus proches voisins. Le hamiltonien est $H = -J\sum_{\langle ij\rangle}\sigma_i\sigma_j$ avec $J>0$.
+
+\begin{enumerate}
+  \item Donner le nombre de microétats, les niveaux d'énergie et leurs dégénérescences. Calculer $Z$ et $\langle E\rangle$.
+  \item Calculer $\langle M\rangle$, $\langle M^2\rangle$, $\sigma^2 = \langle M^2\rangle - \langle M\rangle^2$, et $\langle|M|\rangle$.
+  \item Justifier les limites de ces grandeurs à basse et haute température.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Avec $N=4$ spins, il y a $2^4 = 16$ microétats. Un carré a 4 liaisons entre plus proches voisins. Les niveaux d'énergie et leurs dégénérescences sont :
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+Niveau $E_k$ & Configurations & Dégénérescence \\
+\midrule
+$-4J$ (tous alignés) & $++++$, $----$ & $g_1 = 2$ \\
+$0$ (paires alignées) & configurations mixtes & $g_2 = 12$ \\
+$+4J$ (alternés) & $+-+-$, $-+-+$ & $g_3 = 2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Vérification : $2 + 12 + 2 = 16$.
+
+Fonction de partition :
+\[
+Z = 2\e^{4\beta J} + 12 + 2\e^{-4\beta J} = 2(\e^{4\beta J}+\e^{-4\beta J}) + 12 = 4\cosh(4\beta J) + 12 = 4(3+\cosh(4\beta J))
+\]
+
+Énergie moyenne :
+\[
+\langle E\rangle = -\dpart{\ln Z}{\beta} = -\frac{1}{Z}\dpart{Z}{\beta} = -\frac{16J\sinh(4\beta J)}{4(3+\cosh(4\beta J))} = -\frac{4J\sinh(4\beta J)}{3+\cosh(4\beta J)}
+\]
+
+\textbf{2.} Par symétrie entre les configurations $M$ et $-M$ (qui ont la même énergie en l'absence de champ), $\langle M\rangle = 0$.
+
+Pour $\langle M^2\rangle$, il faut connaître les valeurs de $M = \sum_i\sigma_i$ pour chaque niveau :
+\begin{itemize}
+  \item Niveau $E_1=-4J$ : $M = \pm4$. Contribution : $2\times16\times\e^{4\beta J}$.
+  \item Niveau $E_2=0$ : les 12 configurations ont $M = \pm2$ (8 cas) ou $M=0$ (4 cas). Contribution : $8\times4 + 4\times0 = 32$.
+  \item Niveau $E_3=+4J$ : $M = 0$ (configurations alternées). Contribution : $0$.
+\end{itemize}
+\[
+\langle M^2\rangle = \frac{32\e^{4\beta J} + 32 + 0}{Z} = \frac{32\e^{4\beta J}+32}{4(3+\cosh(4\beta J))}= \frac{8(\e^{4\beta J}+1)}{3+\cosh(4\beta J)}
+\]
+
+Comme $\langle M\rangle = 0$ :
+\[
+\boxed{\sigma^2 = \langle M^2\rangle = \frac{8(\e^{4\beta J}+1)}{3+\cosh(4\beta J)}}
+\]
+
+Pour $\langle|M|\rangle$, on note que seuls les niveaux $E_1$ et $E_2$ contribuent avec $|M|\neq0$ :
+\begin{itemize}
+  \item Niveau $E_1$ : $|M|=4$, $g_1=2$ : contribution $4\times2\times\e^{4\beta J}$.
+  \item Niveau $E_2$, configurations avec $M=\pm2$ (8 cas) : $|M|=2$ : contribution $2\times8 = 16$.
+\end{itemize}
+\[
+\langle|M|\rangle = \frac{8\e^{4\beta J} + 16}{4(3+\cosh(4\beta J))} = \frac{2(\e^{4\beta J}+2)}{3+\cosh(4\beta J)}
+\]
+
+\textbf{3.} Limites :
+\begin{itemize}
+  \item $T\to0$ ($\beta\to\infty$) : $\cosh(4\beta J)\approx\frac{1}{2}\e^{4\beta J}$. $\langle|M|\rangle\to4$, ce qui est cohérent : les seuls microétats occupés sont $++++$ et $--$ avec probabilité $1/2$ chacun, donnant $|M|=4$.
+  \item $T\to\infty$ ($\beta\to0$) : $\cosh(4\beta J)\to1$. $\sigma^2\to8\times2/4 = 4$ et $\langle|M|\rangle\to2\times3/4 = 3/2$...
+
+Calcul explicite : pour $\beta=0$, $Z = 4(3+1)=16$. On retrouve la moyenne équiprobable sur les 16 microétats : $\langle|M|\rangle = \frac{1}{16}(2\times4 + 8\times2 + 4\times0 + 2\times0) = \frac{8+16}{16} = \frac{24}{16} = \frac{3}{2}$. Consistant.
+\end{itemize}
+\end{boitecorrige}
+
+\subsection*{Exercice 3 - Chaîne d'Ising 1D ouverte \niveau{\moyen}}
+
+\begin{boiteexercice}
+On considère le modèle d'Ising à 1D composé de $N$ spins, sans champ, avec des conditions libres (chaîne ouverte) : $H = -J\sum_{i=1}^{N-1}\sigma_i\sigma_{i+1}$.
+
+\begin{enumerate}
+  \item Écrire $Z(N)$. En séparant la somme sur $\sigma_1$, montrer la récurrence $Z(N) = 2Z(N-1)\cosh(\beta J)$.
+  \item En déduire que $Z(N) = 2^N\cosh^{N-1}(\beta J)$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.}
+\[
+Z(N) = \sum_{\{\sigma\}}\e^{\beta J\sum_{i=1}^{N-1}\sigma_i\sigma_{i+1}}
+\]
+On sépare la somme sur $\sigma_1$ :
+\[
+Z(N) = \sum_{\sigma_2,\dots,\sigma_N}\left(\sum_{\sigma_1=\pm1}\e^{\beta J\sigma_1\sigma_2}\right)\e^{\beta J\sum_{i=2}^{N-1}\sigma_i\sigma_{i+1}}
+\]
+Pour $\sigma_2 = \pm1$ fixé : $\sum_{\sigma_1=\pm1}\e^{\beta J\sigma_1\sigma_2} = \e^{\beta J\sigma_2} + \e^{-\beta J\sigma_2} = 2\cosh(\beta J)$ (indépendant de $\sigma_2$). Donc :
+\[
+Z(N) = 2\cosh(\beta J)\sum_{\sigma_2,\dots,\sigma_N}\e^{\beta J\sum_{i=2}^{N-1}\sigma_i\sigma_{i+1}} = 2Z(N-1)\cosh(\beta J)
+\]
+
+\textbf{2.} Pour $N=2$ : $Z(2) = \sum_{\sigma_1,\sigma_2}\e^{\beta J\sigma_1\sigma_2} = 2\cosh(\beta J) + 2\cosh(-\beta J)$...
+
+Plus directement : $Z(1) = 2$ (un seul spin). Alors par la récurrence $N$ fois à partir de $Z(1)$ :
+\[
+Z(N) = (2\cosh(\beta J))^{N-1}\cdot Z(1) = 2\cdot(2\cosh(\beta J))^{N-1}
+\]
+\[
+\boxed{Z(N) = 2^N\cosh^{N-1}(\beta J)}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 4 - Matrice de transfert avec champ magnétique \niveau{\difficile}}
+
+\begin{boiteexercice}
+On place les $N$ spins sur un cercle (conditions périodiques $\sigma_{N+1}=\sigma_1$) avec un champ $B\neq0$. La fonction de partition s'écrit $Z = \Tr(T^N)$ avec la matrice de transfert :
+\[
+T = \begin{pmatrix}\e^{\beta(J+B)} & \e^{-\beta J} \\ \e^{-\beta J} & \e^{\beta(J-B)}\end{pmatrix}
+\]
+
+\begin{enumerate}
+  \item Montrer que $\sum_{\{\sigma\}}T_{\sigma_1\sigma_2}T_{\sigma_2\sigma_3}\cdots T_{\sigma_N\sigma_1} = \Tr(T^N)$. En déduire $Z = \lambda_+^N + \lambda_-^N$.
+  \item Montrer que pour $N\to\infty$ : $F/N = -k_BT\ln\!\left(\e^{\beta J}\cosh\beta B + \sqrt{\Delta'}\right)$ avec $\Delta' = \e^{2\beta J}\sinh^2\beta B + \e^{-2\beta J}$.
+  \item En déduire qu'il n'y a pas de magnétisation spontanée en 1D.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La somme $\sum_{\sigma_2}\cdots\sum_{\sigma_N}T_{\sigma_1\sigma_2}T_{\sigma_2\sigma_3}\cdots T_{\sigma_N\sigma_1}$ est le produit matriciel en cascade $T^N$, évalué à l'élément $(\sigma_1,\sigma_1)$. En sommant sur $\sigma_1$ :
+\[
+Z = \sum_{\sigma_1}(T^N)_{\sigma_1\sigma_1} = \Tr(T^N)
+\]
+Si $\lambda_+$ et $\lambda_-$ sont les valeurs propres de $T$ (avec $\lambda_+\geq\lambda_-$), alors les valeurs propres de $T^N$ sont $\lambda_+^N$ et $\lambda_-^N$, d'où $Z = \lambda_+^N + \lambda_-^N$.
+
+\textbf{2.} Les valeurs propres de $T$ sont solutions de $\det(T-\lambda I)=0$ :
+\[
+\lambda_\pm = \e^{\beta J}\cosh(\beta B) \pm \sqrt{\e^{2\beta J}\sinh^2(\beta B) + \e^{-2\beta J}}
+\]
+Pour $N\to\infty$, $\lambda_+^N$ domine :
+\begin{align*}
+F &\approx -Nk_BT\ln\lambda_+ \\
+&= -Nk_BT\ln\!\Big(\e^{\beta J}\cosh\beta B \\
+&\quad + \sqrt{\e^{2\beta J}\sinh^2\beta B + \e^{-2\beta J}}\,\Big)
+\end{align*}
+
+\textbf{3.} La magnétisation par site est $m = -\frac{1}{N}\dpart{F}{B}\big|_{B=0}$. En dérivant et en évaluant en $B=0$ :
+\[
+m = \frac{\sinh(\beta\cdot 0)}{\sqrt{\sinh^2(\beta\cdot0)+\e^{-4\beta J}}} = \frac{0}{\e^{-2\beta J}} = 0
+\]
+La magnétisation spontanée (à $B=0$) est nulle pour toute température non nulle : il n'y a pas de transition de phase en dimension 1.
+\end{boitecorrige}
+
+
+\newpage
+\section{Exercices supplémentaires de physique statistique}
+
+\subsection*{Exercice 5 - Distribution de Maxwell-Boltzmann \niveau{\moyen}}
+
+\begin{boiteexercice}
+Pour un gaz parfait classique de molécules de masse $m$ à température $T$, la distribution des vitesses de Maxwell-Boltzmann est :
+\[
+f(v) = 4\pi n\left(\frac{m}{2\pi k_BT}\right)^{3/2}v^2\e^{-mv^2/(2k_BT)}
+\]
+\begin{enumerate}
+  \item Vérifier que $\int_0^\infty f(v)\,\d v = n$ (normalisation).
+  \item Calculer la vitesse la plus probable $v_p$.
+  \item Calculer la vitesse moyenne $\langle v\rangle$.
+  \item Calculer la vitesse quadratique moyenne $v_{rms} = \sqrt{\langle v^2\rangle}$.
+  \item Comparer ces trois vitesses.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} En posant $\beta = m/(2k_BT)$ :
+\[
+\int_0^\infty f(v)\,\d v = 4\pi n\left(\frac{\beta}{\pi}\right)^{3/2}\int_0^\infty v^2\e^{-\beta v^2}\,\d v = 4\pi n\left(\frac{\beta}{\pi}\right)^{3/2}\cdot\frac{\sqrt{\pi}}{4\beta^{3/2}} = n
+\]
+
+\textbf{2.} Maximum de $f(v)$ : $\dfrac{\d f}{\d v} = 0$ donne $2v - 2\beta v^3 = 0$, soit $v_p = \dfrac{1}{\sqrt{\beta}} = \sqrt{\dfrac{2k_BT}{m}}$.
+
+\textbf{3.} Vitesse moyenne :
+\[
+\langle v\rangle = \frac{1}{n}\int_0^\infty v\,f(v)\,\d v = 4\pi\left(\frac{\beta}{\pi}\right)^{3/2}\int_0^\infty v^3\e^{-\beta v^2}\,\d v = 4\pi\left(\frac{\beta}{\pi}\right)^{3/2}\cdot\frac{1}{2\beta^2} = \sqrt{\frac{8k_BT}{\pi m}}
+\]
+
+\textbf{4.} Vitesse quadratique :
+\[
+\langle v^2\rangle = \frac{4\pi}{n}\left(\frac{\beta}{\pi}\right)^{3/2}\int_0^\infty v^4\e^{-\beta v^2}\,\d v = \frac{3k_BT}{m} \implies v_{rms} = \sqrt{\frac{3k_BT}{m}}
+\]
+
+\textbf{5.} Comparaison : $v_p : \langle v\rangle : v_{rms} = \sqrt{2} : \sqrt{8/\pi} : \sqrt{3} \approx 1 : 1{,}128 : 1{,}225$.
+\end{boitecorrige}
+
+\subsection*{Exercice 6 - Gaz de Bose-Einstein : condensation \niveau{\difficile}}
+
+\begin{boiteexercice}
+Pour un gaz de bosons (spin 0) dans un volume $V$ à température $T$ :
+\begin{enumerate}
+  \item Écrire la distribution de Bose-Einstein $\bar{n}(\epsilon)$.
+  \item Montrer que le potentiel chimique $\mu \leq 0$ pour les bosons.
+  \item La condensation de Bose-Einstein se produit à $T_c = \dfrac{h^2}{2\pi m k_B}\left(\dfrac{N}{V\zeta(3/2)}\right)^{2/3}$ où $\zeta(3/2) \approx 2{,}612$. Calculer $T_c$ pour ${}^{87}$Rb ($M = 87\;\text{g\,mol}^{-1}$) avec $n = N/V = 10^{14}\;\text{cm}^{-3}$.
+  \item Interpréter physiquement la condensation.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Distribution de Bose-Einstein :
+\[
+\bar{n}(\epsilon) = \frac{1}{\e^{(\epsilon-\mu)/k_BT} - 1}
+\]
+
+\textbf{2.} Pour que $\bar{n}(\epsilon) \geq 0$ pour tout $\epsilon \geq 0$, il faut $\e^{(\epsilon-\mu)/k_BT} > 1$, c'est-à-dire $\epsilon - \mu > 0$ pour tout $\epsilon \geq 0$. La condition la plus contraignante est $\epsilon = 0$ : $\mu \leq 0$.
+
+\textbf{3.} Calcul de $T_c$ pour ${}^{87}$Rb :
+
+$m = 87/(6{,}022\times10^{26}) = 1{,}445\times10^{-25}\;\text{kg}$, $n = 10^{20}\;\text{m}^{-3}$.
+\[
+T_c = \frac{(6{,}626\times10^{-34})^2}{2\pi\times1{,}445\times10^{-25}\times1{,}38\times10^{-23}}\left(\frac{10^{20}}{2{,}612}\right)^{2/3}
+\]
+\[
+T_c \approx 170\;\text{nK}
+\]
+C'est en accord avec les expériences de condensation de BEC.
+
+\textbf{4.} Physiquement : à $T < T_c$, la longueur d'onde de de Broglie thermique $\lambda_{dB} = h/\sqrt{2\pi mk_BT}$ devient comparable à la distance interparticulaire $n^{-1/3}$. Les fonctions d'onde des bosons se chevauchent et un grand nombre de particules occupent le même état quantique de plus basse énergie ($\epsilon=0$) : c'est la condensation de Bose-Einstein.
+\end{boitecorrige}
+
+\subsection*{Exercice 7 - Entropie et microétats \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un système de $N$ spins $1/2$ (spins $\pm1$) est placé dans un champ magnétique $B$. Chaque spin a une énergie $\epsilon = \pm\mu_B B$ (signe $-$ pour le spin aligné avec $B$).
+\begin{enumerate}
+  \item Si $n$ spins sont dans l'état $+$ et $N-n$ dans l'état $-$, quelle est la multiplicité $\Omega(n)$ ?
+  \item Calculer l'entropie de Boltzmann $S = k_B\ln\Omega$.
+  \item En utilisant l'approximation de Stirling, montrer que $S$ est maximum pour $n = N/2$.
+  \item L'énergie totale du système est $E = -(N-2n)\mu_B B$. Calculer la température $T$ en fonction de $n$ et $N$ via $1/T = \partial S/\partial E$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Multiplicité : $\Omega(n) = \dbinom{N}{n} = \dfrac{N!}{n!(N-n)!}$.
+
+\textbf{2.} Entropie : $S = k_B\ln\Omega = k_B\ln\dfrac{N!}{n!(N-n)!}$.
+
+\textbf{3.} Approximation de Stirling : $\ln(M!) \approx M\ln M - M$.
+\[
+S \approx k_B\bigl[N\ln N - n\ln n - (N-n)\ln(N-n)\bigr]
+\]
+$\dfrac{\partial S}{\partial n} = -k_B\ln\dfrac{n}{N-n} = 0 \Rightarrow n = N-n \Rightarrow n = N/2$.
+
+\textbf{4.} $E = -(N-2n)\mu_BB$, donc $n = \dfrac{N}{2} - \dfrac{E}{2\mu_BB}$.
+\[
+\frac{\partial S}{\partial E} = \frac{\partial S}{\partial n}\cdot\frac{\partial n}{\partial E} = k_B\ln\frac{N-n}{n}\cdot\left(-\frac{1}{2\mu_BB}\right)
+\]
+\[
+\frac{1}{T} = \frac{k_B}{2\mu_BB}\ln\frac{N-n}{n}
+\]
+Pour $n < N/2$ (majorité de spins alignés), on a $1/T > 0$ (température positive). Pour $n > N/2$, $1/T < 0$ : température négative (système à inversion de population).
+\end{boitecorrige}
+
+
+\newpage
+\section{Ensemble microcanonique et entropie}
+
+\subsection*{Exercice 8 - Gaz parfait microcanonique : nombre d'états et entropie \niveau{\moyen}}
+
+\begin{boiteexercice}
+On considère un gaz parfait de $N$ particules sans spin dans un volume $V$, d'énergie totale $E$. On admet que le nombre d'états accessibles est :
+\[
+\Omega(E,V,N) = \frac{1}{N!h^{3N}}\frac{(2\pi mE)^{3N/2}V^N}{\Gamma(3N/2+1)}\,\delta E
+\]
+où $\delta E$ est la largeur de la couche d'énergie.
+\begin{enumerate}
+  \item En utilisant l'approximation de Stirling ($\ln N!\approx N\ln N - N$) et la formule $\ln\Gamma(3N/2+1)\approx\frac{3N}{2}\ln\frac{3N}{2}-\frac{3N}{2}$, calculer l'entropie de Sackur-Tetrode :
+  \[
+  S = Nk_B\left[\ln\!\left(\frac{V}{N}\left(\frac{4\pi mE}{3Nh^2}\right)^{3/2}\right) + \frac{5}{2}\right]
+  \]
+  \item Calculer la température $T$ via $\frac{1}{T} = \frac{\partial S}{\partial E}\Big|_{V,N}$ et retrouver $E = \frac{3}{2}Nk_BT$.
+  \item Calculer la pression $P$ via $\frac{P}{T} = \frac{\partial S}{\partial V}\Big|_{E,N}$ et retrouver $PV = Nk_BT$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} On applique $S = k_B\ln\Omega$ en gardant les termes dominants en $N$ :
+\begin{align*}
+\ln\Omega &= -\ln(N!) + N\ln V + \frac{3N}{2}\ln(2\pi mE) - \ln\Gamma\!\left(\frac{3N}{2}+1\right) + \text{cste}\\
+&\approx -N\ln N + N + N\ln V + \frac{3N}{2}\ln(2\pi mE) - \frac{3N}{2}\ln\frac{3N}{2} + \frac{3N}{2}
+\end{align*}
+En regroupant :
+\[
+\frac{S}{Nk_B} = \ln\frac{V}{N} + \frac{3}{2}\ln\frac{4\pi mE}{3Nh^2} + \frac{5}{2}
+\]
+ce qui donne bien la formule de Sackur-Tetrode.
+
+\textbf{2.} La dépendance en $E$ est $S = \frac{3}{2}Nk_B\ln E + \text{cste}$.
+\[
+\frac{1}{T} = \frac{\partial S}{\partial E} = \frac{3Nk_B}{2E} \implies \boxed{E = \frac{3}{2}Nk_BT}
+\]
+On retrouve bien l'énergie interne du gaz parfait monoatomique.
+
+\textbf{3.} La dépendance en $V$ est $S = Nk_B\ln V + \text{cste}$.
+\[
+\frac{P}{T} = \frac{\partial S}{\partial V} = \frac{Nk_B}{V} \implies \boxed{PV = Nk_BT}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 9 - Distribution de Boltzmann et énergie libre \niveau{\moyen}}
+
+\begin{boiteexercice}
+Un système à deux niveaux est en contact avec un thermostat à température $T$. Les niveaux d'énergie sont $\epsilon_0 = 0$ et $\epsilon_1 = \epsilon > 0$.
+\begin{enumerate}
+  \item Calculer la fonction de partition canonique $Z(T)$.
+  \item Calculer l'énergie libre de Helmholtz $F = -k_BT\ln Z$.
+  \item Calculer l'énergie moyenne $\langle E\rangle = -\partial\ln Z/\partial\beta$ et vérifier les limites $T\to0$ et $T\to\infty$.
+  \item Calculer la chaleur spécifique $C = \partial\langle E\rangle/\partial T$ et montrer qu'elle présente un maximum (pic de Schottky).
+  \item Calculer l'entropie $S = -\partial F/\partial T$ et vérifier que $S\to0$ quand $T\to0$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Avec $\beta = 1/(k_BT)$ :
+\[
+Z = \e^{-\beta\cdot 0} + \e^{-\beta\epsilon} = 1 + \e^{-\beta\epsilon}
+\]
+
+\textbf{2.} Énergie libre :
+\[
+F = -k_BT\ln(1+\e^{-\beta\epsilon})
+\]
+
+\textbf{3.} Énergie moyenne :
+\[
+\langle E\rangle = -\frac{\partial\ln Z}{\partial\beta} = \frac{\epsilon\,\e^{-\beta\epsilon}}{1+\e^{-\beta\epsilon}} = \frac{\epsilon}{\e^{\beta\epsilon}+1}
+\]
+\begin{itemize}
+  \item $T\to 0$ ($\beta\to\infty$) : $\langle E\rangle\to 0$ (le système est dans l'état fondamental).
+  \item $T\to\infty$ ($\beta\to 0$) : $\langle E\rangle\to\epsilon/2$ (équipartition entre les deux niveaux).
+\end{itemize}
+
+\textbf{4.} Chaleur spécifique (en posant $x = \beta\epsilon = \epsilon/(k_BT)$) :
+\[
+C = k_B x^2\frac{\e^x}{(1+\e^x)^2} = k_B\left(\frac{\epsilon}{k_BT}\right)^2\frac{\e^{\epsilon/k_BT}}{(\e^{\epsilon/k_BT}+1)^2}
+\]
+$C\to 0$ pour $T\to 0$ (exponentiellement) et $T\to\infty$ (en $T^{-2}$). Entre les deux, $C$ présente un \textbf{pic de Schottky} à $k_BT\approx 0{,}42\,\epsilon$.
+
+\textbf{5.} Entropie :
+\[
+S = -\frac{\partial F}{\partial T} = k_B\left[\ln(1+\e^{-\beta\epsilon}) + \frac{\beta\epsilon\,\e^{-\beta\epsilon}}{1+\e^{-\beta\epsilon}}\right]
+\]
+Pour $T\to 0$ : le terme dominant est $\e^{-\epsilon/k_BT}\to 0$, donc $S\to 0$ : troisième principe de la thermodynamique.
+\end{boitecorrige}
+
+\subsection*{Exercice 10 - Gaz parfait classique : fonction de partition et équation d'état \niveau{\moyen}}
+
+\begin{boiteexercice}
+On considère un gaz parfait classique de $N$ particules monoatomiques de masse $m$ dans un volume $V$ à température $T$. La fonction de partition à une particule est :
+\[
+z_1 = \frac{V}{\lambda_{dB}^3}, \quad \lambda_{dB} = \frac{h}{\sqrt{2\pi mk_BT}}
+\]
+\begin{enumerate}
+  \item Justifier que $Z_N = z_1^N/N!$ pour un gaz de particules indiscernables.
+  \item Calculer l'énergie libre $F = -k_BT\ln Z_N$ (utiliser Stirling).
+  \item Calculer la pression $P = -\partial F/\partial V$ et retrouver $PV = Nk_BT$.
+  \item Calculer l'énergie interne $U = -\partial\ln Z_N/\partial\beta$ et retrouver $U = \frac{3}{2}Nk_BT$.
+  \item Calculer l'entropie $S = -\partial F/\partial T$ et commenter le résultat.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Pour $N$ particules identiques indiscernables, il faut diviser par $N!$ pour éviter la sur-comptage des microétats (paradoxe de Gibbs). Comme $Z_1 = z_1$ pour une particule, $Z_N = z_1^N/N!$.
+
+\textbf{2.} En utilisant $\ln N!\approx N\ln N - N$ et $z_1 = V/\lambda_{dB}^3$ :
+\[
+F = -k_BT\left[N\ln z_1 - N\ln N + N\right] = -Nk_BT\left[\ln\frac{V}{N\lambda_{dB}^3} + 1\right]
+\]
+
+\textbf{3.} La dépendance en $V$ est $F = -Nk_BT\ln V + \text{cste}$ :
+\[
+P = -\frac{\partial F}{\partial V} = \frac{Nk_BT}{V} \implies \boxed{PV = Nk_BT}
+\]
+
+\textbf{4.} $\ln Z_N = N\ln(V/\lambda_{dB}^3) - N\ln N + N$. Comme $\lambda_{dB}\propto\beta^{-1/2}$, on a $\ln\lambda_{dB}^3 = -\frac{3}{2}\ln\beta + \text{cste}$, donc $\partial\ln Z_N/\partial\beta = -3N/(2\beta)$ :
+\[
+U = -\frac{\partial\ln Z_N}{\partial\beta} = \frac{3N}{2\beta} = \frac{3}{2}Nk_BT
+\]
+
+\textbf{5.} Entropie de Sackur-Tetrode (même formule que dans l'approche microcanonique) :
+\[
+S = Nk_B\left[\ln\frac{V}{N\lambda_{dB}^3} + \frac{5}{2}\right]
+\]
+L'entropie est extensive (proportionnelle à $N$) et augmente avec $V$ et $T$.
+\end{boitecorrige}
+
+\subsection*{Exercice 11 - Statistique de Fermi-Dirac : énergie de Fermi \niveau{\difficile}}
+
+\begin{boiteexercice}
+On considère un gaz de fermions (électrons libres) dans un métal.
+\begin{enumerate}
+  \item Rappeler la distribution de Fermi-Dirac $n(\epsilon)$.
+  \item À $T=0$, montrer que tous les états jusqu'à $\epsilon_F$ sont occupés et que l'énergie de Fermi est :
+  \[
+  \epsilon_F = \frac{\hbar^2}{2m}\left(3\pi^2\frac{N}{V}\right)^{2/3}
+  \]
+  \item Pour le cuivre ($n = N/V = 8{,}5\times10^{28}$ m$^{-3}$, $m_e = 9{,}1\times10^{-31}$ kg), calculer $\epsilon_F$ en eV et la température de Fermi $T_F = \epsilon_F/k_B$.
+  \item Calculer l'énergie interne totale à $T=0$ : $U_0 = \frac{3}{5}N\epsilon_F$.
+  \item À basse température ($T\ll T_F$), la capacité calorifique électronique est $C_e = \frac{\pi^2}{2}Nk_B\frac{T}{T_F}$. Comparer à la contribution classique $\frac{3}{2}Nk_B$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} Distribution de Fermi-Dirac :
+\[
+n(\epsilon) = \frac{1}{\e^{(\epsilon-\mu)/k_BT}+1}
+\]
+où $\mu$ est le potentiel chimique. À $T=0$, $n(\epsilon)=1$ pour $\epsilon<\mu_0=\epsilon_F$ et $n(\epsilon)=0$ pour $\epsilon>\epsilon_F$.
+
+\textbf{2.} La densité d'états pour un gaz d'électrons 3D (avec facteur de spin 2) :
+\[
+g(\epsilon) = \frac{V}{2\pi^2}\left(\frac{2m}{\hbar^2}\right)^{3/2}\sqrt{\epsilon}
+\]
+La condition de normalisation $N = \int_0^{\epsilon_F} g(\epsilon)\,\d\epsilon$ donne :
+\[
+N = \frac{V}{3\pi^2}\left(\frac{2m\epsilon_F}{\hbar^2}\right)^{3/2}
+\implies \epsilon_F = \frac{\hbar^2}{2m}\left(3\pi^2\frac{N}{V}\right)^{2/3}
+\]
+
+\textbf{3.} Pour le cuivre :
+\begin{align*}
+\epsilon_F &= \frac{(1{,}055\times10^{-34})^2}{2\times9{,}1\times10^{-31}}\times(3\pi^2\times8{,}5\times10^{28})^{2/3}\\
+&\approx 1{,}12\times10^{-38}\times(7{,}96\times10^{29})^{2/3}\\
+&\approx 1{,}12\times10^{-38}\times4{,}25\times10^{19}\approx 7{,}0\;\text{eV}
+\end{align*}
+Température de Fermi : $T_F = \epsilon_F/k_B = 7{,}0/(8{,}62\times10^{-5})\approx 8{,}1\times10^4\;\text{K}$.
+
+\textbf{4.} Énergie à $T=0$ :
+\[
+U_0 = \int_0^{\epsilon_F}\epsilon\,g(\epsilon)\,\d\epsilon = \frac{3N}{2}\cdot\frac{2}{5}\epsilon_F = \frac{3}{5}N\epsilon_F
+\]
+
+\textbf{5.} Rapport des capacités calorifiques :
+\[
+\frac{C_e}{C_{\text{classique}}} = \frac{\pi^2}{2}\frac{T/T_F}{3/2} = \frac{\pi^2T}{3T_F}\ll 1
+\]
+À température ambiante ($T=300$ K, $T_F=81000$ K) : $C_e/C_{\text{classique}}\approx 0{,}012$. La capacité calorifique électronique est très faible car seuls les électrons dans une couche d'énergie $\sim k_BT$ autour de $\epsilon_F$ participent (principe d'exclusion de Pauli).
+\end{boitecorrige}
+
+\subsection*{Exercice 12 - Rayonnement du corps noir : loi de Planck et Stefan-Boltzmann \niveau{\difficile}}
+
+\begin{boiteexercice}
+Le rayonnement électromagnétique en équilibre thermique dans une cavité à température $T$ se comporte comme un gaz de photons (bosons) de potentiel chimique $\mu = 0$.
+\begin{enumerate}
+  \item En utilisant la distribution de Bose-Einstein avec $\mu=0$ et la densité d'états $g(\nu) = \frac{8\pi V\nu^2}{c^3}$, écrire la densité spectrale d'énergie $u(\nu,T)$ (loi de Planck).
+  \item Vérifier la limite de Rayleigh-Jeans pour $h\nu\ll k_BT$.
+  \item Calculer l'énergie totale $U = \int_0^\infty u(\nu,T)\,\d\nu$ et montrer que $U/V\propto T^4$ (loi de Stefan).
+  \item La puissance émise par unité de surface d'un corps noir est $P = \sigma T^4$. En admettant $\int_0^\infty x^3/(e^x-1)\,\d x = \pi^4/15$, calculer la constante de Stefan $\sigma$.
+  \item Calculer la longueur d'onde du maximum d'émission (loi de Wien) : $\lambda_{\max}T = b$ avec $b\approx 2{,}898\times10^{-3}$ m$\cdot$K.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} L'énergie moyenne d'un mode de fréquence $\nu$ est $h\nu/(\e^{h\nu/k_BT}-1)$ (distribution de Bose-Einstein, $\mu=0$). La densité spectrale d'énergie (énergie par unité de volume et par unité de fréquence) est :
+\[
+\boxed{u(\nu,T) = \frac{8\pi h\nu^3}{c^3}\frac{1}{\e^{h\nu/k_BT}-1}}
+\]
+C'est la \textbf{loi de Planck}.
+
+\textbf{2.} Pour $h\nu\ll k_BT$ : $\e^{h\nu/k_BT}-1\approx h\nu/k_BT$, donc :
+\[
+u(\nu,T)\approx\frac{8\pi\nu^2}{c^3}k_BT
+\]
+C'est la loi de \textbf{Rayleigh-Jeans}, qui diverge à haute fréquence (catastrophe ultraviolette).
+
+\textbf{3.} En posant $x = h\nu/k_BT$ :
+\[
+\frac{U}{V} = \frac{8\pi h}{c^3}\left(\frac{k_BT}{h}\right)^4\int_0^\infty\frac{x^3}{\e^x-1}\,\d x = \frac{8\pi^5 k_B^4}{15c^3h^3}T^4 \propto T^4
+\]
+
+\textbf{4.} La puissance rayonnée par unité de surface est $P = (c/4)\cdot(U/V)$ :
+\[
+\sigma = \frac{2\pi^5 k_B^4}{15c^2h^3} = \frac{2\pi^5\times(1{,}38\times10^{-23})^4}{15\times(3\times10^8)^2\times(6{,}626\times10^{-34})^3}\approx 5{,}67\times10^{-8}\;\text{W.m}^{-2}\text{.K}^{-4}
+\]
+
+\textbf{5.} Le maximum de $u(\nu,T)$ en $\nu$ se trouve en dérivant et en posant $x = h\nu/k_BT$ : $3(1-\e^{-x}) = x$ donne $x\approx 2{,}82$. En termes de longueur d'onde ($\lambda = c/\nu$) :
+\[
+\lambda_{\max} = \frac{hc}{2{,}82\,k_BT} \implies \lambda_{\max}T = \frac{hc}{2{,}82\,k_B}\approx 2{,}898\times10^{-3}\;\text{m.K}
+\]
+\end{boitecorrige}
+
+\subsection*{Exercice 13 - Fluctuations d'énergie dans l'ensemble canonique \niveau{\moyen}}
+
+\begin{boiteexercice}
+Dans l'ensemble canonique, la variance de l'énergie est une quantité fondamentale.
+\begin{enumerate}
+  \item Exprimer $\langle E^2\rangle$ en fonction de $Z$ et de ses dérivées par rapport à $\beta$.
+  \item En déduire que $\langle(\Delta E)^2\rangle = \langle E^2\rangle - \langle E\rangle^2 = k_BT^2 C_V$.
+  \item Pour $N$ particules, montrer que les fluctuations relatives $\sqrt{\langle(\Delta E)^2\rangle}/\langle E\rangle\propto 1/\sqrt{N}$.
+  \item Application : pour un gaz parfait monoatomique ($C_V = \frac{3}{2}Nk_B$, $\langle E\rangle = \frac{3}{2}Nk_BT$), calculer la fluctuation relative pour $N = 10^{23}$.
+  \item Interpréter physiquement : pourquoi l'ensemble canonique et l'ensemble microcanonique donnent-ils les mêmes résultats en thermodynamique ?
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} La valeur moyenne est $\langle E\rangle = -\partial\ln Z/\partial\beta = -Z^{-1}\partial Z/\partial\beta$.
+\[
+\langle E^2\rangle = \frac{1}{Z}\frac{\partial^2 Z}{\partial\beta^2}
+\]
+
+\textbf{2.} On calcule :
+\[
+\frac{\partial^2\ln Z}{\partial\beta^2} = \frac{1}{Z}\frac{\partial^2 Z}{\partial\beta^2} - \left(\frac{1}{Z}\frac{\partial Z}{\partial\beta}\right)^2 = \langle E^2\rangle - \langle E\rangle^2 = \langle(\Delta E)^2\rangle
+\]
+D'autre part, $\langle E\rangle = -\partial\ln Z/\partial\beta$ implique :
+\[
+\frac{\partial^2\ln Z}{\partial\beta^2} = -\frac{\partial\langle E\rangle}{\partial\beta} = -\frac{\partial\langle E\rangle}{\partial T}\cdot\frac{\partial T}{\partial\beta} = C_V\cdot k_BT^2
+\]
+Donc :
+\[
+\boxed{\langle(\Delta E)^2\rangle = k_BT^2 C_V}
+\]
+
+\textbf{3.} Pour un système de $N$ particules indépendantes, $C_V\propto N$ et $\langle E\rangle\propto N$, donc :
+\[
+\frac{\sqrt{\langle(\Delta E)^2\rangle}}{\langle E\rangle}\propto\frac{\sqrt{N}}{N} = \frac{1}{\sqrt{N}}
+\]
+
+\textbf{4.} Pour un gaz parfait monoatomique :
+\[
+\frac{\sqrt{\langle(\Delta E)^2\rangle}}{\langle E\rangle} = \frac{\sqrt{k_BT^2\cdot\frac{3}{2}Nk_B}}{\frac{3}{2}Nk_BT} = \sqrt{\frac{2}{3N}} = \sqrt{\frac{2}{3\times10^{23}}}\approx 8\times10^{-12}
+\]
+Les fluctuations relatives sont absolument négligeables.
+
+\textbf{5.} Pour les systèmes macroscopiques ($N\sim10^{23}$), les fluctuations d'énergie sont $\sim10^{-12}$ fois plus petites que l'énergie moyenne. Les deux ensembles (canonique et microcanonique) donnent donc des prédictions thermodynamiques identiques à toute précision mesurable. L'équivalence des ensembles est la base de la thermodynamique statistique.
+\end{boitecorrige}
+
+\subsection*{Exercice 14 - Gaz de photons : pression de radiation \niveau{\difficile}}
+
+\begin{boiteexercice}
+Un gaz de photons en équilibre thermique exerce une pression de radiation.
+\begin{enumerate}
+  \item La densité d'énergie du rayonnement du corps noir est $u = aT^4$ avec $a = 4\sigma/c$ ($\sigma = 5{,}67\times10^{-8}$ W.m$^{-2}$.K$^{-4}$). Calculer $a$.
+  \item La pression de radiation est $P_{rad} = u/3$. Calculer $P_{rad}$ pour $T = 10^7$ K (intérieur du Soleil).
+  \item Calculer l'entropie du gaz de photons : $S = \frac{4}{3}aVT^3$. Montrer que le troisième principe est vérifié.
+  \item Écrire le grand potentiel $\Omega = -PV$ du gaz de photons et vérifier la relation de Gibbs-Duhem.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+\textbf{1.} $a = 4\sigma/c = 4\times5{,}67\times10^{-8}/(3\times10^8) = 7{,}56\times10^{-16}$ J.m$^{-3}$.K$^{-4}$.
+
+\textbf{2.} Pression de radiation dans le Soleil :
+\[
+P_{rad} = \frac{aT^4}{3} = \frac{7{,}56\times10^{-16}\times(10^7)^4}{3} = \frac{7{,}56\times10^{12}}{3}\approx 2{,}5\times10^{12}\;\text{Pa}
+\]
+C'est un quart de la pression hydrostatique au centre du Soleil ($\sim 10^{13}$ Pa) : la pression de radiation joue un rôle important.
+
+\textbf{3.} $S = 4aVT^3/3$. Quand $T\to 0$, $S\to 0$ : le troisième principe est vérifié. Le gaz de photons n'a pas de potentiel chimique ($\mu=0$), donc $dF = -S\,dT - P\,dV$.
+
+\textbf{4.} $F = -PV = -\frac{u}{3}V = -\frac{a}{3}VT^4$. On vérifie :
+\[
+-S = \frac{\partial F}{\partial T} = -\frac{4a}{3}VT^3 \quad
+\]
+\[
+-P = \frac{\partial F}{\partial V} = -\frac{a}{3}T^4 \quad
+\]
+La relation de Gibbs-Duhem ($\mu=0$) : $U = TS - PV = \frac{4a}{3}VT^4 - \frac{a}{3}VT^4 = aVT^4$.
+\end{boitecorrige}
+
+\subsection*{Exercice 15 - Paradoxe de Gibbs et indiscernabilité \niveau{\moyen}}
+
+\begin{boiteexercice}
+On considère deux gaz parfaits monoatomiques identiques (même masse $m$, même nature), chacun de $N$ particules, dans deux compartiments de volume $V$ séparés par une cloison, à la même température $T$. On retire la cloison.
+\begin{enumerate}
+  \item Calculer la variation d'entropie si l'on traite les particules comme \emph{distinguables}.
+  \item Calculer la variation d'entropie si l'on traite les particules comme \emph{indistinguables} (cas quantique réel).
+  \item Reprendre la question 2 pour deux gaz différents ($A$ et $B$). Conclure sur le paradoxe de Gibbs.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Particules distinguables.}
+
+Pour un gaz parfait, $S = Nk_B[\ln(V/N) + \tfrac{3}{2}\ln(2\pi mk_BT) + 5/2]$ (formule de Sackur-Tétrode simplifiée). Avant le mélange (particules distinguées) :
+\[
+S_i = 2Nk_B\!\left[\ln\frac{V}{N} + C(T)\right]
+\]
+Après mélange (volume $2V$ pour $2N$ particules distinguées) :
+\[
+S_f = 2Nk_B\!\left[\ln\frac{2V}{2N} + C(T)\right] = 2Nk_B\!\left[\ln\frac{V}{N} + C(T)\right] = S_i.
+\]
+Aucune variation d'entropie : c'est attendu pour des particules distinguées mélangées avec elles-mêmes. Mais la formule brute donne aussi $\Delta S = 0$ pour des gaz différents, ce qui est incorrect (paradoxe).
+
+\textbf{2. Particules indistinguables (gaz identiques).}
+
+Avec la correction de Gibbs ($1/N!$ dans la fonction de partition) :
+\[
+S_i = 2Nk_B\!\left[\ln\frac{V}{N} + C\right] + k_B\ln\frac{(2N)!}{(N!)^2}\cdot\frac{1}{\cdots}.
+\]
+Plus simplement : après mélange, $S_f = 2Nk_B[\ln(2V/2N) + C] = 2Nk_B[\ln(V/N) + C] = S_i$. Donc :
+\[
+\Delta S_\text{id} = 0.
+\]
+Aucune variation d'entropie pour un mélange de gaz identiques, ce qui est physiquement correct.
+
+\textbf{3. Deux gaz différents $A$ et $B$.}
+
+Avant mélange : $S_i = Nk_B[\ln(V/N) + C_A] + Nk_B[\ln(V/N) + C_B]$. Après (chaque gaz occupe $2V$) :
+\[
+S_f = Nk_B\!\left[\ln\frac{2V}{N} + C_A\right] + Nk_B\!\left[\ln\frac{2V}{N} + C_B\right].
+\]
+D'où :
+\[
+\Delta S = 2Nk_B\ln 2 > 0.
+\]
+C'est l'entropie de mélange. Le \emph{paradoxe de Gibbs} vient de l'oubli du facteur $1/N!$ dans le traitement classique : il conduit à $\Delta S > 0$ même pour des gaz identiques. La mécanique quantique (indiscernabilité) résout le paradoxe en imposant $\Delta S = 0$ pour les gaz identiques.
+
+\reponse{$\Delta S = 0$ pour gaz identiques ; $\Delta S = 2Nk_B\ln 2$ pour gaz différents}
+\end{boitecorrige}
+
+\subsection*{Exercice 16 - Théorème équipartition et gaz diatomique \niveau{\moyen}}
+
+\begin{boiteexercice}
+On considère $N$ molécules diatomiques rigides (masse $m$, moment d'inertie $I$) à la température $T$.
+\begin{enumerate}
+  \item Énumérer les degrés de liberté et appliquer le théorème d'équipartition.
+  \item Calculer la capacité calorifique molaire à volume constant $C_V$.
+  \item Discuter l'évolution de $C_V$ avec $T$ aux très basses températures (effets quantiques).
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Degrés de liberté.}
+
+Une molécule diatomique rigide possède :
+\begin{itemize}[nosep]
+  \item 3 degrés de translation (centre de masse) ;
+  \item 2 degrés de rotation (autour des axes perpendiculaires à la liaison, l'axe de la liaison n'a pas d'inertie) ;
+  \item 0 degré de vibration (modèle rigide).
+\end{itemize}
+Total : 5 degrés de liberté quadratiques. Le théorème d'équipartition donne $\langle E\rangle = \tfrac{5}{2}k_BT$ par molécule, soit $U = \tfrac{5}{2}Nk_BT$.
+
+\textbf{2. Capacité calorifique.}
+
+À volume constant :
+\[
+C_V = \left(\frac{\partial U}{\partial T}\right)_V = \frac{5}{2}Nk_B.
+\]
+Pour une mole ($N = N_A$) : $C_V = \tfrac{5}{2}R \approx 20{,}8\;\text{J\,mol}^{-1}\text{K}^{-1}$.
+
+\textbf{3. Évolution quantique.}
+
+Aux très basses températures, les niveaux rotationnels sont quantifiés ($E_J = \hbar^2 J(J+1)/(2I)$), d'espacement $\Delta E \sim \hbar^2/I$. Si $k_BT \ll \hbar^2/I$, les rotations sont « gelées » et seuls les 3 degrés de translation restent actifs : $C_V \to \tfrac{3}{2}R$ (gaz monoatomique). À haute température, $C_V \to \tfrac{5}{2}R$ (théorème équipartition). Pour un modèle non rigide (vibration active), on ajoute 2 degrés (1 cinétique + 1 potentiel) et $C_V \to \tfrac{7}{2}R$ à très haute $T$. La courbe $C_V(T)$ présente des « marches » successives caractéristiques de la mécanique quantique.
+
+\reponse{$C_V = \dfrac{5}{2}R$ (diatomique rigide, classical)}
+\end{boitecorrige}
+
+\subsection*{Exercice 17 - Marche aléatoire et diffusion brownienne \niveau{\moyen}}
+
+\begin{boiteexercice}
+Une particule brownienne se déplace en 1D par sauts de longueur $a$ à intervalles de temps $\tau$, dans une direction aléatoire (probabilité $1/2$ pour $\pm a$). On note $x_n$ la position après $n$ sauts.
+\begin{enumerate}
+  \item Calculer $\langle x_n\rangle$ et $\langle x_n^2\rangle$.
+  \item En posant $D = a^2/(2\tau)$, montrer que $\langle x^2(t)\rangle = 2Dt$ à la limite continue.
+  \item Écrire l'équation de diffusion correspondante et donner la solution pour une source ponctuelle.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Moments.}
+
+Soit $\xi_i = \pm a$ le $i$-ème saut (variable aléatoire indépendante avec $\langle\xi_i\rangle = 0$ et $\langle\xi_i^2\rangle = a^2$). La position $x_n = \sum_{i=1}^n \xi_i$ vérifie :
+\[
+\langle x_n\rangle = \sum_{i=1}^n \langle\xi_i\rangle = 0, \qquad \langle x_n^2\rangle = \sum_{i=1}^n \langle\xi_i^2\rangle = na^2
+\]
+(les covariances s'annulent par indépendance).
+
+\textbf{2. Limite continue.}
+
+Pour $n = t/\tau$ sauts en temps $t$ :
+\[
+\langle x^2(t)\rangle = na^2 = \frac{a^2 t}{\tau} = 2Dt \quad\text{avec}\quad D = \frac{a^2}{2\tau}.
+\]
+$D$ est le coefficient de diffusion. Cette loi $\langle x^2\rangle = 2Dt$ est caractéristique d'un mouvement brownien.
+
+\textbf{3. Équation de diffusion.}
+
+La densité de probabilité $\rho(x,t)$ vérifie :
+\[
+\frac{\partial\rho}{\partial t} = D\,\frac{\partial^2\rho}{\partial x^2}.
+\]
+Pour une source ponctuelle $\rho(x,0) = \delta(x)$, la solution est une gaussienne :
+\[
+\rho(x,t) = \frac{1}{\sqrt{4\pi Dt}}\,\exp\!\left(-\frac{x^2}{4Dt}\right).
+\]
+On vérifie $\langle x^2\rangle = \int x^2 \rho(x,t)\,\d x = 2Dt$. C'est la loi de Fick et le c\oe{}ur de la théorie d'Einstein de la diffusion (1905).
+
+\reponse{$\langle x^2(t)\rangle = 2Dt$, équation $\partial_t\rho = D\,\partial_x^2\rho$}
+\end{boitecorrige}
+
+\subsection*{Exercice 18 - Entropie de Shannon et physique statistique \niveau{\difficile}}
+
+\begin{boiteexercice}
+Soit une variable aléatoire discrète $X$ prenant $N$ valeurs $\{x_1,\ldots,x_N\}$ avec probabilités $\{p_i\}$. L'entropie de Shannon est $S = -k\sum_i p_i\ln p_i$ (en physique, $k=k_B$).
+\begin{enumerate}
+  \item Montrer que $S$ est maximale pour la distribution uniforme $p_i = 1/N$, et donner $S_\text{max}$.
+  \item Pour un système physique en contact avec un thermostat, montrer que la distribution de Boltzmann $p_i = \e^{-\beta E_i}/Z$ maximise $S$ sous contraintes $\sum p_i = 1$ et $\sum p_i E_i = \langle E\rangle$.
+  \item En déduire la relation $F = \langle E\rangle - TS$ et exprimer $S$ en fonction de $Z$.
+\end{enumerate}
+\end{boiteexercice}
+
+\begin{boitecorrige}
+
+\textbf{1. Maximum pour la distribution uniforme.}
+
+Par inégalité $\ln x \le x - 1$ (égalité en $x=1$) :
+\[
+\sum_i p_i \ln\frac{1/N}{p_i} \le \sum_i p_i\!\left(\frac{1/N}{p_i} - 1\right) = \sum_i \frac{1}{N} - \sum_i p_i = 1 - 1 = 0.
+\]
+Donc $-\sum_i p_i \ln p_i \le \ln N$, soit $S \le k\ln N$, avec égalité ssi $p_i = 1/N$ pour tout $i$.
+
+\textbf{2. Maximisation sous contraintes.}
+
+On introduit les multiplicateurs de Lagrange $\alpha$ (pour $\sum p_i = 1$) et $\beta$ (pour $\sum p_i E_i = \langle E\rangle$) et on annule :
+\[
+\frac{\partial}{\partial p_i}\!\left[-k\sum_j p_j\ln p_j - \alpha\!\left(\sum_j p_j - 1\right) - \beta\!\left(\sum_j p_j E_j - \langle E\rangle\right)\right] = 0.
+\]
+Cela donne $-k(\ln p_i + 1) - \alpha - \beta E_i = 0$, soit :
+\[
+p_i = \e^{-1-\alpha/k}\,\e^{-\beta E_i/k} \propto \e^{-\beta E_i}.
+\]
+En identifiant $\beta = 1/(k_B T)$ et en normalisant, on retrouve la distribution de Boltzmann $p_i = \e^{-\beta E_i}/Z$ avec $Z = \sum_j \e^{-\beta E_j}$.
+
+\textbf{3. Énergie libre.}
+
+L'énergie moyenne est $\langle E\rangle = \sum_i p_i E_i = -\partial\ln Z/\partial\beta$. L'entropie :
+\[
+S = -k_B\sum_i p_i \ln p_i = -k_B\sum_i p_i(-\beta E_i - \ln Z) = k_B\beta\langle E\rangle + k_B\ln Z.
+\]
+Donc :
+\[
+\langle E\rangle - TS = \langle E\rangle - k_B T\beta\langle E\rangle - k_B T\ln Z = -k_B T\ln Z = F.
+\]
+On obtient $F = -k_B T\ln Z$, $S = k_B(\ln Z + \beta\langle E\rangle) = -\partial F/\partial T$.
+
+\reponse{$F = -k_B T\ln Z$, \quad $S = k_B\!\left(\ln Z + \beta\langle E\rangle\right) = -\partial F/\partial T$}
+\end{boitecorrige}
+
+\ifdefined\inMainDoc\else\end{document}\fi
