@@ -1,0 +1,84 @@
+ENSEMBLE « MATHÉMATIQUES FINANCIÈRES » EN TROIS NIVEAUX
+COURS + TRAVAUX DIRIGÉS + TRAVAUX PRATIQUES
+===========================================================
+
+Auteur : Ounimborbitibou DJABON
+Titulaire de deux Masters : Sciences Mathématiques (AIMS Ghana)
+et Physique Théorique (Université de Lomé)
+Chercheur en Information et Communication Quantique
+Lomé, Togo — Année académique 2026-2027
+
+Cet ensemble remplace le support unique « Mathématiques Financières » (cours +
+fascicule de TP) par trois niveaux d'enseignement, chacun doté de TROIS
+documents distincts et complémentaires : le COURS (concepts, formules et
+exemples résolus), le fascicule de TRAVAUX DIRIGÉS (les séries d'exercices
+corrigés qui se trouvaient en fin de chapitre, réorganisées en séances
+structurées) et le fascicule de TRAVAUX PRATIQUES (séances informatiques
+Python et Excel). Il remplace et supprime l'ancienne livraison
+« Mathematiques_Financieres_Cours_TP ».
+
+CONTENU (18 fichiers + LISEZMOI)
+--------------------------------
+BTS — 40 heures (CM 20 h, TD 14 h, TP 6 h)
+1. Cours_MF_BTS.tex / .pdf        Cours complet BTS (44 pages)
+2. TD_MF_BTS.tex / .pdf           4 séances de TD, 14 h (30 pages)
+3. TP_MF_BTS.tex / .pdf           2 séances de TP, 6 h (21 pages)
+
+Licence — 70 heures (CM 34 h, TD 24 h, TP 12 h)
+4. Cours_MF_Licence.tex / .pdf    Cours complet Licence (69 pages)
+5. TD_MF_Licence.tex / .pdf       6 séances de TD, 24 h (46 pages)
+6. TP_MF_Licence.tex / .pdf       3 séances de TP, 12 h (28 pages)
+
+Master Professionnel — 50 heures (CM 23 h, TD 17 h, TP 10 h)
+7. Cours_MF_Master_Professionnel.tex / .pdf
+                                  Cours complet Master Pro (51 pages)
+8. TD_MF_Master_Professionnel.tex / .pdf
+                                  5 séances de TD, 17 h (39 pages)
+9. TP_MF_Master_Professionnel.tex / .pdf
+                                  2 séances de TP, 10 h (24 pages)
+
+PROGRAMMES
+----------
+BTS — 40 h : Introduction : la valeur temps de l'argent ; Intérêts simples ;
+  Intérêts composés ; Annuités.
+Licence — 70 h : les quatre chapitres du socle BTS, puis Emprunts indivis
+  (tableaux d'amortissement, TEG, remboursement anticipé) et Choix
+  d'investissement (VAN, TRI, indice de profitabilité, délais).
+Master Professionnel — 50 h : Emprunts indivis ; Choix d'investissement ;
+  Évaluation des emprunts obligataires (prix, TRA, duration, sensibilité) ;
+  Introduction à l'évaluation des actions (Gordon-Shapiro) ; Synthèse des
+  formules clés en aide-mémoire.
+
+POINTS CLÉS
+-----------
+- Le COURS conserve tous les exemples résolus dans le corps des chapitres ;
+  les séries d'exercices de fin de chapitre ont MIGRÉ dans le fascicule de
+  TD du même niveau, sous forme de séances structurées : objectifs et
+  durée, rappels de méthode avec formulaire, énoncés, corrigés détaillés
+  pas à pas, synthèse « à retenir ».
+- Chaque séance de TD renvoie aux sections du cours correspondant ; chaque
+  chapitre du cours signale sa séance de TD ; l'ensemble est articulé dans
+  les deux sens.
+- Le niveau Master Pro est autonome : les techniques d'actualisation et
+  d'annuités du socle de Licence y sont supposées acquises et rappelées au
+  fil du texte.
+- Les chapitres sans série d'exercices (choix d'investissement, synthèse)
+  sont prolongés par des séances créées pour ce réagencement, chiffrées et
+  vérifiées par programmes de contrôle indépendants.
+- Chaque séance de TP donne DEUX voies de résolution complètes : Python
+  (code commenté exécuté, sorties réelles) et Excel (fonctions financières
+  VA, VC, VPM, NPM, TAUX, VAN, TRI et équivalents anglais), avec corrigé
+  numérique complet et interprétation.
+- Exemples et cas ancrés dans des contextes togolais et ouest-africains
+  (Lomé, Kara, Sokodé, Dapaong, UEMOA, BCEAO, UMOA-Titres, microfinance,
+  coopératives agricoles) ; montants en francs CFA, base 360/365 jours.
+- Figures en TikZ/pgfplots (aucune image externe) ; tableaux selon une
+  typologie stricte (données chiffrées zébrées, formulaires, comparatifs,
+  répartitions horaires), filets booktabs.
+
+COMPILATION
+-----------
+Les fichiers .tex sont autonomes. Deux passes pour la table des matières :
+  pdflatex Cours_MF_BTS.tex && pdflatex Cours_MF_BTS.tex
+(ou une seule commande : tectonic Cours_MF_BTS.tex). Un environnement TeX
+Live récent suffit ; sous XeTeX/LuaTeX, la préambule s'adapte automatiquement.
