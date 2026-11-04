@@ -1,0 +1,308 @@
+% ============================================================
+%  Chapitre 3 : Systemes de numeration et operations
+% ============================================================
+\chapter{Systèmes de numération et opérations}
+\chaptermark{Systèmes de numération}
+
+\begin{quelqueslignes}
+Une machine ne connaît que deux états stables (le courant passe ou ne passe pas), auxquels on associe les valeurs 0 et 1 : tout nombre, tout texte, toute image finit par se réduire à des suites de bits. Ce chapitre définit les systèmes de numération utilisés en informatique (binaire, octal, décimal, hexadécimal), apprend à convertir un nombre d'une base vers l'autre dans les deux sens, pose les opérations arithmétiques directement en binaire et en hexadécimal, puis mesure l'information elle-même en bits et en octets. Aucune notion d'informatique n'est supposée connue ; les puissances et la division euclidienne suffisent.
+\end{quelqueslignes}
+
+\section{Systèmes de numération}
+
+\begin{definition}[système de numération]
+Un \emph{système de numération} de base $b$ (entier $b \geqslant 2$) est défini par deux éléments : la \emph{base} $b$, qui fixe le nombre de symboles disponibles, et l'ensemble des $b$ \emph{symboles} (ou chiffres) autorisés. Tout nombre s'écrit comme une suite finie de ces symboles, et chacun d'eux vaut un entier strictement inférieur à $b$.
+\end{definition}
+
+\begin{center}
+\small
+\begin{tabular}{L{2.3cm}C{1.2cm}L{8.3cm}C{2.3cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Système} & \textbf{Base} & \textbf{Symboles} & \textbf{Nombre de symboles}\\
+\midrule
+Décimal & 10 & $0, 1, 2, 3, 4, 5, 6, 7, 8, 9$ & 10\\
+\rowcolor{rogrisf!50}Binaire & 2 & $0, 1$ & 2\\
+Octal & 8 & $0, 1, 2, 3, 4, 5, 6, 7$ & 8\\
+\rowcolor{rogrisf!50}Hexadécimal & 16 & $0,\dots,9$, puis $A, B, C, D, E, F$ & 16\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Les quatre systèmes de numération de l'informatique}
+\label{ch3:tab:systemes}
+\end{center}
+
+Les six lettres de l'hexadécimal ne sont pas des variables : elles valent $A=10$, $B=11$, $C=12$, $D=13$, $E=14$ et $F=15$. Ce recours aux lettres s'impose parce qu'un chiffre doit rester un caractère unique : écrire « 10 » pour dix créerait une ambiguïté avec le nombre dix écrit sur deux chiffres. L'hexadécimal existe pour une raison pratique : un nombre binaire occupe beaucoup de chiffres, et l'hexadécimal, étudié à la section 2, le condense par groupes de quatre bits.
+
+L'humanité a pratiqué plusieurs bases avant celle-ci : la base 60 des Mésopotamiens, dont il nous reste les minutes et les secondes ; la base 20 des anciens Gaulois, qui survit dans « quatre-vingts » ; la base 12 des douzaines d'œufs et des mois de l'année. La base 10 s'est imposée dans la vie courante parce que nous comptons sur nos dix doigts ; l'informatique, elle, impose la base 2 pour une raison physique expliquée ci-dessous, et lui adjoint les bases 8 et 16 comme notations compactes.
+
+\begin{definition}[notation positionnelle, bit, poids]
+Soit $N = (a_{n-1}\,a_{n-2}\,\dots\,a_1\,a_0)_b$ une écriture en base $b$ : $n$ est le nombre de symboles employés, $a_i$ le symbole de position $i$, chaque $a_i$ valant un entier strictement inférieur à $b$, et les positions se comptent de droite à gauche en commençant à 0. En binaire, chaque symbole 0 ou 1 s'appelle un \emph{bit} (contraction de l'anglais \emph{binary digit}) ; le bit le plus à gauche, de plus fort poids, s'appelle \emph{bit de poids fort}, et celui de droite \emph{bit de poids faible}.
+\end{definition}
+
+\begin{exemple}[lire les positions et repérer une écriture invalide]
+Dans $(19017)_{10}$, on lit $a_4=1$, $a_3=9$, $a_2=0$, $a_1=1$ et $a_0=7$. Dans $(1011101)_2$, mot de sept bits, $a_6=1$ est le bit de poids fort et $a_0=1$ le bit de poids faible. En revanche l'écriture $(18095)_8$ \emph{n'existe pas} : en base 8, les symboles autorisés sont 0 à 7, or le chiffre 8 et le chiffre 9 y figurent. Avant toute conversion, vérifier que chaque symbole est strictement inférieur à la base.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \foreach \i/\v in {7/1,6/0,5/1,4/1,3/1,2/0,1/0,0/1}{
+    \draw[rogris!60, line width=0.6pt] ({8-\i-1},0) rectangle ({8-\i},1.0);
+    \node[font=\large\bfseries, text=robleu] at ({8-\i-0.5},0.5) {\v};
+    \node[font=\scriptsize, text=rogris] at ({8-\i-0.5},-0.3) {$2^{\i}$};
+  }
+  \node[font=\footnotesize, text=roor, align=center] at (1.6,1.55) {bit de poids fort\\($2^{7} = 128$)};
+  \node[font=\footnotesize, text=roor, align=center] at (7.6,1.55) {bit de poids faible\\($2^{0} = 1$)};
+\end{tikzpicture}
+\captionof{figure}{Le mot $(10111001)_2$ : chaque position porte le poids $2^{i}$}
+\label{ch3:fig:poidsfort}
+\end{center}
+
+\begin{exemple}[décomposer un octet par la table des poids]
+Décomposons $(10111001)_2$, un mot de huit bits. Les positions vont de 7 à 0 ; on associe à chaque bit sa valeur, produit du chiffre par son poids.
+
+\begin{center}
+\small
+\begin{tabular}{L{2.5cm}*{8}{C{0.85cm}}}
+\toprule
+\rowcolor{robleuf}Position $i$ & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0\\
+\midrule
+Chiffre $a_i$ & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 1\\
+\rowcolor{rogrisf!50}Valeur $a_i\times 2^{i}$ & 128 & 0 & 32 & 16 & 8 & 0 & 0 & 1\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Table des poids du nombre $(10111001)_2$}
+\label{ch3:tab:poids}
+\end{center}
+
+On additionne les valeurs non nulles : $128 + 32 + 16 + 8 + 1 = 185$. Le résultat est $(10111001)_2 = (185)_{10}$. C'est exactement le calcul que fait le processeur lorsqu'il interprète un code binaire comme une valeur numérique.
+\end{exemple}
+
+Reste à comprendre pourquoi la machine ne connaît que 0 et 1 : un circuit électronique numérique est bâti sur des éléments à deux états stables (tension basse ou haute), et le processeur n'interprète aucun état intermédiaire. Le choix de deux états n'est pas une pauvreté, c'est une robustesse : entre « tension basse » et « tension haute », une marge large sépare les deux valeurs reconnues, si bien qu'un léger bruit électrique ne change pas l'état lu. Dix niveaux de tension distincts, eux, se confondraient dès que le bruit s'en mêle. Le binaire occupe donc une place à part, les bases 8 et 16 ne servant qu'à l'écrire de façon compacte ; la mesure de l'information en bits et en multiples de l'octet fait l'objet de la section 4.
+
+\section{Conversions}
+
+\subsection{D'une base quelconque vers le décimal}
+
+\begin{methode}[somme pondérée]
+Le poids d'un chiffre de position $i$ est la base élevée à la puissance de sa position. La valeur décimale s'obtient en additionnant les produits de chaque chiffre par son poids :
+\[
+(N)_b \;=\; a_{n-1}\times b^{n-1} + a_{n-2}\times b^{n-2} + \dots + a_1\times b + a_0 .
+\]
+Pour un nombre à partie fractionnaire, les positions à droite de la virgule reçoivent les exposants négatifs $b^{-1}, b^{-2}, \dots$
+\end{methode}
+
+\begin{exemple}[trois conversions vers le décimal]
+Convertissons $(1023)_4$, $(175)_8$ et $(A24)_{16}$.
+\begin{align*}
+(1023)_4 &= 1\times 4^{3} + 0\times 4^{2} + 2\times 4^{1} + 3\times 4^{0} = 64 + 0 + 8 + 3 = 75 .\\
+(175)_8 &= 1\times 8^{2} + 7\times 8^{1} + 5\times 8^{0} = 64 + 56 + 5 = 125 .\\
+(A24)_{16} &= 10\times 16^{2} + 2\times 16^{1} + 4\times 16^{0} = 2560 + 32 + 4 = 2596 .
+\end{align*}
+Pour $(A24)_{16}$, on a d'abord remplacé la lettre $A$ par sa valeur 10. Les seules puissances à connaître par cœur sont, pour le binaire, $1, 2, 4, 8, 16, 32, 64, 128, 256$, pour l'octal $1, 8, 64$ et pour l'hexadécimal $1, 16, 256$ : la conversion se fait alors presque de tête, en pointant chaque chiffre non nul et en additionnant les poids.
+\end{exemple}
+
+\subsection{Du décimal vers la base \texorpdfstring{$b$}{b}}
+
+\begin{methode}[divisions successives]
+Pour écrire un entier $N$ en base $b$ : diviser $N$ par $b$ et noter le reste ; diviser le quotient par $b$, noter le reste, et recommencer tant que le quotient n'est pas nul ; lire les restes du \textbf{dernier} au \textbf{premier}. Le premier reste obtenu est le chiffre des unités, donc il se place à droite du résultat.
+\end{methode}
+
+\begin{exemple}[du décimal vers le binaire et vers l'hexadécimal]
+Convertissons $35$ en base 2 :
+\begin{align*}
+35 &= 2\times 17 + 1 & 17 &= 2\times 8 + 1 & 8 &= 2\times 4 + 0\\
+4 &= 2\times 2 + 0 & 2 &= 2\times 1 + 0 & 1 &= 2\times 0 + 1
+\end{align*}
+La lecture des restes du dernier au premier donne $(35)_{10} = (100011)_2$, que l'on vérifie par la somme pondérée : $32 + 2 + 1 = 35$. Convertissons ensuite $2596$ en base 16 : les divisions successives donnent $2596 = 16\times 162 + 4$, puis $162 = 16\times 10 + 2$, puis $10 = 16\times 0 + 10$. Les restes, lus du dernier au premier, valent 10, 2 et 4 ; le reste 10 s'écrivant $A$, on obtient $(2596)_{10} = (A24)_{16}$, en accord avec la conversion directe de l'exemple précédent.
+\end{exemple}
+
+\begin{attention}
+L'erreur classique consiste à lire les restes dans l'ordre où ils ont été calculés. Relire les restes de 35 à l'endroit donne 110001, qui vaut $32 + 16 + 1 = 49$ et non 35 : l'écriture inversée désigne un tout autre nombre. Relire du dernier au premier reste est une discipline non négociable.
+\end{attention}
+
+Les nombres à virgule se traitent par deux méthodes symétriques. Vers le décimal, la somme pondérée se poursuit à droite de la virgule avec les exposants négatifs. Du décimal vers la base $b$, on multiplie successivement la partie fractionnaire par $b$ : la partie entière de chaque produit donne, de gauche à droite, les chiffres après la virgule, et l'on s'arrête lorsque la partie fractionnaire devient nulle.
+
+\begin{exemple}[un nombre à virgule dans les deux sens]
+Convertissons $0{,}625$ en binaire par multiplications successives :
+\begin{align*}
+0{,}625 \times 2 &= 1{,}25 && \text{partie entière } 1\\
+0{,}25 \times 2 &= 0{,}5 && \text{partie entière } 0\\
+0{,}5 \times 2 &= 1{,}0 && \text{partie entière } 1
+\end{align*}
+La partie fractionnaire vaut 1{,}0 : le calcul s'arrête, et les parties entières lues de haut en bas donnent $(0{,}101)_2$. Relecture par la somme pondérée : $1 \times 2^{-1} + 0 \times 2^{-2} + 1 \times 2^{-3} = 0{,}5 + 0{,}25 = 0{,}625$. Dans l'autre sens, convertissons $(101{,}01)_2$ : la partie entière $101$ vaut $4 + 1 = 5$ et la partie fractionnaire $01$ vaut $0 \times 2^{-1} + 1 \times 2^{-2} = 0{,}25$, d'où $(101{,}01)_2 = (5{,}25)_{10}$. On notera que certains nombres, comme $0{,}1$, n'ont pas d'écriture binaire finie : la multiplication par 2 ne s'arrête jamais. Ce fait, sans conséquence sur papier, devient la source des erreurs d'arrondi étudiées au chapitre 4.
+\end{exemple}
+
+\begin{remarque}[la méthode de Horner]
+La somme pondérée se réorganise en un schéma sans puissances : on part du chiffre le plus à gauche, on multiplie par la base, on ajoute le chiffre suivant, et l'on recommence jusqu'au dernier. Pour $(1101)_2$ : $\bigl(((1\times 2)+1)\times 2+0\bigr)\times 2+1 = (3\times 2+0)\times 2+1 = 6\times 2+1 = 13$. Cette variante systématique se programme aisément, puisqu'elle ne demande qu'une boucle « multiplier par la base, ajouter le chiffre suivant ».
+\end{remarque}
+
+\subsection{Les raccourcis binaire-octal et binaire-hexadécimal}
+
+\begin{propriete}[correspondances par groupes de bits]
+Puisque $8 = 2^{3}$, un chiffre octal correspond exactement à un groupe de trois bits ; puisque $16 = 2^{4}$, un chiffre hexadécimal correspond exactement à un groupe de quatre bits. Les conversions se font par simple substitution, sans aucune arithmétique, en regroupant les bits à partir de la droite et en complétant par des zéros à gauche au besoin.
+\end{propriete}
+
+\begin{center}
+\begin{tabular}{C{2.7cm}C{2.7cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Chiffre octal} & \textbf{Écriture sur 3 bits}\\
+\midrule
+0 & 000\\
+\rowcolor{rogrisf!50}1 & 001\\
+2 & 010\\
+\rowcolor{rogrisf!50}3 & 011\\
+4 & 100\\
+\rowcolor{rogrisf!50}5 & 101\\
+6 & 110\\
+\rowcolor{rogrisf!50}7 & 111\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Correspondance chiffres octaux et groupes de trois bits}
+\label{ch3:tab:octal}
+\qquad
+\begin{tabular}{C{1.8cm}C{2.0cm}C{1.8cm}C{2.0cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Chiffre hexa} & \textbf{4 bits} & \textbf{Chiffre hexa} & \textbf{4 bits}\\
+\midrule
+0 & 0000 & 8 & 1000\\
+\rowcolor{rogrisf!50}1 & 0001 & 9 & 1001\\
+2 & 0010 & $A$ & 1010\\
+\rowcolor{rogrisf!50}3 & 0011 & $B$ & 1011\\
+4 & 0100 & $C$ & 1100\\
+\rowcolor{rogrisf!50}5 & 0101 & $D$ & 1101\\
+6 & 0110 & $E$ & 1110\\
+\rowcolor{rogrisf!50}7 & 0111 & $F$ & 1111\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Correspondance chiffres hexadécimaux et groupes de quatre bits}
+\label{ch3:tab:hexa}
+\end{center}
+
+\begin{exemple}[convertir par substitution dans les deux sens]
+Convertons $(1\,111\,010\,110\,110)_2$ en octal : en regroupant par trois à partir de la droite, $1$ devient $1$, puis $111$, $010$, $110$, $110$ donnent $7$, $2$, $6$, $6$, d'où $(17266)_8$. Convertissons ensuite $(A24)_{16}$ en binaire : chaque chiffre hexadécimal se déplie sur quatre bits, $A$ donne $1010$, $2$ donne $0010$ et $4$ donne $0100$, d'où $(A24)_{16} = (1010\,0010\,0100)_2$. Ces deux tables sont les seules à connaître par cœur dans tout le chapitre : elles font l'économie de toutes les divisions.
+\end{exemple}
+
+La table suivante donne les écritures des seize premières valeurs dans les quatre systèmes : elle sert de table de correspondance rapide pour toutes les conversions de ce chapitre.
+
+\begin{center}
+\small
+\begin{tabular}{C{1.0cm}C{1.9cm}C{1.4cm}C{1.4cm}C{1.0cm}C{1.9cm}C{1.4cm}C{1.4cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Déc.} & \textbf{Binaire} & \textbf{Octal} & \textbf{Hexa} & \textbf{Déc.} & \textbf{Binaire} & \textbf{Octal} & \textbf{Hexa}\\
+\midrule
+0 & 0000 & 0 & 0 & 8 & 1000 & 10 & 8\\
+\rowcolor{rogrisf!50}1 & 0001 & 1 & 1 & 9 & 1001 & 11 & 9\\
+2 & 0010 & 2 & 2 & 10 & 1010 & 12 & A\\
+\rowcolor{rogrisf!50}3 & 0011 & 3 & 3 & 11 & 1011 & 13 & B\\
+4 & 0100 & 4 & 4 & 12 & 1100 & 14 & C\\
+\rowcolor{rogrisf!50}5 & 0101 & 5 & 5 & 13 & 1101 & 15 & D\\
+6 & 0110 & 6 & 6 & 14 & 1110 & 16 & E\\
+\rowcolor{rogrisf!50}7 & 0111 & 7 & 7 & 15 & 1111 & 17 & F\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Correspondance des seize premières valeurs dans les quatre systèmes}
+\label{ch3:tab:corresp}
+\end{center}
+
+\section{Opérations dans les systèmes}
+
+Les quatre opérations se posent dans toute base exactement comme en décimal : on traite les chiffres de droite à gauche, en tenant compte des retenues lorsque la somme des chiffres atteint la base. En binaire, la table d'addition se résume à quatre cas : $0+0=0$, $0+1=1$, $1+0=1$ et $1+1=10$ : j'écris 0 et je reporte 1.
+
+Les tables des opérations binaires tiennent en deux lignes : pour l'addition, $0+0=0$, $0+1=1+0=1$ et $1+1=10$ (j'écris 0, je reporte 1) ; pour la multiplication, $0\times 0 = 0\times 1 = 1\times 0 = 0$ et $1 \times 1 = 1$. C'est toute l'arithmétique de la machine.
+
+\begin{methode}[poser une opération dans une base $b$]
+\begin{enumerate}
+  \item écrire les deux nombres alignés à droite, dans la même base, et vérifier que tous leurs chiffres sont strictement inférieurs à $b$ ;
+  \item traiter les colonnes de droite à gauche, en additionnant (ou multipliant) les chiffres \emph{en décimal} ;
+  \item si le total atteint $b$, écrire le reste de la division par $b$ et reporter le quotient ;
+  \item contrôler le résultat en convertissant les trois nombres en décimal : l'égalité posée doit se vérifier de part et d'autre.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[addition et multiplication binaires posées]
+Posons $1011 + 1101$ puis $1011 \times 101$, soit en décimal $11 + 13 = 24$ et $11 \times 5 = 55$ :
+\begin{center}
+\begin{tabular}{c}
+\texttt{\ \ \ 1011}\\
+\texttt{\ \ +1101}\\
+\texttt{\ \rule{1.5cm}{0.4pt}}\\
+\texttt{\ 11000}\\
+\end{tabular}
+\qquad
+\begin{tabular}{rl}
+\texttt{\ \ \ \ \ 1011} & \phantom{xxxxxxxxxxxx}\\
+\texttt{\ \ \ \ $\times$\ 101} & \\
+\texttt{\ \ \rule{1.5cm}{0.4pt}} & \\
+\texttt{\ \ \ \ \ 1011} & produit partiel ($\times 1$)\\
+\texttt{\ \ \ 0000\ } & produit partiel ($\times 0$, décalé)\\
+\texttt{\ \ 1011\ \ } & produit partiel ($\times 1$, décalé)\\
+\texttt{\ \rule{1.5cm}{0.4pt}} & \\
+\texttt{\ \ 110111} & $32+16+4+2+1 = 55$\\
+\end{tabular}
+\end{center}
+Dans l'addition, la troisième colonne cumule $1+1+1$ (le report inclus) : j'écris 1 et je reporte 1, d'où le résultat $11000 = 24$. Dans la multiplication, chaque chiffre du multiplicateur valant 0 ou 1, les produits partiels sont le multiplicande lui-même, décalé, ou la ligne nulle : il ne reste qu'à les additionner.
+\end{exemple}
+
+\begin{exemple}[soustraction avec emprunt et addition hexadécimale]
+Posons $1101 - 0110$ en binaire ($13 - 6 = 7$). Dans la colonne des unités, $1 - 0 = 1$. Dans la suivante, $0 - 1$ est impossible : j'emprunte 1 à la colonne de gauche, ce qui donne $10 - 1 = 1$, et la colonne prêteuse passe de 1 à 0 ; dans cette colonne, $0 - 1$ devient à son tour impossible, d'où un second emprunt qui fournit encore $10 - 1 = 1$. Le bit de poids fort, vidé par ce second emprunt, termine le calcul par $0 - 0 = 0$. Le résultat est $(111)_2 = 7$. En hexadécimal, posons $3A7 + 1B9$ : colonne des unités, $7 + 9 = 16 = 1\times 16 + 0$, j'écris $0$ et je reporte 1 ; colonne suivante, $A + B + 1 = 10 + 11 + 1 = 22 = 1\times 16 + 6$, j'écris $6$ et je reporte 1 ; dernière colonne, $3 + 1 + 1 = 5$. Le résultat est $(560)_{16}$, que l'on vérifie en décimal : $935 + 441 = 1376 = 5\times 256 + 6\times 16 = 1376$.
+\end{exemple}
+
+\begin{remarque}
+Les nombres négatifs ne s'écrivent pas avec un simple signe dans la machine : ils utilisent la représentation par \emph{complément à deux}, étudiée au chapitre 4, qui permet d'effectuer la soustraction avec le même circuit que l'addition. La soustraction binaire posée ci-dessus reste néanmoins la méthode de calcul manuel à maîtriser. Un cas particulier de la multiplication mérite d'être signalé : multiplier par 2 revient à décaler tous les bits d'une position vers la gauche, $10110 \times 10_2 = 101100$, soit $22 \times 2 = 44$, exactement comme multiplier par 10 en décimal ajoute un zéro.
+\end{remarque}
+
+\section{Codes binaires}
+
+\begin{propriete}[nombre de codages sur $n$ bits]
+Un mot de $n$ bits offre $2$ choix par position, donc $2^{n}$ codages possibles : $n$ bits codent $2^{n}$ valeurs distinctes. Sur 4 bits on code $2^{4} = 16$ valeurs (de 0 à 15), sur 8 bits $2^{8} = 256$ valeurs (de 0 à 255).
+\end{propriete}
+
+Cette propriété gouverne tous les codages de l'informatique. Un \emph{codage de caractères} associe à chaque lettre, chiffre ou signe un nombre binaire fixé par convention. La table \emph{ASCII} (American Standard Code for Information Interchange), codée historiquement sur 7 bits puis stockée sur 8, attribue par exemple 65 à la lettre A, 66 à B, jusqu'à 90 pour Z, les minuscules occupant 97 à 122, les chiffres 48 à 57 et l'espace 32.
+
+\begin{center}
+\small
+\begin{tabular}{L{4.6cm}L{4.6cm}L{5.0cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Caractères} & \textbf{Codes décimaux} & \textbf{Exemple}\\
+\midrule
+Espace & 32 & $32 = (0010\,0000)_2$\\
+\rowcolor{rogrisf!50}Chiffres 0 à 9 & 48 à 57 & « 0 » vaut $48 = (0011\,0000)_2$\\
+Lettres A à Z & 65 à 90 & « C » vaut $67 = (0100\,0011)_2$\\
+\rowcolor{rogrisf!50}Lettres a à z & 97 à 122 & « e » vaut $101 = (0110\,0101)_2$\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Extraits de la table ASCII : chaque caractère est un nombre}
+\label{ch3:tab:ascii}
+\end{center}
+
+\begin{exemple}[coder un mot et compter les octets]
+Codons le mot « CPTEC » en ASCII : C vaut 67, P vaut 80, T vaut 84, E vaut 69 et C vaut 67 ; stocké sur un octet par caractère, le mot occupe 5 octets, soit $5 \times 8 = 40$ bits, écrits par exemple $0100\,0011\ 0101\,0000\ 0101\,0100\ 0100\,0101\ 0100\,0011$. La convention « un octet par caractère » limite le jeu à 256 symboles : Un mot accentué comme « é » montre la limite : l'ASCII d'origine, américain, ne contient ni les accents ni les caractères africains, et chaque norme nationale y avait greffé ses propres extensions incompatibles. c'est la raison d'être d'Unicode, qui associe à chaque caractère du monde un numéro universel, stocké sur un, deux, trois ou quatre octets selon la norme d'encodage.
+\end{exemple}
+
+\begin{center}
+\small
+\begin{tabular}{C{2.6cm}C{3.0cm}C{2.6cm}C{3.2cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Puissance de 2} & \textbf{Valeur} & \textbf{Unité} & \textbf{Valeur (fabricant)}\\
+\midrule
+$2^{8}$ & 256 & 1 Ko & $10^{3}$ octets\\
+\rowcolor{rogrisf!50}$2^{10}$ & 1\,024 & 1 Mo & $10^{6}$ octets\\
+$2^{16}$ & 65\,536 & 1 Go & $10^{9}$ octets\\
+\rowcolor{rogrisf!50}$2^{20}$ & 1\,048\,576 & 1 To & $10^{12}$ octets\\
+$2^{30}$ & 1\,073\,741\,824 & & \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Puissances de 2 à connaître et multiples décimaux de l'octet}
+\label{ch3:tab:puissances}
+\end{center}
+
+\begin{exemple}[mesurer l'information : octets et multiples]
+Un \emph{octet} (\emph{byte} en anglais) est un groupe de 8 bits : c'est l'unité usuelle de l'information. Les multiples du fabricant suivent les puissances de 10 : 1 kilooctet (Ko) $= 10^{3}$ octets, 1 mégaoctet (Mo) $= 10^{6}$ octets, 1 gigaoctet (Go) $= 10^{9}$ octets ; la mémoire vive, elle, se compte en puissances de 2, où $2^{10} = 1024$ octets, $2^{20} = 1\,048\,576$ octets et $2^{30} = 1\,073\,741\,824$ octets. Une photographie de smartphone pèse environ 3 Mo ; sur une clé de 64 Go, soit $64 \times 10^{9}$ octets, on peut en stocker environ
+\[
+\frac{64 \times 10^{9}}{3 \times 10^{6}} \approx 21\,000 ,
+\]
+c'est-à-dire plus de vingt mille photographies, à condition de négliger l'espace réservé par le système de fichiers.
+\end{exemple}
+
+\begin{aretirer}
+Un système de numération se définit par sa base et ses symboles ; en informatique : binaire (2), octal (8), décimal (10), hexadécimal (16, avec $A{=}10$ à $F{=}15$). Vers le décimal : somme pondérée, chaque chiffre multiplié par $b^{\text{position}}$, positions comptées depuis 0 à droite. Du décimal vers la base $b$ : divisions successives par $b$, restes lus du dernier au premier. Raccourcis : $8 = 2^{3}$ et $16 = 2^{4}$, donc trois bits par chiffre octal, quatre bits par chiffre hexadécimal, par simple substitution. Les opérations se posent comme en décimal avec retenue quand la somme atteint la base ; en binaire $1+1 = 10$. Enfin $n$ bits codent $2^{n}$ valeurs, un octet vaut 8 bits, 1 Ko $= 10^{3}$ octets chez les fabricants contre $2^{10} = 1024$ pour la mémoire. Ces conversions composent l'essentiel de la séance de travaux dirigés 1.
+\end{aretirer}

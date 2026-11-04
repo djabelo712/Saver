@@ -1,0 +1,42 @@
+% ============================================================
+%  TD Chapitre 4 : Donnees en memoire
+% ============================================================
+\chapter{Données en mémoire}
+\chaptermark{Données en mémoire}
+
+\begin{exercice}[coder et relire en complément à deux]
+\begin{enumerate}
+\item coder $-45$ sur $8$ bits en complément à deux : écrire $45$ en binaire, inverser les bits, ajouter $1$ ;
+\item relire le mot obtenu : calculer d'abord sa valeur comme mot non signé, puis en déduire la valeur signée ;
+\item coder $-1$ sur $8$ bits et vérifier qu'on obtient $11111111$ ;
+\item rappeler l'intervalle des entiers relatifs représentables sur $8$ bits en complément à deux.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[addition en complément à deux]
+On veut calculer $(-45) + 90$ sur $8$ bits.
+\begin{enumerate}
+\item donner les deux mots de $8$ bits : le complément à deux de $-45$ (exercice 1) et l'écriture binaire de $90$ ;
+\item poser l'addition binaire des deux mots et donner le mot de $8$ bits obtenu, la retenue finale étant ignorée ;
+\item relire ce mot comme entier signé et vérifier qu'on retrouve bien $45$ ;
+\item contrôler le calcul en décimal.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[dépassement de capacité]
+Sur $8$ bits signés, un programme calcule $75 + 65$.
+\begin{enumerate}
+\item écrire $75$ et $65$ en binaire sur $8$ bits et poser l'addition ;
+\item relire le mot de $8$ bits obtenu comme entier signé : que trouve-t-on ?
+\item expliquer pourquoi ce résultat est faux, en comparant la somme exacte à l'intervalle représentable ;
+\item citer la plage de valeurs pour laquelle l'addition sur $8$ bits signés reste sûre.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[adresses, framebuffer et préfixes]
+\begin{enumerate}
+\item un microcontrôleur possède un bus d'adresses de $20$ bits : combien d'octets peut-il adresser ? Donner le résultat en kio (division par $2^{10}$) ;
+\item un écran affiche $1280 \times 720$ pixels en RVB sur $24$ bits par pixel : calculer le poids en octets de la mémoire d'affichage (framebuffer), puis en mégaoctets arrondis à $0{,}1$ Mo près ;
+\item une clé est étiquetée « 128 Go », le fabricant comptant $128 \times 10^9$ octets. Quelle capacité, en Gio arrondis à $0{,}1$ près, affichera le système d'exploitation qui compte en puissances de deux ?
+\end{enumerate}
+\end{exercice}

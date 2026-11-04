@@ -1,0 +1,74 @@
+% ============================================================
+%  Corriges TD Chapitre 6 : Les vecteurs et les images numeriques
+% ============================================================
+\chapter{Les vecteurs et les images numériques}
+\chaptermark{Vecteurs et images numériques}
+
+\begin{corrige}{6.1}
+\begin{enumerate}
+\item Le produit matrice-vecteur prend la somme des produits ligne par coordonnée :
+\[
+A\,\vec{p} = \begin{pmatrix} 2 \times 5 + 0 \times 2 \\ 0 \times 5 + 3 \times 2 \end{pmatrix} = \begin{pmatrix} 10 \\ 6 \end{pmatrix},
+\qquad
+R\,\vec{p} = \begin{pmatrix} 0 \times 5 + (-1) \times 2 \\ 1 \times 5 + 0 \times 2 \end{pmatrix} = \begin{pmatrix} -2 \\ 5 \end{pmatrix}.
+\]
+L'échelle étire le pixel de $2$ en largeur et de $3$ en hauteur ; la rotation l'envoie en $(-2, 5)$.
+\item On applique $A$ au résultat de la rotation :
+\[
+A\,(R\,\vec{p}) = \begin{pmatrix} 2 \times (-2) + 0 \times 5 \\ 0 \times (-2) + 3 \times 5 \end{pmatrix} = \begin{pmatrix} -4 \\ 15 \end{pmatrix}.
+\]
+Le pixel a tourné d'un quart de tour puis a été étiré : $-2$ devient $-4$ (facteur $2$) et $5$ devient $15$ (facteur $3$).
+\item Le produit des deux matrices vaut
+\[
+A \times R = \begin{pmatrix} 2 & 0 \\ 0 & 3 \end{pmatrix} \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}
+= \begin{pmatrix} 2 \times 0 + 0 \times 1 & 2 \times (-1) + 0 \times 0 \\ 0 \times 0 + 3 \times 1 & 0 \times (-1) + 3 \times 0 \end{pmatrix}
+= \begin{pmatrix} 0 & -2 \\ 3 & 0 \end{pmatrix},
+\]
+et l'on vérifie :
+\[
+(A \times R)\,\vec{p} = \begin{pmatrix} 0 \times 5 + (-2) \times 2 \\ 3 \times 5 + 0 \times 2 \end{pmatrix} = \begin{pmatrix} -4 \\ 15 \end{pmatrix},
+\]
+le même résultat que la question 2 : composer les transformations revient à multiplier leurs matrices, dans le même ordre.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{6.2}
+\begin{enumerate}
+\item La définition vaut $4032 \times 3024 = 12\,192\,768$ pixels, soit environ $12{,}2$ Mpx.
+\item On simplifie le rapport :
+\[
+\frac{4032}{3024} = \frac{4032 \div 1008}{3024 \div 1008} = \frac{4}{3} .
+\]
+La photo est au format 4:3, le format classique des anciens téléviseurs.
+\item À $300$ dpi, chaque pouce imprimé contient $300$ pixels, et $1$ pouce vaut $2{,}54$ cm :
+\[
+L = \frac{4032 \times 2{,}54}{300} \approx 34{,}1 \ \text{cm},
+\qquad
+H = \frac{3024 \times 2{,}54}{300} \approx 25{,}6 \ \text{cm} .
+\]
+La feuille A4 en paysage offre $29{,}7$ cm sur $21$ cm : la photo, qui mesure $34{,}1$ cm sur $25{,}6$ cm, \emph{déborde} de la page sur les deux dimensions. Il faut soit une page A3 ($42$ cm sur $29{,}7$ cm), soit une impression à une résolution plus élevée, qui réduit les dimensions physiques.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{6.3}
+\begin{enumerate}
+\item On convertit chaque canal en base $16$ : $66 = 4 \times 16 + 2$, donc \texttt{42} ; $135 = 8 \times 16 + 7$, donc \texttt{87} ; $245 = 15 \times 16 + 5$, donc \texttt{F5} puisque $15$ s'écrit F. La couleur s'écrit \texttt{\#4287F5}, un bleu franc.
+\item On lit chaque paire hexadécimale comme un quotient par $16$ : \texttt{1B} vaut $1 \times 16 + 11 = 27$ ; \texttt{5E} vaut $5 \times 16 + 14 = 94$ ; \texttt{20} vaut $2 \times 16 + 0 = 32$. Le code \texttt{\#1B5E20} désigne le triplet $(27, 94, 32)$, un vert sombre.
+\item Sur $24$ bits, chaque canal offre $2^8 = 256$ valeurs, donc le nombre de couleurs vaut $2^{8} \times 2^{8} \times 2^{8} = 2^{24} = 16\,777\,216$, le célèbre « 16 millions de couleurs ». Une image en niveaux de gris n'utilise qu'un seul canal de $8$ bits : $2^{8} = 256$ nuances, du noir au blanc.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{6.4}
+\begin{enumerate}
+\item Avec $24$ bits par pixel, soit $3$ octets, le poids non compressé vaut
+\[
+\frac{1920 \times 1080 \times 24}{8} = 1920 \times 1080 \times 3 = 6\,220\,800 \ \text{octets} \approx 6{,}2 \ \text{Mo} .
+\]
+\item Avec un facteur de compression de $10$, le fichier JPEG pèse environ $\dfrac{6{,}2}{10} \approx 0{,}6$ Mo : c'est ce poids réduit qui circule sur les réseaux.
+\item Le scan compte $2480 \times 3508 = 8\,699\,840$ pixels. En noir et blanc, chaque pixel pèse $1$ bit, donc le poids vaut
+\[
+\frac{8\,699\,840}{8} = 1\,087\,480 \ \text{octets} \approx 1{,}1 \ \text{Mo} .
+\]
+En niveaux de gris ($8$ bits par pixel), il serait de $8\,699\,840$ octets, soit environ $8{,}7$ Mo : le noir et blanc pèse exactement huit fois moins, ce qui explique le choix du mode texte pour les documents scannés.
+\end{enumerate}
+\end{corrige}

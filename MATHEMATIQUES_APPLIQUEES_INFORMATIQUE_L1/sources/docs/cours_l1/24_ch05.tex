@@ -1,0 +1,239 @@
+% ============================================================
+%  Chapitre 5 : Mesures des angles
+% ============================================================
+\chapter{Mesures des angles}
+\chaptermark{Mesures des angles}
+
+\begin{quelqueslignes}
+Les angles mesurent les rotations, et l'informatique tourne autour des rotations : une image qu'on redresse, un personnage de jeu qui pivote, une antenne qu'on oriente vers une source de signal, un bras de robot qui s'articule. Ce chapitre fixe les deux unités de mesure (le degré et le radian) et leur conversion, puis reprend les triangles rectangles avec le théorème de Pythagore et les rapports trigonométriques, qui calculent longueurs et distances inaccessibles. La dernière section introduit les vecteurs du plan, objets qui portent à la fois une direction, un sens et une longueur, et préparent le chapitre 6 sur les images numériques.
+\end{quelqueslignes}
+
+\section{Mesure des angles}
+
+\begin{definition}[angle, degré, radian]
+Un \emph{angle} est la figure formée par deux demi-droites de même origine, appelée sommet. Il se mesure en \emph{degrés} : un tour complet vaut $360\dgr{}$, un angle droit $90\dgr{}$ et un angle plat $180\dgr{}$. Le \emph{radian} est la seconde unité, celle des calculs : un angle de $1$ radian correspond à un arc de cercle dont la longueur égale le rayon, et un tour complet vaut $2\pi$ radians.
+\end{definition}
+
+\begin{propriete}[conversion degrés-radians]
+Puisque $180\dgr{} = \pi$ rad, la conversion se fait au prorata :
+\[
+\alpha\ \text{rad} = \alpha \times \frac{180}{\pi}\ {}^\circ
+\qquad\text{et}\qquad
+\beta\ {}^\circ = \beta \times \frac{\pi}{180}\ \text{rad} .
+\]
+\end{propriete}
+
+\begin{center}
+\small
+\begin{tabular}{C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Degrés} & $0\dgr{}$ & $30\dgr{}$ & $45\dgr{}$ & $60\dgr{}$ & $90\dgr{}$ & $180\dgr{}$ & $360\dgr{}$\\
+\midrule
+\textbf{Radians} & $0$ & $\dfrac{\pi}{6}$ & $\dfrac{\pi}{4}$ & $\dfrac{\pi}{3}$ & $\dfrac{\pi}{2}$ & $\pi$ & $2\pi$\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Angles remarquables en degrés et en radians}
+\label{ch5:tab:angles}
+\end{center}
+
+\begin{exemple}[convertir dans les deux sens]
+Convertions $150\dgr{}$ en radians, puis $\dfrac{5\pi}{6}$ et $72\dgr{}$ dans l'autre sens. Pour $150\dgr{}$ : $150 \times \dfrac{\pi}{180} = \dfrac{150\pi}{180} = \dfrac{5\pi}{6}$ rad, en simplifiant par 30. Réciproquement, $\dfrac{5\pi}{6}$ rad vaut $\dfrac{5\pi}{6} \times \dfrac{180}{\pi} = \dfrac{5 \times 180}{6} = 150\dgr{}$. Pour $72\dgr{}$ : $72 \times \dfrac{\pi}{180} = \dfrac{2\pi}{5}$ rad. On remarque que les deux sens de conversion utilisent les mêmes fractions : $\dfrac{\pi}{180}$ pour descendre en radians, $\dfrac{180}{\pi}$ pour remonter en degrés.
+\end{exemple}
+
+Un cadran d'horloge donne à la notion d'angle un terrain d'exercice quotidien : chaque heure vaut $360\dgr{} / 12 = 30\dgr{}$ et chaque minute $360\dgr{} / 60 = 6\dgr{}$. À $3$ h $30$, la petite aiguille se trouve à mi-chemin entre 3 et 4, soit $3{,}5 \times 30\dgr{} = 105\dgr{}$ depuis midi, et la grande à $30 \times 6\dgr{} = 180\dgr{}$ ; l'angle entre les deux aiguilles vaut donc $180\dgr{} - 105\dgr{} = 75\dgr{}$.
+
+\begin{exemple}[faire tourner un pixel de 90\dgr{}]
+Faire tourner un point du plan de $90\dgr{}$ dans le sens direct (sens inverse des aiguilles d'une montre) transforme le point de coordonnées $(x, y)$ en $(-y, x)$. Le pixel situé en $(4, 1)$ se retrouve ainsi en $(-1, 4)$ après un quart de tour, et le point $(-1, 4)$ revient à $(4, 1)$ après trois quarts de tour supplémentaires, soit $3 \times 90\dgr{} = 270\dgr{} = \dfrac{3\pi}{2}$ rad. Les logiciels de dessin et les moteurs de jeux reçoivent d'ailleurs leurs angles en radians par défaut : un quart de tour s'y demande avec l'angle $\pi/2$, et la conversion du tableau~\ref{ch5:tab:angles} devient immédiatement utile.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+  \draw[->, rogris, line width=0.6pt] (-1.7,0) -- (1.9,0)
+        node[anchor=north east, font=\footnotesize] {$x$};
+  \draw[->, rogris, line width=0.6pt] (0,-1.7) -- (0,1.9)
+        node[anchor=north east, font=\footnotesize] {$y$};
+  \draw[robleu, line width=1.1pt] (1,0) arc[start angle=0, end angle=360, radius=1];
+  % points remarquables sur les axes
+  \fill[roor] (1,0) circle (0.045);
+  \node[font=\footnotesize, text=rogris, anchor=north west] at (1.04,-0.08) {$0$};
+  \fill[roor] (0,1) circle (0.045);
+  \node[font=\footnotesize, text=rogris, anchor=south east] at (-0.04,1.08) {$\dfrac{\pi}{2}$};
+  \fill[roor] (-1,0) circle (0.045);
+  \node[font=\footnotesize, text=rogris, anchor=south east] at (-1.08,0.12) {$\pi$};
+  \fill[roor] (0,-1) circle (0.045);
+  \node[font=\footnotesize, text=rogris, anchor=north west] at (-0.04,-1.1) {$\dfrac{3\pi}{2}$};
+  % angle remarquable pi/3 avec son rayon
+  \draw[rogold, line width=1pt] (0,0) -- (0.5,0.866);
+  \fill[rogold] (0.5,0.866) circle (0.045);
+  \node[font=\footnotesize, text=rogold, anchor=south west] at (0.55,0.92) {$\dfrac{\pi}{3}$};
+  \draw[rogold, line width=0.7pt] (0.42,0) arc[start angle=0, end angle=60, radius=0.42];
+  % legende sous la figure
+  \node[font=\footnotesize, text=rogris, align=center] at (0.1,-2.2)
+    {un tour complet vaut $2\pi$ rad $= 360\dgr{}$};
+\end{tikzpicture}
+\captionof{figure}{Le cercle trigonométrique de rayon 1 : les angles remarquables se lisent en radians}
+\label{ch5:fig:cercle}
+\end{center}
+
+\section{Les triangles}
+
+\begin{propriete}[somme des angles et théorème de Pythagore]
+Dans tout triangle, la somme des trois angles vaut $180\dgr{}$. Dans un triangle \emph{rectangle} en $C$, dont les côtés adjacents à l'angle droit ont pour longueurs $a$ et $b$ et dont l'hypoténuse a pour longueur $c$ :
+\[
+c^{2} = a^{2} + b^{2},
+\]
+et l'hypoténuse est le côté le plus long, opposé à l'angle droit.
+\end{propriete}
+
+Le théorème de Pythagore s'applique dès qu'une diagonale traverse un rectangle : écran, fenêtre, terrain, feuille de papier. C'est aussi lui qui donne la distance entre deux points du plan, vue à la section 3. Le triangle rectangle de côtés $3$, $4$ et $5$ (car $3^{2} + 4^{2} = 9 + 16 = 25 = 5^{2}$) est le plus célèbre des triangles de Pythagore : les maçons l'utilisent depuis l'Antiquité pour tracer un angle droit avec une corde à treize nœuds, et une échelle de 5 m posée à 3 m d'un mur atteint exactement 4 m de hauteur.
+
+\begin{center}
+\small
+\begin{tabular}{L{3.2cm}L{6.0cm}L{5.4cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Type de triangle} & \textbf{Caractéristique} & \textbf{Exemple d'angles}\\
+\midrule
+Équilatéral & trois côtés égaux & $60\dgr{}$ ; $60\dgr{}$ ; $60\dgr{}$\\
+\rowcolor{rogrisf!50}Isocèle & deux côtés égaux & $40\dgr{}$ ; $70\dgr{}$ ; $70\dgr{}$\\
+Quelconque (scalène) & trois côtés inégaux & $50\dgr{}$ ; $60\dgr{}$ ; $70\dgr{}$\\
+\rowcolor{rogrisf!50}Rectangle & un angle droit de $90\dgr{}$ & $90\dgr{}$ ; $30\dgr{}$ ; $60\dgr{}$\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Types de triangles et exemple d'angles (somme toujours $180\dgr{}$)}
+\label{ch5:tab:types}
+\end{center}
+
+Pour les triangles quelconques, la \emph{loi des cosinus} généralise Pythagore : dans un triangle dont deux côtés ont pour longueurs $b$ et $c$ et dont l'angle entre eux vaut $\alpha$, le troisième côté vaut $a$ avec
+\[
+a^{2} = b^{2} + c^{2} - 2\,b\,c\,\cos \alpha .
+\]
+Lorsque $\alpha = 90\dgr{}$, le terme correctif disparaît et l'on retrouve $a^{2} = b^{2} + c^{2}$ : Pythagore est le cas particulier d'un angle droit. À titre d'illustration, avec $b = 7$, $c = 8$ et $\alpha = 60\dgr{}$ : $a^{2} = 49 + 64 - 2 \times 7 \times 8 \times 0{,}5 = 57$, d'où $a = \sqrt{57} \approx 7{,}55$.
+
+\begin{propriete}[rapports trigonométriques]
+Dans un triangle rectangle, pour un angle aigu $\alpha$ :
+\[
+\cos \alpha = \frac{\text{côté adjacent}}{\text{hypoténuse}}, \qquad
+\sin \alpha = \frac{\text{côté opposé}}{\text{hypoténuse}}, \qquad
+\tan \alpha = \frac{\text{côté opposé}}{\text{côté adjacent}} .
+\]
+\end{propriete}
+
+\begin{center}
+\small
+\begin{tabular}{C{1.7cm}C{1.9cm}C{1.9cm}C{1.9cm}C{1.9cm}C{1.7cm}}
+\toprule
+\rowcolor{robleuf}$\alpha$ & $0\dgr{}$ & $30\dgr{}$ & $45\dgr{}$ & $60\dgr{}$ & $90\dgr{}$\\
+\midrule
+$\sin \alpha$ & $0$ & $\dfrac{1}{2}$ & $\dfrac{\sqrt{2}}{2}$ & $\dfrac{\sqrt{3}}{2}$ & $1$\\
+\rowcolor{rogrisf!50}$\cos \alpha$ & $1$ & $\dfrac{\sqrt{3}}{2}$ & $\dfrac{\sqrt{2}}{2}$ & $\dfrac{1}{2}$ & $0$\\
+$\tan \alpha$ & $0$ & $\dfrac{1}{\sqrt{3}}$ & $1$ & $\sqrt{3}$ & indéfini\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Valeurs exactes des rapports trigonométriques des angles remarquables}
+\label{ch5:tab:trigo}
+\end{center}
+
+\begin{methode}[résoudre un triangle rectangle]
+\begin{enumerate}
+  \item repérer l'angle droit et l'angle connu (ou cherché) $\alpha$ ;
+  \item nommer les trois côtés du point de vue de $\alpha$ : opposé, adjacent, hypoténuse ;
+  \item choisir le rapport qui relie les deux côtés connus : $\cos$ pour adjacent-hypoténuse, $\sin$ pour opposé-hypoténuse, $\tan$ pour opposé-adjacent ; Pythagore lorsque les trois côtés sont concernés ;
+  \item isoler l'inconnue, calculer, puis contrôler l'ordre de grandeur : l'hypoténuse doit rester le côté le plus long.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[la diagonale d'un écran par Pythagore]
+Un écran de 24 pouces au format 16:9 a une diagonale de 24 pouces ; quelles sont sa largeur et sa hauteur ? Écrivons la largeur $w = 16k$ et la hauteur $h = 9k$, avec $k$ inconnu. Pythagore donne :
+\[
+(16k)^{2} + (9k)^{2} = 24^{2}
+\quad\Longrightarrow\quad
+k^{2}\,(256 + 81) = 576
+\quad\Longrightarrow\quad
+k = \frac{24}{\sqrt{337}} \approx 1{,}307 .
+\]
+D'où $w \approx 16 \times 1{,}307 \approx 20{,}9$ pouces et $h \approx 9 \times 1{,}307 \approx 11{,}8$ pouces, soit environ 53 cm sur 30 cm (1 pouce $= 2{,}54$ cm).
+\end{exemple}
+
+\begin{exemple}[une hauteur inaccessible par la trigonométrie]
+Un technicien situe un point d'observation à 15 m du pied d'une antenne, au sol horizontal ; l'angle entre le sol et la ligne de visée du sommet vaut $35\dgr{}$. Quelle est la hauteur $h$ de l'antenne ? Le triangle est rectangle, l'angle connu est adjacent au côté de 15 m et opposé au côté $h$ :
+\[
+\tan 35\dgr{} = \frac{h}{15}
+\quad\Longrightarrow\quad
+h = 15 \times \tan 35\dgr{} \approx 15 \times 0{,}700 \approx 10{,}5\ \text{m} .
+\]
+L'antenne culmine à environ 10,5 mètres. La même lecture du tableau~\ref{ch5:tab:trigo} (adjacent, opposé, hypoténuse) résout tous les triangles où une longueur reste inaccessible à la mesure directe.
+\end{exemple}
+
+\begin{remarque}[pourquoi le radian]
+Le radian n'est pas une unité de plus par caprice : c'est l'unité naturelle du cercle. Un angle de $\alpha$ radians découpé sur un cercle de rayon $r$ correspond à un arc de longueur $s = r \times \alpha$ : la longueur se lit directement, sans coefficient de conversion. Un angle de $1$ radian sur un cercle de 1 m y découpe un arc d'exactement 1 m ; le même angle sur un cercle de 3 m y découpe 3 m. Cette simplicité fait du radian l'unité des logiciels de graphisme, des moteurs de jeu et de toute la physique des rotations.
+\end{remarque}
+
+\section{Les vecteurs}
+
+\begin{definition}[vecteur du plan]
+Un \emph{vecteur} du plan est un déplacement caractérisé par trois données : une direction, un sens et une longueur (\emph{norme}). Il se représente par une flèche et se note $\vec{u}$ ; ses \emph{coordonnées} $\begin{pmatrix} x \\ y \end{pmatrix}$ indiquent le déplacement horizontal et le déplacement vertical qu'il effectue. La \emph{norme} de $\vec{u} = \begin{pmatrix} x \\ y \end{pmatrix}$ vaut
+\[
+\|\vec{u}\| = \sqrt{x^{2} + y^{2}},
+\]
+conséquence directe du théorème de Pythagore.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[->, rogris, line width=0.6pt] (-0.9,0) -- (4.4,0)
+        node[anchor=north east, font=\footnotesize] {$x$};
+  \draw[->, rogris, line width=0.6pt] (0,-0.9) -- (0,4.8)
+        node[anchor=north east, font=\footnotesize] {$y$};
+  % graduations
+  \draw[rogris, line width=0.5pt] (3,0.08) -- (3,-0.08);
+  \draw[rogris, line width=0.5pt] (0.08,4) -- (-0.08,4);
+  % lignes de rappel pointillees
+  \draw[roteal, line width=0.6pt, dashed] (3,0) -- (3,4) -- (0,4);
+  % le vecteur
+  \draw[->, robleu, line width=1.2pt] (0,0) -- (3,4);
+  \node[text=robleu, font=\footnotesize\bfseries, anchor=west] at (3.14,4.1) {$\vec{u}$};
+  % coordonnees
+  \node[font=\footnotesize, text=rogris, anchor=north] at (3,-0.16) {$3$};
+  \node[font=\footnotesize, text=rogris, anchor=east] at (-0.14,4) {$4$};
+  \node[font=\scriptsize, text=roteal, anchor=west] at (3.25,1.9) {$\Delta x = 3$};
+  \node[font=\scriptsize, text=roteal, anchor=south] at (1.5,4.1) {$\Delta y = 4$};
+  % norme, a l'ecart du trace
+  \node[font=\footnotesize, text=robleu, anchor=east] at (1.3,2.5) {$\|\vec{u}\| = 5$};
+\end{tikzpicture}
+\captionof{figure}{Le vecteur $\vec{u} = \begin{pmatrix} 3 \\ 4 \end{pmatrix}$ : ses coordonnées et sa norme}
+\label{ch5:fig:vecteur}
+\end{center}
+
+Deux vecteurs s'additionnent coordonnée par coordonnée, et se multiplient par un nombre qui agrandit ou rétrécit leur longueur : $\vec{u} + \vec{v} = \begin{pmatrix} x_u + x_v \\ y_u + y_v \end{pmatrix}$ et $\lambda \vec{u} = \begin{pmatrix} \lambda x \\ \lambda y \end{pmatrix}$. Deux vecteurs sont \emph{colinéaires} lorsque l'un est multiple de l'autre : ils ont la même direction, au sens près ou à sens contraire. En informatique, un vecteur désigne aussi bien un déplacement sur l'écran qu'une liste de données ; le mot désigne ici l'objet géométrique, le chapitre 6 reprendra la lecture informatique. Sur un écran de $1920 \times 1080$ pixels, le déplacement d'un curseur de dix pixels vers la droite et quatre vers le bas s'écrit simplement le vecteur $\begin{pmatrix} 10 \\ 4 \end{pmatrix}$, de norme $\sqrt{100 + 16} = \sqrt{116} \approx 10{,}8$ pixels.
+
+En informatique, la norme d'un vecteur sert dès qu'une distance se calcule : distance du curseur à un objet cliqué, longueur d'un déplacement par image dans un jeu, taille d'un pas d'algorithme. La direction du vecteur sert à orienter : un personnage se tourne vers la direction de son vecteur de vitesse, un projectile part dans la direction du vecteur visé. Un même objet mathématique, trois usages : déplacer, mesurer, orienter.
+
+\begin{propriete}[produit scalaire et angle entre deux vecteurs]
+Le \emph{produit scalaire} de deux vecteurs $\vec{u} = \begin{pmatrix} x_u \\ y_u \end{pmatrix}$ et $\vec{v} = \begin{pmatrix} x_v \\ y_v \end{pmatrix}$ vaut $\vec{u} \cdot \vec{v} = x_u\,x_v + y_u\,y_v$, et il relie la norme et l'angle $\theta$ entre les deux vecteurs :
+\[
+\vec{u} \cdot \vec{v} = \|\vec{u}\| \times \|\vec{v}\| \times \cos \theta .
+\]
+Un produit scalaire nul signale deux vecteurs perpendiculaires, puisque $\cos 90\dgr{} = 0$.
+\end{propriete}
+
+À titre d'illustration, les vecteurs $\begin{pmatrix} 3 \\ 4 \end{pmatrix}$ et $\begin{pmatrix} 4 \\ 3 \end{pmatrix}$ ont pour produit scalaire $3 \times 4 + 4 \times 3 = 24$, et comme chacun a pour norme $5$, on lit $\cos \theta = 24/25 = 0{,}96$, d'où un angle d'environ $16{,}3\dgr{}$ entre eux : deux directions proches, comme le confirme un dessin rapide.
+
+\begin{exemple}[opérer sur des vecteurs]
+Soient $\vec{u} = \begin{pmatrix} 3 \\ 4 \end{pmatrix}$ et $\vec{v} = \begin{pmatrix} -1 \\ 2 \end{pmatrix}$. La somme vaut $\vec{u} + \vec{v} = \begin{pmatrix} 3 + (-1) \\ 4 + 2 \end{pmatrix} = \begin{pmatrix} 2 \\ 6 \end{pmatrix}$, la norme de $\vec{u}$ vaut $\|\vec{u}\| = \sqrt{3^{2} + 4^{2}} = \sqrt{25} = 5$, et le double $\ 2\vec{u} = \begin{pmatrix} 6 \\ 8 \end{pmatrix}$ est colinéaire à $\vec{u}$, de norme $10$ : le même déplacement, deux fois plus long.
+\end{exemple}
+
+\begin{exemple}[distance entre deux points du plan image]
+Quelle est la distance entre le pixel $A$ de coordonnées $(2, 3)$ et le pixel $B$ de coordonnées $(7, 15)$ d'une image ? Le déplacement de $A$ vers $B$ est le vecteur $\overrightarrow{AB} = \begin{pmatrix} 7 - 2 \\ 15 - 3 \end{pmatrix} = \begin{pmatrix} 5 \\ 12 \end{pmatrix}$, dont la norme vaut
+\[
+\|\overrightarrow{AB}\| = \sqrt{5^{2} + 12^{2}} = \sqrt{25 + 144} = \sqrt{169} = 13 .
+\]
+La distance entre les deux points vaut 13 pixels. Ce calcul (différence de coordonnées, puis Pythagore) est celui que toute bibliothèque graphique exécute pour mesurer, aligner ou animer.
+\end{exemple}
+
+\begin{attention}
+Sur l'écran, deux conventions de coordonnées cohabitent et ne doivent jamais être mélangées. Les mathématiques du plan placent l'origine en bas à gauche, l'axe des $y$ vers le haut ; les bibliothèques d'images, elles, comptent les lignes depuis le haut de l'image, l'origine en haut à gauche, l'axe vertical vers le bas. Le pixel « ligne 3, colonne 7 » d'une photo n'est donc pas le point de coordonnées $(7, 3)$ du repère du cours, mais son symétrique vertical. Avant tout calcul d'image, s'assurer de la convention du logiciel utilisé.
+\end{attention}
+
+\begin{aretirer}
+Un tour complet vaut $360\dgr{}$ ou $2\pi$ rad, et la conversion se fait par $\pi = 180\dgr{}$ : multiplier par $\frac{\pi}{180}$ pour passer en radians, par $\frac{180}{\pi}$ pour revenir en degrés (tableau~\ref{ch5:tab:angles}). Dans un triangle rectangle : somme des angles $180\dgr{}$, Pythagore $c^{2} = a^{2} + b^{2}$, et les rapports $\cos$, $\sin$, $\tan$ relient les côtés (tableau~\ref{ch5:tab:trigo}) : la diagonale d'un écran 16:9 et la hauteur d'une antenne se calculent ainsi. Un vecteur $\begin{pmatrix} x \\ y \end{pmatrix}$ porte direction, sens et norme $\sqrt{x^{2}+y^{2}}$ ; la somme se fait coordonnée par coordonnée, la colinéarité signe la même direction, et la distance entre deux points est la norme du vecteur qui les relie. Le chapitre 6 transpose ces vecteurs aux images : chaque pixel y devient une adresse, chaque couleur une donnée.
+\end{aretirer}

@@ -1,0 +1,39 @@
+% ============================================================
+%  TD Chapitre 6 : Les vecteurs et les images numeriques
+% ============================================================
+\chapter{Les vecteurs et les images numériques}
+\chaptermark{Vecteurs et images numériques}
+
+\begin{exercice}[matrices de transformation]
+Soient $A = \begin{pmatrix} 2 & 0 \\ 0 & 3 \end{pmatrix}$ (matrice d'échelle) et $R = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$ (rotation de $90\dgr{}$ dans le sens direct), et le pixel $\vec{p} = \begin{pmatrix} 5 \\ 2 \end{pmatrix}$.
+\begin{enumerate}
+\item calculer $A\,\vec{p}$ et $R\,\vec{p}$ ;
+\item calculer $A\,(R\,\vec{p})$ : que fait-on au pixel si l'on tourne d'abord puis qu'on étire ?
+\item calculer le produit $A \times R$ puis vérifier que $(A \times R)\,\vec{p}$ redonne le résultat de la question 2.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[définition, rapport et impression]
+Une photo de smartphone mesure $4032 \times 3024$ pixels.
+\begin{enumerate}
+\item calculer sa définition en pixels, puis en mégapixels arrondis à $0{,}1$ Mpx près ;
+\item montrer que son rapport d'affichage vaut $\dfrac{4}{3}$ ;
+\item calculer les dimensions imprimées en centimètres à $300$ dpi (rappel : $1$ pouce $= 2{,}54$ cm), arrondies à $0{,}1$ cm près, et dire si la photo tient en pleine page A4 paysage ($29{,}7$ cm sur $21$ cm).
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[couleurs RVB et hexadécimal]
+\begin{enumerate}
+\item convertir la couleur RVB $(66, 135, 245)$ en notation hexadécimale de la forme \texttt{\#RRVVBB} ;
+\item décoder le code \texttt{\#1B5E20} en un triplet RVB (rappel : en hexadécimal, A vaut 10, B vaut 11, \dots, F vaut 15) ;
+\item combien de couleurs distinctes offre le codage RVB sur $24$ bits ? Et une image en niveaux de gris sur $8$ bits ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[poids d'une image]
+\begin{enumerate}
+\item calculer le poids non compressé, en octets puis en mégaoctets arrondis à $0{,}1$ Mo près, d'une image de $1920 \times 1080$ pixels en RVB sur $24$ bits ;
+\item la même image est enregistrée en JPEG avec un facteur de compression de $10$ : donner son poids approximatif ;
+\item une page A4 est scannée à $300$ dpi, ce qui donne environ $2480 \times 3508$ pixels. Calculer le poids du scan en noir et blanc ($1$ bit par pixel), arrondi à $0{,}1$ Mo près, et comparer avec le même scan en niveaux de gris ($8$ bits par pixel).
+\end{enumerate}
+\end{exercice}

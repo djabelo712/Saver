@@ -1,0 +1,151 @@
+% ============================================================
+%  Corriges TD Chapitre 3 : Systemes de numeration
+% ============================================================
+\chapter{Systèmes de numération}
+\chaptermark{Systèmes de numération}
+
+\begin{corrige}{3.1}
+\textbf{Première conversion.} L'écriture $(110101)_2$ compte six bits, numérotés $5$ à $0$ de gauche à droite ; chaque bit se multiplie par la puissance de deux de son rang :
+\begin{center}
+\begin{tabular}{C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}}
+\toprule
+\rowcolor{robleuf}bit $5$ & bit $4$ & bit $3$ & bit $2$ & bit $1$ & bit $0$ \\
+\midrule
+$1$ & $1$ & $0$ & $1$ & $0$ & $1$ \\
+\rowcolor{rogrisf!50}$32$ & $16$ & $8$ & $4$ & $2$ & $1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+On ne retient que les positions occupées par un $1$ : $(110101)_2 = 32 + 16 + 4 + 1 = 53$.
+
+\textbf{Deuxième conversion.} Dans $(127{,}4)_8$, les chiffres avant la virgule se multiplient par $8^2 = 64$, $8^1 = 8$ et $8^0 = 1$, le chiffre après la virgule par $8^{-1} = \frac{1}{8}$ :
+\[
+(127{,}4)_8 = 1 \times 64 + 2 \times 8 + 7 \times 1 + 4 \times \frac{1}{8} = 64 + 16 + 7 + 0{,}5 = 87{,}5.
+\]
+
+\textbf{Troisième conversion.} Dans $(2\mathrm{E}{,}8)_{16}$, le chiffre E vaut $14$ et la partie fractionnaire se pondère par $16^{-1} = \frac{1}{16}$ :
+\[
+(2\mathrm{E}{,}8)_{16} = 2 \times 16 + 14 \times 1 + 8 \times \frac{1}{16} = 32 + 14 + 0{,}5 = 46{,}5.
+\]
+
+\textbf{Vérification.} $53 = 32 + 16 + 4 + 1$ redonne bien les bits $110101$ ; $87{,}5 = 87 + \frac{4}{8}$ redonne $127{,}4$ en octal ; $46{,}5 = 46 + \frac{8}{16}$ redonne $2$E$,8$ en hexadécimal. Les trois résultats sont cohérents.
+\end{corrige}
+
+\begin{corrige}{3.2}
+\textbf{Conversion de $2026$ en binaire.} On divise par $2$ jusqu'à quotient nul, en notant chaque reste ; les onze divisions se répartissent sur deux blocs, à lire de haut en bas dans le bloc de gauche puis dans le bloc de droite :
+\begin{center}
+\begin{tabular}{C{1.9cm}C{1.7cm}C{1.3cm}}
+\toprule
+\rowcolor{robleuf}Division & Quotient & Reste \\
+\midrule
+$2026 \div 2$ & $1013$ & $0$ \\
+\rowcolor{rogrisf!50}$1013 \div 2$ & $506$ & $1$ \\
+$506 \div 2$ & $253$ & $0$ \\
+\rowcolor{rogrisf!50}$253 \div 2$ & $126$ & $1$ \\
+$126 \div 2$ & $63$ & $0$ \\
+\rowcolor{rogrisf!50}$63 \div 2$ & $31$ & $1$ \\
+\bottomrule
+\end{tabular}
+\qquad
+\begin{tabular}{C{1.9cm}C{1.7cm}C{1.3cm}}
+\toprule
+\rowcolor{robleuf}Division & Quotient & Reste \\
+\midrule
+$31 \div 2$ & $15$ & $1$ \\
+\rowcolor{rogrisf!50}$15 \div 2$ & $7$ & $1$ \\
+$7 \div 2$ & $3$ & $1$ \\
+\rowcolor{rogrisf!50}$3 \div 2$ & $1$ & $1$ \\
+$1 \div 2$ & $0$ & $1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Les restes se lisent du bas du second bloc vers le haut du premier : $(2026)_{10} = (11111101010)_2$. Contrôle : $1024 + 512 + 256 + 128 + 64 + 32 + 8 + 2 = 2026$.
+
+\textbf{Conversion de $2026$ en octal.} Divisions par $8$ : $2026 = 253 \times 8 + 2$ ; $253 = 31 \times 8 + 5$ ; $31 = 3 \times 8 + 7$ ; $3 = 0 \times 8 + 3$. Les restes se lisent du bas vers le haut : $(2026)_{10} = (3752)_8$.
+
+\textbf{Conversion de $2026$ en hexadécimal.} Divisions par $16$ : $2026 = 126 \times 16 + 10$, reste A ; $126 = 7 \times 16 + 14$, reste E ; $7 = 0 \times 16 + 7$. Donc $(2026)_{10} = (7\mathrm{EA})_{16}$.
+
+\textbf{Conversion de $77$ en binaire.} Divisions par $2$ : $77 = 38 \times 2 + 1$ ; $38 = 19 \times 2 + 0$ ; $19 = 9 \times 2 + 1$ ; $9 = 4 \times 2 + 1$ ; $4 = 2 \times 2 + 0$ ; $2 = 1 \times 2 + 0$ ; $1 = 0 \times 2 + 1$. En lisant les restes du bas vers le haut : $(77)_{10} = (1001101)_2$.
+
+\textbf{Cohérence.} Le raccourci de substitution redonne la même écriture binaire : $3$, $7$, $5$, $2$ en octal donnent $011\,111\,101\,010$, et $7$, E, A en hexadécimal donnent $0111\,1110\,1010$ ; après suppression des zéros de tête, les deux écritures coïncident avec $11111101010$.
+\end{corrige}
+
+\begin{corrige}{3.3}
+\textbf{De l'octal vers le binaire.} Chaque chiffre octal se remplace par son paquet de trois bits : $1$ donne $001$, $7$ donne $111$, $5$ donne $101$ ; on concatène puis on supprime les zéros de tête :
+\[
+(175)_8 = 001\,111\,101 = (1111101)_2.
+\]
+Contrôle : $(175)_8 = 1 \times 64 + 7 \times 8 + 5 = 125$ et $(1111101)_2 = 64 + 32 + 16 + 8 + 4 + 1 = 125$.
+
+\textbf{De l'hexadécimal vers le binaire.} Chaque chiffre hexadécimal se remplace par son paquet de quatre bits : A donne $1010$, $2$ donne $0010$, $4$ donne $0100$ :
+\[
+(\mathrm{A24})_{16} = 1010\,0010\,0100 = (101000100100)_2.
+\]
+Contrôle : $(\mathrm{A24})_{16} = 10 \times 256 + 2 \times 16 + 4 = 2596$ et $(101000100100)_2 = 2048 + 512 + 32 + 4 = 2596$.
+
+\textbf{Du binaire vers l'octal puis l'hexadécimal.} Pour l'octal, on regroupe les bits par trois depuis la droite ; le paquet de gauche ne compte qu'un bit, on le complète par deux zéros : $1111101101$ se coupe en $1\,|\,111\,|\,101\,|\,101$, soit $001\,|\,111\,|\,101\,|\,101$, d'où $(1755)_8$. Pour l'hexadécimal, on regroupe par quatre depuis la droite ; le paquet de gauche compte deux bits, on le complète par deux zéros : $11\,|\,1110\,|\,1101$, soit $0011\,|\,1110\,|\,1101$, d'où $(3\mathrm{ED})_{16}$.
+
+\textbf{Contrôle.} Le nombre binaire vaut $512 + 256 + 128 + 64 + 32 + 8 + 4 + 1 = 1005$ ; on retrouve $1 \times 512 + 7 \times 64 + 5 \times 8 + 5 = 1005$ et $3 \times 256 + 14 \times 16 + 13 = 1005$. Les trois écritures décrivent le même nombre.
+\end{corrige}
+
+\begin{corrige}{3.4}
+\textbf{Addition binaire posée.} On aligne les deux nombres à droite et on complète le second par des zéros ; la ligne du haut porte les retenues :
+\begin{center}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{L{1.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}}
+\toprule
+\rowcolor{robleuf}retenues & $1$ & $1$ & $1$ & $1$ & $1$ & $1$ & $1$ & $1$ & \\
+\midrule
+& & $1$ & $1$ & $1$ & $1$ & $0$ & $1$ & $1$ & $1$ \\
+\rowcolor{rogrisf!50}$+$ & & $0$ & $0$ & $0$ & $1$ & $1$ & $1$ & $1$ & $1$ \\
+\midrule
+& $1$ & $0$ & $0$ & $0$ & $1$ & $0$ & $1$ & $1$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+De droite à gauche : $1+1$ donne $0$ avec une retenue ; puis $1+1+1$ donne $1$ ; encore $1+1+1$ donne $1$ ; puis $0+1+1$ donne $0$ ; puis $1+1+1$ donne $1$ ; puis $1+0+1$ donne $0$ ; encore $1+0+1$ donne $0$ ; enfin $1+0+1$ donne $0$, et la retenue tombe dans une neuvième colonne. La somme s'écrit $(100010110)_2$.
+
+\textbf{Soustraction binaire posée avec emprunt.} On retire $(101011)_2$ de la somme obtenue, en complétant par des zéros à gauche ; la ligne du haut porte les emprunts :
+\begin{center}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{L{1.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}}
+\toprule
+\rowcolor{robleuf}emprunts & $1$ & $1$ & $1$ & $1$ & $1$ & $1$ & $1$ & $1$ & \\
+\midrule
+& $1$ & $0$ & $0$ & $0$ & $1$ & $0$ & $1$ & $1$ & $0$ \\
+\rowcolor{rogrisf!50}$-$ & $0$ & $0$ & $0$ & $1$ & $0$ & $1$ & $0$ & $1$ & $1$ \\
+\midrule
+& $0$ & $1$ & $1$ & $1$ & $0$ & $1$ & $0$ & $1$ & $1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+De droite à gauche, chaque colonne où le chiffre du haut, diminué de l'emprunt reçu, est inférieur à celui du bas emprunte $2$ à la colonne suivante ; le dernier $1$ du haut reste alors disponible, la neuvième colonne donne $0$, et le résultat s'écrit $(11101011)_2$.
+
+\textbf{Vérification décimale.} $(11110111)_2 = 247$, $(11111)_2 = 31$, $(101011)_2 = 43$ : l'énoncé demande $247 + 31 - 43 = 235$, et $(11101011)_2 = 128 + 64 + 32 + 8 + 2 + 1 = 235$. De même $247 + 31 = 278$ et $(100010110)_2 = 256 + 16 + 4 + 2 = 278$.
+
+\textbf{Addition hexadécimale posée.} Colonne des unités : $7 + \mathrm{B} = 7 + 11 = 18 = 16 + 2$, on pose $2$ et on retient $1$. Colonne des seizaines : $\mathrm{A} + 9 + 1 = 10 + 9 + 1 = 20 = 16 + 4$, on pose $4$ et on retient $1$. Colonne des $256$ : $3 + 1 + 1 = 5$. D'où $(3\mathrm{A7})_{16} + (19\mathrm{B})_{16} = (542)_{16}$. Contrôle : $3\mathrm{A7} = 935$, $19\mathrm{B} = 411$, somme $1346$ ; et $(542)_{16} = 5 \times 256 + 4 \times 16 + 2 = 1346$.
+\end{corrige}
+
+\begin{corrige}{3.5}
+\textbf{Question 1.} Un octet compte $8$ bits et chaque bit vaut $0$ ou $1$ : le nombre de mots distincts vaut $2^8 = 256$. C'est le résultat général de la section 4 du chapitre 3 du cours : $n$ bits offrent $2^n$ codages.
+
+\textbf{Question 2.} Avec $24$ bits par pixel, le nombre de couleurs vaut $2^{24} = 16\,777\,216$, soit environ $16{,}8$ millions de couleurs, souvent annoncées « 16,7 millions » dans les fiches techniques des écrans.
+
+\textbf{Question 3.} La capacité $4$ Go vaut $4 \times 10^9 = 4\,000\,000\,000$ octets ; la capacité $4$ Gio vaut $4 \times 2^{30} = 4 \times 1\,073\,741\,824 = 4\,294\,967\,296$ octets. L'écart vaut $4\,294\,967\,296 - 4\,000\,000\,000 = 294\,967\,296$ octets, soit près de $0{,}3$ Go : les deux étiquettes ne désignent pas la même capacité.
+
+\textbf{Question 4.} La lettre C vaut $67 = 64 + 2 + 1$, d'où l'octet $01000011$ ; la lettre T vaut $84 = 64 + 16 + 4$, d'où l'octet $01010100$. Le mot « CT » s'écrit donc sur deux octets, $01000011\,01010100$, un octet par caractère conformément au code ASCII de la section 4 du chapitre 3 du cours.
+\end{corrige}
+
+\begin{corrige}{3.6}
+\textbf{Question 1.} La capacité annoncée vaut $64 \times 10^9 = 64\,000\,000\,000$ octets. Un gibioctet vaut $2^{30} = 1\,073\,741\,824$ octets, donc
+\[
+\frac{64\,000\,000\,000}{1\,073\,741\,824} \approx 59{,}6.
+\]
+Le système d'exploitation, qui compte en préfixes binaires, affichera environ $59{,}6$ Gio pour une clé étiquetée 64 Go : l'écart perçu par le client, près de $4{,}4$ Gio, vient uniquement du double étalonnage des préfixes, et non d'une perte de capacité.
+
+\textbf{Question 2.} Un code de trois chiffres décimaux offre $10 \times 10 \times 10 = 1000$ codes distincts, de $000$ à $999$. Comme $2^9 = 512 < 1000 \leqslant 1024 = 2^{10}$, neuf bits ne suffisent pas et dix bits suffisent : le nombre minimal de bits vaut $10$.
+
+\textbf{Question 3.} L'adresse $(2\mathrm{C})_{16}$ vaut $2 \times 16 + 12 = 44$ en décimal. En binaire, $44 = 32 + 8 + 4$, d'où $(101100)_2$ ; le raccourci de substitution le confirme : $2$ donne $0010$, C donne $1100$, et $00101100$ se réduit à $101100$.
+
+\textbf{Conclusion.} La même marchandise porte deux capacités différentes selon le préfixe utilisé, $64$ Go pour le fabricant et $59{,}6$ Gio pour l'ordinateur ; lire correctement une fiche technique suppose de toujours préciser lequel des deux étalonnages est employé.
+\end{corrige}

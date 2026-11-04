@@ -1,0 +1,62 @@
+% ============================================================
+%  Corriges TD Chapitre 4 : Donnees en memoire
+% ============================================================
+\chapter{Données en mémoire}
+\chaptermark{Données en mémoire}
+
+\begin{corrige}{4.1}
+\begin{enumerate}
+\item On écrit d'abord $45 = 32 + 8 + 4 + 1 = (0010\,1101)_2$. L'inversion des bits donne $1101\,0010$, et l'ajout de $1$ fournit $1101\,0011$. Le complément à deux de $-45$ sur $8$ bits est donc $(1101\,0011)_2$.
+\item Lu comme mot non signé, ce mot vaut $128 + 64 + 16 + 2 + 1 = 211$. Le bit de poids fort vaut $1$, donc le mot code un négatif : la valeur signée vaut $211 - 256 = -45$, ce qui retombe sur l'entier de départ.
+\item On écrit $1 = (0000\,0001)_2$ ; l'inversion donne $1111\,1110$ et l'ajout de $1$ donne $1111\,1111$. Donc $-1$ se code bien $(1111\,1111)_2$ : c'est le mot dont tous les bits valent $1$.
+\item Sur $8$ bits signés, les entiers représentables vont de $-128$ (mot $1000\,0000$) à $+127$ (mot $0111\,1111$), soit $256$ valeurs au total.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{4.2}
+\begin{enumerate}
+\item Le complément à deux de $-45$ est $1101\,0011$ (exercice 1). Pour $90 = 64 + 16 + 8 + 2$, l'écriture binaire est $(0101\,1010)_2$.
+\item Addition posée, la ligne du haut portant les retenues reçues par chaque colonne :
+\begin{center}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{L{2.2cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}C{0.5cm}}
+\toprule
+\rowcolor{robleuf}retenues reçues & $1$ & & $1$ & & & $1$ & & \\
+\midrule
+& $1$ & $1$ & $0$ & $1$ & $0$ & $0$ & $1$ & $1$ \\
+\rowcolor{rogrisf!50}$+$ & $0$ & $1$ & $0$ & $1$ & $1$ & $0$ & $1$ & $0$ \\
+\midrule
+& $0$ & $0$ & $1$ & $0$ & $1$ & $1$ & $0$ & $1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+De droite à gauche : $1+0$ donne $1$ ; $1+1$ donne $0$ et une retenue ; $0+0+1$ donne $1$ ; $0+1$ donne $1$ ; $1+1$ donne $0$ et une retenue ; $0+0+1$ donne $1$ ; $1+1$ donne $0$ et une retenue ; enfin $1+0+1$ donne $0$ et une retenue finale, ignorée puisqu'on travaille sur $8$ bits. Le mot obtenu est $(0010\,1101)_2$.
+\item Le mot $0010\,1101$ commence par un $0$ : il code un positif, qui vaut $32 + 8 + 4 + 1 = 45$.
+\item En décimal : $-45 + 90 = 45$. Le calcul en complément à deux donne le bon résultat sans regarder les signes : c'est exactement la propriété qui a fait adopter ce codage par toutes les machines.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{4.3}
+\begin{enumerate}
+\item On écrit $75 = 64 + 8 + 2 + 1 = (0100\,1011)_2$ et $65 = 64 + 1 = (0100\,0001)_2$. L'addition binaire donne :
+\[
+(0100\,1011)_2 + (0100\,0001)_2 = (1000\,1100)_2 .
+\]
+Colonnes de droite à gauche : $1+1$ donne $0$ et une retenue ; $1+0+1$ donne $0$ et une retenue ; $0+0+1$ donne $1$ ; puis les colonnes $0+0$, $1+0$, $0+0$ ; la colonne des $64$ donne $1+1 = 0$ et une retenue qui envahit le bit de signe : $0+0+1$ donne $1$.
+\item Le mot $1000\,1100$ commence par un $1$ : lu comme entier signé, il vaut $128 + 8 + 4 = 140$, soit $140 - 256 = -116$. La machine affiche donc $75 + 65 = -116$.
+\item La somme exacte vaut $140$, qui dépasse $+127$, la borne supérieure de l'intervalle représentable sur $8$ bits signés. La retenue du calcul a envahi le bit de poids fort, qui marquait le signe : le mot obtenu, interprété, décrit un négatif alors que la somme de deux positifs ne peut pas l'être. Le résultat est faux.
+\item L'addition sur $8$ bits signés reste sûre tant que le résultat exact reste dans l'intervalle $[-128, +127]$ ; au-delà, il y a dépassement de capacité et le programme doit changer de type, par exemple passer à $16$ ou $32$ bits.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{4.4}
+\begin{enumerate}
+\item Un bus de $20$ bits désigne $2^{20} = 1\,048\,576$ adresses d'octets. Comme $1\,048\,576 / 2^{10} = 1024$, la mémoire adressable vaut $1024$ kio, soit exactement $1$ Mio en préfixes binaires.
+\item Chaque pixel pèse $24$ bits, soit $3$ octets. Le framebuffer contient $1280 \times 720 \times 3 = 921\,600 \times 3 = 2\,764\,800$ octets, soit environ $2{,}8$ Mo.
+\item La capacité du fabricant vaut $128 \times 10^9 = 128\,000\,000\,000$ octets. Un gibioctet vaut $2^{30} = 1\,073\,741\,824$ octets, donc
+\[
+\frac{128\,000\,000\,000}{1\,073\,741\,824} \approx 119{,}2 .
+\]
+Le système affichera environ $119{,}2$ Gio : l'écart avec l'étiquette, près de $9$ Gio, vient du double étalonnage des préfixes et non d'une perte de capacité.
+\end{enumerate}
+\end{corrige}

@@ -1,0 +1,173 @@
+% ============================================================
+%  Corriges TD Chapitre 2 : Logique et algebre de Boole
+% ============================================================
+\chapter{Logique et algèbre de Boole}
+\chaptermark{Logique et algèbre de Boole}
+
+\begin{corrige}{2.1}
+La négation $\lnot P$ se lit « la connexion Internet ne fonctionne pas ». La conjonction $P \land Q$ se lit « la connexion Internet fonctionne et le groupe électrogène est en marche ». La disjonction $P \lor Q$ se lit « la connexion Internet fonctionne ou le groupe électrogène est en marche », le « ou » n'étant pas exclusif : l'une au moins des deux est vraie, éventuellement les deux.
+
+La proposition $Q \lor \lnot P$ se lit « le groupe électrogène est en marche ou la connexion Internet ne fonctionne pas ». La proposition $\lnot P \lor \lnot Q$ se lit « la connexion Internet ne fonctionne pas ou le groupe électrogène n'est pas en marche ». Enfin $\lnot (P \land Q)$ se lit « il est faux que la connexion fonctionne et que le groupe soit en marche », c'est-à-dire « les deux ne fonctionnent pas en même temps ».
+
+Les deux dernières propositions nient toutes deux la simultanéité des deux fonctionnements : $\lnot (P \land Q)$ nie la conjonction globalement, $\lnot P \lor \lnot Q$ affirme qu'au moins l'une des deux est en panne. Elles doivent donc être équivalentes : c'est exactement la seconde loi de De Morgan, démontrée par table dans l'exercice 3.
+\end{corrige}
+
+\begin{corrige}{2.2}
+On dresse la table unique demandée, avec l'ordre binaire des combinaisons : $(0, 0)$, $(0, 1)$, $(1, 0)$, $(1, 1)$.
+
+\begin{center}
+\begin{tabular}{cc|cccc}
+\toprule
+\rowcolor{robleuf}$P$ & $Q$ & $\lnot P \land Q$ & $P \lor \lnot Q$ & $\lnot (P \land Q)$ & $\lnot P \lor \lnot Q$ \\
+\midrule
+0 & 0 & 0 & 1 & 1 & 1 \\
+\rowcolor{rogrisf!50}0 & 1 & 1 & 0 & 1 & 1 \\
+1 & 0 & 0 & 1 & 1 & 1 \\
+\rowcolor{rogrisf!50}1 & 1 & 0 & 1 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+La colonne de $\lnot P \land Q$ ne vaut 1 que sur la ligne $(0, 1)$, seule ligne où $\lnot P$ et $Q$ valent 1 ensemble. La colonne de $P \lor \lnot Q$ ne vaut 0 que sur la ligne $(0, 1)$, seule ligne où $P$ vaut 0 et $Q$ vaut 1.
+
+Les colonnes de $\lnot (P \land Q)$ et de $\lnot P \lor \lnot Q$ coïncident sur les quatre lignes : 1, 1, 1, puis 0 sur la ligne $(1, 1)$. On conclut l'équivalence $\lnot (P \land Q) \equiv \lnot P \lor \lnot Q$, première loi de De Morgan : nier une conjonction revient à affirmer qu'au moins l'un des deux membres est nié.
+\end{corrige}
+
+\begin{corrige}{2.3}
+\textbf{Question 1.} La table juxtapose la disjonction puis sa négation et la conjonction des négations :
+
+\begin{center}
+\begin{tabular}{cc|cc|cc}
+\toprule
+\rowcolor{robleuf}$P$ & $Q$ & $P \lor Q$ & $\lnot (P \lor Q)$ & $\lnot P$ & $\lnot Q$ \\
+\midrule
+0 & 0 & 0 & \textbf{1} & 1 & 1 \\
+\rowcolor{rogrisf!50}0 & 1 & 1 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 & 0 & 1 \\
+\rowcolor{rogrisf!50}1 & 1 & 1 & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\qquad
+\begin{tabular}{c}
+\toprule
+\rowcolor{robleuf}$\lnot P \land \lnot Q$ \\
+\midrule
+\textbf{1} \\
+\rowcolor{rogrisf!50}0 \\
+0 \\
+\rowcolor{rogrisf!50}0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Les colonnes de $\lnot (P \lor Q)$ et de $\lnot P \land \lnot Q$ coïncident ligne à ligne : c'est la seconde loi de De Morgan, $\lnot (P \lor Q) \equiv \lnot P \land \lnot Q$.
+
+\textbf{Question 2.} La table juxtapose l'implication et la disjonction $\lnot P \lor Q$ :
+
+\begin{center}
+\begin{tabular}{cc|cc|c}
+\toprule
+\rowcolor{robleuf}$P$ & $Q$ & $\lnot P$ & $P \rightarrow Q$ & $\lnot P \lor Q$ \\
+\midrule
+0 & 0 & 1 & 1 & 1 \\
+\rowcolor{rogrisf!50}0 & 1 & 1 & 1 & 1 \\
+1 & 0 & 0 & \textbf{0} & \textbf{0} \\
+\rowcolor{rogrisf!50}1 & 1 & 0 & 1 & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Les deux colonnes coïncident : $P \rightarrow Q \equiv \lnot P \lor Q$. L'implication ne vaut 0 que sur la ligne $(1, 0)$, ce que la disjonction reproduit exactement.
+
+\textbf{Question 3.} La table juxtapose l'implication, sa réciproque et sa contraposée :
+
+\begin{center}
+\begin{tabular}{cc|cc|ccc}
+\toprule
+\rowcolor{robleuf}$P$ & $Q$ & $P \rightarrow Q$ & $Q \rightarrow P$ & $\lnot Q$ & $\lnot P$ & $\lnot Q \rightarrow \lnot P$ \\
+\midrule
+0 & 0 & 1 & 1 & 1 & 1 & 1 \\
+\rowcolor{rogrisf!50}0 & 1 & \textbf{1} & 0 & 0 & 1 & \textbf{1} \\
+1 & 0 & \textbf{0} & 1 & 1 & 0 & \textbf{0} \\
+\rowcolor{rogrisf!50}1 & 1 & 1 & 1 & 0 & 0 & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+La réciproque $Q \rightarrow P$ diffère de $P \rightarrow Q$ sur les deux lignes $(0, 1)$ et $(1, 0)$ : elle n'est pas équivalente à l'implication. La contraposée $\lnot Q \rightarrow \lnot P$ coïncide avec elle sur les quatre lignes : $P \rightarrow Q \equiv \lnot Q \rightarrow \lnot P$. Il faut retenir l'ordre : dans la contraposée, on nie les deux membres et on les échange ; échanger sans nier donne la réciproque, nier sans échanger donne l'inverse $\lnot P \rightarrow \lnot Q$, qui n'est pas équivalente non plus.
+
+\textbf{Question 4.} En notant $S$ : « la sauvegarde est terminée » et $E$ : « l'ordinateur s'éteint », l'énoncé est $S \rightarrow E$ et sa négation vaut $S \land \lnot E$, d'après la table de la question 2. La phrase (a), « la sauvegarde est terminée et l'ordinateur ne s'éteint pas », traduit exactement $S \land \lnot E$ : c'est la bonne négation. La phrase (b) traduit l'inverse $\lnot S \rightarrow \lnot E$, qui n'est ni la négation ni même l'équivalent de l'énoncé initial : une sauvegarde non terminée n'interdit pas l'extinction.
+\end{corrige}
+
+\begin{corrige}{2.4}
+\textbf{Expression $X$.} La distributivité développe le second terme : $X = A \cdot B + A \cdot (B + C) = A \cdot B + A \cdot B + A \cdot C$. L'idempotence $A \cdot B + A \cdot B = A \cdot B$ réduit la somme, puis la mise en facteur donne $X = A \cdot B + A \cdot C = A \cdot (B + C)$ : c'est la distributivité lue de droite à gauche.
+
+\textbf{Expression $Y$.} La seconde distributivité, celle de la somme sur le produit, donne directement $Y = (A + B) \cdot (A + C) = A + B \cdot C$.
+
+\textbf{Expression $Z$.} L'absorption s'applique : $Z = A \cdot (A + B) = A \cdot A + A \cdot B = A + A \cdot B = A \cdot (1 + B) = A$, en utilisant $1 + B = 1$. La simplification tient en un seul symbole.
+
+\textbf{Vérification par table unique.} La table juxtapose les colonnes de $X$ et de sa forme simplifiée $A \cdot (B+C)$, de $Y$ et de sa forme simplifiée $A + B \cdot C$, de $Z$ et de $A$, sur les huit combinaisons de $(A, B, C)$ :
+
+\begin{center}
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{ccc|c|c|c|c|c|c}
+\toprule
+\rowcolor{robleuf}$A$ & $B$ & $C$ & $X$ & $A(B{+}C)$ & $Y$ & $A{+}BC$ & $Z$ & $A$ \\
+\midrule
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{rogrisf!50}0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\rowcolor{rogrisf!50}0 & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\
+1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+\rowcolor{rogrisf!50}1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+1 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 \\
+\rowcolor{rogrisf!50}1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Les colonnes de chaque forme initiale coïncident avec celles de sa forme simplifiée sur les huit lignes : les trois simplifications sont établies. En langage de circuits : dans $X$ comme dans $Z$, la variable $A$ fait court-circuiter le reste de l'expression dès qu'elle vaut $1$, ce que l'absorption exprime.
+\end{corrige}
+
+\begin{corrige}{2.5}
+\textbf{Question 1.} On aligne les deux octets et on applique la table de chaque opération colonne par colonne :
+
+\begin{center}
+\begin{tabular}{C{1.9cm}C{0.42cm}C{0.42cm}C{0.42cm}C{0.42cm}C{0.42cm}C{0.42cm}C{0.42cm}C{0.42cm}}
+\toprule
+\rowcolor{robleuf}octet & $b_7$ & $b_6$ & $b_5$ & $b_4$ & $b_3$ & $b_2$ & $b_1$ & $b_0$ \\
+\midrule
+$P$ & $0$ & $1$ & $1$ & $0$ & $0$ & $1$ & $1$ & $1$ \\
+\rowcolor{rogrisf!50}$Q$ & $1$ & $1$ & $1$ & $1$ & $0$ & $0$ & $0$ & $1$ \\
+\midrule
+$P \land Q$ & $0$ & $1$ & $1$ & $0$ & $0$ & $0$ & $0$ & $1$ \\
+\rowcolor{rogrisf!50}$P \lor Q$ & $1$ & $1$ & $1$ & $1$ & $0$ & $1$ & $1$ & $1$ \\
+$P \veebar Q$ & $1$ & $0$ & $0$ & $1$ & $0$ & $1$ & $1$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+D'où $P \land Q = 01100001$, $P \lor Q = 11110111$ et $P \veebar Q = 10010110$. La ligne du ou exclusif vaut $1$ exactement là où les deux bits diffèrent.
+
+\textbf{Question 2.} Le chiffrement donne $C = M \veebar K$ :
+\[
+1011 \veebar 0110 = 1101.
+\]
+Le déchiffrement applique le même masque au chiffré : $1101 \veebar 0110 = 1011$, et l'on retrouve le message initial. La justification tient aux deux propriétés du ou exclusif : $C \veebar K = (M \veebar K) \veebar K = M \veebar (K \veebar K) = M \veebar 0000 = M$. Le même masque chiffre et déchiffre, à condition de rester secret : c'est le principe du chiffrement par masque appliqué aux bits, celui que les réseaux utilisent pour les échanges de clés.
+
+\textbf{Question 3.} Le circuit calcule la porte ET de $A$ et $B$, la porte ET de $\overline{A}$ et $B$, puis la porte OU des deux sorties : l'expression est $S = (A \land B) \lor (\overline{A} \land B)$. En algèbre de Boole, la mise en facteur donne
+\[
+S = B \land (A \lor \overline{A}) = B \land 1 = B,
+\]
+par la complémentaire $A + \overline{A} = 1$ : toute la composition se réduit au fil direct $B$. La table confirme :
+
+\begin{center}
+\begin{tabular}{cc|cc|c}
+\toprule
+\rowcolor{robleuf}$A$ & $B$ & $A \land B$ & $\overline{A} \land B$ & $S$ \\
+\midrule
+0 & 0 & 0 & 0 & \textbf{0} \\
+\rowcolor{rogrisf!50}0 & 1 & 0 & 1 & \textbf{1} \\
+1 & 0 & 0 & 0 & \textbf{0} \\
+\rowcolor{rogrisf!50}1 & 1 & 1 & 0 & \textbf{1} \\
+\bottomrule
+\end{tabular}
+\end{center}
+La colonne de $S$ copie la colonne de $B$ : quel que soit l'état de $A$, la sortie suit $B$. Un circuit inutilement complexe se simplifie donc en un simple passage de signal, économie de portes et de temps de propagation.
+\end{corrige}

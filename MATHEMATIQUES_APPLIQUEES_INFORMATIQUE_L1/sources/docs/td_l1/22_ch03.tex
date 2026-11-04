@@ -1,0 +1,53 @@
+% ============================================================
+%  TD Chapitre 3 : Systemes de numeration
+% ============================================================
+\chapter{Systèmes de numération}
+\chaptermark{Systèmes de numération}
+
+\begin{exercice}[trois conversions vers le décimal]
+Convertir en écriture décimale les trois nombres suivants, en détaillant la contribution de chaque chiffre :
+\[
+(110101)_2 \qquad ; \qquad (127{,}4)_8 \qquad ; \qquad (2\mathrm{E}{,}8)_{16}.
+\]
+Vérifier ensuite chaque résultat en recomposant le nombre à partir de sa valeur décimale obtenue.
+\end{exercice}
+
+\begin{exercice}[du décimal vers les bases 2, 8 et 16]
+Convertir le nombre $(2026)_{10}$ en écriture binaire, puis en écriture octale et en écriture hexadécimale, par les divisions successives. Convertir également $(77)_{10}$ en écriture binaire. Contrôler la cohérence des quatre résultats entre eux : l'écriture octale et l'écriture hexadécimale de $2026$ doivent redonner la même écriture binaire par les raccourcis de substitution.
+\end{exercice}
+
+\begin{exercice}[les raccourcis par les puissances de deux]
+Convertir sans aucun passage par le décimal :
+\[
+(175)_8 = (\,?\,)_2 \qquad ; \qquad (\mathrm{A24})_{16} = (\,?\,)_2 \qquad ; \qquad (1111101101)_2 = (\,?\,)_8 = (\,?\,)_{16}.
+\]
+Pour la troisième conversion, préciser les regroupements de bits utilisés et les zéros ajoutés éventuellement à gauche. Contrôler les trois résultats par un calcul décimal rapide.
+\end{exercice}
+
+\begin{exercice}[opérations posées en binaire et en hexadécimal]
+Calculer, en posant chaque opération dans la base demandée :
+\[
+(11110111)_2 + (11111)_2 - (101011)_2 = (\,?\,)_2 \qquad ; \qquad (3\mathrm{A7})_{16} + (19\mathrm{B})_{16} = (\,?\,)_{16}.
+\]
+Dresser pour l'addition binaire la ligne des retenues, et pour la soustraction la ligne des emprunts. Contrôler chaque résultat en repassant par le décimal.
+\end{exercice}
+
+\begin{exercice}[codages, tailles et préfixes]
+Répondre aux quatre questions suivantes en justifiant chaque calcul :
+\begin{enumerate}
+\item combien de mots binaires distincts peut-on écrire sur un octet ?
+\item une couleur est codée sur $24$ bits, huit par canal rouge, vert et bleu : combien de couleurs distinctes ce codage permet-il ?
+\item comparer la capacité annoncée par $4$ Go, soit $4 \times 10^9$ octets, à celle de $4$ Gio, soit $4 \times 2^{30}$ octets : quel est l'écart en octets ?
+\item en code ASCII, chaque caractère tient sur un octet : donner les écritures binaires des lettres C et T, sachant que C vaut $67$ et T vaut $84$ en décimal, puis la taille en octets du mot « CT ».
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[situation complète : la boutique d'électronique de Lomé]
+Une boutique d'électronique du quartier de Bè, à Lomé, revend des clés USB étiquetées « 64 Go ». Le fabricant compte en décimal : la capacité vaut $64 \times 10^9$ octets.
+\begin{enumerate}
+\item exprimer cette capacité en gibioctets, c'est-à-dire diviser $64 \times 10^9$ par $2^{30}$, et arrondir à $0{,}1$ Gio près : quelle valeur le système d'exploitation d'un ordinateur affichera-t-il pour cette clé ?
+\item le code interne du produit dans le registre de la boutique est un nombre de trois chiffres décimaux, de $000$ à $999$. Combien de codes distincts existent-ils ? Quel nombre minimal de bits suffit pour les représenter tous en binaire ?
+\item l'étiquette du rayon réseau porte l'adresse hexadécimale $(2\mathrm{C})_{16}$ : donner sa valeur décimale puis son écriture binaire.
+\end{enumerate}
+Conclure en une phrase sur l'écart entre l'étiquette du fabricant et l'affichage de l'ordinateur.
+\end{exercice}

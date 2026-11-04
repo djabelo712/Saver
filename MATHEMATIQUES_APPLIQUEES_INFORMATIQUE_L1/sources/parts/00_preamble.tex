@@ -1,0 +1,396 @@
+% ============================================================
+%  Mathematiques Appliquees a l'Informatique — Preambule commun
+%  Support de cours et Fascicule de travaux pratiques
+%  Compilation : tectonic (XeTeX) ou pdflatex, deux passes si refs
+% ============================================================
+\documentclass[11pt,a4paper]{report}
+
+% ==== Encodage et langue ====
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}
+\fi
+\usepackage[french]{babel}
+\frenchbsetup{StandardLists=true}
+
+% ==== Geometrie ====
+\usepackage[a4paper,left=2.4cm,right=2.4cm,top=2.7cm,bottom=2.7cm]{geometry}
+
+% ==== Mathematiques ====
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{amsthm} % environnement de demonstration ; boites ci-dessous a compteurs dedies
+
+% ==== Couleurs ====
+\usepackage{xcolor}
+\definecolor{robleu}{HTML}{16456B}
+\definecolor{robleuf}{HTML}{EAF1F7}
+\definecolor{roteal}{HTML}{0E7C7B}
+\definecolor{rotealf}{HTML}{E9F4F3}
+\definecolor{roor}{HTML}{B03A2E}
+\definecolor{roorf}{HTML}{FBEDEB}
+\definecolor{rogold}{HTML}{B7791F}
+\definecolor{rogoldf}{HTML}{FBF3E4}
+\definecolor{rovert}{HTML}{2E7D32}
+\definecolor{rovertf}{HTML}{EDF6ED}
+\definecolor{rogris}{HTML}{4A4A4A}
+\definecolor{rogrisf}{HTML}{F3F3F3}
+
+% ==== Graphiques ====
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows.meta,calc,shapes.geometric,decorations.pathreplacing,babel,matrix}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+\tikzset{badgeRO/.style={rounded corners=1.2mm, draw=#1, line width=0.9pt,
+  text=#1, font=\bfseries\small, inner xsep=5mm, inner ysep=1.8mm}}
+
+% ==== Tableaux ====
+\usepackage{booktabs,array,multirow,longtable,colortbl}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\renewcommand{\arraystretch}{1.25}
+
+% ==== Listes ====
+\usepackage{enumitem}
+\setlist[itemize]{label=\textbullet, itemsep=2pt, topsep=4pt, parsep=2pt}
+\setlist[enumerate]{itemsep=2pt, topsep=4pt, parsep=2pt}
+
+% ==== Legendes ====
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf}
+
+% ==== Boites pedagogiques ====
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{etoolbox}
+
+\tcbset{robase/.style={breakable, enhanced, boxrule=0.9pt, arc=1.6mm,
+  left=3mm, right=3mm, top=2.2mm, bottom=2.2mm, fonttitle=\bfseries,
+  before skip=12pt, after skip=14pt}}
+
+\newtcolorbox[auto counter, number within=chapter]{definition}[1][]
+  {robase, colback=robleuf, colframe=robleu,
+   title={Définition~\thetcbcounter\ifstrempty{#1}{}{~: #1}}}
+
+\newtcolorbox[auto counter, number within=chapter]{propriete}[1][]
+  {robase, colback=robleuf!55, colframe=robleu!80!black,
+   title={Propriété~\thetcbcounter\ifstrempty{#1}{}{~: #1}}}
+
+\newtcolorbox[auto counter, number within=chapter]{theoreme}[1][]
+  {robase, colback=robleu!8, colframe=robleu, boxrule=1.2pt,
+   title={Théorème~\thetcbcounter\ifstrempty{#1}{}{~: #1}}}
+
+\newtcolorbox{methode}[1][]
+  {robase, colback=rotealf, colframe=roteal,
+   title={Méthode\ifstrempty{#1}{}{~: #1}}}
+
+\newtcolorbox[auto counter, number within=chapter]{exemple}[1][]
+  {robase, colback=rotealf!70, colframe=roteal,
+   title={Exemple résolu~\thetcbcounter\ifstrempty{#1}{}{~: #1}}}
+
+\newtcolorbox{remarque}
+  {robase, colback=rogrisf, colframe=rogris!70, boxrule=0.6pt,
+   title={Remarque}}
+
+\newtcolorbox{attention}
+  {robase, colback=roorf, colframe=roor,
+   title={Attention}}
+
+% Boites d'ouverture et de cloture de chapitre (format du modele ESGAE)
+\newtcolorbox{quelqueslignes}
+  {robase, colback=robleuf!70, colframe=robleu!75!black,
+   title={En quelques lignes}}
+
+\newtcolorbox{aretirer}
+  {robase, colback=rovertf, colframe=rovert,
+   title={Ce qu'il faut retenir}}
+
+\newtcolorbox[auto counter, number within=chapter]{exercice}[1][]
+  {robase, colback=rogoldf, colframe=rogold,
+   title={Exercice~\thetcbcounter\ifstrempty{#1}{}{~: #1}}}
+
+\newtcolorbox{corrige}[1]
+  {robase, colback=rovertf, colframe=rovert,
+   title={Corrigé de l'exercice~#1}}
+
+\newcommand{\niveau}[2]{%
+\begin{tcolorbox}[enhanced, boxrule=0.9pt, arc=1.6mm, colback=rogoldf,
+  colframe=rogold, left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={Public visé et prérequis}, fonttitle=\bfseries,
+  before skip=6pt, after skip=14pt]
+\textbf{Public concerné :} #1\par\smallskip
+\textbf{Prérequis :} #2
+\end{tcolorbox}}
+
+% ==== Code informatique ====
+\usepackage{listings}
+\lstdefinestyle{stylepy}{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{robleu}\bfseries,
+  commentstyle=\color{rovert}\itshape,
+  stringstyle=\color{roor},
+  numbers=left, numberstyle=\tiny\color{rogris}, numbersep=8pt,
+  frame=single, rulecolor=\color{rogris!50},
+  backgroundcolor=\color{rogrisf},
+  breaklines=true, breakatwhitespace=false,
+  showstringspaces=false, tabsize=4, captionpos=b,
+  xleftmargin=16pt, framexleftmargin=14pt,
+  morekeywords={True, False, None, self},
+  literate={é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {à}{{\`a}}1
+           {ç}{{\c{c}}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+           {ù}{{\`u}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1
+           {Ô}{{\^O}}1 {Ç}{{\c{C}}}1 {œ}{{\oe}}1 {Œ}{{\OE}}1
+           {·}{{\textperiodcentered}}1}
+\lstdefinestyle{stylealgo}{
+  language={},
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{robleu}\bfseries,
+  commentstyle=\color{rovert}\itshape,
+  stringstyle=\color{roor},
+  numbers=left, numberstyle=\tiny\color{rogris}, numbersep=8pt,
+  frame=single, rulecolor=\color{rogris!50},
+  backgroundcolor=\color{rogrisf},
+  breaklines=true, showstringspaces=false, tabsize=4, captionpos=b,
+  xleftmargin=16pt, framexleftmargin=14pt,
+  morekeywords={Algorithme, DEBUT, FIN, SI, ALORS, SINON, FINSI, TANTQUE,
+    FINTANTQUE, POUR, FINPOUR, FAIRE, FONCTION, FINFONCTION, RETOURNER,
+    Entrée, Sortie, Initialiser, Afficher},
+  literate={é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {à}{{\`a}}1
+           {ç}{{\c{c}}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+           {ù}{{\`u}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1
+           {Ô}{{\^O}}1 {Ç}{{\c{C}}}1 {·}{{\textperiodcentered}}1}
+\lstdefinestyle{styleout}{
+  language={},
+  basicstyle=\ttfamily\footnotesize,
+  frame=single, rulecolor=\color{rogris!50},
+  backgroundcolor=\color{white},
+  breaklines=true, showstringspaces=false, xleftmargin=8pt,
+  literate={é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ô}{{\^o}}1 {ç}{{\c{c}}}1 {·}{{\textperiodcentered}}1}
+
+% ==== Titres de chapitres ====
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\color{robleu}}
+  {\Large\chaptertitlename~\thechapter}{10pt}{\huge}
+\titlespacing*{\chapter}{0pt}{-24pt}{26pt}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{robleu}}{\thesection}{0.8em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{roteal}}{\thesubsection}{0.8em}{}
+
+% ==== En-tetes et pieds de page ====
+\usepackage{fancyhdr}
+\newcommand{\DocTitre}{Mathématiques Appliquées à l'Informatique}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape\color{rogris} \DocTitre}
+\fancyhead[R]{\small\itshape\color{rogris}\nouppercase{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter.~#1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}}
+
+% ==== Divers ====
+\usepackage{microtype}
+% Interlettrage des pages de garde : propre a pdfTeX, neutralise sans lui
+\ifPDFTeX\else
+  \ifdefined\textls
+    \renewcommand{\textls}[2][]{#2}
+  \else
+    \newcommand{\textls}[2][]{#2}
+  \fi
+\fi
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\bits}{\{0,1\}}
+% signe degre, utilisable en math et en texte (\degres est pris par babel-french)
+\newcommand{\dgr}{\ensuremath{^{\circ}}}
+
+% ==== Identite du document ====
+% (personnalisation : modifier ces macros uniquement)
+\newcommand{\Auteur}{Ounimborbitibou DJABON}
+\newcommand{\AuteurQualite}{Titulaire de deux Masters : Sciences Mathématiques (AIMS Ghana)\\ et Physique Théorique (Université de Lomé)}
+\newcommand{\AuteurLigneB}{Chercheur en Information et Communication Quantique}
+\newcommand{\AuteurContact}{+228 92 39 97 21 \ \textbullet \ \ djabon@aims.edu.gh \ \textbullet \ \ github.com/djabelo712}
+\newcommand{\Etablissement}{Institut Supérieur CPTEC, Lomé (Togo)}
+\newcommand{\InstitutNom}{Institut Supérieur CPTEC}
+\newcommand{\InstitutLigne}{Agréé par arrêté N° 00.50/2024 \textbullet{} Avedji, Lomé (Togo) \textbullet{} +228 70 78 78 18 \textbullet{} 96 51 05 50 \textbullet{} cptec228togo@gmail.com}
+\newcommand{\AnneeAcad}{Année académique 2026--2027}
+\newcommand{\DocKicker}{Support de cours}
+\newcommand{\DocSousTitre}{Des fondements logiques au programme opérationnel}
+\newcommand{\DocDescription}{Cours complet avec exemples corrigés et code commenté}
+\newcommand{\BadgeA}{BTS}
+\newcommand{\BadgeB}{Licence}
+\newcommand{\BadgeC}{Master Professionnel}
+\newcommand{\BadgeUniq}{BTS}
+\newcommand{\DocVolumeH}{Volume horaire : 60 heures}
+
+% ==== Page de garde ====
+\newcommand{\pagedegarde}{%
+\begin{titlepage}
+\begin{tikzpicture}[remember picture, overlay]
+% ================= bandeau superieur =================
+\fill[robleu] (current page.north west)
+  rectangle ([yshift=-12.2cm]current page.north east);
+\fill[rogold] ([yshift=-12.2cm]current page.north west)
+  rectangle ([yshift=-12.42cm]current page.north east);
+% filigrane : reseau de noeuds en haut a droite
+\begin{scope}
+  \draw[white, opacity=0.12, line width=1pt]
+    ([xshift=13.5cm,yshift=-2.0cm]current page.north west) --
+    ([xshift=15.9cm,yshift=-3.3cm]current page.north west) --
+    ([xshift=18.6cm,yshift=-2.2cm]current page.north west) --
+    ([xshift=17.7cm,yshift=-5.1cm]current page.north west) --
+    ([xshift=14.9cm,yshift=-6.2cm]current page.north west) --
+    ([xshift=13.1cm,yshift=-4.5cm]current page.north west) -- cycle;
+  \draw[white, opacity=0.12, line width=1pt]
+    ([xshift=13.5cm,yshift=-2.0cm]current page.north west) --
+    ([xshift=17.7cm,yshift=-5.1cm]current page.north west);
+  \draw[white, opacity=0.12, line width=1pt]
+    ([xshift=15.9cm,yshift=-3.3cm]current page.north west) --
+    ([xshift=14.9cm,yshift=-6.2cm]current page.north west);
+  \draw[white, opacity=0.12, line width=1pt]
+    ([xshift=18.6cm,yshift=-2.2cm]current page.north west) --
+    ([xshift=19.9cm,yshift=-7.2cm]current page.north west);
+  \foreach \px/\py in {13.5/-2.0, 15.9/-3.3, 18.6/-2.2, 17.7/-5.1, 14.9/-6.2, 13.1/-4.5, 19.9/-7.2}{%
+    \fill[white, opacity=0.18] ([xshift=\px cm,yshift=\py cm]current page.north west)
+      circle (0.10);}
+\end{scope}
+% ligne d'appel
+\node[anchor=west, text=rogold!55!white, font=\small]
+  at ([xshift=2.1cm,yshift=-2.05cm]current page.north west)
+  {\textls[180]{\scshape\DocKicker}};
+% titre principal sur trois lignes
+\node[anchor=west, text=white, font=\fontsize{38}{45}\selectfont\bfseries]
+  at ([xshift=2.0cm,yshift=-3.7cm]current page.north west) {MATHÉMATIQUES};
+\node[anchor=west, text=white, font=\fontsize{38}{45}\selectfont\bfseries]
+  at ([xshift=2.0cm,yshift=-5.55cm]current page.north west) {APPLIQUÉES À};
+\node[anchor=west, text=white, font=\fontsize{38}{45}\selectfont\bfseries]
+  at ([xshift=2.0cm,yshift=-7.4cm]current page.north west) {L'INFORMATIQUE};
+\fill[rogold] ([xshift=2.05cm,yshift=-8.3cm]current page.north west)
+  rectangle ++(2.8,-0.09);
+% sous-titre et description
+\node[anchor=west, text=white, font=\large\itshape]
+  at ([xshift=2.1cm,yshift=-9.05cm]current page.north west) {\DocSousTitre};
+\node[anchor=west, text=white!82!robleu, font=\normalsize]
+  at ([xshift=2.1cm,yshift=-9.95cm]current page.north west) {\DocDescription};
+% pastilles de niveaux
+\tikzset{badgeBlanc/.style={rounded corners=1.2mm, draw=white!75!robleu,
+  line width=0.8pt, text=white, font=\bfseries\small,
+  inner xsep=4.5mm, inner ysep=1.8mm}}
+\node[badgeBlanc, anchor=west] (badA)
+  at ([xshift=2.1cm,yshift=-11.15cm]current page.north west) {\BadgeUniq};
+\node[anchor=west, text=white, font=\small]
+  at ([xshift=0.65cm]badA.east) {\DocVolumeH};
+% ================= zone centrale : trois panneaux =================
+\begin{scope}[shift={(current page.north west)}]
+% panneau 1 : numeration et conversions
+\fill[white, draw=rogris!45, line width=0.7pt, rounded corners=2.5mm]
+  (1.8,-13.8) rectangle (7.0,-20.05);
+\fill[robleu] (2.08,-14.05) rectangle (6.72,-14.11);
+\node[text=rogris, font=\footnotesize\scshape] at (4.4,-19.68)
+  {\textls[110]{Numération}};
+\begin{scope}[shift={(4.4,-16.85)}, scale=0.9]
+  \fill[robleuf] (-1.8,0.8) rectangle (1.8,0.3);
+  \draw[rogris!60, line width=0.6pt] (-1.8,0.8) rectangle (1.8,-1.35);
+  \foreach \yy in {0.3,-0.25,-0.8}{\draw[rogris!60, line width=0.5pt] (-1.8,\yy) -- (1.8,\yy);}
+  \foreach \xx in {-0.6,0.6}{\draw[rogris!60, line width=0.5pt] (\xx,0.8) -- (\xx,-1.35);}
+  \node[font=\scriptsize\bfseries, text=robleu] at (-1.2,0.55) {Déc.};
+  \node[font=\scriptsize\bfseries, text=robleu] at (0.0,0.55) {Binaire};
+  \node[font=\scriptsize\bfseries, text=robleu] at (1.2,0.55) {Hexa};
+  \node[font=\scriptsize, text=rogris] at (-1.2,0.025) {9};
+  \node[font=\scriptsize, text=rogris] at (0.0,0.025) {1001};
+  \node[font=\scriptsize, text=rogris] at (1.2,0.025) {9};
+  \node[font=\scriptsize, text=rogris] at (-1.2,-0.525) {11};
+  \node[font=\scriptsize, text=rogris] at (0.0,-0.525) {1011};
+  \node[font=\scriptsize, text=rogris] at (1.2,-0.525) {B};
+  \node[font=\scriptsize, text=rogris] at (-1.2,-1.075) {26};
+  \node[font=\scriptsize, text=rogris] at (0.0,-1.075) {11010};
+  \node[font=\scriptsize, text=rogris] at (1.2,-1.075) {1A};
+\end{scope}
+% panneau 2 : logique et tables de verite
+\fill[white, draw=rogris!45, line width=0.7pt, rounded corners=2.5mm]
+  (7.9,-13.8) rectangle (13.1,-20.05);
+\fill[roteal] (8.18,-14.05) rectangle (12.82,-14.11);
+\node[text=rogris, font=\footnotesize\scshape] at (10.5,-19.68)
+  {\textls[110]{Logique}};
+\begin{scope}[shift={(10.5,-16.9)}, scale=0.86]
+  \fill[robleuf] (-1.9,0.9) rectangle (1.9,0.35);
+  \draw[rogris!60, line width=0.6pt] (-1.9,0.9) rectangle (1.9,-1.45);
+  \foreach \yy in {0.35,-0.1,-0.55,-1.0}{\draw[rogris!60, line width=0.5pt] (-1.9,\yy) -- (1.9,\yy);}
+  \foreach \xx in {-0.75,0.35}{\draw[rogris!60, line width=0.5pt] (\xx,0.9) -- (\xx,-1.45);}
+  \node[font=\scriptsize\bfseries, text=robleu] at (-1.32,0.625) {$p$};
+  \node[font=\scriptsize\bfseries, text=robleu] at (-0.2,0.625) {$q$};
+  \node[font=\scriptsize\bfseries, text=robleu] at (1.12,0.625) {$p \Rightarrow q$};
+  \node[font=\scriptsize, text=rogris] at (-1.32,0.125) {V};
+  \node[font=\scriptsize, text=rogris] at (-0.2,0.125) {V};
+  \node[font=\scriptsize, text=rogris] at (1.12,0.125) {V};
+  \node[font=\scriptsize, text=rogris] at (-1.32,-0.325) {V};
+  \node[font=\scriptsize, text=rogris] at (-0.2,-0.325) {F};
+  \node[font=\scriptsize\bfseries, text=roor] at (1.12,-0.325) {F};
+  \node[font=\scriptsize, text=rogris] at (-1.32,-0.775) {F};
+  \node[font=\scriptsize, text=rogris] at (-0.2,-0.775) {V};
+  \node[font=\scriptsize, text=rogris] at (1.12,-0.775) {V};
+  \node[font=\scriptsize, text=rogris] at (-1.32,-1.225) {F};
+  \node[font=\scriptsize, text=rogris] at (-0.2,-1.225) {F};
+  \node[font=\scriptsize, text=rogris] at (1.12,-1.225) {V};
+\end{scope}
+% panneau 3 : ensembles et diagramme de Venn
+\fill[white, draw=rogris!45, line width=0.7pt, rounded corners=2.5mm]
+  (14.0,-13.8) rectangle (19.2,-20.05);
+\fill[rogold] (14.28,-14.05) rectangle (18.92,-14.11);
+\node[text=rogris, font=\footnotesize\scshape] at (16.6,-19.68)
+  {\textls[110]{Ensembles}};
+\begin{scope}[shift={(16.6,-16.7)}, scale=1.0]
+  \draw[rogris!60, line width=0.6pt, fill=rogrisf!40]
+    (-1.5,-1.05) rectangle (1.5,1.15);
+  \draw[robleu, line width=1pt, fill=robleuf, fill opacity=0.65]
+    (-0.62,0.05) ellipse (0.8 and 0.58);
+  \draw[roteal, line width=1pt, fill=rotealf, fill opacity=0.65]
+    (0.62,0.05) ellipse (0.8 and 0.58);
+  \node[font=\scriptsize, text=rogris] at (0,-1.6)
+    {$A \cup B$, $A \cap B$ et $\overline{A}$};
+\end{scope}
+\end{scope}
+% ================= bandeau institut =================
+\node[text=robleu, font=\fontsize{13}{15}\selectfont\bfseries]
+  at ([yshift=-20.75cm]current page.north) {\InstitutNom};
+\node[text=rogris, font=\footnotesize]
+  at ([yshift=-21.38cm]current page.north) {\InstitutLigne};
+% ================= carte d'auteur =================
+\fill[robleuf!60] ([yshift=-21.9cm]current page.north west)
+  rectangle (current page.south east);
+\draw[robleu, line width=2.2pt]
+  ([yshift=-21.9cm]current page.north west) -- ([yshift=-21.9cm]current page.north east);
+\draw[rogold, line width=0.9pt]
+  ([yshift=-22.14cm]current page.north west) -- ([yshift=-22.14cm]current page.north east);
+% nom
+\node[text=robleu, font=\fontsize{21}{25}\selectfont\bfseries]
+  at ([yshift=-23.4cm]current page.north) {\Auteur};
+\fill[rogold] ([xshift=-1.3cm,yshift=-24.32cm]current page.north) rectangle ++(2.6,-0.07);
+% lignes de qualite
+\node[text width=16.6cm, align=center, text=rogris, font=\small]
+  at ([yshift=-25.3cm]current page.north) {\AuteurQualite};
+\node[text=rogris, font=\small]
+  at ([yshift=-26.4cm]current page.north) {\AuteurLigneB};
+\node[text=rogris!80!black, font=\footnotesize]
+  at ([yshift=-27.3cm]current page.north) {\AuteurContact};
+% ================= bandeau inferieur =================
+\fill[robleu] ([yshift=-28.75cm]current page.north west)
+  rectangle (current page.south east);
+\node[text=white, font=\small]
+  at ([yshift=-29.25cm]current page.north) {\textls[150]{\scshape\AnneeAcad}};
+\end{tikzpicture}
+\end{titlepage}}
+
+% ==== Liens (en dernier) ====
+\usepackage[colorlinks=true, linkcolor=robleu, urlcolor=roteal,
+            citecolor=robleu]{hyperref}

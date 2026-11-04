@@ -1,0 +1,210 @@
+% ============================================================
+%  Chapitre 4 : Donnees en memoire
+% ============================================================
+\chapter{Données en mémoire}
+\chaptermark{Données en mémoire}
+
+\begin{quelqueslignes}
+Après avoir écrit les nombres en binaire, il faut voir où ils habitent : la mémoire d'un ordinateur est une suite d'octets, chacun identifié par une adresse, et tout ce qu'un programme manipule (compteurs, salaires, coordonnées d'un pixel) y prend une place exactement comptée. Ce chapitre présente la représentation des nombres entiers signés par le complément à deux, décrit l'organisation et les capacités de la mémoire, examine les limites de précision qui guettent tout calcul machine et donne les critères du choix d'une représentation adaptée. Les chapitres 1 et 3 fournissent les bases de numération utilisées dans chaque conversion.
+\end{quelqueslignes}
+
+\section{Représentation des nombres en mémoire}
+
+\begin{definition}[mot mémoire]
+La mémoire d'une machine stocke l'information par \emph{mots} de taille fixe : 8 bits (un octet), 16, 32 ou 64 bits selon le type de donnée. Sur $n$ bits, un entier \emph{non signé} occupe toutes les valeurs de $0$ à $2^{n}-1$ ; pour coder aussi les nombres négatifs, on réserve un codage particulier, le \emph{complément à deux}.
+\end{definition}
+
+\begin{methode}[coder un entier relatif par complément à deux sur $n$ bits]
+\begin{enumerate}
+  \item écrire la valeur absolue du nombre en binaire sur $n$ bits ;
+  \item inverser tous les bits (complément à un) ;
+  \item ajouter 1 au résultat : c'est le complément à deux, qui code le nombre négatif.
+\end{enumerate}
+Pour relire un mot signé : si le bit de poids fort vaut 0, le mot se lit directement ; s'il vaut 1, le nombre vaut la valeur binaire du mot moins $2^{n}$.
+\end{methode}
+
+Une solution plus intuitive existe, dite \emph{grandeur signée} (réserver un bit de signe et coder la valeur absolue sur les bits restants), mais elle a deux défauts : elle donne deux zéros distincts ($0000\,0000$ et $1000\,0000$ représentent tous deux zéro) et elle oblige à soustraire, alors que le complément à deux permet d'additionner sans regarder les signes. C'est pourquoi toutes les machines actuelles codent les entiers relatifs par complément à deux, et c'est ce codage que l'on étudie.
+
+Le tableau~\ref{ch4:tab:ca2} montre le codage sur 4 bits, où l'intervalle signé va de $-8$ à $+7$ : la moitié haute des mots (bit de poids fort 1) porte les négatifs.
+
+\begin{center}
+\small
+\begin{tabular}{C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}}
+\toprule
+\rowcolor{robleuf}Mot & 0000 & 0001 & 0010 & 0100 & 0111\\
+\midrule
+Valeur & 0 & 1 & 2 & 4 & 7\\
+\rowcolor{rogrisf!50}Mot & 1000 & 1010 & 1100 & 1110 & 1111\\
+Valeur & $-8$ & $-6$ & $-4$ & $-2$ & $-1$\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Extraits du codage signé sur 4 bits (complément à deux)}
+\label{ch4:tab:ca2}
+\end{center}
+
+\begin{exemple}[coder puis relire un nombre négatif]
+Codons $-77$ sur 8 bits. On écrit d'abord $77 = (0100\,1101)_2$, car $64 + 8 + 4 + 1 = 77$. L'inversion des bits donne $1011\,0010$, et l'ajout de 1 fournit $1011\,0011$ : le complément à deux de $-77$ sur 8 bits est $(1011\,0011)_2$. Pour relire ce mot : son interprétation non signée vaut $128 + 32 + 16 + 2 + 1 = 179$, le bit de poids fort vaut 1, donc le nombre codé vaut $179 - 256 = -77$. Sur 8 bits, les entiers signés occupent ainsi l'intervalle de $-128$ à $+127$.
+\end{exemple}
+
+\begin{attention}
+Ne pas confondre le \emph{complément à un} (la simple inversion des bits) et le \emph{complément à deux}, qui ajoute 1 après l'inversion. Le complément à un de $77$ sur 8 bits vaut $1011\,0010$, soit $-78$ en lecture signée ; le complément à deux vaut $1011\,0011$, soit $-77$. Oublier l'ajout final de 1 est l'erreur la plus fréquente du codage : elle décale chaque résultat négatif d'une unité, et donne notamment $-0$ pour le complément à un de zéro, un code que le complément à deux, lui, ne connaît pas.
+\end{attention}
+
+\begin{exemple}[additionner en complément à deux]
+Calculons $5 + (-3)$ sur 8 bits. On code $5 = (0000\,0101)_2$ et $-3$ par complément à deux : $3 = (0000\,0011)_2$, inversé en $(1111\,1100)_2$, plus 1 donne $(1111\,1101)_2$. L'addition binaire donne
+\[
+(0000\,0101)_2 + (1111\,1101)_2 = (1\,0000\,0010)_2 .
+\]
+Le neuvième bit, sorti du mot, est ignoré par la machine : il reste $(0000\,0010)_2 = 2$, le bon résultat. C'est tout l'intérêt du complément à deux : le même circuit d'addition traite les nombres positifs et négatifs, et la soustraction se réduit à l'addition du complément.
+\end{exemple}
+
+Les nombres à virgule s'écrivent de deux façons. En \emph{virgule fixe}, on réserve un nombre fixé de bits pour la partie fractionnaire : sur 8 bits partagés en 4 bits entiers et 4 bits fractionnaires, $6{,}5$ s'écrit $(0110\,1000)_2$, car $0110$ vaut 6 et $1000$ vaut $\tfrac{8}{16} = 0{,}5$. En \emph{virgule flottante}, normalisée par la norme IEEE 754, un mot de 32 bits contient un bit de signe, 8 bits d'exposant et 23 bits de mantisse, et un mot de 64 bits les double : c'est le format utilisé par défaut pour les nombres réels dans tous les langages actuels.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[rogris!60, line width=0.6pt] (0,0) rectangle (12,1.15);
+  \draw[roor, fill=roorf] (0,0) rectangle (1.2,1.15);
+  \draw[robleu, fill=robleuf] (1.2,0) rectangle (4.4,1.15);
+  \draw[roteal, fill=rotealf] (4.4,0) rectangle (12,1.15);
+  \node[font=\small\bfseries, text=roor] at (0.6,0.57) {S};
+  \node[font=\small\bfseries, text=robleu] at (2.8,0.57) {Exposant};
+  \node[font=\small\bfseries, text=roteal] at (8.2,0.57) {Mantisse};
+  \node[font=\footnotesize, text=rogris] at (0.6,-0.35) {1 bit};
+  \node[font=\footnotesize, text=rogris] at (2.8,-0.35) {8 bits};
+  \node[font=\footnotesize, text=rogris] at (8.2,-0.35) {23 bits};
+\end{tikzpicture}
+\captionof{figure}{Un mot de virgule flottante simple précision (32 bits, norme IEEE 754)}
+\label{ch4:fig:ieee}
+\end{center}
+
+\section{Mémoire d'un ordinateur}
+
+\begin{definition}[octet, adresse]
+La mémoire vive est une suite d'octets, chacun repéré par un numéro appelé \emph{adresse}, qui commence à 0. Une variable occupe un ou plusieurs octets consécutifs, et son adresse est celle de son premier octet. Si le bus d'adresses comporte $n$ bits, le processeur peut désigner $2^{n}$ adresses distinctes : un bus de 16 bits atteint $2^{16} = 65\,536$ octets, un bus de 32 bits $2^{32} = 4\,294\,967\,296$ octets, soit 4 Go de mémoire adressable.
+\end{definition}
+
+Les capacités se calculent avec les multiples de la section 3 : chez le fabricant, 1 Ko $= 10^{3}$ octets, 1 Mo $= 10^{6}$, 1 Go $= 10^{9}$ ; pour la mémoire vive, les puissances de 2 priment, avec $2^{10} = 1024$, $2^{20} = 1\,048\,576$ et $2^{30} = 1\,073\,741\,824$. Une « barrette de 8 Go » contient ainsi $8 \times 2^{30} = 8\,589\,934\,592$ octets. La machine organise en outre ses mémoires en hiérarchie, du plus rapide au plus lent : chaque niveau sacrifie de la vitesse à la capacité, comme le résume le tableau~\ref{ch4:tab:hierarchie}.
+
+\begin{center}
+\small
+\begin{tabular}{L{3.4cm}L{3.8cm}L{4.4cm}L{3.2cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Niveau} & \textbf{Capacité typique} & \textbf{Temps d'accès (ordre)} & \textbf{Volatile ?}\\
+\midrule
+Registres du processeur & quelques dizaines d'octets & $\sim 1$ ns & oui\\
+\rowcolor{rogrisf!50}Mémoire cache & Ko à quelques Mo & $\sim 10$ ns & oui\\
+Mémoire vive (RAM) & 4 à 32 Go & $\sim 100$ ns & oui\\
+\rowcolor{rogrisf!50}Disque SSD & 128 Go à 2 To & $\sim 0{,}1$ ms & non\\
+Disque dur (HDD) & 1 à 8 To & $\sim 10$ ms & non\\
+\bottomrule
+\end{tabular}
+\captionof{table}{La hiérarchie mémoire : la vitesse diminue quand la capacité grandit}
+\label{ch4:tab:hierarchie}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \foreach \i/\c in {0/robleuf,1/white,2/robleuf,3/white,4/robleuf,5/white,6/robleuf,7/white}{
+    \draw[rogris!60, line width=0.6pt, fill=\c] (\i,0) rectangle ({\i+1},0.9);
+    \node[font=\scriptsize, text=rogris] at (\i+0.5,-0.35) {65\,53\i};
+  }
+  \node[font=\footnotesize, text=rogris] at (4,-0.95) {octets d'une mémoire de 65\,536 adresses (bus 16 bits)};
+  \draw[roor, line width=1.4pt] (3.15,-0.15) rectangle (6.85,1.05);
+  \node[font=\footnotesize, text=roor] at (5,1.35) {une variable de 4 octets occupe les adresses 65\,532 à 65\,535};
+\end{tikzpicture}
+\captionof{figure}{La mémoire vive comme suite d'octets adressés : une variable 32 bits finit au dernier octet}
+\label{ch4:fig:ram}
+\end{center}
+
+Cette hiérarchie explique un conseil constant des programmeurs : garder au plus près du processeur les données utilisées souvent, et ne descendre vers la RAM ou le disque qu'en cas de besoin. Les « mémoires volatiles » perdent leur contenu dès la coupure de courant ; seuls les disques conservent l'information hors tension.
+
+\begin{exemple}[compter les adresses et la capacité réelle]
+Un microcontrôleur de carte à puce possède un bus d'adresses de 16 bits : il adresse $2^{16} = 65\,536$ octets, soit 64 Ko de mémoire, numérotés de 0 à 65\,535. Une variable de type entier 32 bits déclarée à l'adresse 65\,532 occupe les octets 65\,532 à 65\,535 : elle finit exactement au dernier octet adressable. Une clé annoncée 32 Go contient en réalité $32 \times 10^{9} = 32\,000\,000\,000$ octets ; comptés en puissances de 2, cela fait $32\,000\,000\,000 / 2^{30} \approx 29{,}8$ « Gio », ce qui explique l'écart que l'explorateur de fichiers affiche entre la capacité annoncée et la capacité vue par le système.
+\end{exemple}
+
+\begin{exemple}[estimer ce que contient une clé]
+Combien de photographies de 4 Mo peut stocker la clé de 32 Go ? En octets de fabricant, la clé vaut $32 \times 10^{9}$ octets et chaque photo $4 \times 10^{6}$ octets, d'où
+\[
+\frac{32 \times 10^{9}}{4 \times 10^{6}} = 8\,000 .
+\]
+Huit mille photographies tiennent donc sur la clé, avant l'espace réservé par le système de fichiers. Le même calcul s'applique à un fichier vidéo de 1,5 Go sur un disque de 500 Go : $500 \times 10^{9} / (1{,}5 \times 10^{9}) \approx 333$ vidéos.
+\end{exemple}
+
+Une confusion d'étudiants mérite d'être désamorcée dès maintenant : « mémoire » et « stockage » ne désignent pas la même chose. La mémoire vive (RAM) garde les programmes et les données \emph{pendant} l'exécution, et perd tout à la coupure de courant ; le stockage (SSD, disque dur) conserve les fichiers \emph{entre} les sessions, mais il est plus lent. Ouvrir un fichier le recopie du stockage vers la mémoire vive ; enregistrer le recopie en sens inverse. Les deux capacités, « 8 Go de RAM » et « 512 Go de stockage », répondent donc à deux besoins distincts et ne se remplacent pas.
+
+\section{Limites de précision}
+
+La mémoire étant finie, tout codage atteint ses limites quelque part. La première limite est le \emph{dépassement de capacité} (\emph{overflow}) : un résultat qui sort de l'intervalle du type utilisé est tronqué et donne une réponse fausse, sans aucun message d'erreur.
+
+\begin{exemple}[un dépassement silencieux]
+Sur 8 bits signés, l'intervalle va de $-128$ à $+127$. Calculons $100 + 50$ : on code $100 = (0110\,0100)_2$ et $50 = (0011\,0010)_2$, et l'addition binaire donne $(1001\,0110)_2$. Relu comme mot signé, ce mot vaut $150 - 256 = -106$ : la machine affiche $100 + 50 = -106$, sans avertissement. Le bit de poids fort, qui marque le signe, a été envahi par la retenue du calcul. Tout programmeur vérifie donc l'intervalle du type choisi avant d'y accumuler des valeurs.
+\end{exemple}
+
+La seconde limite concerne la virgule flottante : les nombres réels sont représentés en nombre fini de bits, donc de façon approchée. Le nombre $0{,}1$ n'a pas d'écriture binaire finie, de même que $\tfrac{1}{3}$ n'a pas d'écriture décimale finie, et la machine le stocke par une valeur très proche mais inexacte.
+
+\begin{exemple}[quand la machine se trompe de $0{,}0000000000000001$]
+Dans un interpréteur Python, l'expression $0{,}1 + 0{,}2$ renvoie exactement :
+\begin{center}
+\texttt{>>> 0.1 + 0.2}\\
+\texttt{0.30000000000000004}
+\end{center}
+L'erreur est minuscule, mais elle suffit à faire échouer un test : l'égalité \texttt{0.1 + 0.2 == 0.3} renvoie \texttt{False}, car $0{,}3$ stocké n'est pas exactement le résultat stocké de $0{,}1 + 0{,}2$. En pratique, on compare des flottants avec une tolérance (déclarer le résultat correct si $|x - 0{,}3| < 10^{-9}$), et on ne code jamais des montants financiers en flottant.
+\end{exemple}
+
+\begin{remarque}[l'accumulation des petites erreurs]
+Une erreur minuscule devient visible quand elle s'accumule. Additionner $1000$ fois la valeur $0{,}1$ devrait donner $100$ ; un interpréteur Python renvoie $99{,}9999999999986$, avec un déficit d'environ $1{,}4 \times 10^{-12}$. Sur un calcul isolé, l'écart est négligeable ; sur une boucle de paie, de capitalisation ou de trajectoire, il peut devenir gênant. Les règles du métier suivent : comparer avec tolérance, préférer les entiers dès que la donnée le permet, et réserver les flottants aux quantités réellement continues.
+\end{remarque}
+
+\begin{attention}
+Deux réflexes protègent de ces limites. D'une part, toute accumulation doit être confrontée à l'intervalle du type : mille ajouts de 3 millions sur un entier 16 bits signé (max $32\,767$) débordent dès le premier. D'autre part, l'égalité de deux flottants ne se teste jamais directement : deux calculs mathématiquement identiques peuvent différer au dernier bit, et la comparaison rigoureuse passe par une tolérance absolue ou relative.
+\end{attention}
+
+\begin{remarque}
+Comment détecter un dépassement sans recalculer tout le tableau ? Pour l'addition signée en complément à deux, on observe les deux retenues sortantes : celle qui quitte le bit de poids fort et celle qui entre dans la colonne du signe. Si ces deux retenues sont identiques (toutes deux 0 ou toutes deux 1), le résultat est correct ; si elles diffèrent, il y a dépassement. Dans l'exemple $100 + 50$, la retenue entrant dans le signe vaut 1 et celle sortant du mot vaut 0 : le dépassement est détecté, et un processeur le signale en levant son drapeau d'erreur, le fameux \emph{overflow flag} que les tableaux du chapitre 3 laissaient pressentir.
+\end{remarque}
+
+\section{Choix de la bonne représentation}
+
+Choisir une représentation, c'est répondre à trois questions : la donnée est-elle un entier ou un réel ? quel intervalle de valeurs doit couvrir le type ? quelle place chaque enregistrement consommera-t-il, multipliée par le nombre d'enregistrements ?
+
+\begin{methode}[choisir un type : trois questions]
+\begin{enumerate}
+  \item la donnée est-elle un comptage (entier) ou une mesure (réel) ? un âge, une population, un matricule sont des entiers ; une moyenne, un prix, une coordonnée sont des réels, ou des entiers de plus petite unité (centimes, centièmes de point) ;
+  \item quel intervalle doit couvrir le type ? reprendre le tableau~\ref{ch4:tab:types} et garder une marge : un compteur d'octets d'un disque de 2 To dépasse l'entier 32 bits signé ($\approx 2{,}1$ milliards) dès le premier téraoctet ;
+  \item quelle place par enregistrement, multipliée par combien d'enregistrements ? la différence entre 2 et 8 octets se paie sur des fichiers de dizaines de milliers de lignes.
+\end{enumerate}
+\end{methode}
+
+\begin{center}
+\small
+\begin{tabular}{L{3.4cm}L{4.6cm}L{7.2cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Type} & \textbf{Intervalle couvert} & \textbf{Usage typique}\\
+\midrule
+Entier 8 bits signé & $-128$ à $127$ & compteur court, échantillon audio\\
+\rowcolor{rogrisf!50}Entier 16 bits signé & $-32\,768$ à $32\,767$ & année, pixel d'une composante RVB\\
+Entier 32 bits signé & $\approx \pm 2{,}1$ milliards & identifiant, population d'un pays\\
+\rowcolor{rogrisf!50}Entier 64 bits signé & $\approx \pm 9{,}2$ milliards de milliards & horodatage, compteur universel\\
+Flottant 32 bits & $\approx \pm 3{,}4 \times 10^{38}$, 7 chiffres fiables & graphique, capteur\\
+\rowcolor{rogrisf!50}Flottant 64 bits & $\approx \pm 1{,}8 \times 10^{308}$, 15 chiffres fiables & calcul scientifique par défaut\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Intervalles et usages des représentations usuelles}
+\label{ch4:tab:types}
+\end{center}
+
+\begin{exemple}[choisir un type pour une donnée réelle]
+Un système de gestion des étudiants de CPTEC doit stocker un matricule, un âge et une moyenne. Le matricule, entier positif de moins de 9 chiffres, tient sur un entier 32 bits non signé ; l'âge tient largement sur un octet ; la moyenne, réel compris entre 0 et 20 avec deux décimales, se code soit en flottant 64 bits avec la tolérance de comparaison vue plus haut, soit, mieux pour des notes réglementées, en entier de centièmes : une moyenne de $14{,}75$ devient l'entier 1475, exact et sans erreur d'arrondi. Dans un fichier de 50\,000 étudiants, passer la moyenne du flottant 64 bits (8 octets) à l'entier de centièmes sur 16 bits (2 octets) économise $50\,000 \times 6 = 300\,000$ octets : le choix du type se paie en octets.
+\end{exemple}
+
+\begin{exemple}[une image occupe aussi des octets]
+L'écran de la salle de travaux pratiques affiche $1920 \times 1080$ pixels en couleurs RVB (24 bits par pixel, soit 3 octets). La mémoire d'affichage, le \emph{framebuffer}, doit donc contenir
+\[
+1920 \times 1080 \times 3 = 6\,220\,800\ \text{octets} \approx 6{,}2\ \text{Mo} .
+\]
+Chaque image affichée occupe ainsi 6,2 Mo de mémoire, et un vidéo-projecteur qui rafraîchit l'écran 60 fois par seconde lit chaque seconde $60 \times 6{,}2 \approx 372$ Mo : le simple affichage d'un bureau vide mobilise déjà une part du débit mémoire. Le chapitre 6 reprend ce calcul pixel par pixel.
+\end{exemple}
+
+\begin{aretirer}
+Sur $n$ bits : $0$ à $2^{n}-1$ en non signé, $-2^{n-1}$ à $2^{n-1}-1$ en signé. Le complément à deux s'obtient en inversant les bits puis en ajoutant 1 ; sa lecture retranche $2^{n}$ lorsque le bit de poids fort vaut 1 ; l'addition signée utilise le même circuit, le bit sortant étant ignoré. La mémoire est une suite d'octets adressés de 0 à $2^{n}-1$ pour un bus de $n$ bits ; 1 Ko $= 10^{3}$ octets chez les fabricants contre $2^{10} = 1024$ pour le système. Deux pièges : le dépassement de capacité, qui donne $100 + 50 = -106$ sur 8 bits signés sans prévenir, et la précision finie des flottants, où $0{,}1 + 0{,}2 \neq 0{,}3$ ; on compare donc avec une tolérance et on code les montants en entiers de centimes. Le type se choisit selon l'intervalle à couvrir et la place multipliée par le nombre d'enregistrements.
+\end{aretirer}

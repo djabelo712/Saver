@@ -1,0 +1,54 @@
+% ============================================================
+%  TD Chapitre 1 : Les ensembles
+% ============================================================
+\chapter{Les ensembles}
+\chaptermark{Les ensembles}
+
+\begin{exercice}[écrire et compter des ensembles]
+Soit $A = \{x \in \N \mid 2 \leqslant x \leqslant 10\}$ et $B$ l'ensemble des lettres distinctes du mot « licence ».
+\begin{enumerate}
+\item écrire $A$ en extension et donner $|A|$ ;
+\item écrire $B$ en extension et donner $|B|$ ;
+\item dire si chacune des assertions suivantes est vraie ou fausse : $4 \in A$ ; $11 \notin A$ ; $3 \in A$ ;
+\item calculer $|A \times B|$ et donner un couple $(x, y)$ avec $x \in A$ et $y \in B$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[opérations de base et lois de De Morgan]
+Dans l'univers $U = \{1, 2, 3, 4, 5, 6, 7, 8\}$, on prend $A = \{1, 2, 3, 4\}$ et $B = \{3, 4, 5, 6\}$.
+\begin{enumerate}
+\item calculer $A \cup B$, $A \cap B$, $\overline{A}$ et $\overline{B}$ ;
+\item en déduire $\overline{A} \cap \overline{B}$ puis $\overline{A \cup B}$, et comparer les deux résultats ;
+\item vérifier de même la seconde loi de De Morgan : calculer $\overline{A \cap B}$ et $\overline{A} \cup \overline{B}$, puis conclure.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[diagramme de Venn : deux modules de formation]
+Dans une promotion de $90$ étudiants de l'institut, $48$ suivent le module de bureautique (ensemble $B$), $39$ suivent le module d'algorithmique (ensemble $A$) et $15$ suivent les deux modules.
+\begin{enumerate}
+\item reproduire le diagramme de Venn et placer les effectifs dans chaque région (commencer par l'intersection) ;
+\item combien d'étudiants suivent au moins un des deux modules ?
+\item combien d'étudiants ne suivent aucun des deux modules ?
+\item retrouver le résultat de la question 2 avec la formule $|A \cup B| = |A| + |B| - |A \cap B|$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[trois langages de programmation]
+On interroge $70$ développeurs d'une agence de Lomé sur les langages qu'ils pratiquent : $34$ pratiquent Python (ensemble $P$), $27$ pratiquent JavaScript (ensemble $J$), $22$ pratiquent SQL (ensemble $S$). De plus, $12$ pratiquent Python et JavaScript, $9$ pratiquent Python et SQL, $7$ pratiquent JavaScript et SQL, et $4$ pratiquent les trois.
+\begin{enumerate}
+\item calculer l'effectif de chaque région du diagramme de Venn à trois ensembles, en commençant par le noyau $P \cap J \cap S$ ;
+\item combien de développeurs pratiquent au moins un des trois langages ?
+\item combien n'en pratiquent aucun ?
+\item vérifier que la somme des huit régions vaut bien $70$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[simplifier des expressions d'ensembles]
+Simplifier les deux expressions suivantes en citant chaque loi utilisée, puis contrôler le résultat sur des ensembles concrets :
+\[
+E = (A \cap B) \cup (\overline{A} \cap B)
+\qquad ; \qquad
+F = (A \cup B) \cap (A \cup \overline{B}) .
+\]
+Pour le contrôle, on prendra $A = \{1, 2\}$ et $B = \{2, 3\}$ dans l'univers $U = \{1, 2, 3, 4\}$, et l'on calculera les deux membres de chaque égalité.
+\end{exercice}

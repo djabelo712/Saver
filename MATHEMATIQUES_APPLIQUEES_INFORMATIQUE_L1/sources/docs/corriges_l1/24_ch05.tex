@@ -1,0 +1,87 @@
+% ============================================================
+%  Corriges TD Chapitre 5 : Mesures des angles
+% ============================================================
+\chapter{Mesures des angles}
+\chaptermark{Mesures des angles}
+
+\begin{corrige}{5.1}
+\textbf{Des degrés vers les radians.} On multiplie par $\dfrac{\pi}{180}$ et on simplifie :
+\[
+45\dgr{} = \frac{45\pi}{180} = \frac{\pi}{4} \ \text{rad} ;
+\qquad
+210\dgr{} = \frac{210\pi}{180} = \frac{7\pi}{6} \ \text{rad} ;
+\qquad
+300\dgr{} = \frac{300\pi}{180} = \frac{5\pi}{3} \ \text{rad} .
+\]
+
+\textbf{Des radians vers les degrés.} On multiplie par $\dfrac{180}{\pi}$ ; le $\pi$ se simplifie :
+\[
+\frac{5\pi}{4} \ \text{rad} = \frac{5 \times 180}{4} = 225\dgr{} ;
+\qquad
+\frac{11\pi}{6} \ \text{rad} = \frac{11 \times 180}{6} = 330\dgr{} ;
+\qquad
+\frac{\pi}{9} \ \text{rad} = \frac{180}{9} = 20\dgr{} .
+\]
+Contrôles : $\dfrac{\pi}{4}$ est la moitié de $\dfrac{\pi}{2}$ donc vaut $45\dgr{}$ ; $210\dgr{} = 180\dgr{} + 30\dgr{}$ donc $\dfrac{7\pi}{6} = \pi + \dfrac{\pi}{6}$ ; $300\dgr{} = 360\dgr{} - 60\dgr{}$ donc $\dfrac{5\pi}{3} = 2\pi - \dfrac{\pi}{3}$ ; les trois résultats en degrés, $225\dgr{}$, $330\dgr{}$ et $20\dgr{}$, sont tous inférieurs à $360\dgr{}$, ce qui est cohérent.
+\end{corrige}
+
+\begin{corrige}{5.2}
+\begin{enumerate}
+\item À $8$ h $20$, la petite aiguille a dépassé le chiffre $8$ d'un tiers d'heure, car $20$ minutes valent $\dfrac{20}{60} = \dfrac{1}{3}$ heure. Sa position depuis midi vaut donc
+\[
+\left(8 + \frac{1}{3}\right) \times 30\dgr{} = \frac{25}{3} \times 30\dgr{} = 250\dgr{} .
+\]
+\item La grande aiguille parcourt $6\dgr{}$ par minute : à la $20^{\text{e}}$ minute, elle est à $20 \times 6\dgr{} = 120\dgr{}$ depuis midi.
+\item L'angle entre les deux aiguilles vaut $250\dgr{} - 120\dgr{} = 130\dgr{}$.
+\end{enumerate}
+L'oubli classique est de compter la petite aiguille à $8 \times 30\dgr{} = 240\dgr{}$ : on obtiendrait alors $120\dgr{}$, qui est l'angle entre la grande aiguille et le chiffre $8$, pas entre les deux aiguilles. La petite aiguille avance en permanence, d'un demi-degré par minute.
+\end{corrige}
+
+\begin{corrige}{5.3}
+\begin{enumerate}
+\item L'échelle est l'hypoténuse d'un triangle rectangle : le mur et le sol forment les deux côtés de l'angle droit. Le théorème de Pythagore donne
+\[
+h^{2} = 6{,}5^{2} - 2{,}5^{2} = 42{,}25 - 6{,}25 = 36 ,
+\qquad\text{d'où}\qquad
+h = \sqrt{36} = 6 \ \text{m} .
+\]
+Le sommet de l'échelle touche le mur à exactement $6$ m du sol.
+\item L'angle de $30\dgr{}$ est adjacent au côté de $25$ m et opposé à la hauteur $h$ cherchée : le bon rapport est la tangente,
+\[
+\tan 30\dgr{} = \frac{h}{25}
+\qquad\Longrightarrow\qquad
+h = 25 \times \tan 30\dgr{} \approx 25 \times 0{,}577 \approx 14{,}4 \ \text{m} .
+\]
+La tour culmine à environ $14{,}4$ mètres.
+\end{enumerate}
+Dans les deux questions, l'hypoténuse (l'échelle) ou l'angle (la visée) est connu : on choisit Pythagore quand les trois côtés sont concernés, et un rapport trigonométrique quand un angle et deux côtés sont liés.
+\end{corrige}
+
+\begin{corrige}{5.4}
+\begin{enumerate}
+\item La somme se fait coordonnée par coordonnée :
+\[
+\vec{u} + \vec{v} = \begin{pmatrix} 4 + 1 \\ -3 + 5 \end{pmatrix} = \begin{pmatrix} 5 \\ 2 \end{pmatrix}.
+\]
+Les normes se calculent par Pythagore :
+\[
+\|\vec{u}\| = \sqrt{4^{2} + (-3)^{2}} = \sqrt{16 + 9} = \sqrt{25} = 5 ;
+\qquad
+\|\vec{v}\| = \sqrt{1^{2} + 5^{2}} = \sqrt{26} \approx 5{,}10 .
+\]
+\item On combine d'abord les coordonnées :
+\[
+2\vec{u} - \vec{v} = \begin{pmatrix} 2 \times 4 - 1 \\ 2 \times (-3) - 5 \end{pmatrix} = \begin{pmatrix} 7 \\ -11 \end{pmatrix},
+\qquad
+\left\| 2\vec{u} - \vec{v} \right\| = \sqrt{49 + 121} = \sqrt{170} \approx 13{,}04 .
+\]
+\item Le déplacement de $A$ vers $B$ est le vecteur
+\[
+\overrightarrow{AB} = \begin{pmatrix} 3 - (-2) \\ -8 - 4 \end{pmatrix} = \begin{pmatrix} 5 \\ -12 \end{pmatrix},
+\qquad
+\|\overrightarrow{AB}\| = \sqrt{5^{2} + (-12)^{2}} = \sqrt{25 + 144} = \sqrt{169} = 13 .
+\]
+La distance entre $A$ et $B$ vaut $13$ unités.
+\end{enumerate}
+Les vecteurs $\begin{pmatrix} 5 \\ -12 \end{pmatrix}$ et $\begin{pmatrix} 4 \\ -3 \end{pmatrix}$ donnent des normes exactes, $13$ et $5$ : ce sont des triplets de Pythagore $(5, 12, 13)$ et $(3, 4, 5)$, à reconnaître pour gagner du temps.
+\end{corrige}

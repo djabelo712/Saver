@@ -1,0 +1,146 @@
+\begin{document}
+\hypersetup{pdftitle={Mathématiques Appliquées à l'Informatique (Licence 1 & 2) : support de cours},
+            pdfauthor={\Auteur},
+            pdfsubject={Ensembles, logique et algèbre de Boole, systèmes de numération, données en mémoire, mesures des angles, vecteurs et images numériques},
+            pdfkeywords={ensembles, diagramme de Venn, logique, table de vérité, algèbre de Boole, portes logiques, système de numération, binaire, hexadécimal, conversion de base, complément à deux, mémoire, virgule flottante, degré, radian, trigonométrie, vecteur, matrice, image numérique, RVB, pixel, Licence 1, Licence 2, CPTEC}}
+
+% ==== Identité du document ====
+\renewcommand{\DocTitre}{Mathématiques Appliquées à l'Informatique (Licence 1 \& 2)}
+\renewcommand{\DocKicker}{Institut Supérieur CPTEC \textbullet{} Support de cours}
+\renewcommand{\DocSousTitre}{Des ensembles et de la logique aux images numériques}
+\renewcommand{\DocDescription}{Support de cours de l'étudiant : six chapitres avec exemples résolus}
+\renewcommand{\BadgeUniq}{Licence 1 \& Licence 2}
+\renewcommand{\DocVolumeH}{Année académique 2026--2027}
+
+% ================= PAGE 1 : page de garde =================
+\pagedegarde
+
+% ================= PAGE 2 : page a l'effigie de CPTEC et de l'enseignant =================
+\newcommand{\pagedeux}{%
+\begin{titlepage}
+\begin{tikzpicture}[remember picture, overlay]
+% ================= bandeau superieur =================
+\fill[robleu] (current page.north west)
+  rectangle ([yshift=-10.8cm]current page.north east);
+\fill[rogold] ([yshift=-10.8cm]current page.north west)
+  rectangle ([yshift=-11.02cm]current page.north east);
+\begin{scope}
+  \draw[white, opacity=0.12, line width=1pt]
+    ([xshift=14.2cm,yshift=-1.6cm]current page.north west) --
+    ([xshift=16.6cm,yshift=-2.9cm]current page.north west) --
+    ([xshift=19.3cm,yshift=-1.8cm]current page.north west) --
+    ([xshift=18.4cm,yshift=-4.7cm]current page.north west) --
+    ([xshift=15.6cm,yshift=-5.8cm]current page.north west) --
+    ([xshift=13.8cm,yshift=-4.1cm]current page.north west) -- cycle;
+  \draw[white, opacity=0.12, line width=1pt]
+    ([xshift=14.2cm,yshift=-1.6cm]current page.north west) --
+    ([xshift=18.4cm,yshift=-4.7cm]current page.north west);
+  \draw[white, opacity=0.12, line width=1pt]
+    ([xshift=16.6cm,yshift=-2.9cm]current page.north west) --
+    ([xshift=15.6cm,yshift=-5.8cm]current page.north west);
+\end{scope}
+% ligne d'appel
+\node[anchor=west, text=rogold!55!white, font=\small]
+  at ([xshift=2.1cm,yshift=-1.85cm]current page.north west)
+  {\textls[180]{\scshape\DocKicker}};
+% titre principal sur trois lignes
+\node[anchor=west, text=white, font=\fontsize{31}{38}\selectfont\bfseries]
+  at ([xshift=2.0cm,yshift=-3.35cm]current page.north west) {MATHÉMATIQUES};
+\node[anchor=west, text=white, font=\fontsize{31}{38}\selectfont\bfseries]
+  at ([xshift=2.0cm,yshift=-5.0cm]current page.north west) {APPLIQUÉES À};
+\node[anchor=west, text=white, font=\fontsize{31}{38}\selectfont\bfseries]
+  at ([xshift=2.0cm,yshift=-6.65cm]current page.north west) {L'INFORMATIQUE};
+\fill[rogold] ([xshift=2.05cm,yshift=-7.45cm]current page.north west)
+  rectangle ++(2.8,-0.09);
+% mention etudiant
+\node[anchor=west, text=white, font=\Large\itshape]
+  at ([xshift=2.1cm,yshift=-8.35cm]current page.north west) {Support de cours de l'étudiant};
+\node[anchor=west, text=white!82!robleu, font=\small, text width=16.6cm, align=left]
+  at ([xshift=2.1cm,yshift=-9.35cm]current page.north west)
+  {Ensembles \textbullet{} Logique et algèbre de Boole \textbullet{} Systèmes de numération\\[1mm]
+   Données en mémoire \textbullet{} Mesures des angles \textbullet{} Vecteurs et images numériques};
+% ================= deux cartes : institut et enseignant =================
+\begin{scope}[shift={(current page.north west)}]
+% ---- carte 1 : l'institut ----
+\fill[white, draw=rogris!45, line width=0.7pt, rounded corners=2.5mm]
+  (1.8,-12.3) rectangle (10.2,-20.9);
+\fill[robleu] (1.8,-12.3) rectangle (10.2,-13.0);
+\node[text=white, font=\small\bfseries] at (6.0,-12.65)
+  {\textls[140]{\scshape L'institut}};
+\node[text=robleu, font=\large\bfseries, align=center, text width=7.6cm] at (6.0,-14.15)
+  {CPTEC Business School\\[-0.5mm]{\footnotesize\mdseries Institut Supérieur}};
+\node[text=roor, font=\footnotesize\bfseries] at (6.0,-15.15)
+  {Agréé par l'État N\dgr{} 00.50/2024};
+\node[text=rogris, font=\small, align=center, text width=7.4cm] at (6.0,-16.85)
+  {Avedji, Lomé (Togo)\\[0.5mm]
+   {\footnotesize Rue en face de l'Église Évangélique Presbytérienne\\ du Togo (EEPT), au niveau de SUNU Assurance}};
+\node[text=rogris, font=\small, align=center, text width=7.4cm] at (6.0,-19.0)
+  {\textbf{+228 70 78 78 18} \ \textbullet{} \ \textbf{96 51 05 50}\\[0.8mm]
+   cptec228togo@gmail.com};
+% ---- carte 2 : l'enseignant ----
+\fill[white, draw=rogris!45, line width=0.7pt, rounded corners=2.5mm]
+  (10.9,-12.3) rectangle (19.3,-20.9);
+\fill[roteal] (10.9,-12.3) rectangle (19.3,-13.0);
+\node[text=white, font=\small\bfseries] at (15.1,-12.65)
+  {\textls[140]{\scshape L'enseignant}};
+\node[text=robleu, font=\large\bfseries, align=center, text width=7.6cm] at (15.1,-14.3)
+  {Ounimborbitibou DJABON};
+\node[text=rogris, font=\small, align=center, text width=7.4cm] at (15.1,-16.15)
+  {Titulaire de deux Masters :\\[0.4mm]
+   Sciences Mathématiques (AIMS Ghana)\\[0.4mm]
+   Physique Théorique (Université de Lomé)};
+\node[text=rogris, font=\footnotesize\itshape, align=center, text width=7.4cm] at (15.1,-17.85)
+  {Chercheur en Information et Communication Quantique};
+\node[text=rogris, font=\small, align=center, text width=7.4cm] at (15.1,-19.35)
+  {\textbf{+228 92 39 97 21}\\[0.8mm]
+   djabon@aims.edu.gh\\[0.6mm]
+   github.com/djabelo712};
+\end{scope}
+% ================= bandeau inferieur =================
+\fill[robleu] ([yshift=-22.3cm]current page.north west)
+  rectangle (current page.south east);
+\fill[rogold] ([yshift=-22.3cm]current page.north west)
+  rectangle ([yshift=-22.44cm]current page.north east);
+\node[text=white, font=\fontsize{15}{18}\selectfont\bfseries]
+  at ([yshift=-23.7cm]current page.north) {Niveau : Licence 1 \& Licence 2};
+\node[text=white!85!robleu, font=\small]
+  at ([yshift=-24.8cm]current page.north) {\textls[150]{\scshape\AnneeAcad}};
+\end{tikzpicture}
+\end{titlepage}}
+\pagedeux
+
+\pagenumbering{roman}
+
+% numérotation des sections dans chaque chapitre (format du modele : 1, 2, 3 ...)
+\renewcommand{\thesection}{\arabic{section}}
+
+% ================= PAGE 3 : objectifs et table des matieres =================
+{\color{robleu}\Large\bfseries Objectifs du module}\par
+\vspace{1.5mm}
+
+\textbf{Objectif général :} donner aux étudiants les méthodes mathématiques directement utilisées en informatique, des ensembles et de la logique jusqu'à la représentation des données et des images dans la machine.
+
+\vspace{2.2mm}
+\textbf{Objectifs spécifiques :} à l'issue de cet enseignement, l'étudiant doit être capable de :
+\begin{itemize}\small
+  \item définir les ensembles, les représenter et appliquer les opérations entre ensembles ;
+  \item raisonner avec la logique des propositions et simplifier avec l'algèbre de Boole ;
+  \item convertir les nombres entre les bases 2, 8, 10 et 16 et y effectuer les opérations ;
+  \item représenter les nombres et les données dans la mémoire d'un ordinateur ;
+  \item mesurer les angles en degrés et en radians et résoudre les triangles ;
+  \item manipuler les vecteurs et les matrices ;
+  \item calculer la taille, le codage des couleurs et le poids d'une image numérique.
+\end{itemize}
+
+\vspace{4mm}
+\begingroup
+\makeatletter
+\setcounter{tocdepth}{1}
+\renewcommand*\l@chapter{\bfseries\@dottedtocline{0}{0em}{2.0em}}
+{\noindent{\color{robleu}\Large\bfseries Table des matières}\par}\vspace{1.5mm}
+{\small\@starttoc{toc}}
+\makeatother
+\endgroup
+
+\clearpage
+\pagenumbering{arabic}

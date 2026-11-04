@@ -1,0 +1,233 @@
+% ============================================================
+%  Chapitre 6 : Les vecteurs et les images numeriques
+% ============================================================
+\chapter{Les vecteurs}
+\chaptermark{Vecteurs et images numériques}
+
+\begin{quelqueslignes}
+Le mot « vecteur » désigne aussi, en informatique, une liste ordonnée de nombres ; et une image numérique n'est rien d'autre qu'une grande matrice de nombres. Ce chapitre commence par les vecteurs et les matrices en tant qu'objets de calcul (dimensions, somme, produit), puis les applique aux images : différence entre image vectorielle et image matricielle, taille et résolution, codage des couleurs en RVB, et calcul du poids d'un fichier. Le chapitre 5 fournit la norme des vecteurs et le théorème de Pythagore utilisés pour les dimensions.
+\end{quelqueslignes}
+
+\section{Définition de vecteurs et de matrices}
+
+\begin{definition}[vecteur, matrice]
+Un \emph{vecteur} de dimension $n$ est une liste ordonnée de $n$ nombres, notée en colonne ou en ligne. Une \emph{matrice} de taille $m \times n$ est un tableau de $m$ lignes et $n$ colonnes de nombres ; son élément de ligne $i$ et colonne $j$ se note $a_{ij}$. Une image numérique de 1080 lignes et 1920 colonnes est une matrice $1080 \times 1920$.
+\end{definition}
+
+En mémoire, les éléments d'une matrice se rangent ligne après ligne : l'image commence par sa première ligne de pixels, puis la seconde, et ainsi de suite jusqu'à la dernière. Ce rangement détermine la vitesse des traitements : parcourir une image ligne par ligne suit l'ordre de la mémoire et reste rapide, tandis que la parcourir colonne par colonne saute d'un bout à l'autre de la mémoire à chaque pas.
+
+La somme de deux vecteurs de même dimension, et celle de deux matrices de même taille, se font élément par élément. Le produit d'une matrice $A$ de taille $m \times n$ par un vecteur $\vec{v}$ de dimension $n$ produit un vecteur de dimension $m$ dont chaque coordonnée est la somme des produits d'une ligne de $A$ par les coordonnées de $\vec{v}$ :
+\[
+\begin{pmatrix} a & b \\ c & d \end{pmatrix}
+\begin{pmatrix} x \\ y \end{pmatrix}
+=
+\begin{pmatrix} a\,x + b\,y \\ c\,x + d\,y \end{pmatrix} .
+\]
+
+Deux matrices se multiplient selon la règle « ligne de la première, colonne de la seconde » : le produit $A \times B$ d'une matrice $m \times n$ par une matrice $n \times p$ donne une matrice $m \times p$ dont l'élément de ligne $i$ et colonne $j$ est la somme des produits de la ligne $i$ de $A$ par la colonne $j$ de $B$. Sur des matrices $2 \times 2$ :
+\[
+\begin{pmatrix} a & b \\ c & d \end{pmatrix}
+\begin{pmatrix} e & f \\ g & h \end{pmatrix}
+=
+\begin{pmatrix} a\,e + b\,g & a\,f + b\,h \\ c\,e + d\,g & c\,f + d\,h \end{pmatrix} .
+\]
+Composer deux transformations revient à multiplier leurs matrices : si $B$ fait tourner et $A$ fait changer d'échelle, la matrice produit $A \times B$ fait les deux d'un coup.
+
+\begin{exemple}[opérations élémentaires]
+Soient $\vec{u} = \begin{pmatrix} 2 \\ 5 \end{pmatrix}$, $\vec{v} = \begin{pmatrix} -3 \\ 1 \end{pmatrix}$ et $A = \begin{pmatrix} 2 & 0 \\ 0 & 3 \end{pmatrix}$. La somme vaut $\vec{u} + \vec{v} = \begin{pmatrix} 2 + (-3) \\ 5 + 1 \end{pmatrix} = \begin{pmatrix} -1 \\ 6 \end{pmatrix}$. Le produit matrice-vecteur vaut
+\[
+A\,\vec{u} = \begin{pmatrix} 2 \times 2 + 0 \times 5 \\ 0 \times 2 + 3 \times 5 \end{pmatrix} = \begin{pmatrix} 4 \\ 15 \end{pmatrix} .
+\]
+Chaque coordonnée a été multipliée par un facteur différent : la matrice $A$ a étiré le vecteur de 2 en horizontal et de 3 en vertical.
+\end{exemple}
+
+\begin{exemple}[matrices géométriques : échelle et rotation]
+Deux matrices carrées décrivent des transformations de base du plan. La matrice d'\emph{échelle} $S = \begin{pmatrix} k & 0 \\ 0 & k \end{pmatrix}$ multiplie toute norme par $k$ : avec $k = 2$, le pixel $\begin{pmatrix} 40 \\ 25 \end{pmatrix}$ devient $\begin{pmatrix} 80 \\ 50 \end{pmatrix}$, l'image double de taille. La matrice de \emph{rotation} de $90\dgr{}$ dans le sens direct $R = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$ transforme $\begin{pmatrix} x \\ y \end{pmatrix}$ en $\begin{pmatrix} -y \\ x \end{pmatrix}$ : le pixel $\begin{pmatrix} 4 \\ 1 \end{pmatrix}$ devient $\begin{pmatrix} -1 \\ 4 \end{pmatrix}$, exactement la rotation étudiée au chapitre 5. Tout logiciel de retouche enchaîne ces matrices à chaque clic sur « redimensionner » ou « pivoter ». Leur produit compose les deux opérations :
+\[
+S \times R = \begin{pmatrix} 2 & 0 \\ 0 & 3 \end{pmatrix}
+\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}
+= \begin{pmatrix} 0 & -2 \\ 3 & 0 \end{pmatrix} ,
+\]
+et l'on vérifie que ce produit appliqué au pixel $\begin{pmatrix} 4 \\ 1 \end{pmatrix}$ donne $\begin{pmatrix} -2 \\ 12 \end{pmatrix}$, le même résultat que la rotation suivie de l'échelle : le pixel a tourné d'un quart de tour puis a été étiré. Une seule multiplication matricielle remplace deux transformations successives, et c'est ainsi que les logiciels traitent des millions de pixels à chaque action.
+\end{exemple}
+
+\section{Image vectorielle et image matricielle}
+
+\begin{definition}[image matricielle, image vectorielle]
+Une \emph{image matricielle} (ou bitmap) décrit une grille de pixels, chaque case portant sa couleur : l'image est un tableau géant, comme la matrice de la section 1. Une \emph{image vectorielle} décrit des formes par des équations (segments, cercles, courbes de Bézier, aires remplies) dont le logiciel recalcule le rendu à chaque affichage.
+\end{definition}
+
+Les deux familles ne se comportent pas de la même façon à l'agrandissement. L'image matricielle, zoomée, montre ses pixels : chaque case devient un carré visible, et la photo paraît crénelée ; l'image vectorielle, elle, se redessine sans aucune perte à n'importe quel facteur d'agrandissement, car ses équations ne dépendent pas de la taille d'affichage. En contrepartie, une image matricielle représente sans effort une photographie aux millions de nuances, alors qu'un dessin vectoriel complexe demande des milliers d'équations.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  % panneau bitmap : pixels visibles
+  \draw[rogris!60, line width=0.6pt, rounded corners=1.5mm] (0,0) rectangle (5.2,4.3);
+  \node[font=\footnotesize\bfseries, text=rogris] at (2.6,3.9) {Bitmap agrandi};
+  \draw[robleu!70, fill=robleuf] (1.2,0.5) rectangle (1.9,1.2);
+  \draw[robleu!70, fill=robleuf] (1.9,0.5) rectangle (2.6,1.2);
+  \draw[robleu!70, fill=robleuf] (1.2,1.2) rectangle (1.9,1.9);
+  \draw[robleu, fill=robleuf] (1.9,1.2) rectangle (2.6,1.9);
+  \draw[robleu!70, fill=robleuf] (1.9,1.9) rectangle (2.6,2.6);
+  \draw[robleu!70, fill=robleuf] (2.6,1.2) rectangle (3.3,1.9);
+  \draw[robleu, fill=robleuf] (2.6,1.9) rectangle (3.3,2.6);
+  \draw[robleu!70, fill=robleuf] (2.6,2.6) rectangle (3.3,3.3);
+  \draw[robleu, fill=robleuf] (3.3,1.9) rectangle (4.0,2.6);
+  \node[font=\scriptsize, text=rogris, align=center] at (2.6,0.22) {les carrés deviennent visibles};
+  % panneau vectoriel : cercle lisse
+  \draw[rogris!60, line width=0.6pt, rounded corners=1.5mm] (6.4,0) rectangle (11.6,4.3);
+  \node[font=\footnotesize\bfseries, text=rogris] at (9.0,3.9) {Vectoriel agrandi};
+  \draw[roteal, line width=1.4pt] (9.0,2.0) circle (1.35);
+  \fill[roteal] (9.0,2.0) circle (0.09);
+  \node[font=\scriptsize, text=rogris, align=center] at (9.0,0.28) {équation $x^{2}+y^{2}=r^{2}$ : rendu net};
+\end{tikzpicture}
+\captionof{figure}{À l'agrandissement, le bitmap montre ses pixels, le vectoriel se redessine}
+\label{ch6:fig:zoom}
+\end{center}
+
+\begin{center}
+\small
+\begin{tabular}{L{3.6cm}L{5.9cm}L{5.9cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Critère} & \textbf{Image matricielle} & \textbf{Image vectorielle}\\
+\midrule
+Contenu & grille de pixels colorés & équations de formes\\
+\rowcolor{rogrisf!50}Formats & JPG, PNG, GIF & SVG, AI, PDF vectoriel\\
+Agrandissement & pixels visibles, perte de qualité & rendu net à toute échelle\\
+\rowcolor{rogrisf!50}Usages & photographies, captures d'écran & logos, plans, typographies\\
+Poids & croît avec le nombre de pixels & croît avec la complexité du dessin\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Image matricielle et image vectorielle face à face}
+\label{ch6:tab:formats}
+\end{center}
+
+Lue comme objet mathématique, une image matricielle est une fonction de deux indices : $f(i, j)$ donne la couleur du pixel de ligne $i$ et colonne $j$, avec $0 \leqslant i < 1080$ et $0 \leqslant j < 1920$ pour un écran Full HD. Les traitements d'image (luminosité, contraste, filtre de netteté) réécrivent ces valeurs par des formules appliquées à chaque pixel ou à son voisinage ; la matrice de la section 1 n'est pas une métaphore, c'est la structure de données réelle du fichier en mémoire.
+
+\begin{exemple}[choisir la bonne famille]
+Un studio de Lomé prépare deux documents : la couverture d'un rapport, qui mêle photographie de terrain et bandeau de couleur unie, et le logo de l'agence, qui doit figurer en haut d'une lettre aussi bien que sur une banderole de 4 mètres. La photographie passe en image matricielle (JPG), seule capable de restituer les nuances du réel ; le logo passe en vectoriel (SVG), car il sera redessiné à toutes les tailles sans crénelage. Le bon choix dépend donc de l'usage final, non du logiciel disponible.
+\end{exemple}
+
+\section{Taille et dimension d'une image numérique}
+
+\begin{definition}[pixel, définition, résolution]
+Un \emph{pixel} (picture element) est la plus petite unité d'une image matricielle. La \emph{définition} d'une image est son nombre total de pixels, produit du nombre de colonnes par le nombre de lignes : $4000 \times 3000 = 12\,000\,000$ pixels, soit 12 mégapixels (Mpx). La \emph{résolution} d'affichage ou d'impression compte les pixels par pouce (dpi, \emph{dots per inch}) : elle décide de la taille physique du rendu, puisque $L_{\text{cm}} = L_{\text{px}} \times 2{,}54 / \text{dpi}$.
+\end{definition}
+
+La même définition produit des tailles physiques différentes selon la résolution : l'image de 12 Mpx imprimée à 300 dpi donne $\dfrac{4000 \times 2{,}54}{300} \approx 33{,}9$ cm de large, tandis qu'affichée à 72 dpi elle occupe plus de 1,4 mètre de large sur l'écran. Enfin le \emph{rapport d'affichage} (ou format) est le quotient largeur sur hauteur : un écran 16:9 a un rapport de $\dfrac{1920}{1080} \approx 1{,}78$, et une image 4:3, comme les anciens téléviseurs, un rapport de $1{,}33$ ; afficher une image dans un cadre d'un autre rapport exige de rogner ou d'ajouter des bandes.
+
+\begin{center}
+\small
+\begin{tabular}{L{3.4cm}C{3.2cm}C{2.6cm}C{2.4cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Appellation} & \textbf{Dimensions (px)} & \textbf{Définition} & \textbf{Rapport}\\
+\midrule
+HD & $1280 \times 720$ & 0,92 Mpx & 16:9\\
+\rowcolor{rogrisf!50}Full HD & $1920 \times 1080$ & 2,07 Mpx & 16:9\\
+4K UHD & $3840 \times 2160$ & 8,29 Mpx & 16:9\\
+\rowcolor{rogrisf!50}Photo smartphone & $4000 \times 3000$ & 12 Mpx & 4:3\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Définitions usuelles : la qualité se mesure en pixels}
+\label{ch6:tab:definitions}
+\end{center}
+
+\begin{exemple}[définition et rapport d'un écran]
+Un écran affiche $1920 \times 1080$ pixels. Sa définition vaut $1920 \times 1080 = 2\,073\,600$ pixels, soit environ 2{,}07 Mpx. Son rapport vaut $\dfrac{1920}{1080} = \dfrac{16}{9}$, en simplifiant par 120 : c'est un écran 16:9. Une photo de $4000 \times 3000$ a pour sa part un rapport de $\dfrac{4}{3}$ : affichée plein écran sur le 16:9, elle laisse deux bandes verticales, ou bien elle est recadrée de $\dfrac{4}{3} \to \dfrac{16}{9}$ au prix d'une perte de hauteur.
+\end{exemple}
+
+\begin{attention}
+Ne pas confondre la \emph{définition}, qui compte les pixels de l'image elle-même, et la \emph{résolution}, qui décide de la taille de leur rendu sur un support : la première appartient au fichier, la seconde au périphérique. Une même image de 12 Mpx est « grande » sur un écran de téléphone à 400 pixels par pouce et « immense » sur un vidéo-projecteur à 80 pixels par pouce. Lorsqu'un logiciel propose de changer la résolution sans changer les pixels, il ne touche qu'à la taille d'impression prévue, jamais au contenu de l'image.
+\end{attention}
+
+\begin{exemple}[préparer une impression à 300 dpi]
+On veut imprimer la photo de $4000 \times 3000$ pixels à 300 dpi, la résolution d'impression de qualité. La largeur imprimée vaut $\dfrac{4000 \times 2{,}54}{300} \approx 33{,}9$ cm et la hauteur $\dfrac{3000 \times 2{,}54}{300} \approx 25{,}4$ cm : la photo déborde d'une page A4 en paysage (29{,}7 cm sur 21 cm), mais tient en pleine page A3, dont le format paysage offre 42 cm sur 29{,}7 cm. Si l'on tient la même photo à 150 dpi, la taille double : 67{,}7 cm sur 50{,}8 cm, utile pour une affiche vue de loin, où l'œil ne distingue plus les pixels.
+\end{exemple}
+
+\section{Codage des couleurs}
+
+\begin{definition}[modèle RVB]
+Le modèle \emph{RVB} (rouge, vert, bleu) décrit toute couleur comme l'addition de trois composantes lumineuses, chacune codée sur 8 bits, donc entre 0 et 255. Une couleur pèse 24 bits par pixel : $(255, 0, 0)$ est le rouge pur, $(0, 0, 0)$ le noir, $(255, 255, 255)$ le blanc. En notation hexadécimale, très utilisée dans les pages web, chaque canal s'écrit sur deux chiffres hexadécimaux du chapitre 3 : le rouge pur devient \texttt{\#FF0000}.
+\end{definition}
+
+Le choix du rouge, du vert et du bleu n'a rien d'arbitraire : la rétine humaine dispose de trois familles de récepteurs sensibles à ces trois plages de lumière, et tout ce que l'œil perçoit se recompose par mélange de ces trois sensations. Un écran qui allume trois luminophores aux couleurs bien choisies trompe l'œil avec la même recette. La synthèse additive des écrans, qui ajoute de la lumière du noir vers le blanc, s'oppose à la synthèse soustractive des imprimantes, qui retranche de la lumière d'un support blanc et mélange cyan, magenta et jaune.
+
+\begin{propriete}[nombre de couleurs]
+Sur 24 bits par pixel, le nombre de couleurs distinctes vaut $2^{8} \times 2^{8} \times 2^{8} = 2^{24} = 16\,777\,216$ : c'est le « 16 millions de couleurs » des fiches techniques. Une image en \emph{niveaux de gris} n'utilise qu'un canal de 8 bits : 256 nuances, du noir (0) au blanc (255), suffisant pour un document scanné en texte.
+\end{propriete}
+
+\begin{center}
+\small
+\begin{tabular}{L{2.6cm}C{3.2cm}C{2.6cm}L{4.4cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Couleur} & \textbf{RVB (R, V, B)} & \textbf{Hexadécimal} & \textbf{Composition lumineuse}\\
+\midrule
+Noir & $(0, 0, 0)$ & \texttt{\#000000} & aucune composante\\
+\rowcolor{rogrisf!50}Blanc & $(255, 255, 255)$ & \texttt{\#FFFFFF} & les trois à fond\\
+Rouge pur & $(255, 0, 0)$ & \texttt{\#FF0000} & rouge seul\\
+\rowcolor{rogrisf!50}Jaune & $(255, 255, 0)$ & \texttt{\#FFFF00} & rouge + vert\\
+Cyan & $(0, 255, 255)$ & \texttt{\#00FFFF} & vert + bleu\\
+\rowcolor{rogrisf!50}Magenta & $(255, 0, 255)$ & \texttt{\#FF00FF} & rouge + bleu\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Couleurs usuelles en RVB : la synthèse additive des écrans}
+\label{ch6:tab:couleurs}
+\end{center}
+
+\begin{exemple}[d'une couleur RVB au code hexadécimal]
+Convertissons la couleur $(164, 78, 20)$ en hexadécimal. Le canal rouge : $164 = 10 \times 16 + 4$, donc \texttt{A4}. Le canal vert : $78 = 4 \times 16 + 14$, donc \texttt{4E}, car 14 s'écrit E. Le canal bleu : $20 = 1 \times 16 + 4$, donc \texttt{14}. La couleur s'écrit \texttt{\#A44E14} : un orange-brun sombre, typique d'une palette de terre. Dans l'autre sens, le code \texttt{\#1A2B3C} se décode en $26, 43, 60$ : un bleu nuit.
+\end{exemple}
+
+\begin{exemple}[compter les couleurs et les nuances]
+Combien de nuances offre une image en niveaux de gris 8 bits ? Un seul canal : $2^{8} = 256$ nuances. Combien de couleurs sur un écran 30 bits (10 bits par canal) ? $2^{10} \times 2^{10} \times 2^{10} = 2^{30} = 1\,073\,741\,824$, soit plus d'un milliard : les professionnels de la vidéo y gagnent des dégradés sans marches visibles. À l'inverse, une image indexée sur 4 bits ne garde que $2^{4} = 16$ couleurs, comme les premières interfaces graphiques.
+\end{exemple}
+
+\section{Poids d'une image numérique}
+
+\begin{methode}[calculer le poids brut d'une image]
+Le poids \emph{non compressé} d'une image matricielle vaut
+\[
+\text{poids (octets)} = \frac{\text{largeur} \times \text{hauteur} \times \text{profondeur (bits)}}{8},
+\]
+la profondeur étant de 1 bit (noir et blanc), 8 bits (niveaux de gris) ou 24 bits (RVB). Les formats compressés (JPEG pour les photos, PNG pour les graphiques) réduisent ce poids d'un facteur qui dépend du contenu, typiquement de 5 à 20 pour un JPEG de qualité courante.
+\end{methode}
+
+\begin{center}
+\small
+\begin{tabular}{L{2.2cm}L{4.6cm}L{3.6cm}L{3.4cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Format} & \textbf{Usage} & \textbf{Compression} & \textbf{Facteur typique}\\
+\midrule
+JPG & photographies & avec perte & $\times 5$ à $\times 20$\\
+\rowcolor{rogrisf!50}PNG & captures, logos, transparence & sans perte & $\times 2$ à $\times 3$\\
+GIF & petites animations & indexée (256 couleurs) & variable\\
+\rowcolor{rogrisf!50}SVG & dessins vectoriels & sans objet (équations) & non applicable\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Les formats d'image et leur comportement à l'enregistrement}
+\label{ch6:tab:compression}
+\end{center}
+
+\begin{exemple}[le poids d'une photographie]
+La photo de $4000 \times 3000$ pixels en RVB (24 bits) pèse, non compressée :
+\[
+\frac{4000 \times 3000 \times 24}{8} = \frac{288\,000\,000}{8} = 36\,000\,000\ \text{octets} = 36\ \text{Mo} .
+\]
+Enregistrée en JPEG de qualité courante, elle pèse environ 3{,}6 Mo, soit dix fois moins : la compression sacrifie des détails imperceptibles à l'œil. C'est le poids que l'on télécharge réellement, et celui qui détermine le temps d'envoi : à 2 Mo par seconde, 3{,}6 Mo partent en moins de deux secondes.
+\end{exemple}
+
+\begin{exemple}[le poids d'une page scannée]
+Une page A4 (21 cm sur 29{,}7 cm) est scannée à 300 dpi en niveaux de gris (8 bits). Ses dimensions en pixels valent $\dfrac{21 \times 300}{2{,}54} \approx 2480$ et $\dfrac{29{,}7 \times 300}{2{,}54} \approx 3508$, soit $2480 \times 3508 \approx 8\,700\,000$ pixels. En niveaux de gris, le poids brut vaut $8\,700\,000$ octets, soit 8{,}7 Mo ; en noir et blanc (1 bit par pixel), il tombe à $\dfrac{8\,700\,000}{8} \approx 1{,}1$ Mo : la raison pour laquelle un service de scan de documents choisit le noir et blanc pour le texte.
+\end{exemple}
+
+Le calcul du poids se lit aussi pixel par pixel : une profondeur de 24 bits, c'est 3 octets par pixel, de sorte que chaque ligne de 4000 pixels d'une photo plein format occupe $4000 \times 3 = 12\,000$ octets, et les 3000 lignes totalisent bien $12\,000 \times 3000 = 36$ millions d'octets. Ajouter un quatrième canal (l'opacité, notée alpha, dans le codage RGBA) porterait la profondeur à 32 bits et le poids brut à 48 Mo : la transparence se paie en octets.
+
+\begin{remarque}[du poids au temps d'envoi]
+Le poids d'une image se convertit en temps de transmission. Une photo de 36 Mo non compressée représente $36 \times 8 = 288$ mégabits ; sur une liaison à 10 Mbit/s, son envoi demande $288 / 10 \approx 29$ secondes. Compressée en JPEG à 3{,}6 Mo, soit 28,8 mégabits, la même photo part en moins de 3 secondes. C'est cette arithmétique (bits, octets, débit) qui explique pourquoi les messageries compressent systématiquement les images avant l'envoi.
+\end{remarque}
+
+\begin{aretirer}
+Un vecteur est une liste de nombres, une matrice un tableau ; le produit matrice-vecteur applique les transformations de base (échelle $\begin{pmatrix} k & 0 \\ 0 & k \end{pmatrix}$, rotation $\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$) aux pixels d'une image. Image matricielle (JPG, PNG : grille de pixels) et image vectorielle (SVG : équations) ne réagissent pas de même au zoom. La définition compte les pixels ($4000 \times 3000 = 12$ Mpx), la résolution les répartit ($300$ dpi $\Rightarrow$ 33{,}9 cm de large), le rapport 16:9 ou 4:3 fixe les proportions. En RVB 24 bits : $2^{24} = 16\,777\,216$ couleurs, chaque canal écrit en hexadécimal, $(164, 78, 20) = $ \texttt{\#A44E14}. Le poids brut vaut largeur $\times$ hauteur $\times$ profondeur / 8 octets : 36 Mo pour la photo de 12 Mpx, ramenés à 3{,}6 Mo par le JPEG.
+\end{aretirer}
+
+\end{document}
