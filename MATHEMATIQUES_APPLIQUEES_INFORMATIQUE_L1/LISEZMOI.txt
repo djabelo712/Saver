@@ -1,0 +1,59 @@
+MATHÉMATIQUES APPLIQUÉES À L'INFORMATIQUE — LICENCE 1
+Ensemble de deux supports pour l'Institut Supérieur CPTEC (Avedji, Lomé, Togo)
+Agréé par arrêté N° 00.50/MESRS/2024
+
+CONTENU DE L'ARCHIVE
+====================
+1. Cours_MAI_L1.pdf  — Cours complet (48 pages) :
+   avant-propos, objectif général et objectifs spécifiques, mode d'emploi,
+   chapitre 1 : les systèmes de numération et les unités d'information,
+   chapitre 2 : la logique des propositions et l'algèbre de Boole,
+   chapitre 3 : les événements et les probabilités,
+   aide-mémoire final. Exemples entièrement résolus au fil des chapitres.
+   Volume : 32 heures (CM 24 h - TD 8 h).
+
+2. TD_MAI_L1.pdf  — Fascicule de travaux dirigés (26 pages) :
+   trois séances entièrement corrigées (8 heures au total) :
+   séance 1 : numération et unités d'information (3 h, 6 exercices),
+   séance 2 : logique et algèbre de Boole (3 h, 5 exercices),
+   séance 3 : événements et probabilités (2 h, 5 exercices).
+   Chaque séance : objectifs, rappels de méthode avec renvois aux sections
+   du cours, énoncés, corrigés détaillés pas à pas, à retenir.
+
+3. Cours_MAI_L1.tex et TD_MAI_L1.tex — codes sources LaTeX complets,
+   compilables tels quels.
+
+4. sources_modules/ — sources modulaires :
+   - 00_preamble.tex : préambule commun (boîtes définition/méthode/exemple/
+     exercice/corrigé, page de garde CPTEC, en-têtes) ;
+   - docs/cours_l1/*.tex : frontmatter, chapitres 1 à 3, aide-mémoire ;
+   - docs/td_l1/*.tex : frontmatter, séances 1 à 3, pour aller plus loin ;
+   - assemble.py : assemblage des fragments (python3 assemble.py cours_l1) ;
+   - verify_mail1_*.py : vérification arithmétique exhaustive
+     (conversions, tables de vérité, probabilités ; 0 écart toléré).
+
+COMPILATION
+===========
+Avec Tectonic (recommandé) :
+    tectonic Cours_MAI_L1.tex
+    tectonic TD_MAI_L1.tex
+La première compilation nécessite une connexion internet (téléchargement
+des paquets) ; compiler deux fois pour la table des matières.
+
+Avec une distribution TeX Live complète :
+    pdflatex Cours_MAI_L1.tex && pdflatex Cours_MAI_L1.tex
+    pdflatex TD_MAI_L1.tex && pdflatex TD_MAI_L1.tex
+
+AUTEUR ET CONTACT
+=================
+Ounimborbitibou DJABON
+Titulaire de deux Mastères : Sciences Mathématiques (AIMS Ghana) et
+Physique Théorique (Université de Lomé)
+Chercheur en information et communication quantique
++228 92 39 97 21 - djabon@aims.edu.gh - github.com/djabelo712
+
+INSTITUT SUPÉRIEUR CPTEC
+Agréé par arrêté N° 00.50/MESRS/2024 - Avedji, Lomé (Togo)
++228 70 78 78 18 - 96 51 05 50 - cptec228togo@gmail.com
+
+Année académique 2026-2027
