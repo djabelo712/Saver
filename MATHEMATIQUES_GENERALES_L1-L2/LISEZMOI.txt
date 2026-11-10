@@ -4,12 +4,13 @@ Agréé par arrêté N° 00.50/MESRS/2024 — Année académique 2026-2027
 
 CONTENU DE L'ARCHIVE
 ====================
-1. Cours_MG_L1-L2_2026-2027.pdf — Support de cours (44 pages, 20 heures) :
+1. Cours_MG_L1-L2_2026-2027.pdf — Support de cours (45 pages, 20 heures) :
    page de garde, page à l'effigie de CPTEC et de l'enseignant, objectifs du
    module et table des matières (le chapitre 1 débute en page 4) :
    chapitre 1 : les ensembles,
-   chapitre 2 : logique et algèbre de Boole,
-   chapitre 3 : équations et inéquations,
+   chapitre 2 : équations et inéquations,
+   chapitre 3 : les fonctions numériques (généralités, fonctions usuelles,
+   limites et continuité, dérivation, étude complète, optimisation du profit),
    chapitre 4 : systèmes linéaires et programmation linéaire,
    chapitre 5 : mesures des angles et trigonométrie,
    chapitre 6 : suites numériques (intérêts simples et composés).
@@ -18,14 +19,14 @@ CONTENU DE L'ARCHIVE
    fermeture « Ce qu'il faut retenir ».
 
 2. TD_MG_L1-L2_2026-2027.pdf — Énoncés des travaux dirigés (10 pages),
-   chapitre par chapitre (27 exercices) : aucun avant-propos ni table des
+   chapitre par chapitre (31 exercices) : aucun avant-propos ni table des
    matières, le document commence directement par le chapitre 1. Chaque
    chapitre débute sur une nouvelle page.
 
-3. Corriges_TD_MG_L1-L2_2026-2027.pdf — Corrigés détaillés (13 pages),
+3. Corriges_TD_MG_L1-L2_2026-2027.pdf — Corrigés détaillés (15 pages),
    même structure : chapitre par chapitre, chacun sur une nouvelle page,
    chaque corrigé reprenant la numérotation « chapitre.exercice » du
-   fascicule d'énoncés (ex. 1.1, 4.5).
+   fascicule d'énoncés (ex. 1.1, 3.8).
 
 4. sources/ — Codes sources LaTeX complets (compilables) :
    - assemble.py           : assembleur (parts + docs -> build/<doc>.tex) ;
@@ -34,21 +35,21 @@ CONTENU DE L'ARCHIVE
    - docs/td_mg/           : les énoncés de TD ;
    - docs/corriges_mg/     : les corrigés de TD ;
    - scripts/verify_mg.py  : vérification numérique exhaustive des énoncés,
-                             du cours et des corrigés (145 contrôles).
+                             du cours et des corrigés (193 contrôles).
 
 ALIGNEMENT AVEC LE MODULE MAI (Mathématiques Appliquées à l'Informatique)
 =========================================================================
-Les mêmes étudiants suivent l'un des deux modules. La numérotation des
-chapitres a été alignée pour que les séances communes coïncident :
+Les mêmes étudiants suivent l'un des deux modules. La numérotation est
+alignée là où les séances sont communes :
   - chapitre 1 (Les ensembles) : identique au chapitre 1 de MAI ;
-  - chapitre 2 (Logique et algèbre de Boole) : identique au chapitre 2 de MAI ;
   - chapitre 5 (Mesures des angles et trigonométrie) : le socle (degrés,
     radians, conversion, triangle rectangle) est commun avec le chapitre 5
     de MAI (Mesures des angles) ; la trigonométrie orientée (cercle
     trigonométrique, formules, équations) prolonge ce socle pour MG ;
-  - chapitres 3, 4 et 6 : spécifiques à Mathématiques Générales (équations,
-    systèmes et programmation linéaire, suites) et correspondant aux
-    chapitres 3 et 4 de MAI (numération, mémoire) en volume horaire.
+  - chapitres 2 (équations), 3 (fonctions numériques), 4 (systèmes et
+    programmation linéaire) et 6 (suites) : spécifiques à Mathématiques
+    Générales. Le chapitre 2 de MAI (logique et algèbre de Boole) n'est pas
+    au programme de MG.
 
 COMPILATION
 ===========

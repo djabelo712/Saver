@@ -5,7 +5,7 @@
 \chaptermark{Les ensembles}
 
 \begin{quelqueslignes}
-L'ensemble est la brique élémentaire de toutes les mathématiques appliquées à l'informatique : les tables d'une base de données, les fichiers d'un répertoire, les étudiants d'une promotion ou les adresses d'un réseau local se décrivent tous comme des collections d'objets bien définis. Ce chapitre fixe le vocabulaire (appartenance, représentation, cardinal), puis construit les trois opérations fondamentales (union, intersection, complémentaire) et leurs propriétés, avec le diagramme de Venn comme support visuel. Il prépare directement le chapitre 2, où les mêmes idées deviennent des propositions logiques.
+L'ensemble est la brique élémentaire de toutes les mathématiques appliquées à l'informatique : les tables d'une base de données, les fichiers d'un répertoire, les étudiants d'une promotion ou les adresses d'un réseau local se décrivent tous comme des collections d'objets bien définis. Ce chapitre fixe le vocabulaire (appartenance, représentation, cardinal), puis construit les trois opérations fondamentales (union, intersection, complémentaire) et leurs propriétés, avec le diagramme de Venn comme support visuel. Il prépare directement le chapitre 2 : résoudre une équation, c'est déterminer les éléments d'un ensemble de solutions.
 \end{quelqueslignes}
 
 \section{Notions d'ensembles}
@@ -251,14 +251,14 @@ Lois de De Morgan & $\overline{A \cup B} = \overline{A} \cap \overline{B}$ & $\o
 
 Chaque loi se lit sur le diagramme de Venn en coloriant les deux membres : ils recouvrent exactement la même région. L'absorption $A \cup (A \cap B) = A$ se lit en un coup d'œil : la zone de $A \cap B$ est déjà à l'intérieur de $A$, donc l'union ne l'agrandit pas. L'idempotence $A \cup A = A$ dit simplement qu'unionner un ensemble avec lui-même ne change rien, de même que la distributivité gauche ou droite se vérifie en superposant deux coloriages. Cette lecture graphique ne remplace pas le calcul : elle l'oriente, en suggérant quelle loi appliquer avant de le mener.
 
-Les lois de De Morgan méritent une lecture attentive : le complémentaire d'une union est l'intersection des complémentaires, et le complémentaire d'une intersection est l'union des complémentaires. En français courant : « ne suivre ni programmation ni réseaux » revient à « ne pas suivre programmation \emph{et} ne pas suivre réseaux ». On les retrouve mot pour mot au chapitre 2 sous la forme des lois de De Morgan de la logique.
+Les lois de De Morgan méritent une lecture attentive : le complémentaire d'une union est l'intersection des complémentaires, et le complémentaire d'une intersection est l'union des complémentaires. En français courant : « ne suivre ni programmation ni réseaux » revient à « ne pas suivre programmation \emph{et} ne pas suivre réseaux ». On les retrouvera partout où deux conditions se combinent, en particulier pour décrire les domaines de définition des fonctions au chapitre 3.
 
 \begin{exemple}[vérifier une distributivité sur des ensembles concrets]
 Prenons $A = \{1, 2, 3, 4\}$, $B = \{3, 4, 5\}$ et $C = \{4, 5, 6\}$ et vérifions $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$. D'un côté, $B \cup C = \{3, 4, 5, 6\}$, donc $A \cap (B \cup C) = \{3, 4\}$. De l'autre, $A \cap B = \{3, 4\}$ et $A \cap C = \{4\}$, donc $(A \cap B) \cup (A \cap C) = \{3, 4\} \cup \{4\} = \{3, 4\}$. Les deux membres coïncident : la loi est vérifiée sur cet exemple, comme elle l'est toujours.
 \end{exemple}
 
-\begin{remarque}[la même algèbre pour les ensembles et pour la logique]
-Le tableau~\ref{ch1:tab:lois} et le tableau des connecteurs du chapitre 2 se ressemblent fort : union et intersection jouent les rôles du « ou » et du « et », le complémentaire joue le rôle de la négation, et les lois portent les mêmes noms. Ce n'est pas un hasard : « $x$ appartient à $A \cap B$ » est une phrase qui dit « $x \in A$ \emph{et} $x \in B$ ». Le chapitre 2 exploitera ce parallèle jusqu'au bout, et l'algèbre de Boole le formalisera pour les circuits.
+\begin{remarque}[des ensembles aux équations et aux fonctions]
+Le tableau~\ref{ch1:tab:lois} prépare directement la suite du cours. Résoudre une équation $f(x) = 0$, c'est chercher les éléments de l'ensemble $\{x \in \R : f(x) = 0\}$ : les solutions d'une équation produit se calculent comme une réunion, celles d'un système comme une intersection. De même, le domaine de définition d'une fonction du chapitre 3 se décrit par des intersections de conditions : « le dénominateur ne s'annule pas \emph{et} la racine existe ». Les opérations apprises ici deviennent des réflexes de calcul dans tous les chapitres suivants.
 \end{remarque}
 
 \begin{exemple}[vérifier une loi de De Morgan sur des ensembles concrets]

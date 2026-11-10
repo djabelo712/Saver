@@ -1,53 +1,50 @@
 % ============================================================
-%  TD Chapitre 2 : Logique et algebre de Boole
+%  TD Chapitre 2 : Equations et inequations
 % ============================================================
 \clearpage
-\chapter{Logique et algèbre de Boole}
-\chaptermark{Logique et algèbre de Boole}
+\chapter{Équations et inéquations}
+\chaptermark{Équations et inéquations}
 
-\begin{exercice}[du français aux propositions]
-Dans un réseau de vente de l'institut, on considère les deux propositions :
-$P$ : « la connexion Internet fonctionne » ; \quad $Q$ : « le terminal de paiement est en marche ».
-Traduire en phrases françaises simples les six propositions suivantes :
-\[
-\neg P \quad ; \quad P \wedge Q \quad ; \quad P \vee Q \quad ; \quad Q \vee \neg P \quad ; \quad \neg P \vee \neg Q \quad ; \quad \neg(P \wedge Q).
-\]
-Comparer la signification des deux dernières et indiquer, sans table, si elles doivent être équivalentes.
-\end{exercice}
-
-\begin{exercice}[quatre tables de vérité]
-Construire sur les quatre combinaisons de valeurs de $(P, Q)$ prises dans l'ordre du comptage binaire, les tables de vérité des quatre expressions suivantes, en donnant une colonne par sous-formule :
-\[
-\neg P \wedge Q \quad ; \quad P \vee \neg Q \quad ; \quad \neg(P \wedge Q) \quad ; \quad \neg P \vee \neg Q .
-\]
-Comparer les colonnes de $\neg(P \wedge Q)$ et de $\neg P \vee \neg Q$, puis conclure sur l'équivalence annoncée par la première loi de De Morgan.
-\end{exercice}
-
-\begin{exercice}[implication, réciproque et contraposée]
+\begin{exercice}[équations du premier degré et équations produit]
+Résoudre dans $\R$ les équations suivantes :
 \begin{enumerate}
-\item dresser une table unique de $P$, $Q$, $\neg P$, $P \Rightarrow Q$ et $P \wedge \neg Q$ ; comparer les deux dernières colonnes et conclure sur la validité ;
-\item dresser une table de $P$, $Q$, $\neg P$, $P \Rightarrow Q$ et $\neg P \vee Q$ ; conclure ;
-\item dresser une table de $P$, $Q$, $P \Rightarrow Q$, $Q \Rightarrow P$ et $\neg Q \Rightarrow \neg P$. Identifier la réciproque et la contraposée de $P \Rightarrow Q$ parmi les deux dernières colonnes et dire lesquelles sont équivalentes à $P \Rightarrow Q$ ;
-\item en déduire la forme correcte de la négation d'une implication « si le marchand a reçu le paiement, alors la commande est expédiée », parmi les trois phrases suivantes : (a) le marchand a reçu le paiement et la commande n'a pas été expédiée ; (b) si la commande est expédiée, alors le marchand n'a pas reçu le paiement ; (c) si le marchand n'a pas reçu le paiement, alors la commande n'a pas été expédiée.
+\item $5(x - 2) = 3x + 4$ ;
+\item $(3x - 2)(x + 5) = 0$ ;
+\item $x^{2} = 4x$, résolue en factorisant (et non en divisant par $x$).
 \end{enumerate}
 \end{exercice}
 
-\begin{exercice}[simplification d'expressions booléennes]
-Simplifier les trois expressions suivantes en citant chaque loi utilisée, $A$ et $B$ étant des variables booléennes :
-\[
-X = A \cdot \overline{B} + \overline{A} \cdot B + A \cdot B
-\quad ; \quad
-Y = (A + B) \cdot (A + \overline{B})
-\quad ; \quad
-Z = A \cdot (A + B) .
-\]
-Vérifier les trois simplifications par une table de vérité unique sur les quatre combinaisons de $(A, B)$, qui juxtapose les colonnes de $X$ et de sa forme simplifiée, de $Y$ et de sa forme simplifiée, de $Z$ et de sa forme simplifiée.
+\begin{exercice}[équations du second degré : le discriminant]
+Résoudre dans $\R$ les équations suivantes en calculant le discriminant, puis factoriser quand c'est possible :
+\begin{enumerate}
+\item $2x^{2} - 5x - 3 = 0$ ;
+\item $4x^{2} - 12x + 9 = 0$ ;
+\item $x^{2} + x + 1 = 0$.
+\end{enumerate}
 \end{exercice}
 
-\begin{exercice}[opérations bit à bit et chiffrement par le ou exclusif]
+\begin{exercice}[somme, produit et formation d'une équation]
 \begin{enumerate}
-\item On donne les octets $P = 10101010$ et $Q = 11110000$. Calculer bit à bit $P \wedge Q$, $P \vee Q$ et $P \veebar Q$.
-\item Un message de huit bits $M = 01101001$ est chiffré par le masque $K = 10011010$ : calculer le message chiffré $C = M \veebar K$, puis retrouver $M$ en calculant $C \veebar K$. Justifier le résultat par les propriétés du ou exclusif.
-\item Dans un mini-contrôleur, la sortie d'une porte ET des entrées $A$ et $B$, et la sortie d'une porte ET des entrées $\overline{A}$ et $B$, alimentent ensemble une porte OU. Écrire l'expression booléenne de la sortie, la simplifier et dresser la table de vérité qui confirme la simplification.
+\item calculer, si possible, la somme $S$ et le produit $P$ des solutions de $5x^{2} - 6x + 1 = 0$, puis vérifier en résolvant complètement l'équation ;
+\item former l'équation du second degré dont les solutions ont pour somme $S = 2$ et pour produit $P = -8$, puis la résoudre ;
+\item l'équation $2x^{2} - 7x + 3 = 0$ admet $\dfrac{1}{2}$ comme solution : retrouver l'autre solution avec le produit, sans calculer le discriminant.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[équations bicarrées]
+Résoudre dans $\R$ les équations suivantes avec le changement de variable $X = x^{2}$ :
+\begin{enumerate}
+\item $x^{4} - 5x^{2} + 4 = 0$ ;
+\item $x^{4} + x^{2} - 2 = 0$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[inéquations du premier et du second degré]
+Résoudre dans $\R$ les inéquations suivantes, en donnant l'ensemble des solutions sous forme d'intervalle ou de réunion d'intervalles :
+\begin{enumerate}
+\item $3x - 7 \leqslant 0$ ;
+\item $-4x + 10 > 0$ ;
+\item $x^{2} - 4x - 5 \leqslant 0$ ;
+\item $-2x^{2} + 8x - 6 > 0$.
 \end{enumerate}
 \end{exercice}

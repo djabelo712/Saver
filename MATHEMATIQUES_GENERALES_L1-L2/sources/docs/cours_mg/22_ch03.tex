@@ -1,163 +1,459 @@
 % ============================================================
-%  Chapitre 3 : Equations et inequations
+%  Chapitre 3 : Les fonctions numeriques
 % ============================================================
-\chapter{Équations et inéquations}
-\chaptermark{Équations et inéquations}
+\chapter{Les fonctions numériques}
+\chaptermark{Les fonctions numériques}
 
 \begin{quelqueslignes}
-Les équations sont le langage naturel des problèmes chiffrés : un coût inconnu, un prix de vente à déterminer, un seuil de rentabilité à atteindre, une quantité à produire se traduisent tous par une égalité ou une inégalité conditionnelle où la donnée cherchée porte un nom, en général $x$. Ce chapitre reprend les équations du premier degré et les équations produit, puis installe l'outil central du programme : l'équation du second degré et son discriminant, avec la somme et le produit des solutions qui permettent de raisonner sans résoudre. Les dernières sections transposent ces techniques aux inéquations, dont les solutions sont des intervalles de nombres et non plus des nombres isolés.
+Une fonction est une machine qui associe à chaque nombre d'entrée un unique nombre de sortie : le coût total en fonction de la quantité produite, la prime d'un vendeur en fonction de ses ventes, la valeur d'un capital en fonction du temps. Ce chapitre rassemble en un seul parcours tout ce que le programme exige sur les fonctions : d'abord le vocabulaire et le domaine de définition, puis les fonctions usuelles et leurs graphiques, ensuite les limites et la continuité, enfin la dérivation, qui mène à l'étude complète d'une fonction et à l'optimisation du profit, question centrale du gestionnaire.
 \end{quelqueslignes}
 
-\section{Équations du premier degré et équations produit}
+\section{Généralités sur les fonctions}
 
-\begin{definition}[équation et racine]
-Une \emph{équation} à une inconnue $x$ est une égalité conditionnelle : elle n'est vraie que pour certaines valeurs de $x$, appelées \emph{solutions} ou \emph{racines}. Résoudre une équation dans $\R$, c'est trouver l'ensemble de toutes ses solutions, noté $S$. Deux équations sont \emph{équivalentes} lorsqu'elles ont exactement les mêmes solutions.
+\begin{definition}[fonction numérique, image, antécédent]
+Une \emph{fonction numérique} $f$ est un procédé qui associe à tout réel $x$ d'un ensemble $D$ un unique réel noté $f(x)$. On écrit $f : D \to \R$, et l'ensemble $D$ est le \emph{domaine de définition} de $f$. Le nombre $x$ est la \emph{variable} ; le nombre $f(x)$ est l'\emph{image} de $x$ par $f$. Inversement, si $f(x) = y$, alors $x$ est un \emph{antécédent} de $y$.
 \end{definition}
 
-\begin{propriete}[équation du premier degré]
-Une équation du premier degré à une inconnue s'écrit $ax + b = 0$ avec $a \neq 0$. En transposant $b$ puis en divisant par $a$, elle admet une solution unique :
-\[
-ax + b = 0 \quad\Longleftrightarrow\quad x = -\frac{b}{a}.
-\]
-Ajouter ou retrancher un même nombre aux deux membres, ou multiplier les deux membres par un même nombre non nul, ne change pas les solutions : ce sont les deux principes de résolution.
-\end{propriete}
+La distinction entre image et antécédent doit être parfaitement claire. Si $f(x) = 2x + 1$, l'image de $3$ est $f(3) = 2 \times 3 + 1 = 7$, et les antécédents de $7$ sont les $x$ tels que $2x + 1 = 7$, c'est-à-dire $3$ seulement. Chaque nombre a une unique image, mais un nombre peut avoir zéro, un ou plusieurs antécédents : l'équation $x^{2} = 4$ montre que $4$ a deux antécédents, $2$ et $-2$, tandis que $-4$ n'en a aucun. En situation de gestion, la variable est une quantité et l'image un montant : si $C(q) = 1\,500\,q + 350\,000$ est le coût en FCFA de $q$ cartons, alors l'image de $100$ est $C(100) = 500\,000$ FCFA, et $100$ est l'antécédent du coût $500\,000$ FCFA.
 
-\begin{propriete}[équation produit]
-Pour tout couple de facteurs :
-\[
-A(x) \cdot B(x) = 0 \quad\Longleftrightarrow\quad A(x) = 0 \ \text{ ou } \ B(x) = 0 .
-\]
-Un produit est nul si et seulement si l'un au moins de ses facteurs est nul : résoudre une équation produit revient à résoudre chacune des équations qu'elle contient, puis à réunir les solutions.
-\end{propriete}
-
-\begin{exemple}[du premier degré au produit]
-Résolvons d'abord $4(x + 5) = 3x - 2$. On développe : $4x + 20 = 3x - 2$, puis on transpose : $4x - 3x = -2 - 20$, d'où $x = -22$. Vérification : $4(-22 + 5) = 4 \times (-17) = -68$ et $3 \times (-22) - 2 = -68$ ; les deux membres coïncident. Résolvons ensuite l'équation produit $(2x + 1)(x - 3) = 0$ : le facteur $2x + 1$ s'annule pour $x = -\dfrac{1}{2}$ et le facteur $x - 3$ s'annule pour $x = 3$, donc $S = \left\{-\dfrac{1}{2};\ 3\right\}$.
-\end{exemple}
-
-\begin{attention}
-On ne divise jamais les deux membres d'une équation par une expression qui contient l'inconnue : de $x^{2} = x$, diviser par $x$ ferait perdre la solution $x = 0$. La bonne méthode est de tout transposer ($x^{2} - x = 0$) puis de factoriser ($x(x - 1) = 0$) : les deux solutions $0$ et $1$ apparaissent.
-\end{attention}
-
-\section{Équations du second degré : le discriminant}
-
-\begin{definition}[équation du second degré]
-Une équation du second degré à une inconnue s'écrit
-\[
-ax^{2} + bx + c = 0, \qquad a \neq 0,
-\]
-où $a$, $b$ et $c$ sont des nombres réels connus appelés coefficients. Le nombre
-\[
-\Delta = b^{2} - 4ac
-\]
-s'appelle le \emph{discriminant} de l'équation : sa valeur décide du nombre de solutions.
-\end{definition}
-
-\begin{propriete}[les trois cas selon le signe de $\Delta$]
-Soit $(E) : ax^{2} + bx + c = 0$ avec $a \neq 0$.
+\begin{definition}[domaine de définition]
+Le \emph{domaine de définition} d'une fonction $f$ est l'ensemble des réels $x$ pour lesquels $f(x)$ existe et est un nombre réel. Une valeur $x$ est \emph{interdite} en particulier dans les trois cas suivants :
 \begin{itemize}
-  \item si $\Delta > 0$, l'équation admet deux solutions distinctes
-  \[
-  x_{1} = \frac{-b + \sqrt{\Delta}}{2a} \qquad\text{et}\qquad
-  x_{2} = \frac{-b - \sqrt{\Delta}}{2a},
-  \]
-  et le trinôme se factorise : $ax^{2} + bx + c = a(x - x_{1})(x - x_{2})$ ;
-  \item si $\Delta = 0$, l'équation admet une solution double $x_{0} = \dfrac{-b}{2a}$, et $ax^{2} + bx + c = a(x - x_{0})^{2}$ ;
-  \item si $\Delta < 0$, l'équation n'admet aucune solution réelle, et le trinôme ne se factorise pas dans $\R$.
+\item $x$ annule un dénominateur de $f(x)$ ;
+\item $x$ rend négative une quantité sous une racine carrée ;
+\item $x$ rend nulle ou négative la quantité dont on prend le logarithme.
 \end{itemize}
-\end{propriete}
+\end{definition}
 
-\begin{remarque}[quand peut-on répondre sans calculer]
-Lorsque les coefficients $a$ et $c$ sont de signes contraires, alors $-4ac > 0$, donc $\Delta = b^{2} - 4ac > 0$ : l'équation admet automatiquement deux solutions distinctes, et leur produit $P = c/a$ étant négatif, les deux solutions sont de signes contraires. Ce test rapide évite de calculer le discriminant quand on ne cherche qu'à connaître le nombre de solutions.
-\end{remarque}
+Par exemple, $f(x) = \dfrac{1}{x-3}$ refuse seulement $x = 3$, donc $D_f = \R \setminus \{3\}$ ; $g(x) = \sqrt{2x-5}$ exige $2x - 5 \geq 0$, donc $D_g = [\frac{5}{2}\,;\,+\infty[$ ; $h(x) = \dfrac{x^{2}-4}{x-2}$ refuse $x = 2$, même si pour tout $x \neq 2$ son expression se simplifie en $h(x) = x + 2$ : le point interdit reste interdit, et cette observation jouera un rôle central dans la section 3 sur les limites.
 
-\begin{exemple}[les trois cas en une série]
-Traitons trois équations représentatives. Pour $-3x^{2} - x + 4 = 0$ : $\Delta = (-1)^{2} - 4 \times (-3) \times 4 = 1 + 48 = 49 > 0$, donc deux solutions $x_{1} = \dfrac{1 + 7}{-6} = -\dfrac{4}{3}$ et $x_{2} = \dfrac{1 - 7}{-6} = 1$, et la factorisation $-3\left(x + \dfrac{4}{3}\right)(x - 1)$. Pour $25x^{2} - 90x + 81 = 0$ : $\Delta = 90^{2} - 4 \times 25 \times 81 = 8100 - 8100 = 0$, solution double $x_{0} = \dfrac{90}{50} = 1{,}8 = \dfrac{9}{5}$, et $25x^{2} - 90x + 81 = (5x - 9)^{2}$. Pour $4x^{2} + 3x + 9 = 0$ : $\Delta = 9 - 144 = -135 < 0$, donc $S = \varnothing$.
-\end{exemple}
-
-\begin{methode}[résoudre une équation du second degré]
+\begin{methode}[déterminer un domaine de définition]
 \begin{enumerate}
-  \item se placer sous la forme $ax^{2} + bx + c = 0$ et vérifier que $a \neq 0$ ;
-  \item calculer $\Delta = b^{2} - 4ac$ en surveillant les signes ;
-  \item selon le signe de $\Delta$, écrire les solutions avec la formule, ou conclure à l'absence de solution ;
-  \item contrôler : la somme des solutions doit valoir $-b/a$ et le produit $c/a$ (section 3).
+\item repérer les obstacles : lister tous les dénominateurs, toutes les racines carrées et tous les logarithmes présents dans $f(x)$ ;
+\item écrire chaque condition (dénominateur non nul, quantité sous racine positive ou nulle, quantité sous logarithme strictement positive) et la résoudre comme une petite inéquation ;
+\item assembler : toutes les conditions doivent être vraies en même temps (intersection), et le résultat s'écrit avec des intervalles.
 \end{enumerate}
 \end{methode}
 
-\section{Somme et produit des solutions}
-
-\begin{propriete}[somme et produit des solutions]
-Lorsque $\Delta \geq 0$, l'équation $ax^{2} + bx + c = 0$ ($a \neq 0$) admet deux solutions (distinctes ou confondues) $x_{1}$ et $x_{2}$ qui vérifient
-\[
-S = x_{1} + x_{2} = -\frac{b}{a} \qquad\text{et}\qquad
-P = x_{1} \times x_{2} = \frac{c}{a}.
-\]
-Réciproquement, deux nombres de somme $S$ et de produit $P$ sont les solutions de l'équation $X^{2} - S X + P = 0$ dans l'inconnue $X$.
+\begin{propriete}[fonctions paires et impaires]
+Soit $f$ définie sur un domaine $D_f$ symétrique par rapport à $0$ : si $x \in D_f$, alors $-x \in D_f$.
+\begin{itemize}
+\item $f$ est \emph{paire} si $f(-x) = f(x)$ pour tout $x$ de $D_f$ : sa courbe est symétrique par rapport à l'axe des ordonnées (exemples : $x^{2}$, $x^{4}$, $\lvert x \rvert$) ;
+\item $f$ est \emph{impaire} si $f(-x) = -f(x)$ pour tout $x$ de $D_f$ : sa courbe est symétrique par rapport à l'origine (exemples : $x$, $x^{3}$, $x^{5}$).
+\end{itemize}
+Une fonction peut n'être ni paire ni impaire, comme $x^{2} + x$.
 \end{propriete}
 
-\begin{exemple}[raisonner sans résoudre]
-Pour $-3x^{2} + 2x + 1 = 0$, on lit directement $S = -\dfrac{b}{a} = -\dfrac{2}{-3} = \dfrac{2}{3}$ et $P = \dfrac{c}{a} = \dfrac{1}{-3} = -\dfrac{1}{3}$. Le produit étant négatif, les deux solutions sont de signes contraires, ce qui confirme le test de la section 2 ($a$ et $c$ de signes contraires) : les solutions sont $-\dfrac{1}{3}$ et $1$. Utilisons maintenant la formule réciproque : deux nombres de somme $S = 6$ et de produit $P = 8$ sont les solutions de $X^{2} - 6X + 8 = 0$, dont le discriminant vaut $\Delta = 36 - 32 = 4$ ; les solutions sont $X = \dfrac{6 \pm 2}{2}$, c'est-à-dire $2$ et $4$.
+\begin{definition}[sens de variation]
+Soit $f$ définie sur un intervalle $I$. $f$ est \emph{croissante} sur $I$ si, pour tous $a < b$ de $I$, on a $f(a) \leq f(b)$ (strictement croissante si $f(a) < f(b)$) ; elle est \emph{décroissante} sur $I$ si $a < b$ entraîne $f(a) \geq f(b)$ (strictement décroissante si $f(a) > f(b)$). Le sens de variation se lit sur la courbe : la fonction monte ou descend quand on parcourt $I$ de gauche à droite, et il peut changer d'un intervalle à l'autre.
+\end{definition}
+
+Le premier réflexe face à une fonction inconnue est de calculer quelques images et de les ranger dans un tableau de valeurs. Pour $f(x) = x^{2} - 2x - 3$ : $f(-1) = 0$, $f(0) = -3$, $f(1) = -4$, $f(2) = -3$, $f(3) = 0$, $f(4) = 5$. Ces valeurs suggèrent que la fonction descend jusqu'à $x = 1$, puis remonte ; le \emph{tableau de variation} résume cette information en une seule lecture :
+
+\begin{center}
+\captionof{table}{Tableau de valeurs de $f(x) = x^{2} - 2x - 3$}
+\label{ch3:tab:valeurs}
+\begin{tabular}{C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}}
+\toprule
+$x$ & $-1$ & $0$ & $1$ & $2$ & $3$ & $4$ \\
+\midrule
+$f(x)$ & $0$ & $-3$ & $-4$ & $-3$ & $0$ & $5$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\captionof{table}{Tableau de variation de $f(x) = x^{2} - 2x - 3$}
+\label{ch3:tab:variation}
+\begin{tabular}{L{2.2cm}C{3.6cm}C{2.4cm}C{3.6cm}}
+\toprule
+$x$ & $-\infty$ & $1$ & $+\infty$ \\
+\midrule
+$f(x)$ & $+\infty \ \searrow$ & $-4$ & $\nearrow \ +\infty$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+La fonction est strictement décroissante sur $]-\infty\,;\,1]$ et strictement croissante sur $[1\,;\,+\infty[$, avec un minimum $-4$ atteint en $1$. Ce minimum se confirme en remarquant que $x^{2} - 2x - 3 = (x-1)^{2} - 4$ : le carré $(x-1)^{2}$ est nul exactement en $x = 1$ et positif partout ailleurs. Les zéros se lisent par factorisation : $x^{2} - 2x - 3 = (x+1)(x-3)$, donc la courbe coupe l'axe des abscisses en $-1$ et $3$.
+
+\begin{exemple}[domaines de trois fonctions]
+Déterminons le domaine de définition de $f(x) = \dfrac{2x+1}{x^{2}-9}$, de $g(x) = \sqrt{3-x}$ et de $h(x) = \dfrac{\sqrt{x+2}}{x-5}$. Pour $f$, le numérateur existe toujours et le dénominateur $x^{2} - 9 = (x-3)(x+3)$ s'annule en $3$ et $-3$, donc $D_f = \R \setminus \{-3\,;\,3\}$. Pour $g$, la quantité sous la racine doit être positive ou nulle : $3 - x \geq 0$, soit $x \leq 3$, donc $D_g = \,]-\infty\,;\,3]$. Pour $h$, deux conditions se superposent : la racine exige $x + 2 \geq 0$, soit $x \geq -2$, et le dénominateur exige $x \neq 5$, donc $D_h = [\,-2\,;\,5\,[\;\cup\;]5\,;\,+\infty[$. La valeur $-2$ est admise car la racine de $0$ existe, alors que $5$ est rejeté car un dénominateur ne doit jamais s'annuler : cette asymétrie entre « positif ou nul » et « non nul » est une source classique d'erreur en devoir.
+\end{exemple}
+
+\section{Fonctions usuelles et leurs graphiques}
+
+\begin{definition}[fonction affine]
+Une fonction \emph{affine} est une fonction de la forme
+\[
+f(x) = m\,x + p,
+\]
+où $m$ et $p$ sont des réels fixés, appelés \emph{pente} (coefficient directeur) et \emph{ordonnée à l'origine}. Sa courbe est une droite : quand $x$ augmente de $1$, $f(x)$ augmente exactement de $m$, et $p$ est la valeur prise en $x = 0$, souvent un coût fixe ou une prime de base.
+\end{definition}
+
+Le signe de la pente gouverne le sens de variation : si $m > 0$ la droite monte, si $m < 0$ elle descend, si $m = 0$ la fonction est constante. Deux points suffisent pour la tracer, par exemple $(0\,;\,p)$ et $(1\,;\,p+m)$. Inversement, une droite passant par $(x_1\,;\,y_1)$ et $(x_2\,;\,y_2)$ avec $x_1 \neq x_2$ a pour pente et pour ordonnée à l'origine :
+\[
+m = \frac{y_2 - y_1}{x_2 - x_1}, \qquad p = y_1 - m\,x_1.
+\]
+La figure~\ref{ch3:fig:affine} montre les deux situations.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=13.0cm, height=7.4cm, grid=major, axis lines=box,
+  xlabel={$x$}, ylabel={$y$},
+  xmin=-2, xmax=3.6, ymin=-2.5, ymax=8,
+  legend style={at={(0.5,1.04)}, anchor=south, legend columns=2, font=\small}]
+\addplot[robleu, very thick, domain=-2:3.5, samples=100] {2*x + 1};
+\addlegendentry{$y = 2x + 1$ : pente $m = 2 > 0$, croissante}
+\addplot[roor, very thick, domain=-2:3.5, samples=100] {-x + 3};
+\addlegendentry{$y = -x + 3$ : pente $m = -1 < 0$, décroissante}
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{Deux fonctions affines : le signe de la pente décide du sens de variation, l'ordonnée à l'origine est la valeur en $x = 0$.}
+\label{ch3:fig:affine}
+\end{center}
+
+La fonction $f(x) = ax^{2} + bx + c$ avec $a \neq 0$ a pour courbe une \emph{parabole}. Si $a > 0$, elle est tournée vers le haut et possède un minimum ; si $a < 0$, elle est tournée vers le bas et possède un maximum. Le sommet se trouve en
+\[
+x_S = -\frac{b}{2a}, \qquad y_S = f\left(-\frac{b}{2a}\right),
+\]
+et les intersections avec l'axe des abscisses sont les racines du trinôme, calculées au chapitre 2 par le discriminant. La figure~\ref{ch3:fig:parabole} rassemble ces éléments pour $f(x) = x^{2} - 2x - 3$, étudiée à la section 1 : sommet $(1\,;\,-4)$, racines $-1$ et $3$, axe de symétrie vertical. Les paraboles modélisent de nombreuses situations de gestion, comme un bénéfice en fonction de la quantité produite quand les charges croissent plus vite que le chiffre d'affaires.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=13.0cm, height=8.2cm, grid=major, axis lines=box,
+  xlabel={$x$}, ylabel={$y$},
+  xmin=-2.8, xmax=4.8, ymin=-5.4, ymax=8.5,
+  legend style={at={(0.5,-0.14)}, anchor=north, legend columns=2, font=\small}]
+\addplot[robleu, very thick, domain=-2.3:4.3, samples=100] {x*x - 2*x - 3};
+\addlegendentry{parabole $y = x^{2} - 2x - 3$}
+\addplot[only marks, mark=*, mark size=2.4pt, color=roor] coordinates {(1,-4)};
+\addlegendentry{sommet $(1\,;\,-4)$}
+\addplot[only marks, mark=square*, mark size=2.1pt, color=rogold] coordinates {(-1,0) (3,0)};
+\addlegendentry{racines $-1$ et $3$}
+\addplot[rogris, dashed, thin] coordinates {(1,-4.8) (1,7.6)};
+\addlegendentry{axe de symétrie $x = 1$}
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{La parabole $y = x^{2} - 2x - 3$ : sommet $(1\,;\,-4)$, racines $-1$ et $3$, axe de symétrie vertical.}
+\label{ch3:fig:parabole}
+\end{center}
+
+\begin{definition}[exponentielle et logarithme népérien]
+Il existe un nombre $\mathrm{e} \approx 2{,}71828$, appelé \emph{nombre d'Euler}. La \emph{fonction exponentielle} associe à tout réel $x$ la puissance $\mathrm{e}^{x}$ : définie sur $\R$ tout entier, toujours positive et strictement croissante, elle décrit toute croissance qui s'accélère. La \emph{fonction logarithme népérien} $\ln$ est sa réciproque :
+\[
+\ln x = y \qquad \Longleftrightarrow \qquad \mathrm{e}^{y} = x,
+\]
+définie seulement pour $x > 0$ et strictement croissante : elle répond à la question « quelle puissance de $\mathrm{e}$ donne ce nombre ? », avec $\ln \mathrm{e} = 1$ et $\ln 1 = 0$.
+\end{definition}
+
+\begin{propriete}[règles de calcul de $\mathrm{e}^{x}$ et de $\ln$]
+Pour tous réels $a$, $b$ et tout entier relatif $n$, avec $a > 0$ et $b > 0$ pour le logarithme :
+\[
+\mathrm{e}^{a} \times \mathrm{e}^{b} = \mathrm{e}^{a+b}, \qquad \frac{\mathrm{e}^{a}}{\mathrm{e}^{b}} = \mathrm{e}^{a-b}, \qquad \left(\mathrm{e}^{a}\right)^{n} = \mathrm{e}^{a\,n},
+\]
+\[
+\ln(a\,b) = \ln a + \ln b, \qquad \ln\left(\frac{a}{b}\right) = \ln a - \ln b, \qquad \ln(a^{n}) = n \ln a.
+\]
+Le logarithme transforme les produits en sommes et les puissances en multiplications, exactement à l'inverse de l'exponentielle, et les deux fonctions annulent mutuellement leurs effets : $\mathrm{e}^{\ln x} = x$ pour $x > 0$, $\ln(\mathrm{e}^{x}) = x$ pour tout $x$.
+\end{propriete}
+
+Quelques valeurs repères : $\mathrm{e}^{1} \approx 2{,}718$, $\mathrm{e}^{2} \approx 7{,}389$, $\mathrm{e}^{-1} \approx 0{,}368$ et $\ln 10 \approx 2{,}3026$, d'où $\ln 100 = 2\ln 10 \approx 4{,}6052$ et $\ln 8 = 3\ln 2 \approx 2{,}0794$. La croissance de l'exponentielle est rapide : quand $x$ avance d'une unité, $\mathrm{e}^{x}$ est multiplié par $\mathrm{e}$ ; quand $x$ devient très négatif, $\mathrm{e}^{x}$ se rapproche de $0$ sans jamais l'atteindre. Le logarithme, lui, n'existe pas en $0$ et $\ln(-2)$ n'existe pas du tout. La figure~\ref{ch3:fig:expln} trace les deux courbes dans le même repère : elles sont symétriques par rapport à la bissectrice $y = x$, traduction graphique de la réciproque.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=13.0cm, height=8.6cm, grid=major, axis lines=box,
+  xlabel={$x$}, ylabel={$y$},
+  xmin=-1.8, xmax=4.9, ymin=-2.6, ymax=5.2,
+  legend style={at={(0.5,-0.13)}, anchor=north, legend columns=3, font=\small}]
+\addplot[robleu, very thick, domain=-1.8:1.6, samples=120] {exp(x)};
+\addlegendentry{$y = \mathrm{e}^{x}$}
+\addplot[roteal, very thick, domain=0.075:4.9, samples=120] {ln(x)};
+\addlegendentry{$y = \ln x$}
+\addplot[roor, dashed, thick, domain=-1.8:4.9, samples=2] {x};
+\addlegendentry{bissectrice $y = x$}
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{Exponentielle et logarithme népérien sont réciproques : leurs courbes sont symétriques par rapport à la droite $y = x$.}
+\label{ch3:fig:expln}
+\end{center}
+
+\begin{remarque}[lien avec les mathématiques financières]
+L'exponentielle et le logarithme sont les fonctions de la croissance et de sa mesure. Un capital placé à intérêts composés de taux $i$ vaut $C_{0}(1+i)^{n}$ au bout de $n$ années, et chercher la durée de doublement revient à résoudre $(1+i)^{n} = 2$, soit $n = \dfrac{\ln 2}{\ln(1+i)}$ : c'est le logarithme qui permet d'isoler la durée. Le chapitre 6 exploitera ces formules dans le détail avec les suites géométriques.
+\end{remarque}
+
+\begin{exemple}[coût de production d'une unité agroalimentaire de Kara]
+Une petite unité de production de jus de fruits de Kara supporte chaque mois un coût fixe et un coût variable proportionnel au nombre $q$ de cartons produits. On sait que produire $100$ cartons coûte $500\,000$ FCFA et que produire $300$ cartons coûte $800\,000$ FCFA. Le coût total est affine, $C(q) = m\,q + p$ : les deux données donnent
+\[
+\begin{cases}
+100\,m + p = 500\,000, \\
+300\,m + p = 800\,000,
+\end{cases}
+\]
+et la soustraction membre à membre élimine $p$ : $200\,m = 300\,000$, donc $m = 1\,500$, puis $p = 500\,000 - 100 \times 1\,500 = 350\,000$. La fonction coût est $C(q) = 1\,500\,q + 350\,000$ : la pente $1\,500$ FCFA est le coût de chaque carton supplémentaire, et l'ordonnée à l'origine $350\,000$ FCFA est le coût fixe payé même à production nulle. Avec un budget mensuel de $950\,000$ FCFA, l'équation $C(q) \leq 950\,000$ donne $1\,500\,q \leq 600\,000$, soit $q \leq 400$ : l'unité peut produire au plus $400$ cartons, et $C(400) = 950\,000$ confirme que le budget est exactement épuisé. On observe au passage que le coût moyen par carton diminue quand la production augmente : $C(100)/100 = 5\,000$ FCFA mais $C(400)/400 = 2\,375$ FCFA, car le coût fixe se répartit sur davantage d'unités.
+\end{exemple}
+
+\section{Limites et continuité}
+
+\begin{definition}[limite d'une fonction en un point]
+Soit $f$ définie au voisinage d'un réel $a$, sauf peut-être en $a$ lui-même. On dit que $f$ tend vers $L$ quand $x$ tend vers $a$, et on écrit
+\[
+\lim_{x \to a} f(x) = L,
+\]
+lorsque $f(x)$ peut être rendu aussi proche de $L$ que l'on veut en prenant $x$ suffisamment proche de $a$, sans jamais prendre $x = a$. On écrit de même $\lim_{x \to +\infty} f(x) = L$ lorsque $f(x)$ se rapproche de $L$ dès que $x$ devient très grand.
+\end{definition}
+
+La limite décrit le comportement de $f$ \emph{au voisinage} d'un point, pas la valeur en ce point, qui peut d'ailleurs ne pas exister. Observons-le sur $h(x) = \dfrac{x^{2}-4}{x-2}$, définie partout sauf en $2$ : en approchant $2$ par des valeurs de plus en plus proches, de chaque côté, les valeurs de $h$ se rapprochent de $4$ des deux côtés à la fois, bien que $h(2)$ n'existe pas. On écrit donc $\lim_{x \to 2} h(x) = 4$, et la suite de la section montre comment l'obtenir par le calcul :
+
+\begin{center}
+\captionof{table}{Valeurs de $h(x) = \dfrac{x^{2}-4}{x-2}$ au voisinage de $2$}
+\label{ch3:tab:limites}
+\begin{tabular}{C{1.7cm}C{1.7cm}C{1.7cm}C{1.7cm}C{1.7cm}C{1.7cm}}
+\toprule
+$x$ & $1{,}9$ & $1{,}99$ & $1{,}999$ & $2{,}001$ & $2{,}01$ \\
+\midrule
+$h(x)$ & $3{,}9$ & $3{,}99$ & $3{,}999$ & $4{,}001$ & $4{,}01$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{propriete}[opérations sur les limites]
+Si $\lim_{x \to a} f(x) = L$ et $\lim_{x \to a} g(x) = M$ avec $L$ et $M$ réels (le point $a$ peut être remplacé par $\pm\infty$), alors :
+\[
+\lim_{x \to a}\,\bigl(f + g\bigr)(x) = L + M, \qquad \lim_{x \to a}\,\bigl(f \times g\bigr)(x) = L \times M, \qquad \lim_{x \to a}\,\left(\frac{f}{g}\right)(x) = \frac{L}{M} \ \text{ si } M \neq 0.
+\]
+Si $M = 0$ et $L \neq 0$, le quotient tend vers $+\infty$ ou $-\infty$. Si $L = M = 0$, le quotient est de \emph{forme indéterminée} : la règle ne dit rien et il faut transformer l'expression.
+\end{propriete}
+
+\begin{attention}
+Une forme indéterminée n'est ni un résultat ni une impossibilité : c'est le signe que la règle ne s'applique pas telle quelle. Écrire que $\frac{0}{0} = 0$ ou que $\frac{\infty}{\infty} = 1$ est une faute grave : la limite de $\frac{x^{2}-4}{x-2}$ en $2$ vaut $4$, celle de $\frac{5x^{2}}{x^{2}}$ en $+\infty$ vaut $5$, et chacune se présentait comme un quotient de deux quantités qui s'annulent ou qui grandissent. Les formes indéterminées usuelles sont $\frac{0}{0}$, $\frac{\infty}{\infty}$, $\infty - \infty$ et $0 \times \infty$.
+\end{attention}
+
+\begin{methode}[lever une forme indéterminée]
+\begin{enumerate}
+\item identifier la forme en substituant formellement la valeur limite : substitution directe possible, $\frac{0}{0}$, $\frac{\infty}{\infty}$, $\infty - \infty$ ou $0 \times \infty$ ;
+\item transformer l'expression : pour $\frac{0}{0}$, factoriser numérateur et dénominateur (identités remarquables du chapitre 2) et simplifier le facteur qui s'annule ; avec une racine, multiplier par l'expression conjuguée ; pour $\frac{\infty}{\infty}$, mettre en facteur la plus grande puissance de $x$ en haut et en bas ;
+\item calculer la limite de l'expression simplifiée et conclure ; contrôler éventuellement avec des valeurs proches du point limite.
+\end{enumerate}
+\end{methode}
+
+Pour $x \neq 2$, la méthode donne $\dfrac{x^{2}-4}{x-2} = \dfrac{(x-2)(x+2)}{x-2} = x + 2$, donc $\lim_{x \to 2} \dfrac{x^{2}-4}{x-2} = 4$. Pour la forme $\frac{\infty}{\infty}$, la même idée factorise $x^{2}$ en haut et en bas :
+\[
+\lim_{x \to +\infty} \frac{3x^{2} - 5x + 1}{2x^{2} + x} = \lim_{x \to +\infty} \frac{3 - \frac{5}{x} + \frac{1}{x^{2}}}{2 + \frac{1}{x}} = \frac{3}{2} = 1{,}5,
+\]
+car les termes $\frac{5}{x}$, $\frac{1}{x^{2}}$ et $\frac{1}{x}$ tendent vers $0$ : à degré égal, la limite à l'infini d'un quotient de polynômes est le rapport des coefficients de plus haut degré.
+
+On peut approcher un point $a$ de deux côtés : la \emph{limite à gauche} $\lim_{x \to a^{-}} f(x)$ étudie $f$ pour $x < a$ proche de $a$, la \emph{limite à droite} $\lim_{x \to a^{+}} f(x)$ pour $x > a$ proche de $a$. La limite en $a$ existe si et seulement si les deux existent et sont égales. Pour la fonction inverse, $\lim_{x \to 0^{+}} \frac{1}{x} = +\infty$ et $\lim_{x \to 0^{-}} \frac{1}{x} = -\infty$ : la limite en $0$ n'existe pas et l'axe vertical est une \emph{asymptote}. Une fonction définie par $f(x) = x$ si $x < 1$ et $f(x) = x + 1$ si $x \geq 1$ montre un autre cas : les deux limites existent mais diffèrent ($1$ à gauche, $2$ à droite), la courbe présente un escalier.
+
+\begin{definition}[continuité en un point]
+Une fonction $f$ est \emph{continue en un point} $a$ de son domaine lorsque $\lim_{x \to a} f(x) = f(a)$ : la limite à gauche existe, la limite à droite existe, et elles coïncident avec la valeur $f(a)$. Graphiquement, la courbe se trace \emph{sans lever le crayon} : ni saut, ni trou, ni passage à l'infini.
+\end{definition}
+
+Toutes les fonctions usuelles sont continues partout où elles sont définies : les polynômes sur $\R$, la fonction inverse sur chacun des deux intervalles où elle existe, l'exponentielle sur $\R$, le logarithme sur $]0\,;\,+\infty[$. En revanche, $h(x) = \dfrac{x^{2}-4}{x-2}$ n'est pas continue en $2$, simplement parce qu'elle n'y est pas définie : on dit qu'elle est \emph{prolongeable par continuité} en $2$, car en posant $h(2) = 4$ on obtient la fonction $x + 2$, continue sur $\R$ tout entier. Quant à la fonction en escalier ci-dessus, elle est discontinue en $1$ malgré l'existence des deux limites, car elles diffèrent.
+
+\begin{exemple}[quatre calculs de limites pas à pas]
+Calculons $\displaystyle\lim_{x \to 3}\,(2x + 1)$, $\displaystyle\lim_{x \to 2}\,\frac{x^{2} - 4}{x - 2}$, $\displaystyle\lim_{x \to +\infty}\,\frac{3x^{2} - 5x + 1}{2x^{2} + x}$ et $\displaystyle\lim_{x \to 0^{-}}\,\frac{1}{x}$. La première est un polynôme, donc continue : on substitue, et $\lim_{x \to 3}(2x+1) = 2 \times 3 + 1 = 7$. La seconde donne $\frac{4-4}{2-2} = \frac{0}{0}$ : on factorise le numérateur, $x^{2} - 4 = (x-2)(x+2)$, on simplifie par $x - 2$, et la limite vaut $4$. La troisième donne $\frac{\infty}{\infty}$ : on factorise $x^{2}$ en haut et en bas, ce qui ramène à $\frac{3 - \frac{5}{x} + \frac{1}{x^{2}}}{2 + \frac{1}{x}}$ puis $\frac{3}{2} = 1{,}5$. La quatrième : quand $x$ prend des valeurs négatives de plus en plus proches de $0$, par exemple $-0{,}1$, $-0{,}01$, $-0{,}001$, les quotients valent $-10$, $-100$, $-1\,000$, donc $\lim_{x \to 0^{-}} \frac{1}{x} = -\infty$ : c'est la limite infinie unilatérale qui explique l'asymptote verticale de la fonction inverse en $0$.
+\end{exemple}
+
+\section{Nombre dérivé et règles de calcul}
+
+La pente d'une droite ne pose aucun problème : elle vaut le quotient d'une variation de $y$ par la variation correspondante de $x$. Pour une courbe, la pente change de point en point, et l'idée fondatrice du calcul différentiel consiste à approcher la courbe par des droites sécantes de plus en plus proches, puis à passer à la limite.
+
+\begin{definition}[taux d'accroissement et nombre dérivé]
+Soit $f$ définie au voisinage de $a$. Le \emph{taux d'accroissement} de $f$ entre $a$ et $a+h$ est le quotient
+\[
+T(h) = \frac{f(a+h) - f(a)}{h} \qquad (h \neq 0).
+\]
+$f$ est \emph{dérivable en} $a$ si $T(h)$ admet une limite finie lorsque $h$ tend vers $0$ ; cette limite est le \emph{nombre dérivé} de $f$ en $a$, noté
+\[
+f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}.
+\]
+\end{definition}
+
+Géométriquement, $f'(a)$ est la pente de la \emph{tangente} à la courbe au point d'abscisse $a$ : la sécante qui joint $(a\,;\,f(a))$ à $(a+h\,;\,f(a+h))$ tourne autour du premier point quand $h$ tend vers $0$, et sa position limite est la tangente. Une valeur $f'(a) > 0$ correspond à une tangente montante, $f'(a) < 0$ à une tangente descendante, $f'(a) = 0$ à une tangente horizontale.
+
+\begin{propriete}[équation de la tangente]
+Si $f$ est dérivable en $a$, la tangente à la courbe de $f$ au point d'abscisse $a$ a pour équation
+\[
+y = f(a) + f'(a)\,(x - a).
+\]
+Elle passe par le point $(a\,;\,f(a))$ et a pour coefficient directeur $f'(a)$.
+\end{propriete}
+
+\begin{definition}[fonction dérivée]
+Soit $f$ dérivable en tout point $x$ d'un intervalle $I$. La \emph{fonction dérivée} de $f$, notée $f'$, associe à chaque $x$ de $I$ le nombre dérivé $f'(x)$. Lorsque $f'$ est elle-même dérivable sur $I$, sa dérivée s'appelle la \emph{dérivée seconde} de $f$ et se note $f''$.
+\end{definition}
+
+En pratique, on ne repasse jamais par la limite pour chaque nouveau point : on utilise un stock de dérivées usuelles obtenu une fois pour toutes, puis des règles de calcul. Le tableau~\ref{ch3:tab:derivees} rassemble les six dérivées indispensables, issues des fonctions usuelles de la section 2.
+
+\begin{center}
+\captionof{table}{Dérivées des fonctions usuelles}
+\label{ch3:tab:derivees}
+\begin{tabular}{L{4.9cm}C{4.0cm}L{4.0cm}}
+\toprule
+\textbf{Fonction} & \textbf{Dérivée} & \textbf{Validité} \\
+\midrule
+$f(x) = k$ (constante) & $f'(x) = 0$ & tout $x$ \\
+$f(x) = x^{n}$ ($n \geq 1$) & $f'(x) = n\,x^{n-1}$ & tout $x$ \\
+$f(x) = \sqrt{x}$ & $f'(x) = \dfrac{1}{2\sqrt{x}}$ & $x > 0$ \\
+$f(x) = \dfrac{1}{x}$ & $f'(x) = -\dfrac{1}{x^{2}}$ & $x \neq 0$ \\
+$f(x) = \mathrm{e}^{x}$ & $f'(x) = \mathrm{e}^{x}$ & tout $x$ \\
+$f(x) = \ln x$ & $f'(x) = \dfrac{1}{x}$ & $x > 0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{propriete}[règles de dérivation]
+Soient $u$ et $v$ deux fonctions dérivables sur un même intervalle $I$ et $k$ une constante :
+\[
+(u + v)' = u' + v', \qquad (k\,u)' = k\,u', \qquad (u \times v)' = u'v + u v',
+\]
+\[
+\left(\frac{u}{v}\right)' = \frac{u'v - u v'}{v^{2}} \ \text{ si } v(x) \neq 0 \text{ sur } I, \qquad (u^{n})' = n\,u'\,u^{n-1}.
+\]
+Pour une fonction affine intérieure $u(x) = ax + b$, la dernière forme donne $(ax+b)^{n}{}' = a\,n\,(ax+b)^{n-1}$ ; de même $(\mathrm{e}^{\,u})' = u'\,\mathrm{e}^{\,u}$ et $(\ln u)' = u'/u$ pour $u > 0$. Le signe « moins » du quotient est une source classique d'erreur : il vient de la dérivation de l'inverse, dont la dérivée est $-v'/v^{2}$.
+\end{propriete}
+
+\begin{exemple}[cinq dérivées et une tangente]
+Dérivons cinq fonctions représentatives. Pour $f(x) = (3x-5)^{4}$ : forme $u^{n}$ avec $u = 3x-5$ et $u' = 3$, donc $f'(x) = 4 \times 3 \times (3x-5)^{3} = 12\,(3x-5)^{3}$. Pour $g(x) = \mathrm{e}^{\,2x+1}$ : $g'(x) = 2\,\mathrm{e}^{\,2x+1}$. Pour $h(x) = \ln(5x^{2}+1)$, strictement positive partout : $h'(x) = \dfrac{10x}{5x^{2}+1}$. Pour $p(x) = x^{2}\,\mathrm{e}^{x}$ : la règle du produit donne $p'(x) = 2x\,\mathrm{e}^{x} + x^{2}\,\mathrm{e}^{x} = (2x + x^{2})\,\mathrm{e}^{x}$. Pour $q(x) = \dfrac{x}{x+1}$ : la règle du quotient donne $q'(x) = \dfrac{(x+1) - x}{(x+1)^{2}} = \dfrac{1}{(x+1)^{2}}$. Et pour la tangente : la fonction carré $f(x) = x^{2}$ en $a = 3$ a un taux d'accroissement $\dfrac{(3+h)^{2} - 9}{h} = \dfrac{6h + h^{2}}{h} = 6 + h$, qui tend vers $6$ quand $h$ tend vers $0$, donc $f'(3) = 6$ et la tangente au point $(3\,;\,9)$ a pour équation $y = 9 + 6(x-3) = 6x - 9$. Contrôle : en $x = 4$, la tangente donne $15$ alors que $f(4) = 16$, la courbe convexe restant légèrement au-dessus de sa tangente.
 \end{exemple}
 
 \begin{remarque}
-Connaître une solution et le produit $P$ suffit pour retrouver l'autre : $x_{2} = P / x_{1}$. De même, connaître une solution et la somme $S$ donne $x_{2} = S - x_{1}$. Ces lectures rapides servent à contrôler une résolution complète sans recalculer le discriminant.
+Ne confondez pas $f'(a)$, qui est un nombre (la pente en un point précis), et $f'$, qui est une fonction. La dérivée seconde $f''$ apporte une information d'un autre type : là où $f'$ décrit la pente, $f''$ décrit la variation de la pente. Quand $f'' > 0$ sur un intervalle, la courbe tourne sa concavité vers le haut ; quand $f'' < 0$, vers le bas. En économie de la production, la dérivée seconde du coût traduit par exemple la présence ou l'absence de rendements décroissants.
 \end{remarque}
 
-\section{Équations bicarrées}
+\section{Étude complète d'une fonction}
 
-\begin{definition}[équation bicarrée]
-Une équation bicarrée s'écrit $ax^{4} + bx^{2} + c = 0$ avec $a \neq 0$ : elle ne contient que des puissances paires de $x$. Le changement de variable $X = x^{2}$ la transforme en équation du second degré en $X$ ; on résout d'abord en $X$, puis on revient à $x$ avec $x = \sqrt{X}$ ou $x = -\sqrt{X}$ pour chaque valeur $X \geq 0$ trouvée.
-\end{definition}
-
-\begin{exemple}[du quatrième degré au second]
-Résolvons $x^{4} - 3x^{2} + 2 = 0$ en posant $X = x^{2}$. L'équation devient $X^{2} - 3X + 2 = 0$, de discriminant $\Delta = 9 - 8 = 1$ ; les solutions en $X$ sont $X = \dfrac{3 \pm 1}{2}$, c'est-à-dire $1$ et $2$. Retour à $x$ : $x^{2} = 1$ donne $x = \pm 1$, et $x^{2} = 2$ donne $x = \pm\sqrt{2}$, donc $S = \{-1;\ 1;\ -\sqrt{2};\ \sqrt{2}\}$. Pour $x^{4} + 3x^{2} + 4 = 0$, le même changement de variable donne $X^{2} + 3X + 4 = 0$ avec $\Delta = 9 - 16 = -7 < 0$ : aucune solution en $X$, donc $S = \varnothing$.
-\end{exemple}
-
-\begin{attention}
-Ne jamais arrêter une équation bicarrée au niveau de $X$ : les solutions demandées sont celles de $x$. Une valeur $X < 0$ trouvée en cours de route est simplement écartée, car $x^{2} = X$ n'a alors aucune solution réelle.
-\end{attention}
-
-\section{Inéquations du premier degré}
-
-\begin{propriete}[règles sur les inégalités]
-Ajouter ou retrancher un même nombre aux deux membres d'une inégalité conserve son sens. Multiplier ou diviser les deux membres par un même nombre \emph{positif} conserve le sens ; multiplier ou diviser par un nombre \emph{négatif} inverse le sens. Ainsi $a \leqslant b$ devient $ka \leqslant kb$ si $k > 0$, mais $ka \geqslant kb$ si $k < 0$.
+\begin{propriete}[signe de la dérivée et sens de variation, admise]
+Soit $f$ dérivable sur un intervalle $I$ :
+\begin{itemize}
+\item si $f'(x) > 0$ pour tout $x$ de $I$, alors $f$ est strictement croissante sur $I$ ;
+\item si $f'(x) < 0$ pour tout $x$ de $I$, alors $f$ est strictement décroissante sur $I$ ;
+\item si $f'(x) = 0$ pour tout $x$ de $I$, alors $f$ est constante sur $I$.
+\end{itemize}
+La lecture graphique est immédiate : là où la courbe monte, les tangentes sont montantes et leur pente est positive ; là où elle descend, leur pente est négative.
 \end{propriete}
 
-\begin{methode}[résoudre $ax + b > 0$ à la fois par l'algèbre et par le signe]
+\begin{definition}[extremum local]
+$f$ présente un \emph{maximum local} en $a$ s'il existe un intervalle ouvert contenant $a$ sur lequel $f(x) \leq f(a)$, et un \emph{minimum local} en $a$ si $f(x) \geq f(a)$ sur un tel intervalle. Le mot « local » est essentiel : un maximum local est le sommet de la courbe dans un voisinage du point, pas nécessairement sur tout le domaine.
+\end{definition}
+
+\begin{theoreme}[conditions du premier ordre]
+Soit $f$ dérivable sur un intervalle $I$ et $a$ intérieur à $I$.
 \begin{enumerate}
-  \item méthode algébrique : transposer $b$, puis diviser par $a$ en tenant compte de son signe. Si $a > 0$, $ax + b > 0 \Longleftrightarrow x > -\dfrac{b}{a}$ ; si $a < 0$, $ax + b > 0 \Longleftrightarrow x < -\dfrac{b}{a}$ ;
-  \item méthode du tableau de signes : on résout $ax + b = 0$ qui donne $x_{0} = -\dfrac{b}{a}$, puis on lit que $ax + b$ a le signe de $-a$ avant $x_{0}$, s'annule en $x_{0}$, et le signe de $a$ après ;
-  \item écrire l'ensemble des solutions comme un intervalle : les solutions d'une inéquation ne sont pas des nombres isolés mais toute une demi-droite de $\R$.
+\item si $f$ présente un extremum local en $a$, alors $f'(a) = 0$ ;
+\item réciproquement, si $f'$ s'annule en $a$ \textbf{en changeant de signe}, alors $f$ présente un extremum local en $a$ : un maximum local si $f'$ passe de $+$ à $-$, un minimum local si elle passe de $-$ à $+$.
+\end{enumerate}
+\end{theoreme}
+
+\begin{attention}
+La condition $f'(a) = 0$ est nécessaire mais \textbf{non suffisante}. Contre-exemple : pour $f(x) = x^{3}$, on a $f'(x) = 3x^{2}$, donc $f'(0) = 0$ ; or $3x^{2} \geq 0$ des deux côtés de $0$, la dérivée ne change pas de signe, et la courbe, qui monte des deux côtés, ne présente aucun extremum, seulement un palier horizontal. C'est bien le \textbf{changement de signe} de $f'$, et non la seule annulation, qui garantit l'extremum.
+\end{attention}
+
+\begin{methode}[étude complète d'une fonction, en cinq étapes]
+\begin{enumerate}
+\item \textbf{domaine} : déterminer l'ensemble des valeurs de $x$ pour lesquelles $f(x)$ existe ;
+\item \textbf{dérivée} : calculer $f'(x)$ avec les règles de la section 4 et \textbf{factoriser} le résultat autant que possible ;
+\item \textbf{signe de $f'$} : résoudre $f'(x) = 0$, puis étudier le signe de chaque facteur ;
+\item \textbf{tableau de variation} : dresser le tableau à trois lignes ($x$, signe de $f'$, variations de $f$), avec les valeurs de $f$ aux points critiques et les limites aux bornes ;
+\item \textbf{courbe} : tracer la courbe en plaçant d'abord les points remarquables du tableau.
 \end{enumerate}
 \end{methode}
 
-\begin{exemple}[deux inéquations, deux sens]
-Résolvons $-2x + 6 \geqslant 0$. On transpose : $-2x \geqslant -6$, puis on divise par $-2$ en changeant le sens : $x \leqslant 3$, donc $S = (-\infty;\ 3]$. Le tableau de signes confirme : $-2x + 6$ est positif avant $3$, nul en $3$, négatif après. Résolvons $5x + 4 > 0$ : $x > -\dfrac{4}{5}$, donc $S = \left(-\dfrac{4}{5};\ +\infty\right)$.
+\begin{exemple}[étude complète de $f(x) = x^{3} - 3x + 1$]
+Appliquons la méthode pas à pas. \textbf{Étape 1 :} $f$ est un polynôme, donc $D = \R$. \textbf{Étape 2 :} les règles de la section 4 donnent $f'(x) = 3x^{2} - 3$, que l'on factorise : $f'(x) = 3(x-1)(x+1)$. \textbf{Étape 3 :} le produit $(x-1)(x+1)$ s'annule en $-1$ et $1$, est positif pour $x < -1$ ou $x > 1$ et négatif entre les deux racines. \textbf{Étape 4 :} $f$ est croissante sur $]-\infty\,;\,-1]$, décroissante sur $[-1\,;\,1]$ puis croissante sur $[1\,;\,+\infty[$, avec $f(-1) = -1 + 3 + 1 = 3$ et $f(1) = 1 - 3 + 1 = -1$, et aux bornes le terme $x^{3}$ domine : $-\infty$ à gauche, $+\infty$ à droite. D'où le tableau, avec un maximum local $3$ atteint en $x = -1$ (la dérivée passe de $+$ à $-$) et un minimum local $-1$ atteint en $x = 1$ :
+
+\begin{center}
+\begin{tikzpicture}[line width=0.7pt]
+  \draw (0,0) rectangle (12.6,2.5);
+  \draw (0,1.9) -- (12.6,1.9);
+  \draw (0,1.3) -- (12.6,1.3);
+  \draw (2.2,0) -- (2.2,2.5);
+  \draw (5.34,0) -- (5.34,1.9);
+  \draw (8.44,0) -- (8.44,1.9);
+  \node at (1.1,2.2) {$x$};
+  \node at (3.75,2.2) {$-\infty$};
+  \node at (5.34,2.2) {$-1$};
+  \node at (8.44,2.2) {$1$};
+  \node at (10.6,2.2) {$+\infty$};
+  \node at (1.1,1.6) {$f'(x)$};
+  \node at (3.75,1.6) {$+$};
+  \node[fill=white, inner sep=1.2pt] at (5.34,1.6) {$0$};
+  \node at (6.9,1.6) {$-$};
+  \node[fill=white, inner sep=1.2pt] at (8.44,1.6) {$0$};
+  \node at (10.6,1.6) {$+$};
+  \node at (1.1,0.62) {$f(x)$};
+  \draw[->, robleu, line width=1.1pt] (2.5,0.30) -- (5.05,1.10);
+  \node[anchor=west, font=\small] at (5.44,1.06) {$3$};
+  \draw[->, robleu, line width=1.1pt] (5.60,0.92) -- (8.16,0.36);
+  \node[anchor=west, font=\small] at (8.54,0.30) {$-1$};
+  \draw[->, robleu, line width=1.1pt] (8.68,0.32) -- (12.1,1.12);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Étape 5 :} on place les points remarquables $(-1\,;\,3)$, $(1\,;\,-1)$ et $(0\,;\,1)$ puisque $f(0) = 1$, puis la courbe suit l'allure dictée par les flèches du tableau, comme le montre la figure~\ref{ch3:fig:courbe}.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=11.5cm, height=7.4cm,
+  xmin=-2.45, xmax=2.45, ymin=-3.8, ymax=5.6,
+  xtick={-2,-1,0,1,2}, ytick={-3,-2,-1,0,1,2,3,4,5},
+  grid=major, grid style={rogris!15},
+  axis lines=middle, axis line style={-Stealth},
+  xlabel={$x$}, ylabel={$y$},
+  xlabel style={anchor=north east}, ylabel style={anchor=north east}]
+\addplot[robleu, very thick, domain=-2.2:2.2, samples=200] {x^3 - 3*x + 1};
+\addplot[only marks, mark=*, mark size=1.9pt, color=roor]
+  coordinates {(-1,3) (1,-1)};
+\draw[dashed, rogris] (axis cs:-1,3) -- (axis cs:-1,0);
+\draw[dashed, rogris] (axis cs:-1,3) -- (axis cs:0,3);
+\draw[dashed, rogris] (axis cs:1,-1) -- (axis cs:1,0);
+\draw[dashed, rogris] (axis cs:1,-1) -- (axis cs:0,-1);
+\node[anchor=south east, font=\small, text=robleu] at (axis cs:2.15,5.0) {$y = f(x)$};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{Courbe de $f(x) = x^{3} - 3x + 1$ : maximum local $3$ en $x = -1$, minimum local $-1$ en $x = 1$, passage par $(0\,;\,1)$.}
+\label{ch3:fig:courbe}
+\end{center}
 \end{exemple}
 
-\section{Inéquations du second degré}
+\section{Optimisation économique du profit}
 
-\begin{propriete}[signe du trinôme du second degré]
-Le signe de $ax^{2} + bx + c$ ($a \neq 0$) se lit sur le discriminant :
+La dérivation trouve dans l'économie de production son champ d'application le plus direct : une unité de production qui fabrique une quantité $q$ supporte un coût, encaisse une recette, et cherche la quantité qui rend le profit le plus grand possible.
+
+\begin{definition}[coût moyen, coût marginal, recette et profit]
+Pour une quantité $q$ produite et vendue :
 \begin{itemize}
-  \item si $\Delta > 0$, le trinôme s'annule en $x_{1} < x_{2}$, a le signe de $a$ à l'extérieur des racines et le signe de $-a$ entre les racines ;
-  \item si $\Delta = 0$, le trinôme garde le signe de $a$ partout, et s'annule uniquement en $x_{0} = -\dfrac{b}{2a}$ ;
-  \item si $\Delta < 0$, le trinôme garde le signe de $a$ partout et ne s'annule jamais.
+\item le \textbf{coût total} $C(q)$ somme les charges fixes (indépendantes de $q$) et les charges variables ; le \textbf{coût moyen} est $\mathrm{CM}(q) = C(q)/q$ ;
+\item le \textbf{coût marginal} est $C'(q)$ : approximativement, le surcoût engendré par la production d'une unité supplémentaire ;
+\item si le prix unitaire est $p$, la \textbf{recette totale} est $R(q) = p \times q$ et la \textbf{recette marginale} est $R'(q)$ ;
+\item le \textbf{profit} est $\pi(q) = R(q) - C(q)$.
 \end{itemize}
-Résoudre une inéquation du second degré, c'est calculer $\Delta$ et les racines éventuelles, dresser le tableau de signes, puis lire les intervalles où l'inégalité est vérifiée.
+\end{definition}
+
+\begin{propriete}[condition de profit maximal]
+Si $R$ et $C$ sont dérivables, alors $\pi' = R' - C'$, et le profit est maximal en un point intérieur $q^{*}$ si et seulement si
+\[
+\pi'(q^{*}) = 0 \quad \Longleftrightarrow \quad R'(q^{*}) = C'(q^{*}), \qquad \text{avec } \pi''(q^{*}) < 0.
+\]
+En langage économique : à l'optimum, la recette rapportée par la dernière unité produite égale exactement son coût de production ; en deçà, produire plus accroît le profit, au-delà, il le diminue.
 \end{propriete}
 
-\begin{exemple}[deux tableaux de signes]
-Résolvons $2x^{2} + 3x - 5 \geqslant 0$. Le discriminant vaut $\Delta = 9 + 40 = 49$, les racines sont $x_{1} = \dfrac{-3 - 7}{4} = -\dfrac{5}{2}$ et $x_{2} = \dfrac{-3 + 7}{4} = 1$. Comme $a = 2 > 0$, le trinôme est positif à l'extérieur des racines :
+\begin{exemple}[profit maximal d'une PME de jus d'anacarde à Kara]
+Une PME installée à Kara transforme la noix d'anacarde en jus de fruits embouteillé, avec une production mensuelle de $q$ cartons. Le coût total mensuel, en FCFA, est $C(q) = 320\,000 + 2\,000\,q + 30\,q^{2}$, où $320\,000$ FCFA sont les charges fixes (location du hangar, amortissement du matériel). Le prix de vente d'un carton dépend du volume écoulé, les grossistes consentant des remises : $p(q) = 12\,000 - 20\,q$ FCFA, d'où la recette $R(q) = 12\,000\,q - 20\,q^{2}$. La fonction profit s'écrit
 \[
-S = \left(-\infty;\ -\frac{5}{2}\right] \cup [1;\ +\infty).
+\pi(q) = 12\,000\,q - 20\,q^{2} - 320\,000 - 2\,000\,q - 30\,q^{2} = 10\,000\,q - 50\,q^{2} - 320\,000,
 \]
-Résolvons $-x^{2} + 3x - 2 < 0$ : $\Delta = 9 - 8 = 1$, racines $1$ et $2$ ; ici $a = -1 < 0$, le trinôme est positif entre les racines et négatif à l'extérieur, donc $S = (-\infty;\ 1) \cup (2;\ +\infty)$.
+et on dérive : $\pi'(q) = 10\,000 - 100\,q$, qui s'annule pour $q = 100$. La dérivée seconde $\pi''(q) = -100$ est strictement négative, donc le profit est maximal en $q^{*} = 100$ cartons, avec
+\[
+\pi(100) = 1\,000\,000 - 500\,000 - 320\,000 = 180\,000 \ \text{FCFA par mois}.
+\]
+Contrôle par les marginales : $R'(100) = 12\,000 - 40 \times 100 = 8\,000$ et $C'(100) = 2\,000 + 60 \times 100 = 8\,000$, bien égales au point optimal. Résolvons enfin $\pi(q) = 0$ : le calcul ramène à $q^{2} - 200\,q + 6\,400 = 0$, dont les solutions sont $q = 40$ et $q = 160$ ; la PME est bénéficiaire entre $40$ et $160$ cartons vendus et perd de l'argent en dehors. Au point optimal, le prix vaut $p(100) = 10\,000$ FCFA le carton, le coût moyen $C(100)/100 = 8\,200$ FCFA, et la marge unitaire $1\,800$ FCFA : au-delà de $100$ cartons, chaque carton supplémentaire coûte plus qu'il ne rapporte, et le réflexe de « produire toujours plus » serait ici une erreur de gestion.
 \end{exemple}
 
 \begin{attention}
-Les valeurs qui annulent le trinôme sont incluses dans les solutions si l'inéquation est large ($\leqslant$ ou $\geqslant$) et exclues si elle est stricte ($<$ ou $>$). Une parenthèse fermée en crochets se lit bien avant de conclure : c'est la frontière de l'ensemble des solutions, et c'est là que se perdent les points en devoir.
+Trois précautions valent de l'or en optimisation. D'abord, ne concluez jamais sur la nature d'un point critique sans avoir étudié le signe de la dérivée ou calculé la dérivée seconde : l'annulation seule ne prouve rien. Ensuite, la quantité qui maximise le profit n'est ni celle qui maximise la recette, ni celle qui minimise le coût moyen : chacune de ces questions a son propre calcul. Enfin, tenez compte du domaine réaliste de la variable $q$ : un optimum théorique hors du domaine (quantité négative, prix devenu négatif) doit être remplacé par la meilleure valeur atteinte sur la frontière.
 \end{attention}
 
 \begin{aretirer}
-Une équation du premier degré $ax + b = 0$ ($a \neq 0$) a une seule solution $x = -b/a$, et une équation produit se sépare en autant d'équations que de facteurs. Pour $ax^{2} + bx + c = 0$ ($a \neq 0$), on calcule $\Delta = b^{2} - 4ac$ : deux solutions distinctes si $\Delta > 0$ (avec factorisation $a(x - x_{1})(x - x_{2})$), une solution double $-b/2a$ si $\Delta = 0$, aucune si $\Delta < 0$. La somme des solutions vaut $-b/a$ et leur produit $c/a$ ; deux nombres de somme $S$ et produit $P$ sont racines de $X^{2} - S X + P = 0$. Une bicarrée se résout avec $X = x^{2}$, en ne gardant que les $X \geqslant 0$ avant de revenir à $x$. Pour les inéquations, diviser par un négatif change le sens ; le signe d'un trinôme se lit sur le tableau construit à partir de ses racines : signe de $a$ à l'extérieur des racines, signe de $-a$ à l'intérieur.
+Une fonction $f$ associe à chaque $x$ de son domaine un unique $f(x)$ ; le domaine exclut les dénominateurs nuls, les racines de quantités négatives et les logarithmes de quantités non strictement positives. Les fonctions affines $mx + p$ ont une droite pour courbe ; les trinômes $ax^{2}+bx+c$ ont une parabole de sommet $x_S = -b/2a$ ; l'exponentielle et le logarithme, réciproques l'un de l'autre, transforment respectivement les sommes en produits et les produits en sommes. Une limite $\frac{0}{0}$ ou $\frac{\infty}{\infty}$ se lève en factorisant (identité remarquable, facteur dominant, expression conjuguée) ; une fonction est continue en $a$ quand $\lim_{x \to a} f(x) = f(a)$. Le nombre dérivé $f'(a)$ est la pente de la tangente $y = f(a) + f'(a)(x-a)$ ; la dérivée se calcule avec le tableau des usuelles et les règles produit, quotient, puissance. $f' > 0$ sur $I$ signifie que $f$ y croît ; un extremum local s'obtient là où $f'$ s'annule \emph{en changeant de signe}. Le profit $\pi(q) = R(q) - C(q)$ est maximal là où la recette marginale égale le coût marginal, avec $\pi'' < 0$.
 \end{aretirer}

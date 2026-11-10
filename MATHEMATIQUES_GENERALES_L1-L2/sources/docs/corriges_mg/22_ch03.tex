@@ -1,46 +1,202 @@
 % ============================================================
-%  Corriges Chapitre 3 : Equations et inequations
+%  Corriges Chapitre 3 : Les fonctions numeriques
 % ============================================================
 \clearpage
-\chapter{Équations et inéquations}
-\chaptermark{Équations et inéquations}
+\chapter{Les fonctions numériques}
+\chaptermark{Les fonctions numériques}
 
 \begin{corrige}{3.1}
-\begin{enumerate}
-\item On développe : $5x - 10 = 3x + 4$, puis on transpose : $5x - 3x = 4 + 10$, soit $2x = 14$ et $x = 7$. Vérification : $5 \times (7 - 2) = 25$ et $3 \times 7 + 4 = 25$.
-\item Un produit est nul si un facteur est nul : $3x - 2 = 0$ donne $x = \dfrac{2}{3}$, et $x + 5 = 0$ donne $x = -5$, donc $S = \left\{-5;\ \dfrac{2}{3}\right\}$.
-\item On transpose puis on factorise : $x^{2} - 4x = 0 \Longleftrightarrow x(x - 4) = 0$, donc $x = 0$ ou $x = 4$, et $S = \{0;\ 4\}$. Diviser par $x$ aurait perdu la solution $0$.
-\end{enumerate}
+\emph{Fonction $f$.} Le numérateur $x + 1$ existe toujours. Le dénominateur $x^{2} - 4$ doit être non nul : $x^{2} - 4 = (x-2)(x+2) = 0$ donne $x = 2$ ou $x = -2$. Ces deux valeurs sont interdites, donc
+\[
+D_f = \R \setminus \{-2\,;\,2\}.
+\]
+
+\emph{Fonction $g$.} La quantité sous la racine doit être positive ou nulle : $5 - 2x \geq 0$, c'est-à-dire $-2x \geq -5$. En divisant par $-2$, l'inégalité se retourne : $x \leq \frac{5}{2} = 2{,}5$. Donc
+\[
+D_g = \,]-\infty\,;\,2{,}5].
+\]
+Contrôle : $g(2{,}5) = \sqrt{0} = 0$ existe, $g(3) = \sqrt{-1}$ n'existe pas, conformément au domaine trouvé.
+
+\emph{Fonction $h$.} Deux conditions se superposent. La racine exige $x - 1 \geq 0$, soit $x \geq 1$ ; le dénominateur exige $x + 3 \neq 0$, soit $x \neq -3$. Il faut les deux en même temps : l'ensemble des $x \geq 1$ intersecté avec l'ensemble des $x \neq -3$. Or $-3$ est inférieur à $1$ et n'appartient donc déjà pas à $[\,1\,;\,+\infty\,[$ : la condition sur le dénominateur est automatiquement satisfaite dès que la condition sur la racine l'est. D'où
+\[
+D_h = \,[\,1\,;\,+\infty\,[.
+\]
+Contrôle : $h(1) = \frac{\sqrt{0}}{4} = 0$ est bien défini, $h(0) = \sqrt{-1}$ n'existe pas.
+
+\emph{Interprétation.} Le piège de cet exercice était de conclure à tort $\,[\,1\,;\,+\infty\,[\;\setminus\;\{-3\}$ en copiant les deux conditions côte à côte : une valeur exclue qui n'appartient de toute façon pas à l'intervalle ne retire rien. Chaque condition s'écrit d'abord séparément, l'assemblage se fait ensuite.
 \end{corrige}
 
 \begin{corrige}{3.2}
-\begin{enumerate}
-\item $2x^{2} - 5x - 3 = 0$ : $\Delta = (-5)^{2} - 4 \times 2 \times (-3) = 25 + 24 = 49 > 0$, donc deux solutions $x_{1} = \dfrac{5 + 7}{4} = 3$ et $x_{2} = \dfrac{5 - 7}{4} = -\dfrac{1}{2}$ ; la factorisation est $2(x - 3)\left(x + \dfrac{1}{2}\right) = (x - 3)(2x + 1)$.
-\item $4x^{2} - 12x + 9 = 0$ : $\Delta = 144 - 144 = 0$, solution double $x_{0} = \dfrac{12}{8} = \dfrac{3}{2}$, et la factorisation $4x^{2} - 12x + 9 = (2x - 3)^{2}$.
-\item $x^{2} + x + 1 = 0$ : $\Delta = 1 - 4 = -3 < 0$, donc aucune solution réelle : $S = \varnothing$.
-\end{enumerate}
+\emph{Fonction $f(x) = x^{3} - x$.} Calculons $f(-x)$ : $(-x)^{3} - (-x) = -x^{3} + x = -(x^{3} - x) = -f(x)$. Le critère d'imparité est satisfait pour tout $x$, donc $f$ est \emph{impaire}. Valeurs de contrôle : $f(2) = 8 - 2 = 6$ et $f(-2) = -8 + 2 = -6 = -f(2)$. La courbe est symétrique par rapport à l'origine du repère.
+
+\emph{Fonction $g(x) = x^{2} + 3$.} Calculons $g(-x)$ : $(-x)^{2} + 3 = x^{2} + 3 = g(x)$. Le critère de parité est satisfait, donc $g$ est \emph{paire}. Valeurs de contrôle : $g(3) = 9 + 3 = 12$ et $g(-3) = 12 = g(3)$. La courbe est symétrique par rapport à l'axe des ordonnées.
+
+\emph{Fonction $h(x) = x^{2} + x$.} Calculons $h(-x)$ : $(-x)^{2} + (-x) = x^{2} - x$, qui n'est ni $h(x)$ ni $-h(x)$. Testons numériquement : $h(1) = 2$ et $h(-1) = 0$. On a $h(-1) = 0 \neq 2 = h(1)$, donc $h$ n'est pas paire, et $h(-1) = 0 \neq -2 = -h(1)$, donc $h$ n'est pas impaire. La fonction $h$ est \emph{ni paire ni impaire} : sa courbe ne possède aucune des deux symétries.
+
+\emph{Interprétation.} La parité se juge d'abord sur le calcul algébrique de $f(-x)$, puis se confirme sur deux valeurs opposées. Elle fournit un contrôle gratuit de tracé : une courbe impaire doit passer par l'origine si $0$ appartient au domaine, et toute paire de points $(x\,;\,f(x))$ et $(-x\,;\,f(-x))$ doit se faire face.
 \end{corrige}
 
 \begin{corrige}{3.3}
-\begin{enumerate}
-\item On lit $S = -\dfrac{b}{a} = \dfrac{6}{5}$ et $P = \dfrac{c}{a} = \dfrac{1}{5}$. Résolution complète : $\Delta = 36 - 20 = 16$, racines $x = \dfrac{6 \pm 4}{10}$, soit $1$ et $\dfrac{1}{5}$ ; la somme vaut $1 + \dfrac{1}{5} = \dfrac{6}{5}$ et le produit $\dfrac{1}{5}$ : les deux lectures coïncident.
-\item Deux nombres de somme $2$ et de produit $-8$ sont les solutions de $X^{2} - 2X - 8 = 0$. Son discriminant vaut $\Delta = 4 + 32 = 36$, d'où $X = \dfrac{2 \pm 6}{2}$ : les solutions sont $4$ et $-2$.
-\item Le produit des solutions vaut $P = \dfrac{3}{2}$ ; connaissant $x_{1} = \dfrac{1}{2}$, l'autre solution vaut $x_{2} = \dfrac{P}{x_{1}} = \dfrac{3/2}{1/2} = 3$, sans calculer le discriminant. Contrôle avec la somme : $S = \dfrac{7}{2}$ et $\dfrac{1}{2} + 3 = \dfrac{7}{2}$.
-\end{enumerate}
+\emph{Question 1.} Un mois sans vente donne $x = 0$, donc $P(0) = m \times 0 + p = p = 4\,000$ : l'ordonnée à l'origine est $p = 4\,000$. Le mois de $50$ ventes donne $P(50) = 50\,m + 4\,000 = 9\,000$, d'où $50\,m = 5\,000$ et
+\[
+m = \frac{5\,000}{50} = 100, \qquad P(x) = 100\,x + 4\,000.
+\]
+
+\emph{Question 2.} La pente $m = 100$ est positive : la fonction est strictement croissante, la prime augmente avec le nombre de ventes. En langage de gestion, $p = 4\,000$ FCFA est la prime fixe versée chaque mois quel que soit le travail, et $m = 100$ FCFA est la prime par vente : chaque vente conclue ajoute exactement $100$ FCFA à la prime du mois.
+
+\emph{Question 3.} Pour $x = 80$ : $P(80) = 100 \times 80 + 4\,000 = 12\,000$. La prime s'élève à $12\,000$ FCFA.
+
+\emph{Question 4.} On cherche $x$ tel que $P(x) = 10\,000$ :
+\[
+100\,x + 4\,000 = 10\,000, \qquad 100\,x = 6\,000, \qquad x = 60.
+\]
+Il faut conclure $60$ ventes. Vérification : $P(60) = 6\,000 + 4\,000 = 10\,000$.
+
+\emph{Interprétation.} La fonction affine résume toute la grille de prime en deux nombres : un socle garanti de $4\,000$ FCFA et un pas de $100$ FCFA par vente. L'objectif de $10\,000$ FCFA se décompose naturellement en $6\,000$ FCFA de prime variable, soit $60$ ventes.
 \end{corrige}
 
 \begin{corrige}{3.4}
-\begin{enumerate}
-\item Avec $X = x^{2}$ : $X^{2} - 5X + 4 = 0$, de discriminant $\Delta = 25 - 16 = 9$ ; les solutions en $X$ sont $X = \dfrac{5 \pm 3}{2}$, soit $1$ et $4$. Retour à $x$ : $x^{2} = 1$ donne $x = \pm 1$ et $x^{2} = 4$ donne $x = \pm 2$, donc $S = \{-2;\ -1;\ 1;\ 2\}$.
-\item Avec $X = x^{2}$ : $X^{2} + X - 2 = 0$, de discriminant $\Delta = 1 + 8 = 9$ ; les solutions en $X$ sont $1$ et $-2$. La valeur $X = 1$ donne $x = \pm 1$ ; la valeur $X = -2$ est écartée, car $x^{2} = -2$ n'a aucune solution réelle. Donc $S = \{-1;\ 1\}$.
-\end{enumerate}
+\emph{Question 1.} L'exponentielle et le logarithme annulent mutuellement leurs effets : $\mathrm{e}^{x} = 12$ équivaut à
+\[
+x = \ln 12 \approx 2{,}4849 \qquad \text{à } 10^{-4} \text{ près}.
+\]
+Contrôle : $\mathrm{e}^{2{,}4849} \approx 11{,}9999$, l'écart venant précisément de l'arrondi de $\ln 12$ au dix-millième.
+
+\emph{Question 2.} De même, $\ln x = 3$ équivaut à $x = \mathrm{e}^{3}$ :
+\[
+x = \mathrm{e}^{3} \approx 20{,}0855 \qquad \text{à } 10^{-4} \text{ près}.
+\]
+Contrôle : $\ln 20{,}0855 \approx 3{,}0000$.
+
+\emph{Question 3.} Utilisons la propriété $(\mathrm{e}^{a})^{n} = \mathrm{e}^{a n}$ avec $a = \ln 3$ et $n = 2$ :
+\[
+\mathrm{e}^{2\ln 3} = \mathrm{e}^{\ln 3 + \ln 3} = \mathrm{e}^{\ln 3} \times \mathrm{e}^{\ln 3} = 3 \times 3 = 9.
+\]
+La clé est la relation $\mathrm{e}^{\ln 3} = 3$, conséquence directe de la définition du logarithme comme réciproque de l'exponentielle.
+
+\emph{Question 4.} La propriété $\ln(ab) = \ln a + \ln b$ avec $a = 8$ et $b = 2$ donne
+\[
+\ln 8 + \ln 2 = \ln(8 \times 2) = \ln 16.
+\]
+Comme $16 = 2^{4}$, la propriété $\ln(a^{n}) = n\ln a$ donne $\ln 16 = 4\ln 2$. Avec $\ln 2 \approx 0{,}6931$ :
+\[
+\ln 16 = 4 \ln 2 \approx 2{,}7726 \qquad \text{à } 10^{-4} \text{ près}.
+\]
+Contrôle : $\mathrm{e}^{2{,}7726} \approx 16{,}0002$, cohérent.
+
+\emph{Interprétation.} Ces quatre questions sont les mouvements de base du calcul logarithmique : passer d'une équation en l'exposant à un logarithme, passer d'une équation en logarithme à une exponentielle, regrouper des produits en sommes de logarithmes. Ce sont exactement les gestes qui résoudront, plus tard, les équations de durées de placement ou de temps de doublement.
 \end{corrige}
 
 \begin{corrige}{3.5}
-\begin{enumerate}
-\item $3x - 7 \leqslant 0 \Longleftrightarrow 3x \leqslant 7 \Longleftrightarrow x \leqslant \dfrac{7}{3}$, donc $S = \left(-\infty;\ \dfrac{7}{3}\right]$.
-\item $-4x + 10 > 0 \Longleftrightarrow -4x > -10$ ; en divisant par $-4$ on change le sens : $x < \dfrac{10}{4} = \dfrac{5}{2}$, donc $S = \left(-\infty;\ \dfrac{5}{2}\right)$.
-\item $x^{2} - 4x - 5 \leqslant 0$ : $\Delta = 16 + 20 = 36$, racines $x_{1} = \dfrac{4 - 6}{2} = -1$ et $x_{2} = \dfrac{4 + 6}{2} = 5$ ; comme $a = 1 > 0$, le trinôme est négatif entre les racines, donc $S = [-1;\ 5]$.
-\item $-2x^{2} + 8x - 6 > 0$ : on multiplie par $-1$ (sens inversé) : $2x^{2} - 8x + 6 < 0$, soit $x^{2} - 4x + 3 < 0$. Le discriminant vaut $\Delta = 16 - 12 = 4$, racines $1$ et $3$ ; le trinôme est strictement négatif entre les racines, donc $S = (1;\ 3)$.
-\end{enumerate}
+\emph{Première limite.} En substituant $x = 5$ : $\frac{25 - 25}{5 - 5} = \frac{0}{0}$, forme indéterminée. On factorise par l'identité $a^{2} - b^{2}$ :
+\[
+\frac{x^{2} - 25}{x - 5} = \frac{(x-5)(x+5)}{x-5} = x + 5 \qquad \text{pour } x \neq 5,
+\]
+d'où $\displaystyle\lim_{x \to 5}\,\frac{x^{2} - 25}{x - 5} = \lim_{x \to 5}\,(x + 5) = 10$. Contrôle numérique : pour $x = 4{,}9999$, le quotient vaut environ $9{,}9999$.
+
+\emph{Deuxième limite.} En substituant $x = +\infty$ : $\frac{\infty}{\infty}$, forme indéterminée. On met $x^{2}$ en facteur en haut et en bas :
+\[
+\frac{5x^{2} + 3x}{x^{2} - 1} = \frac{x^{2}\left(5 + \frac{3}{x}\right)}{x^{2}\left(1 - \frac{1}{x^{2}}\right)} = \frac{5 + \frac{3}{x}}{1 - \frac{1}{x^{2}}} \xrightarrow[x \to +\infty]{} \frac{5}{1} = 5,
+\]
+car les termes $\frac{3}{x}$ et $\frac{1}{x^{2}}$ tendent vers $0$. Contrôle numérique : pour $x = 100\,000$, le quotient vaut environ $5{,}00003$.
+
+\emph{Troisième limite.} En substituant $x = 1$ : le numérateur vaut $1 + 2 - 3 = 0$ et le dénominateur $0$, donc forme $\frac{0}{0}$. On factorise le trinôme : $x^{2} + 2x - 3 = (x+3)(x-1)$. Alors
+\[
+\frac{x^{2} + 2x - 3}{x - 1} = \frac{(x-1)(x+3)}{x-1} = x + 3 \qquad \text{pour } x \neq 1,
+\]
+d'où $\displaystyle\lim_{x \to 1}\,\frac{x^{2} + 2x - 3}{x - 1} = 4$. Contrôle numérique : pour $x = 1{,}0001$, le quotient vaut environ $4{,}0001$.
+
+\emph{Quatrième limite.} En substituant $x = 0$ : le numérateur vaut $\sqrt{4} - 2 = 0$ et le dénominateur $0$, donc forme $\frac{0}{0}$. On multiplie numérateur et dénominateur par l'expression conjuguée $\sqrt{x+4} + 2$ :
+\[
+\frac{\sqrt{x+4} - 2}{x} \times \frac{\sqrt{x+4} + 2}{\sqrt{x+4} + 2} = \frac{(x+4) - 4}{x\,(\sqrt{x+4} + 2)} = \frac{x}{x\,(\sqrt{x+4} + 2)} = \frac{1}{\sqrt{x+4} + 2} \quad (x \neq 0).
+\]
+Cette expression n'a plus rien d'indéterminé, et la fonction $x \mapsto \sqrt{x+4}$ est continue en $0$ :
+\[
+\lim_{x \to 0}\,\frac{\sqrt{x+4} - 2}{x} = \frac{1}{\sqrt{4} + 2} = \frac{1}{4} = 0{,}25.
+\]
+Contrôle numérique : pour $x = 0{,}0001$, le quotient vaut environ $0{,}249998$.
+
+\emph{Interprétation.} Les quatre limites suivent le même scénario : la substitution directe échoue, puis une transformation algébrique (factorisation, facteur dominant ou expression conjuguée) élimine la cause de l'indétermination, et la limite se lit sur l'expression simplifiée.
+\end{corrige}
+
+\begin{corrige}{3.6}
+\emph{Question 1.} La dérivée d'un polynôme se prend terme à terme : $\left(5x^{3}\right)' = 15x^{2}$, $(-2x)' = -2$ et $7' = 0$, d'où $f'(x) = 15x^{2} - 2$ sur $\R$. On écrit $g(x) = 3\,x^{1/2}$, d'où $g'(x) = \dfrac{3}{2\sqrt{x}}$, définie pour $x > 0$. On écrit $h(x) = 4\,x^{-2}$, d'où $h'(x) = -8\,x^{-3} = -\dfrac{8}{x^{3}}$, pour $x \neq 0$. Chaque terme de $k$ se dérive d'après le tableau des usuelles : $k'(x) = 2\,\mathrm{e}^{x} + \dfrac{3}{x}$, pour $x > 0$. Enfin, forme $u^{n}$ avec $u(x) = 2x + 1$ et $u'(x) = 2$ : $m'(x) = 3 \times 2 \times (2x+1)^{2} = 6\,(2x + 1)^{2}$, sur $\R$.
+
+\emph{Question 2.} $f(1) = 1^{2} - 4 \times 1 + 3 = 0$ et $f'(x) = 2x - 4$, donc $f'(1) = -2$. La formule de la tangente en $a = 1$ donne :
+\[
+y = f(1) + f'(1)(x - 1) = 0 - 2(x - 1) = -2x + 2.
+\]
+La tangente est la droite $y = -2x + 2$ ; elle passe par le point de contact $(1\,;\,0)$, qui est aussi une intersection de la courbe avec l'axe des abscisses.
+
+\emph{Question 3.} La tangente est horizontale là où $f'(a) = 0$, c'est-à-dire $2a - 4 = 0$, soit $a = 2$. On a $f(2) = 4 - 8 + 3 = -1$, donc le point est $(2\,;\,-1)$. La dérivée seconde vaut $f''(x) = 2 > 0$ : la courbe tourne sa concavité vers le haut et le point est un \emph{minimum}, c'est le sommet de la parabole.
+\end{corrige}
+
+\begin{corrige}{3.7}
+\emph{Question 1.} On dérive terme à terme : $g'(x) = 3x^{2} - 12x + 9$. Les racines du trinôme $3x^{2} - 12x + 9$ valent, après division par $3$, celles de $x^{2} - 4x + 3$ : le discriminant vaut $\Delta = 16 - 12 = 4$, d'où $x = \frac{4 \pm 2}{2}$, c'est-à-dire $x = 1$ et $x = 3$. Donc $g'(x) = 3(x-1)(x-3)$.
+
+\emph{Question 2.} Le facteur $3$ est positif ; $(x-1)(x-3)$ est positif pour $x < 1$, négatif sur $]1\,;\,3[$ et positif pour $x > 3$. Le polynôme $g$ admet pour limite $-\infty$ en $-\infty$ et $+\infty$ en $+\infty$ (terme $x^{3}$ dominant). Les valeurs critiques valent :
+\[
+g(1) = 1 - 6 + 9 + 1 = 5, \qquad g(3) = 27 - 54 + 27 + 1 = 1.
+\]
+
+\begin{center}
+\begin{tikzpicture}[line width=0.7pt]
+  \draw (0,0) rectangle (12.6,2.5);
+  \draw (0,1.9) -- (12.6,1.9);
+  \draw (0,1.3) -- (12.6,1.3);
+  \draw (2.2,0) -- (2.2,2.5);
+  \draw (5.34,0) -- (5.34,1.9);
+  \draw (8.44,0) -- (8.44,1.9);
+  \node at (1.1,2.2) {$x$};
+  \node at (3.75,2.2) {$-\infty$};
+  \node at (5.34,2.2) {$1$};
+  \node at (8.44,2.2) {$3$};
+  \node at (10.6,2.2) {$+\infty$};
+  \node at (1.1,1.6) {$g'(x)$};
+  \node at (3.75,1.6) {$+$};
+  \node[fill=white, inner sep=1.2pt] at (5.34,1.6) {$0$};
+  \node at (6.9,1.6) {$-$};
+  \node[fill=white, inner sep=1.2pt] at (8.44,1.6) {$0$};
+  \node at (10.6,1.6) {$+$};
+  \node at (1.1,0.62) {$g(x)$};
+  \draw[->, robleu, line width=1.1pt] (2.5,0.30) -- (5.05,1.10);
+  \node[anchor=west, font=\small] at (5.44,1.06) {$5$};
+  \draw[->, robleu, line width=1.1pt] (5.60,0.92) -- (8.16,0.36);
+  \node[anchor=west, font=\small] at (8.54,0.30) {$1$};
+  \draw[->, robleu, line width=1.1pt] (8.68,0.32) -- (12.1,1.12);
+\end{tikzpicture}
+\end{center}
+
+\emph{Question 3.} En $x = 1$, $g'$ passe de $+$ à $-$ : maximum local $g(1) = 5$. En $x = 3$, $g'$ passe de $-$ à $+$ : minimum local $g(3) = 1$. Contrôle par la dérivée seconde : $g''(x) = 6x - 12$, donc $g''(1) = -6 < 0$ (maximum) et $g''(3) = 6 > 0$ (minimum).
+
+\emph{Question 4.} L'équation $g(x) = 5$ s'écrit $x^{3} - 6x^{2} + 9x - 4 = 0$. On vérifie la factorisation en développant :
+\[
+(x-1)^{2}(x-4) = (x^{2} - 2x + 1)(x - 4) = x^{3} - 4x^{2} - 2x^{2} + 8x + x - 4 = x^{3} - 6x^{2} + 9x - 4.
+\]
+Donc $g(x) = 5$ équivaut à $(x-1)^{2}(x-4) = 0$, d'où les solutions $x = 1$ (racine double) et $x = 4$. Lecture graphique : la droite horizontale $y = 5$ touche la courbe en son maximum local ($x = 1$, tangente horizontale) et la recoupe en $x = 4$ (on a bien $g(4) = 64 - 96 + 36 + 1 = 5$).
+\end{corrige}
+
+\begin{corrige}{3.8}
+\emph{Question 1.} La recette est le prix multiplié par la quantité :
+\[
+R(q) = p(q) \times q = (1\,800 - 2\,q)\,q = 1\,800\,q - 2\,q^{2},
+\]
+et le profit s'écrit :
+\[
+\pi(q) = R(q) - C(q) = 1\,800\,q - 2\,q^{2} - 10\,000 - 200\,q - 6\,q^{2} = 1\,600\,q - 8\,q^{2} - 10\,000.
+\]
+
+\emph{Question 2.} On dérive : $\pi'(q) = 1\,600 - 16\,q$, qui s'annule en $q^{*} = 100$. La dérivée seconde vaut $\pi''(q) = -16 < 0$ pour tout $q$ : le profit est donc maximal en $q^{*} = 100$ uniformes par mois, dans le domaine admissible $0 \leq q \leq 300$.
+
+\emph{Question 3.} Le profit maximal vaut :
+\[
+\pi(100) = 1\,600 \times 100 - 8 \times 100^{2} - 10\,000 = 160\,000 - 80\,000 - 10\,000 = 70\,000 \ \text{FCFA}.
+\]
+Contrôle par les marginales : $R'(q) = 1\,800 - 4\,q$ donc $R'(100) = 1\,400$, et $C'(q) = 200 + 12\,q$ donc $C'(100) = 1\,400$ : la condition $R'(q^{*}) = C'(q^{*})$ est vérifiée.
+
+\emph{Question 4.} À l'optimum, le prix de vente unitaire vaut $p(100) = 1\,800 - 200 = 1\,600$ FCFA, et le coût moyen vaut
+\[
+\mathrm{CM}(100) = \frac{C(100)}{100} = \frac{10\,000 + 20\,000 + 60\,000}{100} = 900 \ \text{FCFA}.
+\]
+La marge réalisée est donc de $1\,600 - 900 = 700$ FCFA par uniforme, soit une marge d'environ $44\,\%$ du prix de vente. La résolution de $\pi(q) = 0$ montrerait d'ailleurs que l'atelier n'est bénéficiaire qu'à partir d'environ $6{,}5$ uniformes, soit en pratique $7$ uniformes par mois.
 \end{corrige}

@@ -1,50 +1,78 @@
 % ============================================================
-%  TD Chapitre 3 : Equations et inequations
+%  TD Chapitre 3 : Les fonctions numeriques
 % ============================================================
 \clearpage
-\chapter{Équations et inéquations}
-\chaptermark{Équations et inéquations}
+\chapter{Les fonctions numériques}
+\chaptermark{Les fonctions numériques}
 
-\begin{exercice}[équations du premier degré et équations produit]
-Résoudre dans $\R$ les équations suivantes :
+\begin{exercice}[domaines de définition]
+Déterminer le domaine de définition de chacune des trois fonctions suivantes, en détaillant chaque condition :
+\[
+f(x) = \frac{x+1}{x^{2} - 4}, \qquad g(x) = \sqrt{5 - 2x}, \qquad h(x) = \frac{\sqrt{x-1}}{x + 3}.
+\]
+Pour la troisième fonction, on justifiera soigneusement la façon dont les deux conditions se combinent.
+\end{exercice}
+
+\begin{exercice}[parité et sens de variation]
+Pour chacune des fonctions suivantes, définies sur $\R$, dire si elle est paire, impaire, ou ni l'une ni l'autre, en vérifiant le critère par le calcul de $f(-x)$ puis par des valeurs numériques :
+\[
+f(x) = x^{3} - x, \qquad g(x) = x^{2} + 3, \qquad h(x) = x^{2} + x.
+\]
+Préciser, pour chaque cas concluant, la symétrie correspondante de la courbe.
+\end{exercice}
+
+\begin{exercice}[la prime de la représentante]
+Une représentante de commerce à Lomé reçoit chaque mois une prime $P(x) = m\,x + p$ exprimée en FCFA, où $x$ est le nombre de ventes conclues dans le mois. Sa fiche de paie indique une prime de $4\,000$ FCFA pour un mois sans vente, et une prime de $9\,000$ FCFA pour un mois de $50$ ventes.
 \begin{enumerate}
-\item $5(x - 2) = 3x + 4$ ;
-\item $(3x - 2)(x + 5) = 0$ ;
-\item $x^{2} = 4x$, résolue en factorisant (et non en divisant par $x$).
+\item Calculer la pente $m$ et l'ordonnée à l'origine $p$, puis écrire l'expression de $P(x)$.
+\item Quel est le sens de variation de la prime ? Interpréter $m$ et $p$ en langage de gestion.
+\item Calculer la prime pour un mois de $80$ ventes.
+\item Combien de ventes faut-il conclure pour que la prime atteigne $10\,000$ FCFA ?
 \end{enumerate}
 \end{exercice}
 
-\begin{exercice}[équations du second degré : le discriminant]
-Résoudre dans $\R$ les équations suivantes en calculant le discriminant, puis factoriser quand c'est possible :
+\begin{exercice}[exponentielle et logarithme]
 \begin{enumerate}
-\item $2x^{2} - 5x - 3 = 0$ ;
-\item $4x^{2} - 12x + 9 = 0$ ;
-\item $x^{2} + x + 1 = 0$.
+\item Résoudre l'équation $\mathrm{e}^{x} = 12$, en donnant la valeur exacte puis la valeur approchée à $10^{-4}$ près.
+\item Résoudre l'équation $\ln x = 3$, en donnant la valeur exacte puis la valeur approchée à $10^{-4}$ près.
+\item Simplifier l'expression $\mathrm{e}^{2\ln 3}$ en justifiant chaque étape.
+\item Écrire $\ln 8 + \ln 2$ comme le logarithme d'un seul nombre, puis comme une puissance de $2$ ; en déduire sa valeur exacte et sa valeur approchée à $10^{-4}$ près.
 \end{enumerate}
 \end{exercice}
 
-\begin{exercice}[somme, produit et formation d'une équation]
+\begin{exercice}[calculs de limites]
+Calculer les limites suivantes, en identifiant d'abord la forme obtenue par substitution :
+\[
+\lim_{x \to 5}\,\frac{x^{2} - 25}{x - 5}, \qquad \lim_{x \to +\infty}\,\frac{5x^{2} + 3x}{x^{2} - 1}, \qquad \lim_{x \to 1}\,\frac{x^{2} + 2x - 3}{x - 1}, \qquad \lim_{x \to 0}\,\frac{\sqrt{x+4} - 2}{x}.
+\]
+Pour la dernière, on multipliera le numérateur et le dénominateur par l'expression conjuguée $\sqrt{x+4} + 2$. Contrôler chaque résultat par une valeur numérique proche du point limite.
+\end{exercice}
+
+\begin{exercice}[dérivées et tangente]
 \begin{enumerate}
-\item calculer, si possible, la somme $S$ et le produit $P$ des solutions de $5x^{2} - 6x + 1 = 0$, puis vérifier en résolvant complètement l'équation ;
-\item former l'équation du second degré dont les solutions ont pour somme $S = 2$ et pour produit $P = -8$, puis la résoudre ;
-\item l'équation $2x^{2} - 7x + 3 = 0$ admet $\dfrac{1}{2}$ comme solution : retrouver l'autre solution avec le produit, sans calculer le discriminant.
+\item Calculer la fonction dérivée de chacune des fonctions suivantes, en précisant le domaine de validité :
+  $f(x) = 5x^{3} - 2x + 7$ ; \quad $g(x) = 3\sqrt{x}$ ; \quad $h(x) = \dfrac{4}{x^{2}}$ ; \quad $k(x) = 2\,\mathrm{e}^{x} + 3\ln x$ ; \quad $m(x) = (2x + 1)^{3}$.
+\item Soit $f(x) = x^{2} - 4x + 3$. Calculer $f(1)$ et $f'(1)$, puis donner l'équation réduite de la tangente à la courbe au point d'abscisse $1$.
+\item Déterminer le point de la courbe où la tangente est horizontale, et préciser la nature (maximum ou minimum) de ce point avec la dérivée seconde.
 \end{enumerate}
 \end{exercice}
 
-\begin{exercice}[équations bicarrées]
-Résoudre dans $\R$ les équations suivantes avec le changement de variable $X = x^{2}$ :
+\begin{exercice}[étude complète d'un polynôme du troisième degré]
+Soit $g(x) = x^{3} - 6x^{2} + 9x + 1$.
 \begin{enumerate}
-\item $x^{4} - 5x^{2} + 4 = 0$ ;
-\item $x^{4} + x^{2} - 2 = 0$.
+\item Vérifier que $g'(x) = 3(x - 1)(x - 3)$.
+\item Dresser le tableau de signes de $g'$ puis le tableau de variation complet de $g$ (limites aux bornes comprises).
+\item Donner les extremums locaux de $g$ et les contrôler avec la dérivée seconde.
+\item Résoudre l'équation $g(x) = 5$ en factorisant $g(x) - 5$, puis interpréter le résultat à l'aide du tableau de variation.
 \end{enumerate}
 \end{exercice}
 
-\begin{exercice}[inéquations du premier et du second degré]
-Résoudre dans $\R$ les inéquations suivantes, en donnant l'ensemble des solutions sous forme d'intervalle ou de réunion d'intervalles :
+\begin{exercice}[profit maximal d'un atelier de couture]
+Un atelier de couture de Lomé produit des uniformes scolaires. Le prix de vente unitaire dépend du volume mensuel $q$ d'uniformes vendus, en raison des remises consenties aux grossistes : $p(q) = 1\,800 - 2\,q$ FCFA, avec $0 \leq q \leq 300$. Le coût total mensuel, en FCFA, est $C(q) = 10\,000 + 200\,q + 6\,q^{2}$.
 \begin{enumerate}
-\item $3x - 7 \leqslant 0$ ;
-\item $-4x + 10 > 0$ ;
-\item $x^{2} - 4x - 5 \leqslant 0$ ;
-\item $-2x^{2} + 8x - 6 > 0$.
+\item Exprimer la recette totale $R(q)$, puis le profit $\pi(q)$ sous forme d'un polynôme du second degré.
+\item Calculer $\pi'(q)$ et déterminer la quantité $q^{*}$ qui maximise le profit ; justifier qu'il s'agit d'un maximum.
+\item Calculer le profit maximal et vérifier la condition $R'(q^{*}) = C'(q^{*})$.
+\item Calculer le prix de vente unitaire et le coût moyen à l'optimum, puis commenter la marge réalisée par uniforme.
 \end{enumerate}
 \end{exercice}
