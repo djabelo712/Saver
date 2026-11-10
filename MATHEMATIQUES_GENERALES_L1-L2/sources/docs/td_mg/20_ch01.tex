@@ -1,0 +1,54 @@
+% ============================================================
+%  TD Chapitre 1 : Les ensembles
+% ============================================================
+\chapter{Les ensembles}
+\chaptermark{Les ensembles}
+
+\begin{exercice}[écrire et compter des ensembles]
+Soit $A = \{x \in \N \mid 3 \leqslant x \leqslant 12\}$ et $B$ l'ensemble des lettres distinctes du mot « gestion ».
+\begin{enumerate}
+\item écrire $A$ en extension et donner $|A|$ ;
+\item écrire $B$ en extension et donner $|B|$ ;
+\item dire si chacune des assertions suivantes est vraie ou fausse : $5 \in A$ ; $13 \notin A$ ; $4 \in A$ ;
+\item calculer $|A \times B|$ et donner un couple $(x, y)$ avec $x \in A$ et $y \in B$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[opérations de base et lois de De Morgan]
+Dans l'univers $U = \{1, 2, 3, 4, 5, 6, 7, 8, 9\}$, on prend $C = \{1, 2, 3, 4\}$ et $D = \{3, 4, 5, 6\}$.
+\begin{enumerate}
+\item calculer $C \cup D$, $C \cap D$, $\overline{C}$ et $\overline{D}$ ;
+\item en déduire $\overline{C} \cap \overline{D}$ puis $\overline{C \cup D}$, et comparer les deux résultats ;
+\item vérifier de même la seconde loi de De Morgan : calculer $\overline{C \cap D}$ et $\overline{C} \cup \overline{D}$, puis conclure.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[diagramme de Venn : deux modules de formation]
+Dans une promotion de $84$ étudiants, $45$ suivent le module de bureautique (ensemble $B$), $38$ suivent le module de comptabilité (ensemble $C$) et $17$ suivent les deux modules.
+\begin{enumerate}
+\item reproduire le diagramme de Venn et placer les effectifs dans chaque région (commencer par l'intersection) ;
+\item combien d'étudiants suivent au moins un des deux modules ?
+\item combien d'étudiants ne suivent aucun des deux modules ?
+\item retrouver le résultat de la question 2 avec la formule $|B \cup C| = |B| + |C| - |B \cap C|$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[trois sports au sein d'une promotion]
+On interroge $60$ étudiants d'une classe sur les sports qu'ils pratiquent : $31$ pratiquent le football (ensemble $F$), $24$ le basket-ball (ensemble $K$), $19$ le handball (ensemble $H$). De plus, $11$ pratiquent football et basket, $9$ pratiquent football et handball, $8$ pratiquent basket et handball, et $5$ pratiquent les trois.
+\begin{enumerate}
+\item calculer l'effectif de chaque région du diagramme de Venn à trois ensembles, en commençant par le noyau $F \cap K \cap H$ ;
+\item combien d'étudiants pratiquent au moins un des trois sports ?
+\item combien n'en pratiquent aucun ?
+\item vérifier que la somme des huit régions vaut bien $60$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[simplifier des expressions d'ensembles]
+Simplifier les deux expressions suivantes en citant chaque loi utilisée, puis contrôler le résultat sur des ensembles concrets :
+\[
+E = (A \cap \overline{B}) \cup (\overline{A} \cap B)
+\qquad ; \qquad
+F = (A \cap B) \cup (\overline{A} \cap \overline{B}) .
+\]
+Pour le contrôle, on prendra $A = \{1, 3\}$ et $B = \{2, 3\}$ dans l'univers $U = \{1, 2, 3, 4\}$, et l'on calculera les deux membres de chaque égalité.
+\end{exercice}

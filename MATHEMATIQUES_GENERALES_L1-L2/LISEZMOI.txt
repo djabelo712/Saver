@@ -1,0 +1,76 @@
+MATHÉMATIQUES GÉNÉRALES — LICENCE 1 & LICENCE 2 (20 heures)
+Institut Supérieur CPTEC (Avedji, Lomé, Togo)
+Agréé par arrêté N° 00.50/MESRS/2024 — Année académique 2026-2027
+
+CONTENU DE L'ARCHIVE
+====================
+1. Cours_MG_L1-L2_2026-2027.pdf — Support de cours (44 pages, 20 heures) :
+   page de garde, page à l'effigie de CPTEC et de l'enseignant, objectifs du
+   module et table des matières (le chapitre 1 débute en page 4) :
+   chapitre 1 : les ensembles,
+   chapitre 2 : logique et algèbre de Boole,
+   chapitre 3 : équations et inéquations,
+   chapitre 4 : systèmes linéaires et programmation linéaire,
+   chapitre 5 : mesures des angles et trigonométrie,
+   chapitre 6 : suites numériques (intérêts simples et composés).
+   Chaque chapitre : introduction « En quelques lignes », sections numérotées,
+   définitions, méthodes et exemples entièrement résolus (un par section),
+   fermeture « Ce qu'il faut retenir ».
+
+2. TD_MG_L1-L2_2026-2027.pdf — Énoncés des travaux dirigés (10 pages),
+   chapitre par chapitre (27 exercices) : aucun avant-propos ni table des
+   matières, le document commence directement par le chapitre 1. Chaque
+   chapitre débute sur une nouvelle page.
+
+3. Corriges_TD_MG_L1-L2_2026-2027.pdf — Corrigés détaillés (13 pages),
+   même structure : chapitre par chapitre, chacun sur une nouvelle page,
+   chaque corrigé reprenant la numérotation « chapitre.exercice » du
+   fascicule d'énoncés (ex. 1.1, 4.5).
+
+4. sources/ — Codes sources LaTeX complets (compilables) :
+   - assemble.py           : assembleur (parts + docs -> build/<doc>.tex) ;
+   - parts/00_preamble.tex : préambule commun (couleurs, boîtes, page de garde) ;
+   - docs/cours_mg/        : les six chapitres du cours + pages liminaires ;
+   - docs/td_mg/           : les énoncés de TD ;
+   - docs/corriges_mg/     : les corrigés de TD ;
+   - scripts/verify_mg.py  : vérification numérique exhaustive des énoncés,
+                             du cours et des corrigés (145 contrôles).
+
+ALIGNEMENT AVEC LE MODULE MAI (Mathématiques Appliquées à l'Informatique)
+=========================================================================
+Les mêmes étudiants suivent l'un des deux modules. La numérotation des
+chapitres a été alignée pour que les séances communes coïncident :
+  - chapitre 1 (Les ensembles) : identique au chapitre 1 de MAI ;
+  - chapitre 2 (Logique et algèbre de Boole) : identique au chapitre 2 de MAI ;
+  - chapitre 5 (Mesures des angles et trigonométrie) : le socle (degrés,
+    radians, conversion, triangle rectangle) est commun avec le chapitre 5
+    de MAI (Mesures des angles) ; la trigonométrie orientée (cercle
+    trigonométrique, formules, équations) prolonge ce socle pour MG ;
+  - chapitres 3, 4 et 6 : spécifiques à Mathématiques Générales (équations,
+    systèmes et programmation linéaire, suites) et correspondant aux
+    chapitres 3 et 4 de MAI (numération, mémoire) en volume horaire.
+
+COMPILATION
+===========
+Prérequis : Python 3 et Tectonic (https://tectonic-typesetting.github.io).
+  python3 assemble.py            # assemble les trois documents dans build/
+  tectonic -X compile build/cours_mg.tex
+  tectonic -X compile build/td_mg.tex
+  tectonic -X compile build/corriges_mg.tex
+Toute valeur numérique du cours, des énoncés et des corrigés est vérifiée
+par le script scripts/verify_mg.py (python3 scripts/verify_mg.py).
+
+ENSEIGNANT
+==========
+Ounimborbitibou DJABON
+Titulaire de deux Masters : Sciences Mathématiques (AIMS Ghana) et
+Physique Théorique (Université de Lomé)
+Chercheur en Information et Communication Quantique
++228 92 39 97 21 — djabon@aims.edu.gh — github.com/djabelo712
+
+CONTACT DE L'INSTITUT
+=====================
+Institut Supérieur CPTEC — CPTEC Business School
+Avedji, Lomé (Togo) — Rue en face de l'Église Évangélique Presbytérienne
+du Togo (EEPT), au niveau de SUNU Assurance
++228 70 78 78 18 — 96 51 05 50 — cptec228togo@gmail.com

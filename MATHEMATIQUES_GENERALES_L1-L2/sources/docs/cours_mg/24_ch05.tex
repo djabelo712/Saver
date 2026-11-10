@@ -1,0 +1,250 @@
+% ============================================================
+%  Chapitre 5 : Mesures des angles et trigonometrie
+% ============================================================
+\chapter{Mesures des angles et trigonométrie}
+\chaptermark{Mesures des angles et trigonométrie}
+
+\begin{quelqueslignes}
+Les angles mesurent les rotations, et les rotations sont partout : une toiture à incliner, un panneau solaire à orienter, un graphique à ajuster, une distance inaccessible à estimer depuis un point d'observation. Ce chapitre fixe d'abord les deux unités de mesure (le degré et le radian) et leur conversion, puis reprend le triangle rectangle avec le théorème de Pythagore et les rapports trigonométriques. La suite développe la trigonométrie proprement dite : le cercle trigonométrique qui donne à $\cos$ et $\sin$ un sens pour tout angle orienté, la parité et la périodicité, les formules d'addition et de duplication, et les équations trigonométriques simples dont les solutions se lisent sur le cercle.
+\end{quelqueslignes}
+
+\section{Mesure des angles}
+
+\begin{definition}[angle, degré, radian]
+Un \emph{angle} est la figure formée par deux demi-droites de même origine, appelée sommet. Il se mesure en \emph{degrés} : un tour complet vaut $360\dgr{}$, un angle droit $90\dgr{}$ et un angle plat $180\dgr{}$. Le \emph{radian} est la seconde unité, celle des calculs : un angle de $1$ radian correspond à un arc de cercle dont la longueur égale le rayon, et un tour complet vaut $2\pi$ radians.
+\end{definition}
+
+\begin{propriete}[conversion degrés-radians]
+Puisque $180\dgr{} = \pi$ rad, la conversion se fait au prorata :
+\[
+\alpha\ \text{rad} = \alpha \times \frac{180}{\pi}\ {}^\circ
+\qquad\text{et}\qquad
+\beta\ {}^\circ = \beta \times \frac{\pi}{180}\ \text{rad} .
+\]
+\end{propriete}
+
+\begin{center}
+\small
+\begin{tabular}{C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}}
+\toprule
+\rowcolor{robleuf}\textbf{Degrés} & $0\dgr{}$ & $30\dgr{}$ & $45\dgr{}$ & $60\dgr{}$ & $90\dgr{}$ & $180\dgr{}$ & $360\dgr{}$\\
+\midrule
+\textbf{Radians} & $0$ & $\dfrac{\pi}{6}$ & $\dfrac{\pi}{4}$ & $\dfrac{\pi}{3}$ & $\dfrac{\pi}{2}$ & $\pi$ & $2\pi$\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Angles remarquables en degrés et en radians}
+\label{ch5:tab:angles}
+\end{center}
+
+\begin{exemple}[convertir dans les deux sens]
+Convertions $135\dgr{}$ en radians : $135 \times \dfrac{\pi}{180} = \dfrac{135\pi}{180} = \dfrac{3\pi}{4}$ rad, en simplifiant par $45$. Dans l'autre sens, $\dfrac{11\pi}{12}$ rad vaut $\dfrac{11\pi}{12} \times \dfrac{180}{\pi} = \dfrac{11 \times 180}{12} = 165\dgr{}$. Enfin, $140\dgr{}$ se convertit par $140 \times \dfrac{\pi}{180} = \dfrac{7\pi}{9}$ rad. On remarque que les deux sens de conversion utilisent les mêmes fractions : $\dfrac{\pi}{180}$ pour descendre en radians, $\dfrac{180}{\pi}$ pour remonter en degrés.
+\end{exemple}
+
+Le radian donne aussi directement la longueur d'un arc : sur un cercle de rayon $r$, un angle de $\alpha$ radians découpe un arc de longueur $s = r \times \alpha$. Un angle de $1{,}2$ rad sur un cercle de $5$ cm de rayon y découpe ainsi un arc de $6$ cm, sans aucun coefficient de conversion.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+  \draw[->, rogris, line width=0.6pt] (-1.7,0) -- (1.9,0)
+        node[anchor=north east, font=\footnotesize] {$x$};
+  \draw[->, rogris, line width=0.6pt] (0,-1.7) -- (0,1.9)
+        node[anchor=north east, font=\footnotesize] {$y$};
+  \draw[robleu, line width=1.1pt] (1,0) arc[start angle=0, end angle=360, radius=1];
+  % points remarquables sur les axes
+  \fill[roor] (1,0) circle (0.045);
+  \node[font=\footnotesize, text=rogris, anchor=north west] at (1.04,-0.08) {$0$};
+  \fill[roor] (0,1) circle (0.045);
+  \node[font=\footnotesize, text=rogris, anchor=south east] at (-0.04,1.08) {$\dfrac{\pi}{2}$};
+  \fill[roor] (-1,0) circle (0.045);
+  \node[font=\footnotesize, text=rogris, anchor=south east] at (-1.08,0.12) {$\pi$};
+  \fill[roor] (0,-1) circle (0.045);
+  \node[font=\footnotesize, text=rogris, anchor=north west] at (-0.04,-1.1) {$\dfrac{3\pi}{2}$};
+  % angle remarquable pi/3 avec son rayon
+  \draw[rogold, line width=1pt] (0,0) -- (0.5,0.866);
+  \fill[rogold] (0.5,0.866) circle (0.045);
+  \node[font=\footnotesize, text=rogold, anchor=south west] at (0.55,0.92) {$\dfrac{\pi}{3}$};
+  \draw[rogold, line width=0.7pt] (0.42,0) arc[start angle=0, end angle=60, radius=0.42];
+  % legende sous la figure
+  \node[font=\footnotesize, text=rogris, align=center] at (0.1,-2.2)
+    {un tour complet vaut $2\pi$ rad $= 360\dgr{}$};
+\end{tikzpicture}
+\captionof{figure}{Le cercle trigonométrique de rayon 1 : les angles remarquables se lisent en radians}
+\label{ch5:fig:cercle}
+\end{center}
+
+\begin{remarque}[pourquoi le radian]
+Le radian n'est pas une unité de plus par caprice : c'est l'unité naturelle du cercle. Un angle de $\alpha$ radians découpé sur un cercle de rayon $r$ correspond à un arc de longueur $s = r \times \alpha$ : la longueur se lit directement, sans coefficient de conversion. Un angle de $1$ radian sur un cercle de 1 m y découpe un arc d'exactement 1 m ; le même angle sur un cercle de 3 m y découpe 3 m. Cette simplicité fait du radian l'unité des calculatrices en mode scientifique et de tous les logiciels de calcul.
+\end{remarque}
+
+\section{Le triangle rectangle}
+
+\begin{propriete}[somme des angles et théorème de Pythagore]
+Dans tout triangle, la somme des trois angles vaut $180\dgr{}$. Dans un triangle \emph{rectangle} en $C$, dont les côtés adjacents à l'angle droit ont pour longueurs $a$ et $b$ et dont l'hypoténuse a pour longueur $c$ :
+\[
+c^{2} = a^{2} + b^{2},
+\]
+et l'hypoténuse est le côté le plus long, opposé à l'angle droit. Pour les triangles quelconques, la \emph{loi des cosinus} généralise Pythagore : si deux côtés ont pour longueurs $b$ et $c$ et que l'angle entre eux vaut $\alpha$, le troisième côté vaut $a$ avec $a^{2} = b^{2} + c^{2} - 2\,b\,c\,\cos \alpha$ ; pour $\alpha = 90\dgr{}$, on retrouve Pythagore.
+\end{propriete}
+
+\begin{propriete}[rapports trigonométriques]
+Dans un triangle rectangle, pour un angle aigu $\alpha$ :
+\[
+\cos \alpha = \frac{\text{côté adjacent}}{\text{hypoténuse}}, \qquad
+\sin \alpha = \frac{\text{côté opposé}}{\text{hypoténuse}}, \qquad
+\tan \alpha = \frac{\text{côté opposé}}{\text{côté adjacent}} .
+\]
+\end{propriete}
+
+\begin{center}
+\small
+\begin{tabular}{C{1.7cm}C{1.9cm}C{1.9cm}C{1.9cm}C{1.9cm}C{1.7cm}}
+\toprule
+\rowcolor{robleuf}$\alpha$ & $0\dgr{}$ & $30\dgr{}$ & $45\dgr{}$ & $60\dgr{}$ & $90\dgr{}$\\
+\midrule
+$\sin \alpha$ & $0$ & $\dfrac{1}{2}$ & $\dfrac{\sqrt{2}}{2}$ & $\dfrac{\sqrt{3}}{2}$ & $1$\\
+\rowcolor{rogrisf!50}$\cos \alpha$ & $1$ & $\dfrac{\sqrt{3}}{2}$ & $\dfrac{\sqrt{2}}{2}$ & $\dfrac{1}{2}$ & $0$\\
+$\tan \alpha$ & $0$ & $\dfrac{1}{\sqrt{3}}$ & $1$ & $\sqrt{3}$ & indéfini\\
+\bottomrule
+\end{tabular}
+\captionof{table}{Valeurs exactes des rapports trigonométriques des angles remarquables}
+\label{ch5:tab:trigo}
+\end{center}
+
+\begin{methode}[résoudre un triangle rectangle]
+\begin{enumerate}
+  \item repérer l'angle droit et l'angle connu (ou cherché) $\alpha$ ;
+  \item nommer les trois côtés du point de vue de $\alpha$ : opposé, adjacent, hypoténuse ;
+  \item choisir le rapport qui relie les deux côtés connus : $\cos$ pour adjacent-hypoténuse, $\sin$ pour opposé-hypoténuse, $\tan$ pour opposé-adjacent ; Pythagore lorsque les trois côtés sont concernés ;
+  \item isoler l'inconnue, calculer, puis contrôler l'ordre de grandeur : l'hypoténuse doit rester le côté le plus long.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[une hauteur inaccessible par la trigonométrie]
+Un technicien se place à $18$ m du pied d'un mât d'antenne, au sol horizontal ; l'angle entre le sol et la ligne de visée du sommet vaut $32\dgr{}$. Quelle est la hauteur $h$ du mât ? Le triangle est rectangle, le côté de $18$ m est adjacent à l'angle connu et $h$ lui est opposé :
+\[
+\tan 32\dgr{} = \frac{h}{18}
+\quad\Longrightarrow\quad
+h = 18 \times \tan 32\dgr{} \approx 18 \times 0{,}625 \approx 11{,}2\ \text{m} .
+\]
+Le mât culmine à environ 11,2 mètres. La même lecture du tableau~\ref{ch5:tab:trigo} (adjacent, opposé, hypoténuse) résout tous les triangles où une longueur reste inaccessible à la mesure directe.
+\end{exemple}
+
+\section{Le cercle trigonométrique et les angles orientés}
+
+\begin{definition}[cercle trigonométrique, angle orienté]
+Le \emph{cercle trigonométrique} est le cercle de centre $O$ et de rayon $1$, muni d'un repère orthonormé direct et orienté dans le sens inverse des aiguilles d'une montre. À chaque réel $x$ correspond un unique \emph{angle orienté} de mesure $x$ radians, et ce nombre réel s'appelle désormais l'angle : $x$ peut être négatif (sens horaire) ou supérieur à $2\pi$ (plus d'un tour). Le \emph{point image} de $x$ est le point $M$ où la demi-droite d'angle $x$ rencontre le cercle.
+\end{definition}
+
+\begin{propriete}[cosinus et sinus comme coordonnées]
+Pour tout réel $x$, le point image $M$ de $x$ sur le cercle trigonométrique a pour coordonnées
+\[
+M(x) = \left(\cos x;\ \sin x\right),
+\]
+c'est-à-dire que $\cos x$ se lit sur l'axe des abscisses et $\sin x$ sur l'axe des ordonnées. La tangente s'en déduit : $\tan x = \dfrac{\sin x}{\cos x}$ pour $\cos x \neq 0$. Les valeurs du tableau~\ref{ch5:tab:trigo} se retrouvent ainsi pour tous les angles du cercle, y compris au-delà de $90\dgr{}$ : par exemple $\cos 120\dgr{} = -\dfrac{1}{2}$ et $\sin 120\dgr{} = \dfrac{\sqrt{3}}{2}$.
+\end{propriete}
+
+\begin{center}
+\begin{tikzpicture}[scale=2.1]
+  % axes
+  \draw[->, rogris, line width=0.5pt] (-1.45,0) -- (1.45,0)
+        node[anchor=north east, font=\footnotesize] {$x$};
+  \draw[->, rogris, line width=0.5pt] (0,-1.25) -- (0,1.3)
+        node[anchor=north east, font=\footnotesize] {$y$};
+  % cercle
+  \draw[robleu, line width=1pt] (1,0) arc[start angle=0, end angle=360, radius=1];
+  % rayon vers pi/6
+  \draw[robleu, line width=1.1pt] (0,0) -- (0.866,0.5);
+  \fill[robleu] (0.866,0.5) circle (0.032);
+  \node[font=\footnotesize\bfseries, text=robleu, anchor=south west] at (0.9,0.52) {$M$};
+  % projections
+  \draw[roteal, line width=0.7pt, dashed] (0.866,0.5) -- (0.866,0);
+  \draw[roteal, line width=0.7pt, dashed] (0.866,0.5) -- (0,0.5);
+  \node[font=\scriptsize, text=roteal, anchor=north] at (0.866,-0.04) {$\cos x$};
+  \node[font=\scriptsize, text=roteal, anchor=east] at (-0.05,0.5) {$\sin x$};
+  % arc d'angle
+  \draw[rogold, line width=0.8pt] (0.3,0) arc[start angle=0, end angle=30, radius=0.3];
+  \node[font=\footnotesize, text=rogold, anchor=south west] at (0.32,0.1) {$x$};
+  % point image de 2pi/3
+  \fill[roor] (-0.5,0.866) circle (0.032);
+  \draw[roor, line width=0.6pt] (0,0) -- (-0.5,0.866);
+  \node[font=\footnotesize, text=roor, anchor=south east] at (-0.55,0.85)
+    {$\dfrac{2\pi}{3}:\ \left(-\dfrac{1}{2};\ \dfrac{\sqrt{3}}{2}\right)$};
+\end{tikzpicture}
+\captionof{figure}{Le point image de $x$ a pour coordonnées $(\cos x;\ \sin x)$ : ici $x = \dfrac{\pi}{6}$, et en rouge l'image de $\dfrac{2\pi}{3}$}
+\label{ch5:fig:image}
+\end{center}
+
+\begin{exemple}[lire des coordonnées sur le cercle]
+Le point image de $\dfrac{2\pi}{3}$ rad (soit $120\dgr{}$) se trouve dans le deuxième quadrant : son abscisse y est négative et son ordonnée positive. On lit sur la figure~\ref{ch5:fig:image} :
+\[
+\cos\frac{2\pi}{3} = -\frac{1}{2} \qquad\text{et}\qquad \sin\frac{2\pi}{3} = \frac{\sqrt{3}}{2} .
+\]
+Le sinus garde la valeur du $60\dgr{}$ du tableau~\ref{ch5:tab:trigo}, mais le cosinus change de signe : c'est exactement ce que formalise la parité de la section suivante.
+\end{exemple}
+
+\section{Parité, périodicité et formules}
+
+\begin{propriete}[parité et périodicité]
+Les fonctions cosinus et sinus vérifient, pour tout réel $x$ :
+\[
+\cos(-x) = \cos x, \qquad \sin(-x) = -\sin x, \qquad
+\cos(x + 2\pi) = \cos x, \qquad \sin(x + 2\pi) = \sin x .
+\]
+Le cosinus est une fonction \emph{paire} (symétrique par rapport à l'axe des abscisses), le sinus est \emph{impaire} (symétrique par rapport à l'origine), et les deux sont \emph{périodiques} de période $2\pi$ : un tour complet ramène au même point image, donc aux mêmes valeurs.
+\end{propriete}
+
+\begin{propriete}[formules d'addition et de duplication]
+Pour tous réels $a$ et $b$ :
+\[
+\cos(a + b) = \cos a \cos b - \sin a \sin b,
+\qquad
+\sin(a + b) = \sin a \cos b + \cos a \sin b,
+\]
+et en appliquant ces formules avec $a = b = x$ :
+\[
+\cos 2x = \cos^{2} x - \sin^{2} x,
+\qquad
+\sin 2x = 2 \sin x \cos x .
+\]
+\end{propriete}
+
+\begin{exemple}[une valeur hors du tableau]
+Le tableau~\ref{ch5:tab:trigo} ne contient pas $75\dgr{}$, mais $75 = 45 + 30$ : la formule d'addition donne
+\[
+\cos 75\dgr{} = \cos 45\dgr{} \cos 30\dgr{} - \sin 45\dgr{} \sin 30\dgr{}
+= \frac{\sqrt{2}}{2} \cdot \frac{\sqrt{3}}{2} - \frac{\sqrt{2}}{2} \cdot \frac{1}{2}
+= \frac{\sqrt{6} - \sqrt{2}}{4} \approx 0{,}259 .
+\]
+La duplication donne un second contrôle : $\sin 60\dgr{} = 2 \sin 30\dgr{} \cos 30\dgr{} = 2 \times \dfrac{1}{2} \times \dfrac{\sqrt{3}}{2} = \dfrac{\sqrt{3}}{2}$, en accord avec le tableau.
+\end{exemple}
+
+\section{Équations trigonométriques}
+
+\begin{methode}[résoudre $\cos x = m$ et $\sin x = m$ dans $\R$]
+\begin{enumerate}
+  \item vérifier que $-1 \leqslant m \leqslant 1$ : sinon, il n'y a aucune solution, car $\cos$ et $\sin$ restent dans $[-1;\ 1]$ ;
+  \item trouver sur le cercle trigonométrique l'angle $\alpha$ connu qui convient (par exemple un angle du tableau~\ref{ch5:tab:trigo}) ;
+  \item pour $\cos x = m$, les solutions sont $x = \alpha + 2k\pi$ et $x = -\alpha + 2k\pi$, avec $k \in \Z$ : deux points images symétriques par rapport à l'axe des abscisses ;
+  \item pour $\sin x = m$, les solutions sont $x = \alpha + 2k\pi$ et $x = (\pi - \alpha) + 2k\pi$, avec $k \in \Z$ : deux points images symétriques par rapport à l'axe des ordonnées ;
+  \item écrire l'ensemble des solutions avec le paramètre entier $k$, qui décrit tous les tours supplémentaires permis par la périodicité.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[deux équations de référence]
+Résolvons $\cos x = \dfrac{1}{2}$ : l'angle du tableau qui convient est $\alpha = \dfrac{\pi}{3}$, donc les solutions sont
+\[
+x = \frac{\pi}{3} + 2k\pi \qquad\text{ou}\qquad x = -\frac{\pi}{3} + 2k\pi, \qquad k \in \Z .
+\]
+Résolvons $\sin x = \dfrac{\sqrt{3}}{2}$ : on trouve $\alpha = \dfrac{\pi}{3}$, et la seconde solution vient du symétrique $\pi - \dfrac{\pi}{3} = \dfrac{2\pi}{3}$, donc
+\[
+x = \frac{\pi}{3} + 2k\pi \qquad\text{ou}\qquad x = \frac{2\pi}{3} + 2k\pi, \qquad k \in \Z .
+\]
+Dans les deux cas, chaque valeur de l'entier $k$ ajoute un tour complet : l'équation a une infinité de solutions, toutes obtenues sur le cercle trigonométrique.
+\end{exemple}
+
+\begin{attention}
+Une équation trigonométrique n'a jamais une seule solution isolée dans $\R$ : elle en a soit aucune (si $|m| > 1$), soit une infinité, répétée de tour en tour par la périodicité. Omettre le « $+ 2k\pi$ » avec $k \in \Z$ revient à ne signaler que la solution du premier tour et à oublier toutes les autres.
+\end{attention}
+
+\begin{aretirer}
+Un tour complet vaut $360\dgr{}$ ou $2\pi$ rad, et la conversion se fait par $\pi = 180\dgr{}$ (tableau~\ref{ch5:tab:angles}) ; un angle de $\alpha$ rad sur un cercle de rayon $r$ y découpe un arc de longueur $s = r\alpha$. Dans le triangle rectangle : Pythagore $c^{2} = a^{2} + b^{2}$ et les rapports $\cos$, $\sin$, $\tan$ relient les côtés (tableau~\ref{ch5:tab:trigo}). Sur le cercle trigonométrique, le point image de $x$ a pour coordonnées $(\cos x;\ \sin x)$ : le cosinus est pair, le sinus impair, les deux sont de période $2\pi$, et les formules d'addition donnent $\cos 2x$ et $\sin 2x$. Les équations $\cos x = m$ et $\sin x = m$ ont une infinité de solutions, de la forme $\alpha + 2k\pi$ avec son symétrique ($-\alpha$ pour le cosinus, $\pi - \alpha$ pour le sinus), et aucune solution si $|m| > 1$.
+\end{aretirer}

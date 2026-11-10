@@ -1,0 +1,194 @@
+% ============================================================
+%  Chapitre 4 : Systemes lineaires et programmation lineaire
+% ============================================================
+\chapter{Systèmes linéaires et programmation linéaire}
+\chaptermark{Systèmes linéaires et programmation linéaire}
+
+\begin{quelqueslignes}
+En gestion comme en production, les données cherchées sont rarement seules : deux produits partagent un même stock de matière première, deux services partagent un même budget d'heures de travail. Les conditions se traduisent alors par plusieurs équations ou inéquations portant sur les mêmes inconnues, c'est-à-dire par un système. Ce chapitre installe les méthodes de résolution des systèmes linéaires (substitution, combinaison, Cramer, pivot de Gauss), puis étend la lecture graphique aux inéquations à deux inconnues, dont l'ensemble des solutions est une région du plan. La programmation linéaire rassemble ces outils pour répondre à la question centrale de l'entreprise : produire quelles quantités pour maximiser le bénéfice ou minimiser le coût, sous les contraintes disponibles ?
+\end{quelqueslignes}
+
+\section{Systèmes de deux équations à deux inconnues}
+
+\begin{definition}[système linéaire et solution]
+Un système de deux équations linéaires à deux inconnues $x$ et $y$ s'écrit
+\[
+\begin{cases}
+ax + by = c\\
+a'x + b'y = c'
+\end{cases}
+\]
+où les coefficients sont des réels connus. Une \emph{solution} du système est un couple de nombres $(x_{0};\ y_{0})$ qui vérifie les deux équations en même temps : géométriquement, c'est le point d'intersection des deux droites d'équations $ax + by = c$ et $a'x + b'y = c'$.
+\end{definition}
+
+\begin{methode}[substitution et combinaison]
+\begin{enumerate}
+  \item substitution : tirer une inconnue dans une équation (par exemple $x = \dfrac{c - by}{a}$), puis remplacer cette expression dans l'autre équation ; il reste une équation à une inconnue que l'on sait résoudre ;
+  \item combinaison (ou addition) : multiplier chaque équation par un coefficient bien choisi pour que les monômes d'une inconnue deviennent opposés, puis additionner membre à membre : cette inconnue disparaît ;
+  \item reporter la valeur trouvée dans une des équations pour obtenir la seconde inconnue, puis vérifier le couple dans les deux équations initiales.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[un même système par les deux méthodes]
+Résolvons $\begin{cases}2x + y = 8\\ x - 2y = -1\end{cases}$. Par substitution : la deuxième équation donne $x = 2y - 1$ ; en reportant dans la première, $2(2y - 1) + y = 8$, soit $5y = 10$, donc $y = 2$ et $x = 2 \times 2 - 1 = 3$. Par combinaison : calculons $(\text{L}_{1}) - 2(\text{L}_{2})$, où $\text{L}_{1}$ et $\text{L}_{2}$ désignent les deux équations ; les termes en $x$ s'éliminent ($2x - 2x = 0$) et il reste $y + 4y = 8 + 2$, soit $5y = 10$ et $y = 2$, puis le report dans $\text{L}_{2}$ donne $x = 3$. Dans les deux cas $S = \{(3;\ 2)\}$, et la vérification donne $2 \times 3 + 2 = 8$ et $3 - 2 \times 2 = -1$.
+\end{exemple}
+
+\section{La méthode de Cramer}
+
+\begin{propriete}[déterminants et cas possibles]
+Pour le système $\begin{cases}ax + by = c\\ a'x + b'y = c'\end{cases}$, on calcule trois déterminants :
+\[
+D = \begin{vmatrix} a & b \\ a' & b' \end{vmatrix} = ab' - a'b, \qquad
+D_{x} = \begin{vmatrix} c & b \\ c' & b' \end{vmatrix} = cb' - c'b, \qquad
+D_{y} = \begin{vmatrix} a & c \\ a' & c' \end{vmatrix} = ac' - a'c .
+\]
+Si $D \neq 0$, le système a une unique solution $x = \dfrac{D_{x}}{D}$ et $y = \dfrac{D_{y}}{D}$ (système de Cramer). Si $D = 0$ et $D_{x} \neq 0$ ou $D_{y} \neq 0$, il n'a aucune solution. Si $D = 0$, $D_{x} = 0$ et $D_{y} = 0$, les deux équations sont équivalentes et le système a une infinité de solutions.
+\end{propriete}
+
+\begin{exemple}[Cramer sur le même système]
+Reprenons $\begin{cases}2x + y = 8\\ x - 2y = -1\end{cases}$ : le déterminant du système vaut $D = 2 \times (-2) - 1 \times 1 = -5$, celui de $x$ vaut $D_{x} = 8 \times (-2) - (-1) \times 1 = -15$, et celui de $y$ vaut $D_{y} = 2 \times (-1) - 8 \times 1 = -10$. Comme $D \neq 0$, la solution unique est $x = \dfrac{D_{x}}{D} = \dfrac{-15}{-5} = 3$ et $y = \dfrac{D_{y}}{D} = \dfrac{-10}{-5} = 2$ : on retrouve le couple $(3;\ 2)$ obtenu à la section 1.
+\end{exemple}
+
+\begin{remarque}
+Les trois méthodes (substitution, combinaison, Cramer) donnent toujours le même résultat : le choix est une affaire de confort. Cramer est rapide sur les coefficients simples et donne directement la discussion des cas impossibles ou indéterminés ; la substitution reste la méthode la plus sûre quand une inconnue apparaît déjà seule dans une équation.
+\end{remarque}
+
+\section{Systèmes de trois équations : le pivot de Gauss}
+
+\begin{methode}[triangulariser un système $3 \times 3$]
+\begin{enumerate}
+  \item utiliser la première équation comme pivot pour éliminer $x$ des deux autres : calculer $(\text{L}_{2}) - \dfrac{a'}{a}(\text{L}_{1})$ et $(\text{L}_{3}) - \dfrac{a''}{a}(\text{L}_{1})$ ;
+  \item utiliser la nouvelle deuxième équation comme pivot pour éliminer $y$ de la troisième ;
+  \item le système « triangulaire » obtenu se résout de bas en haut : une équation à une inconnue, puis remontée ligne par ligne ;
+  \item contrôler le triplet trouvé dans les trois équations initiales.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[un système $3 \times 3$ de bout en bout]
+Résolvons $\begin{cases}x - 2y + 5z = 10\\ 2x - 3y + 8z = 16\\ -3x + y - 2z = -1\end{cases}$. On élimine $x$ : $(\text{L}_{2}) - 2(\text{L}_{1})$ donne $y - 2z = -4$, et $(\text{L}_{3}) + 3(\text{L}_{1})$ donne $-5y + 13z = 29$. On élimine $y$ : $(\text{L}_{3}) + 5(\text{L}_{2}')$ donne $13z - 10z = 29 - 20$, soit $3z = 9$, donc $z = 3$. Remontée : $y - 2 \times 3 = -4$ donne $y = 2$, puis $x - 4 + 15 = 10$ donne $x = -1$. La solution est $S = \{(-1;\ 2;\ 3)\}$, vérifiée dans les trois équations : $-1 - 4 + 15 = 10$, $-2 - 6 + 24 = 16$ et $3 + 2 - 6 = -1$.
+\end{exemple}
+
+\section{Inéquations linéaires à deux inconnues}
+
+\begin{methode}[représenter $ax + by + c > 0$ dans le plan]
+\begin{enumerate}
+  \item tracer la droite $(d)$ d'équation $ax + by + c = 0$, frontière entre les deux demi-plans ;
+  \item choisir un point test facile (l'origine $O(0;\ 0)$ si elle n'appartient pas à la droite) et remplacer ses coordonnées dans l'inéquation ;
+  \item si l'inégalité est vérifiée, l'ensemble des solutions est le demi-plan contenant le point test ; sinon, c'est l'autre demi-plan ;
+  \item préciser si la frontière fait partie des solutions : elle est incluse pour $\geqslant$ ou $\leqslant$, exclue pour $>$ ou $<$.
+\end{enumerate}
+\end{methode}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15]
+  % demie-plan non solution (contenant O), en gris tres leger
+  \fill[rogrisf!55] (-1.6,-1.6) -- (4.4,-1.6) -- (4.4,1.7) -- (-1.6,-0.3) -- cycle;
+  % axes
+  \draw[->, rogris, line width=0.6pt] (-1.9,0) -- (4.7,0)
+        node[anchor=north east, font=\footnotesize] {$x$};
+  \draw[->, rogris, line width=0.6pt] (0,-1.8) -- (0,3.4)
+        node[anchor=north east, font=\footnotesize] {$y$};
+  % droite frontiere -x+2y-1=0 : points (-1,0) et (1,1) et (3,2)
+  \draw[robleu, line width=1.2pt] (-1.7,-0.35) -- (4.3,2.65);
+  \fill[robleu] (-1,0) circle (0.05);
+  \node[font=\footnotesize, text=rogris, anchor=north west] at (-1.05,-0.02) {$(-1;\ 0)$};
+  \fill[robleu] (1,1) circle (0.05);
+  \node[font=\footnotesize, text=rogris, anchor=south west] at (0.85,1.05) {$(1;\ 1)$};
+  % point test O
+  \fill[roor] (0,0) circle (0.055);
+  \node[font=\footnotesize, text=roor, anchor=south east] at (-0.05,0.05) {$O$};
+  % libelles
+  \node[font=\footnotesize\bfseries, text=roteal, anchor=south east] at (2.3,3.0)
+    {$S$ : demi-plan au-dessus de $(d)$};
+  \node[font=\footnotesize, text=rogris, anchor=south east] at (1.9,0.65)
+    {$-x+2y-1=0$};
+  \node[font=\scriptsize, text=rogris, anchor=north west] at (0.12,-1.5)
+    {test de $O$ : $-0 + 0 - 1 = -1$, non vérifiée};
+\end{tikzpicture}
+\captionof{figure}{L'ensemble des solutions de $-x + 2y - 1 > 0$ est le demi-plan qui ne contient pas l'origine}
+\label{ch4:fig:region}
+\end{center}
+
+\begin{exemple}[régionnement du plan]
+Représentons l'ensemble des solutions de $-x + 2y - 1 > 0$. La droite $(d)$ d'équation $-x + 2y - 1 = 0$ passe par $(-1;\ 0)$ et $(1;\ 1)$ ; on la trace en trait plein. Le point test $O(0;\ 0)$ donne $-0 + 0 - 1 = -1$, qui ne vérifie pas l'inéquation : l'origine appartient au demi-plan non solution, que la figure~\ref{ch4:fig:region} grise. L'ensemble des solutions est donc le demi-plan ouvert au-dessus de $(d)$, bord exclu puisque l'inégalité est stricte.
+\end{exemple}
+
+\section{Programmation linéaire}
+
+\begin{definition}[fonction économique et contraintes]
+La \emph{programmation linéaire} consiste à maximiser ou minimiser une fonction linéaire des variables, appelée \emph{fonction économique} ou \emph{fonction objectif} (bénéfice, chiffre d'affaires, coût), sous des \emph{contraintes} linéaires traduisant les disponibilités de l'entreprise. Les expressions « au moins », « ne peut descendre sous » se traduisent par $\geqslant$ ; les expressions « au plus », « ne peut dépasser », « dispose de » se traduisent par $\leqslant$. Les contraintes et la fonction économique forment ensemble un système linéaire dont le domaine des solutions est un polygone du plan.
+\end{definition}
+
+\begin{methode}[résoudre un problème de maximisation]
+\begin{enumerate}
+  \item nommer les variables ($x$ et $y$, quantités à produire, donc positives) ;
+  \item traduire chaque contrainte par une inéquation linéaire ;
+  \item écrire la fonction économique $Z$ à maximiser (ou à minimiser) ;
+  \item tracer le domaine des contraintes et repérer ses \emph{sommets} ;
+  \item calculer $Z$ à chaque sommet : dans le cas d'une maximisation, le maximum de $Z$ est atteint au sommet qui donne la plus grande valeur ; dans le cas d'une minimisation, au sommet qui donne la plus petite valeur.
+\end{enumerate}
+\end{methode}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  % domaine des contraintes : O(0,0) A(10,0) E(7.5,5) B(0,10) - 1 unite = 10 unites de production
+  \fill[robleuf] (0,0) -- (10,0) -- (7.5,5) -- (0,10) -- cycle;
+  % axes
+  \draw[->, rogris, line width=0.7pt] (-0.6,0) -- (11.6,0)
+        node[anchor=north east, font=\footnotesize] {$x$};
+  \draw[->, rogris, line width=0.7pt] (0,-0.6) -- (0,11.1)
+        node[anchor=north east, font=\footnotesize] {$y$};
+  % graduations utiles
+  \foreach \v in {5, 7.5, 10}{
+    \draw[rogris, line width=0.5pt] (\v,0.16) -- (\v,-0.16);
+    \node[font=\scriptsize, text=rogris, anchor=north] at (\v,-0.3) {\v};
+    \draw[rogris, line width=0.5pt] (0.16,\v) -- (-0.16,\v);
+    \node[font=\scriptsize, text=rogris, anchor=east] at (-0.3,\v) {\v};}
+  % droite tissu : x+1,5y=150 -> (0,10) a (11.2,2.53)
+  \draw[robleu, line width=1.1pt] (0,10) -- (11.2,2.53);
+  \node[font=\footnotesize, text=robleu, anchor=south west, rotate=-34] at (8.2,4.75)
+    {$x + 1{,}5y = 150$};
+  % droite heures : 4x+2y=400 -> y=20-2x : de (4.5,11) a (10.2,-0.4)
+  \draw[roteal, line width=1.1pt] (4.5,11) -- (10.2,-0.4);
+  \node[font=\footnotesize, text=teal!60!black, anchor=south west, rotate=-63] at (9.15,4.3)
+    {$4x + 2y = 400$};
+  % droite fonction economique Z=160000 : (0,10) a (6.67,0) en tirete
+  \draw[roor, line width=1pt, dashed] (0,10) -- (6.67,0);
+  \node[font=\footnotesize, text=roor, anchor=north east] at (3.8,2.2)
+    {$Z = 160\,000$};
+  \draw[->, roor, line width=0.8pt] (1.7,5.4) -- (3.4,7.9);
+  \node[font=\scriptsize, text=roor, anchor=south west] at (3.4,7.7) {Z croît};
+  % sommets
+  \fill[roor] (7.5,5) circle (0.09);
+  \node[font=\footnotesize\bfseries, text=roor, anchor=south west] at (7.65,5.15)
+    {$E\ (75;\ 50)$};
+  \fill[rogris] (10,0) circle (0.075);
+  \node[font=\footnotesize, text=rogris, anchor=west] at (10.25,0) {$A\ (100;\ 0)$};
+  \fill[rogris] (0,10) circle (0.075);
+  \node[font=\footnotesize, text=rogris, anchor=south east] at (0.15,10.15) {$B\ (0;\ 100)$};
+  \node[font=\scriptsize, text=rogris, anchor=south west] at (0.25,0.2) {$O$};
+\end{tikzpicture}
+\captionof{figure}{Domaine des contraintes de l'exemple : le maximum de $Z$ est atteint au sommet $E(75;\ 50)$}
+\label{ch4:fig:pl}
+\end{center}
+
+\begin{exemple}[maximiser le bénéfice d'un atelier de confection]
+Un atelier de Lomé fabrique deux modèles de chemises. Une chemise du premier modèle nécessite $1$ m de tissu, $4$ heures de travail et rapporte $2\,400$ F ; une chemise du deuxième modèle nécessite $1{,}5$ m de tissu, $2$ heures de travail et rapporte $1\,600$ F. L'atelier dispose quotidiennement de $150$ m de tissu et de $400$ heures de travail, et peut vendre toute sa production. Posons $x$ et $y$ les nombres de chemises de chaque modèle fabriquées par jour. Les contraintes s'écrivent
+\[
+\begin{cases}
+x \geqslant 0,\quad y \geqslant 0\\
+x + 1{,}5y \leqslant 150\\
+4x + 2y \leqslant 400
+\end{cases}
+\qquad\text{et la fonction économique est}\qquad Z = 2\,400x + 1\,600y .
+\]
+Le domaine des contraintes (figure~\ref{ch4:fig:pl}) a pour sommets $O(0;\ 0)$, $A(100;\ 0)$, $E(75;\ 50)$ et $B(0;\ 100)$ : le point $E$ est l'intersection des deux droites de contrainte, résolue à la section 1. On calcule $Z$ à chaque sommet : $Z(O) = 0$, $Z(A) = 2\,400 \times 100 = 240\,000$ F, $Z(E) = 2\,400 \times 75 + 1\,600 \times 50 = 180\,000 + 80\,000 = 260\,000$ F, $Z(B) = 1\,600 \times 100 = 160\,000$ F. Le bénéfice maximal, $260\,000$ F, est atteint en fabriquant $75$ chemises du premier modèle et $50$ du second.
+\end{exemple}
+
+\begin{remarque}
+Pour un problème de minimisation, la méthode est identique : on trace le domaine des contraintes, puis la droite $Z = 0$, et on la déplace parallèlement à elle-même ; le \emph{premier} sommet touché donne le minimum de $Z$, quand la maximisation cherche le \emph{dernier}. Les fonctions à minimiser sont typiquement des coûts, des dépenses ou des achats.
+\end{remarque}
+
+\begin{aretirer}
+Un système linéaire se résout par substitution (tirer une inconnue, la reporter), par combinaison (éliminer une inconnue en additionnant des multiples des lignes), par Cramer ($x = D_{x}/D$, $y = D_{y}/D$ si $D \neq 0$ ; aucune solution si $D = 0$ avec $D_{x}$ ou $D_{y}$ non nul ; infinité si les trois déterminants sont nuls) ou, en dimension trois, par le pivot de Gauss en triangularisant puis remontant. Une inéquation linéaire à deux inconnues a pour ensemble de solutions un demi-plan, déterminé en testant un point une fois la droite frontière tracée. En programmation linéaire, la fonction économique $Z$ atteint son maximum au dernier sommet touché en déplaçant la droite $Z$ sur le domaine des contraintes, et son minimum au premier : il suffit donc de calculer $Z$ aux sommets du polygone et de comparer.
+\end{aretirer}

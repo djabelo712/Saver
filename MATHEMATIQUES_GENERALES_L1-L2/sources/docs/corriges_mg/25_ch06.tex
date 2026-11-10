@@ -1,0 +1,59 @@
+% ============================================================
+%  Corriges Chapitre 6 : Suites numeriques
+% ============================================================
+\clearpage
+\chapter{Suites numériques}
+\chaptermark{Suites numériques}
+
+\begin{corrige}{6.1}
+\begin{enumerate}
+\item Pour $u_{n} = 5 - 3n$ : $u_{n+1} - u_{n} = 5 - 3(n + 1) - (5 - 3n) = -3 < 0$ pour tout $n$ : la suite est décroissante, de raison $-3$ (c'est d'ailleurs une suite arithmétique).
+\item Pour $v_{n} = n^{2} + 2n$ :
+\[
+v_{n+1} - v_{n} = (n+1)^{2} + 2(n+1) - n^{2} - 2n = 2n + 3 > 0
+\]
+pour tout $n \geqslant 0$ : la suite est croissante. Le signe de la différence, et non celui des termes, décide de la monotonie.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{6.2}
+\begin{enumerate}
+\item Chaque année rapporte $250\,000 \times 0{,}06 = 15\,000$ F, toujours le même montant puisque les intérêts ne sont pas replacés. La valeur acquise vaut donc $V_{0} = 250\,000$ la première année et augmente de $15\,000$ F par an : c'est la suite arithmétique de premier terme $250\,000$ et de raison $r = 15\,000$, de terme général
+\[
+V_{n} = 250\,000 + 15\,000 \times n .
+\]
+\item Après $5$ années : $V_{5} = 250\,000 + 5 \times 15\,000 = 325\,000$ F.
+\item Après $10$ années : $V_{10} = 250\,000 + 10 \times 15\,000 = 400\,000$ F.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{6.3}
+\begin{enumerate}
+\item Chaque année, la valeur est multipliée par le facteur $1 + 0{,}06 = 1{,}06$ : c'est la suite géométrique de premier terme $250\,000$ et de raison $q = 1{,}06$, de terme général
+\[
+V_{n} = 250\,000 \times 1{,}06^{n} .
+\]
+\item Après $5$ années : $V_{5} = 250\,000 \times 1{,}06^{5} \approx 250\,000 \times 1{,}338226 \approx 334\,556$ F.
+\item Après $10$ années : $V_{10} = 250\,000 \times 1{,}06^{10} \approx 250\,000 \times 1{,}790848 \approx 447\,712$ F.
+\item Comparaison avec les intérêts simples : après $5$ ans, $334\,556$ F contre $325\,000$ F, soit $9\,556$ F de plus ; après $10$ ans, $447\,712$ F contre $400\,000$ F, soit $47\,712$ F de plus. La différence vient du mécanisme de capitalisation : en intérêts composés, les intérêts produits sont eux-mêmes placés et produisent à leur tour, ce qui donne la croissance multiplicative de la suite géométrique, là où les intérêts simples n'ajoutent qu'un montant fixe.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{6.4}
+\begin{enumerate}
+\item L'amortissement linéaire répartit la valeur de la machine en parts égales : l'annuité vaut $4\,000\,000 / 8 = 500\,000$ F par an. La valeur nette comptable diminue de $500\,000$ F chaque année : c'est la suite arithmétique de premier terme $4\,000\,000$ et de raison $r = -500\,000$, de terme général
+\[
+V_{n} = 4\,000\,000 - 500\,000 \times n .
+\]
+\item Après $5$ années : $V_{5} = 4\,000\,000 - 5 \times 500\,000 = 1\,500\,000$ F.
+\item On cherche $n$ tel que $V_{n} \leqslant 1\,000\,000$ :
+\[
+4\,000\,000 - 500\,000\,n \leqslant 1\,000\,000
+\quad\Longleftrightarrow\quad
+500\,000\,n \geqslant 3\,000\,000
+\quad\Longleftrightarrow\quad
+n \geqslant 6 .
+\]
+La valeur nette comptable devient inférieure ou égale à $1\,000\,000$ F à partir de la $6^{\text{ème}}$ année ($V_{6} = 1\,000\,000$ F exactement).
+\end{enumerate}
+\end{corrige}

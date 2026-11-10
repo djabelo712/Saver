@@ -1,0 +1,163 @@
+% ============================================================
+%  Chapitre 3 : Equations et inequations
+% ============================================================
+\chapter{Équations et inéquations}
+\chaptermark{Équations et inéquations}
+
+\begin{quelqueslignes}
+Les équations sont le langage naturel des problèmes chiffrés : un coût inconnu, un prix de vente à déterminer, un seuil de rentabilité à atteindre, une quantité à produire se traduisent tous par une égalité ou une inégalité conditionnelle où la donnée cherchée porte un nom, en général $x$. Ce chapitre reprend les équations du premier degré et les équations produit, puis installe l'outil central du programme : l'équation du second degré et son discriminant, avec la somme et le produit des solutions qui permettent de raisonner sans résoudre. Les dernières sections transposent ces techniques aux inéquations, dont les solutions sont des intervalles de nombres et non plus des nombres isolés.
+\end{quelqueslignes}
+
+\section{Équations du premier degré et équations produit}
+
+\begin{definition}[équation et racine]
+Une \emph{équation} à une inconnue $x$ est une égalité conditionnelle : elle n'est vraie que pour certaines valeurs de $x$, appelées \emph{solutions} ou \emph{racines}. Résoudre une équation dans $\R$, c'est trouver l'ensemble de toutes ses solutions, noté $S$. Deux équations sont \emph{équivalentes} lorsqu'elles ont exactement les mêmes solutions.
+\end{definition}
+
+\begin{propriete}[équation du premier degré]
+Une équation du premier degré à une inconnue s'écrit $ax + b = 0$ avec $a \neq 0$. En transposant $b$ puis en divisant par $a$, elle admet une solution unique :
+\[
+ax + b = 0 \quad\Longleftrightarrow\quad x = -\frac{b}{a}.
+\]
+Ajouter ou retrancher un même nombre aux deux membres, ou multiplier les deux membres par un même nombre non nul, ne change pas les solutions : ce sont les deux principes de résolution.
+\end{propriete}
+
+\begin{propriete}[équation produit]
+Pour tout couple de facteurs :
+\[
+A(x) \cdot B(x) = 0 \quad\Longleftrightarrow\quad A(x) = 0 \ \text{ ou } \ B(x) = 0 .
+\]
+Un produit est nul si et seulement si l'un au moins de ses facteurs est nul : résoudre une équation produit revient à résoudre chacune des équations qu'elle contient, puis à réunir les solutions.
+\end{propriete}
+
+\begin{exemple}[du premier degré au produit]
+Résolvons d'abord $4(x + 5) = 3x - 2$. On développe : $4x + 20 = 3x - 2$, puis on transpose : $4x - 3x = -2 - 20$, d'où $x = -22$. Vérification : $4(-22 + 5) = 4 \times (-17) = -68$ et $3 \times (-22) - 2 = -68$ ; les deux membres coïncident. Résolvons ensuite l'équation produit $(2x + 1)(x - 3) = 0$ : le facteur $2x + 1$ s'annule pour $x = -\dfrac{1}{2}$ et le facteur $x - 3$ s'annule pour $x = 3$, donc $S = \left\{-\dfrac{1}{2};\ 3\right\}$.
+\end{exemple}
+
+\begin{attention}
+On ne divise jamais les deux membres d'une équation par une expression qui contient l'inconnue : de $x^{2} = x$, diviser par $x$ ferait perdre la solution $x = 0$. La bonne méthode est de tout transposer ($x^{2} - x = 0$) puis de factoriser ($x(x - 1) = 0$) : les deux solutions $0$ et $1$ apparaissent.
+\end{attention}
+
+\section{Équations du second degré : le discriminant}
+
+\begin{definition}[équation du second degré]
+Une équation du second degré à une inconnue s'écrit
+\[
+ax^{2} + bx + c = 0, \qquad a \neq 0,
+\]
+où $a$, $b$ et $c$ sont des nombres réels connus appelés coefficients. Le nombre
+\[
+\Delta = b^{2} - 4ac
+\]
+s'appelle le \emph{discriminant} de l'équation : sa valeur décide du nombre de solutions.
+\end{definition}
+
+\begin{propriete}[les trois cas selon le signe de $\Delta$]
+Soit $(E) : ax^{2} + bx + c = 0$ avec $a \neq 0$.
+\begin{itemize}
+  \item si $\Delta > 0$, l'équation admet deux solutions distinctes
+  \[
+  x_{1} = \frac{-b + \sqrt{\Delta}}{2a} \qquad\text{et}\qquad
+  x_{2} = \frac{-b - \sqrt{\Delta}}{2a},
+  \]
+  et le trinôme se factorise : $ax^{2} + bx + c = a(x - x_{1})(x - x_{2})$ ;
+  \item si $\Delta = 0$, l'équation admet une solution double $x_{0} = \dfrac{-b}{2a}$, et $ax^{2} + bx + c = a(x - x_{0})^{2}$ ;
+  \item si $\Delta < 0$, l'équation n'admet aucune solution réelle, et le trinôme ne se factorise pas dans $\R$.
+\end{itemize}
+\end{propriete}
+
+\begin{remarque}[quand peut-on répondre sans calculer]
+Lorsque les coefficients $a$ et $c$ sont de signes contraires, alors $-4ac > 0$, donc $\Delta = b^{2} - 4ac > 0$ : l'équation admet automatiquement deux solutions distinctes, et leur produit $P = c/a$ étant négatif, les deux solutions sont de signes contraires. Ce test rapide évite de calculer le discriminant quand on ne cherche qu'à connaître le nombre de solutions.
+\end{remarque}
+
+\begin{exemple}[les trois cas en une série]
+Traitons trois équations représentatives. Pour $-3x^{2} - x + 4 = 0$ : $\Delta = (-1)^{2} - 4 \times (-3) \times 4 = 1 + 48 = 49 > 0$, donc deux solutions $x_{1} = \dfrac{1 + 7}{-6} = -\dfrac{4}{3}$ et $x_{2} = \dfrac{1 - 7}{-6} = 1$, et la factorisation $-3\left(x + \dfrac{4}{3}\right)(x - 1)$. Pour $25x^{2} - 90x + 81 = 0$ : $\Delta = 90^{2} - 4 \times 25 \times 81 = 8100 - 8100 = 0$, solution double $x_{0} = \dfrac{90}{50} = 1{,}8 = \dfrac{9}{5}$, et $25x^{2} - 90x + 81 = (5x - 9)^{2}$. Pour $4x^{2} + 3x + 9 = 0$ : $\Delta = 9 - 144 = -135 < 0$, donc $S = \varnothing$.
+\end{exemple}
+
+\begin{methode}[résoudre une équation du second degré]
+\begin{enumerate}
+  \item se placer sous la forme $ax^{2} + bx + c = 0$ et vérifier que $a \neq 0$ ;
+  \item calculer $\Delta = b^{2} - 4ac$ en surveillant les signes ;
+  \item selon le signe de $\Delta$, écrire les solutions avec la formule, ou conclure à l'absence de solution ;
+  \item contrôler : la somme des solutions doit valoir $-b/a$ et le produit $c/a$ (section 3).
+\end{enumerate}
+\end{methode}
+
+\section{Somme et produit des solutions}
+
+\begin{propriete}[somme et produit des solutions]
+Lorsque $\Delta \geq 0$, l'équation $ax^{2} + bx + c = 0$ ($a \neq 0$) admet deux solutions (distinctes ou confondues) $x_{1}$ et $x_{2}$ qui vérifient
+\[
+S = x_{1} + x_{2} = -\frac{b}{a} \qquad\text{et}\qquad
+P = x_{1} \times x_{2} = \frac{c}{a}.
+\]
+Réciproquement, deux nombres de somme $S$ et de produit $P$ sont les solutions de l'équation $X^{2} - S X + P = 0$ dans l'inconnue $X$.
+\end{propriete}
+
+\begin{exemple}[raisonner sans résoudre]
+Pour $-3x^{2} + 2x + 1 = 0$, on lit directement $S = -\dfrac{b}{a} = -\dfrac{2}{-3} = \dfrac{2}{3}$ et $P = \dfrac{c}{a} = \dfrac{1}{-3} = -\dfrac{1}{3}$. Le produit étant négatif, les deux solutions sont de signes contraires, ce qui confirme le test de la section 2 ($a$ et $c$ de signes contraires) : les solutions sont $-\dfrac{1}{3}$ et $1$. Utilisons maintenant la formule réciproque : deux nombres de somme $S = 6$ et de produit $P = 8$ sont les solutions de $X^{2} - 6X + 8 = 0$, dont le discriminant vaut $\Delta = 36 - 32 = 4$ ; les solutions sont $X = \dfrac{6 \pm 2}{2}$, c'est-à-dire $2$ et $4$.
+\end{exemple}
+
+\begin{remarque}
+Connaître une solution et le produit $P$ suffit pour retrouver l'autre : $x_{2} = P / x_{1}$. De même, connaître une solution et la somme $S$ donne $x_{2} = S - x_{1}$. Ces lectures rapides servent à contrôler une résolution complète sans recalculer le discriminant.
+\end{remarque}
+
+\section{Équations bicarrées}
+
+\begin{definition}[équation bicarrée]
+Une équation bicarrée s'écrit $ax^{4} + bx^{2} + c = 0$ avec $a \neq 0$ : elle ne contient que des puissances paires de $x$. Le changement de variable $X = x^{2}$ la transforme en équation du second degré en $X$ ; on résout d'abord en $X$, puis on revient à $x$ avec $x = \sqrt{X}$ ou $x = -\sqrt{X}$ pour chaque valeur $X \geq 0$ trouvée.
+\end{definition}
+
+\begin{exemple}[du quatrième degré au second]
+Résolvons $x^{4} - 3x^{2} + 2 = 0$ en posant $X = x^{2}$. L'équation devient $X^{2} - 3X + 2 = 0$, de discriminant $\Delta = 9 - 8 = 1$ ; les solutions en $X$ sont $X = \dfrac{3 \pm 1}{2}$, c'est-à-dire $1$ et $2$. Retour à $x$ : $x^{2} = 1$ donne $x = \pm 1$, et $x^{2} = 2$ donne $x = \pm\sqrt{2}$, donc $S = \{-1;\ 1;\ -\sqrt{2};\ \sqrt{2}\}$. Pour $x^{4} + 3x^{2} + 4 = 0$, le même changement de variable donne $X^{2} + 3X + 4 = 0$ avec $\Delta = 9 - 16 = -7 < 0$ : aucune solution en $X$, donc $S = \varnothing$.
+\end{exemple}
+
+\begin{attention}
+Ne jamais arrêter une équation bicarrée au niveau de $X$ : les solutions demandées sont celles de $x$. Une valeur $X < 0$ trouvée en cours de route est simplement écartée, car $x^{2} = X$ n'a alors aucune solution réelle.
+\end{attention}
+
+\section{Inéquations du premier degré}
+
+\begin{propriete}[règles sur les inégalités]
+Ajouter ou retrancher un même nombre aux deux membres d'une inégalité conserve son sens. Multiplier ou diviser les deux membres par un même nombre \emph{positif} conserve le sens ; multiplier ou diviser par un nombre \emph{négatif} inverse le sens. Ainsi $a \leqslant b$ devient $ka \leqslant kb$ si $k > 0$, mais $ka \geqslant kb$ si $k < 0$.
+\end{propriete}
+
+\begin{methode}[résoudre $ax + b > 0$ à la fois par l'algèbre et par le signe]
+\begin{enumerate}
+  \item méthode algébrique : transposer $b$, puis diviser par $a$ en tenant compte de son signe. Si $a > 0$, $ax + b > 0 \Longleftrightarrow x > -\dfrac{b}{a}$ ; si $a < 0$, $ax + b > 0 \Longleftrightarrow x < -\dfrac{b}{a}$ ;
+  \item méthode du tableau de signes : on résout $ax + b = 0$ qui donne $x_{0} = -\dfrac{b}{a}$, puis on lit que $ax + b$ a le signe de $-a$ avant $x_{0}$, s'annule en $x_{0}$, et le signe de $a$ après ;
+  \item écrire l'ensemble des solutions comme un intervalle : les solutions d'une inéquation ne sont pas des nombres isolés mais toute une demi-droite de $\R$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[deux inéquations, deux sens]
+Résolvons $-2x + 6 \geqslant 0$. On transpose : $-2x \geqslant -6$, puis on divise par $-2$ en changeant le sens : $x \leqslant 3$, donc $S = (-\infty;\ 3]$. Le tableau de signes confirme : $-2x + 6$ est positif avant $3$, nul en $3$, négatif après. Résolvons $5x + 4 > 0$ : $x > -\dfrac{4}{5}$, donc $S = \left(-\dfrac{4}{5};\ +\infty\right)$.
+\end{exemple}
+
+\section{Inéquations du second degré}
+
+\begin{propriete}[signe du trinôme du second degré]
+Le signe de $ax^{2} + bx + c$ ($a \neq 0$) se lit sur le discriminant :
+\begin{itemize}
+  \item si $\Delta > 0$, le trinôme s'annule en $x_{1} < x_{2}$, a le signe de $a$ à l'extérieur des racines et le signe de $-a$ entre les racines ;
+  \item si $\Delta = 0$, le trinôme garde le signe de $a$ partout, et s'annule uniquement en $x_{0} = -\dfrac{b}{2a}$ ;
+  \item si $\Delta < 0$, le trinôme garde le signe de $a$ partout et ne s'annule jamais.
+\end{itemize}
+Résoudre une inéquation du second degré, c'est calculer $\Delta$ et les racines éventuelles, dresser le tableau de signes, puis lire les intervalles où l'inégalité est vérifiée.
+\end{propriete}
+
+\begin{exemple}[deux tableaux de signes]
+Résolvons $2x^{2} + 3x - 5 \geqslant 0$. Le discriminant vaut $\Delta = 9 + 40 = 49$, les racines sont $x_{1} = \dfrac{-3 - 7}{4} = -\dfrac{5}{2}$ et $x_{2} = \dfrac{-3 + 7}{4} = 1$. Comme $a = 2 > 0$, le trinôme est positif à l'extérieur des racines :
+\[
+S = \left(-\infty;\ -\frac{5}{2}\right] \cup [1;\ +\infty).
+\]
+Résolvons $-x^{2} + 3x - 2 < 0$ : $\Delta = 9 - 8 = 1$, racines $1$ et $2$ ; ici $a = -1 < 0$, le trinôme est positif entre les racines et négatif à l'extérieur, donc $S = (-\infty;\ 1) \cup (2;\ +\infty)$.
+\end{exemple}
+
+\begin{attention}
+Les valeurs qui annulent le trinôme sont incluses dans les solutions si l'inéquation est large ($\leqslant$ ou $\geqslant$) et exclues si elle est stricte ($<$ ou $>$). Une parenthèse fermée en crochets se lit bien avant de conclure : c'est la frontière de l'ensemble des solutions, et c'est là que se perdent les points en devoir.
+\end{attention}
+
+\begin{aretirer}
+Une équation du premier degré $ax + b = 0$ ($a \neq 0$) a une seule solution $x = -b/a$, et une équation produit se sépare en autant d'équations que de facteurs. Pour $ax^{2} + bx + c = 0$ ($a \neq 0$), on calcule $\Delta = b^{2} - 4ac$ : deux solutions distinctes si $\Delta > 0$ (avec factorisation $a(x - x_{1})(x - x_{2})$), une solution double $-b/2a$ si $\Delta = 0$, aucune si $\Delta < 0$. La somme des solutions vaut $-b/a$ et leur produit $c/a$ ; deux nombres de somme $S$ et produit $P$ sont racines de $X^{2} - S X + P = 0$. Une bicarrée se résout avec $X = x^{2}$, en ne gardant que les $X \geqslant 0$ avant de revenir à $x$. Pour les inéquations, diviser par un négatif change le sens ; le signe d'un trinôme se lit sur le tableau construit à partir de ses racines : signe de $a$ à l'extérieur des racines, signe de $-a$ à l'intérieur.
+\end{aretirer}

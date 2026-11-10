@@ -1,0 +1,62 @@
+% ============================================================
+%  TD Chapitre 4 : Systemes lineaires et programmation lineaire
+% ============================================================
+\clearpage
+\chapter{Systèmes linéaires et programmation linéaire}
+\chaptermark{Systèmes linéaires et programmation linéaire}
+
+\begin{exercice}[substitution et combinaison]
+Résoudre dans $\R \times \R$ le système suivant par la méthode de substitution, puis le refaire par la méthode de combinaison, et comparer les résultats :
+\[
+\begin{cases}
+3x + 2y = 13\\
+x - y = 1
+\end{cases}
+\]
+\end{exercice}
+
+\begin{exercice}[méthode de Cramer et cas particuliers]
+\begin{enumerate}
+\item résoudre par la méthode de Cramer le système $\begin{cases}2x + 3y = 12\\ 4x - y = 10\end{cases}$, en calculant $D$, $D_{x}$ et $D_{y}$ ;
+\item discuter puis résoudre les deux systèmes suivants :
+\[
+(S_{1}) : \begin{cases}2x + y = 5\\ 6x + 3y = 15\end{cases}
+\qquad\qquad
+(S_{2}) : \begin{cases}2x + y = 5\\ 6x + 3y = 8\end{cases}
+\]
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[pivot de Gauss sur un système $3 \times 3$]
+Résoudre le système suivant par la méthode du pivot de Gauss, en triangularisant puis en remontant :
+\[
+\begin{cases}
+x + y + z = 6\\
+2x - y + z = 3\\
+x + 2y - z = 2
+\end{cases}
+\]
+Contrôler le triplet obtenu dans les trois équations initiales.
+\end{exercice}
+
+\begin{exercice}[régionnement du plan]
+Représenter graphiquement l'ensemble des solutions du système d'inéquations suivant :
+\[
+\begin{cases}
+x + y \leqslant 6\\
+2x - y \leqslant 4\\
+x \geqslant 0, \quad y \geqslant 0
+\end{cases}
+\]
+Pour chaque inéquation, tracer la droite frontière, tester le point $O(0;\ 0)$, hachurer le demi-plan non solution, puis délimiter le domaine qui vérifie les quatre contraintes en même temps.
+\end{exercice}
+
+\begin{exercice}[programmation linéaire : maximiser le bénéfice]
+Une menuiserie de Lomé fabrique des chaises (modèle léger) et des tables. Une chaise nécessite $2$ planches et $1$ heure de travail et rapporte $2\,500$ F ; une table nécessite $3$ planches et $2$ heures de travail et rapporte $4\,000$ F. L'atelier dispose chaque semaine de $60$ planches et de $34$ heures de travail, et peut vendre toute sa production.
+\begin{enumerate}
+\item noter $x$ et $y$ les nombres de chaises et de tables fabriquées par semaine, puis traduire les disponibilités par un système d'inéquations ;
+\item donner l'expression du bénéfice hebdomadaire $Z$ en fonction de $x$ et de $y$ ;
+\item résoudre graphiquement le système des contraintes et donner les coordonnées des sommets du domaine ;
+\item calculer $Z$ à chaque sommet et déterminer la production qui maximise le bénéfice, ainsi que le bénéfice maximal.
+\end{enumerate}
+\end{exercice}

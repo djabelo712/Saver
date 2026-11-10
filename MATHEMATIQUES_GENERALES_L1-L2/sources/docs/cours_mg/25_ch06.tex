@@ -1,0 +1,92 @@
+% ============================================================
+%  Chapitre 6 : Suites numeriques
+% ============================================================
+\chapter{Suites numériques}
+\chaptermark{Suites numériques}
+
+\begin{quelqueslignes}
+Un capital qui produit des intérêts année après année, un stock qui diminue de mois en mois, une machine dont la valeur comptable baisse d'un montant fixe chaque exercice : autant de suites de nombres, où chaque terme s'obtient du précédent par une règle précise. Ce chapitre définit les suites et leur monotonie, puis installe les deux familles qui gouvernent les calculs financiers : les suites arithmétiques, où l'on ajoute chaque fois la même quantité (intérêts simples, amortissement linéaire), et les suites géométriques, où l'on multiplie chaque fois le même facteur (intérêts composés). Les formules de terme général et de somme des premiers termes permettent de prévoir en une ligne ce qui se passerait sur des dizaines de périodes.
+\end{quelqueslignes}
+
+\section{Généralités sur les suites}
+
+\begin{definition}[suite numérique]
+Une \emph{suite numérique} est une fonction qui à chaque entier naturel $n$ associe un nombre $u_{n}$ : le terme général de la suite $(u_{n})$. La suite est définie de manière \emph{explicite} quand $u_{n}$ se calcule directement à partir de $n$ (par exemple $u_{n} = 2n - 5$), et de manière \emph{récurrente} quand chaque terme se déduit du précédent (par exemple $u_{n+1} = 2u_{n} + 1$ avec un premier terme $u_{0}$ donné).
+\end{definition}
+
+\begin{propriete}[monotonie d'une suite]
+La suite $(u_{n})$ est \emph{croissante} quand $u_{n+1} - u_{n} \geqslant 0$ pour tout $n$, \emph{décroissante} quand $u_{n+1} - u_{n} \leqslant 0$ pour tout $n$, et \emph{constante} quand la différence est nulle. Pour une suite définie explicitement, on calcule donc $u_{n+1} - u_{n}$ et on étudie son signe : c'est la méthode systématique, applicable dès que la formule est simple.
+\end{propriete}
+
+\begin{exemple}[deux suites, deux comportements]
+Étudions la monotonie de $u_{n} = 2n - 5$ : la différence $u_{n+1} - u_{n} = 2(n+1) - 5 - (2n - 5) = 2$ est strictement positive, donc la suite est croissante ; ses premiers termes valent $-5$, $-3$, $-1$, $1$, $3$, \dots. Pour $v_{n} = 5 - \dfrac{2}{n}$ (à partir de $n = 1$), la différence vaut
+\[
+v_{n+1} - v_{n} = \left(5 - \frac{2}{n+1}\right) - \left(5 - \frac{2}{n}\right)
+= \frac{2}{n} - \frac{2}{n+1} = \frac{2}{n(n+1)} > 0,
+\]
+donc la suite $(v_{n})$ est croissante aussi, mais ses termes $3$, $4{,}33$, $4{,}5$, $4{,}6$, \dots se rapprochent de $5$ sans jamais l'atteindre : croissance et comportement à l'infini sont deux questions distinctes.
+\end{exemple}
+
+\section{Suites arithmétiques}
+
+\begin{definition}[suite arithmétique]
+Une suite est \emph{arithmétique} quand on passe de chaque terme au suivant en ajoutant une même quantité $r$, appelée \emph{raison} : $u_{n+1} = u_{n} + r$. La différence de deux termes consécutifs vaut toujours $r$ : c'est une suite qui progresse par paliers réguliers, à la manière d'un prêt à intérêts fixes.
+\end{definition}
+
+\begin{propriete}[terme général et somme]
+Pour une suite arithmétique de premier terme $u_{0}$ et de raison $r$ :
+\[
+u_{n} = u_{0} + n \times r
+\]
+pour tout entier $n \geqslant 0$. La somme des termes consécutifs d'une suite arithmétique vaut le nombre de termes multiplié par la moyenne du premier et du dernier :
+\[
+u_{0} + u_{1} + \dots + u_{n} = (n + 1) \times \frac{u_{0} + u_{n}}{2} .
+\]
+\end{propriete}
+
+\begin{remarque}[l'amortissement linéaire]
+L'amortissement linéaire d'un équipement suit exactement une suite arithmétique : une machine de valeur $V$ amortie sur $N$ années perd chaque année la même annuité $V/N$, et sa valeur nette comptable après $n$ années vaut $V - n \times \dfrac{V}{N}$. C'est la même formule que le terme général, avec $r = -V/N$.
+\end{remarque}
+
+\begin{exemple}[intérêts simples et valeur acquise]
+Un capital de $150\,000$ F est placé à $7\,\%$ par an en \emph{intérêts simples} : chaque année produit la même somme $150\,000 \times 0{,}07 = 10\,500$ F, et les intérêts ne sont pas replacés. La valeur acquise après $n$ années suit la suite arithmétique de premier terme $150\,000$ et de raison $10\,500$ :
+\[
+V_{n} = 150\,000 + 10\,500 \times n .
+\]
+Après $4$ années, $V_{4} = 150\,000 + 4 \times 10\,500 = 192\,000$ F. Le terme général donne d'un coup d'œil la valeur pour toute échéance : après $10$ années, $V_{10} = 150\,000 + 10 \times 10\,500 = 255\,000$ F.
+\end{exemple}
+
+\section{Suites géométriques}
+
+\begin{definition}[suite géométrique]
+Une suite est \emph{géométrique} quand on passe de chaque terme au suivant en multipliant par une même constante $q$, appelée \emph{raison} : $u_{n+1} = q \times u_{n}$. Le rapport de deux termes consécutifs vaut toujours $q$ : c'est une suite qui progresse en pourcentage, à la manière d'un capital qui produit des intérêts composés.
+\end{definition}
+
+\begin{propriete}[terme général et somme]
+Pour une suite géométrique de premier terme $u_{0}$ et de raison $q \neq 0$ :
+\[
+u_{n} = u_{0} \times q^{n}
+\]
+pour tout entier $n \geqslant 0$. La somme des termes consécutifs vaut, pour $q \neq 1$ :
+\[
+u_{0} + u_{1} + \dots + u_{n} = u_{0} \times \frac{1 - q^{n+1}}{1 - q} .
+\]
+\end{propriete}
+
+\begin{exemple}[intérêts composés et comparaison]
+Replaçons le même capital de $150\,000$ F à $7\,\%$ par an, cette fois en \emph{intérêts composés} : chaque année, les intérêts produits sont ajoutés au capital et produisent à leur tour. La valeur acquise suit la suite géométrique de premier terme $150\,000$ et de raison $q = 1{,}07$ :
+\[
+V_{n} = 150\,000 \times 1{,}07^{n} .
+\]
+Après $4$ années, $V_{4} = 150\,000 \times 1{,}07^{4} \approx 150\,000 \times 1{,}3108 \approx 196\,619$ F, contre $192\,000$ F en intérêts simples : l'écart reste modeste. Après $10$ années, $V_{10} = 150\,000 \times 1{,}07^{10} \approx 150\,000 \times 1{,}9672 \approx 295\,073$ F, contre $255\,000$ F en intérêts simples : la raison multipliée fait basculer la croissance, et l'écart se creuse chaque année davantage.
+\end{exemple}
+
+\begin{attention}
+Pour une suite arithmétique, la croissance est contrôlée par le signe de la raison $r$ ; pour une suite géométrique à termes positifs, elle est contrôlée par la raison $q$ par rapport à $1$ : croissance si $q > 1$, décroissance si $0 < q < 1$, termes constants si $q = 1$. Ne jamais raisonner par « signe de $q$ » : une raison négative fait alterner les signes des termes, elle ne traduit pas une décroissance régulière.
+\end{attention}
+
+\begin{aretirer}
+Une suite se définit explicitement ($u_{n}$ en fonction de $n$) ou par récurrence ($u_{n+1}$ à partir de $u_{n}$), et sa monotonie se lit sur le signe de $u_{n+1} - u_{n}$. Une suite arithmétique ajoute à chaque pas sa raison $r$ : terme général $u_{n} = u_{0} + nr$ et somme $(n+1) \times \frac{u_{0} + u_{n}}{2}$ ; elle modélise les intérêts simples ($V_{n} = C + Ctn$) et l'amortissement linéaire. Une suite géométrique multiplie à chaque pas sa raison $q$ : terme général $u_{n} = u_{0} q^{n}$ et somme $u_{0} \frac{1 - q^{n+1}}{1 - q}$ ; elle modélise les intérêts composés ($V_{n} = C(1+t)^{n}$). À long terme, la différence entre ajouter et multiplier décide de tout : $10$ ans de placement à $7\,\%$ donnent $255\,000$ F en intérêts simples contre environ $295\,073$ F en intérêts composés.
+\end{aretirer}
+
+\end{document}

@@ -1,0 +1,108 @@
+% ============================================================
+%  Corriges Chapitre 2 : Logique et algebre de Boole
+% ============================================================
+\clearpage
+\chapter{Logique et algèbre de Boole}
+\chaptermark{Logique et algèbre de Boole}
+
+\begin{corrige}{2.1}
+Les six traductions, dans l'ordre :
+\begin{itemize}
+\item $\neg P$ : « la connexion Internet ne fonctionne pas » ;
+\item $P \wedge Q$ : « la connexion fonctionne et le terminal de paiement est en marche » ;
+\item $P \vee Q$ : « la connexion fonctionne ou le terminal de paiement est en marche » ;
+\item $Q \vee \neg P$ : « le terminal de paiement est en marche ou la connexion ne fonctionne pas » ;
+\item $\neg P \vee \neg Q$ : « la connexion ne fonctionne pas ou le terminal de paiement n'est pas en marche » (au moins une des deux conditions est défaillante) ;
+\item $\neg(P \wedge Q)$ : « les deux conditions ne sont pas simultanément vérifiées » (il n'est pas vrai que tout fonctionne).
+\end{itemize}
+Les deux dernières sont équivalentes sans avoir besoin de table : $\neg(P \wedge Q)$ dit exactement qu'on n'a pas les deux en même temps, c'est-à-dire que l'une au moins est fausse, c'est-à-dire $\neg P \vee \neg Q$. C'est la première loi de De Morgan.
+\end{corrige}
+
+\begin{corrige}{2.2}
+On numérote les combinaisons dans l'ordre du comptage binaire : $(0,0)$, $(0,1)$, $(1,0)$, $(1,1)$.
+\begin{center}
+\small
+\begin{tabular}{C{0.75cm}C{0.75cm}|C{2.1cm}C{1.9cm}C{2.0cm}C{2.4cm}}
+\toprule
+\rowcolor{robleuf}$P$ & $Q$ & $\neg P \wedge Q$ & $P \vee \neg Q$ & $\neg(P \wedge Q)$ & $\neg P \vee \neg Q$\\
+\midrule
+0 & 0 & 0 & 1 & 1 & 1\\
+\rowcolor{rogrisf!50}0 & 1 & 1 & 0 & 1 & 1\\
+1 & 0 & 0 & 1 & 1 & 1\\
+\rowcolor{rogrisf!50}1 & 1 & 0 & 0 & 0 & 0\\
+\bottomrule
+\end{tabular}
+\end{center}
+Les colonnes de $\neg(P \wedge Q)$ et de $\neg P \vee \neg Q$ coïncident ligne à ligne : la première loi de De Morgan $\neg(P \wedge Q) \Longleftrightarrow \neg P \vee \neg Q$ est vérifiée.
+\end{corrige}
+
+\begin{corrige}{2.3}
+\begin{enumerate}
+\item La table donne :
+\begin{center}\small
+\begin{tabular}{C{0.7cm}C{0.7cm}|C{0.9cm}C{2.2cm}C{2.4cm}}
+\toprule
+\rowcolor{robleuf}$P$ & $Q$ & $\neg P$ & $P \Rightarrow Q$ & $P \wedge \neg Q$\\
+\midrule
+0 & 0 & 1 & 1 & 0\\
+\rowcolor{rogrisf!50}0 & 1 & 1 & 1 & 0\\
+1 & 0 & 0 & 0 & 1\\
+\rowcolor{rogrisf!50}1 & 1 & 0 & 1 & 0\\
+\bottomrule
+\end{tabular}\end{center}
+Les deux dernières colonnes sont opposées ligne à ligne : $P \Rightarrow Q$ et $P \wedge \neg Q$ ne sont jamais vraies ensemble. La négation de l'implication est donc bien la conjonction $P \wedge \neg Q$ : l'implication est fausse exactement quand l'hypothèse est vraie et la conclusion fausse.
+\item La table de $\neg P \vee Q$ coïncide ligne à ligne avec celle de $P \Rightarrow Q$ : l'implication s'écrit $\neg P \vee Q$, forme utile pour appliquer De Morgan.
+\item La réciproque est $Q \Rightarrow P$ (colonne 4) et la contraposée est $\neg Q \Rightarrow \neg P$ (colonne 5). Seule la contraposée coïncide ligne à ligne avec $P \Rightarrow Q$ : les deux sont équivalentes ; la réciproque a sa propre table.
+\item La négation de « si $P$ alors $Q$ » est « $P$ et $\neg Q$ ». Avec $P$ : « le marchand a reçu le paiement » et $Q$ : « la commande est expédiée », la forme correcte est la phrase (a) : « le marchand a reçu le paiement et la commande n'a pas été expédiée ». La phrase (c) est la contraposée, qui dit la même chose que l'implication et ne la contredit pas.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{2.4}
+\textbf{Expression $X$.} On regroupe par distributivité :
+\[
+X = A\overline{B} + AB + \overline{A}B = A(\overline{B} + B) + \overline{A}B = A + \overline{A}B = A + B,
+\]
+où $\overline{B} + B = 1$, puis l'absorption $a + \overline{a}b = a + b$. Forme simplifiée : $X = A + B$.
+\par\smallskip
+\textbf{Expression $Y$.} La distributivité donne $(A + B)(A + \overline{B}) = A + B\overline{B} = A + 0 = A$ : c'est la seconde forme de la distributivité avec $C = \overline{B}$, et la complémentation $B\overline{B} = 0$. Forme simplifiée : $Y = A$.
+\par\smallskip
+\textbf{Expression $Z$.} L'absorption directement : $Z = A(A + B) = A \cdot A + A \cdot B = A + AB = A$. Forme simplifiée : $Z = A$.
+\par\smallskip
+\textbf{Table de vérification} sur les quatre combinaisons de $(A, B)$ :
+\begin{center}\small
+\begin{tabular}{C{0.7cm}C{0.7cm}|C{0.7cm}C{0.9cm}|C{0.7cm}C{0.7cm}|C{0.7cm}C{0.7cm}}
+\toprule
+\rowcolor{robleuf}$A$ & $B$ & $X$ & $A+B$ & $Y$ & $A$ & $Z$ & $A$\\
+\midrule
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\rowcolor{rogrisf!50}0 & 1 & 1 & 1 & 0 & 0 & 0 & 0\\
+1 & 0 & 1 & 1 & 1 & 1 & 1 & 1\\
+\rowcolor{rogrisf!50}1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+\bottomrule
+\end{tabular}\end{center}
+Chaque couple de colonnes coïncide ligne à ligne : les trois simplifications sont confirmées.
+\end{corrige}
+
+\begin{corrige}{2.5}
+\begin{enumerate}
+\item Bit à bit, colonne par colonne :
+\[
+P \wedge Q = 10100000, \qquad P \vee Q = 11111010, \qquad P \veebar Q = 01011010 .
+\]
+Le « et » exige deux 1, le « ou » un seul 1 suffit, le « ou exclusif » exige un nombre impair de 1.
+\item Le chiffrement donne, bit à bit :
+\[
+C = M \veebar K : \quad 01101001 \veebar 10011010 = 11110011,
+\]
+puis le déchiffrement :
+\[
+C \veebar K = 11110011 \veebar 10011010 = 01101001 = M .
+\]
+La justification tient aux propriétés du ou exclusif : $K \veebar K = 0$ et $M \veebar 0 = M$, donc $(M \veebar K) \veebar K = M \veebar (K \veebar K) = M \veebar 0 = M$. Le même masque chiffre et déchiffre.
+\item La sortie s'écrit $F = (A \cdot B) \vee (\overline{A} \cdot B)$, et la distributivité fait sortir $B$ :
+\[
+F = B \cdot (A + \overline{A}) = B \cdot 1 = B .
+\]
+La table de $F$ sur les quatre combinaisons de $(A, B)$ donne $F = 0, 1, 0, 1$, qui copie exactement la colonne de $B$ : le circuit simplifié se réduit au fil reliant $B$ à la sortie, sans aucune porte.
+\end{enumerate}
+\end{corrige}

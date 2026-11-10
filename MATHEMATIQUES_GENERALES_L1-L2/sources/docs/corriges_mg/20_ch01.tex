@@ -1,0 +1,54 @@
+% ============================================================
+%  Corriges Chapitre 1 : Les ensembles
+% ============================================================
+\chapter{Les ensembles}
+\chaptermark{Les ensembles}
+
+\begin{corrige}{1.1}
+\begin{enumerate}
+\item En extension : $A = \{3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}$, donc $|A| = 10$ éléments.
+\item Le mot « gestion » comporte sept lettres distinctes : $B = \{g, e, s, t, i, o, n\}$, donc $|B| = 7$.
+\item $5 \in A$ est \textbf{vrai} (entre 3 et 12) ; $13 \notin A$ est \textbf{vrai} (13 dépasse 12) ; $4 \in A$ est \textbf{faux} (4 est inférieur à 3, donc $4 \notin A$).
+\item La propriété du produit cartésien donne $|A \times B| = |A| \times |B| = 10 \times 7 = 70$ couples. Un couple convenable : $(3, g)$, avec $3 \in A$ et $g \in B$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{1.2}
+\begin{enumerate}
+\item L'union réunit les éléments des deux ensembles : $C \cup D = \{1, 2, 3, 4, 5, 6\}$. L'intersection garde les communs : $C \cap D = \{3, 4\}$. Les complémentaires se lisent dans $U = \{1, \dots, 9\}$ : $\overline{C} = \{5, 6, 7, 8, 9\}$ et $\overline{D} = \{1, 2, 7, 8, 9\}$.
+\item $\overline{C} \cap \overline{D} = \{7, 8, 9\}$ ; de l'autre côté, $\overline{C \cup D} = \overline{\{1, \dots, 6\}} = \{7, 8, 9\}$. Les deux résultats coïncident : c'est exactement la première loi de De Morgan, $\overline{C \cup D} = \overline{C} \cap \overline{D}$.
+\item $\overline{C \cap D} = \overline{\{3, 4\}} = \{1, 2, 5, 6, 7, 8, 9\}$ ; et $\overline{C} \cup \overline{D} = \{5, 6, 7, 8, 9\} \cup \{1, 2, 7, 8, 9\} = \{1, 2, 5, 6, 7, 8, 9\}$. Les deux écritures coïncident : seconde loi de De Morgan vérifiée.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{1.3}
+\begin{enumerate}
+\item On commence par l'intersection : $|B \cap C| = 17$ étudiants suivent les deux modules. La zone « bureautique seulement » vaut $45 - 17 = 28$, et la zone « comptabilité seulement » vaut $38 - 17 = 21$. Le diagramme porte donc $28$, $17$ et $21$ dans ses trois cercles.
+\item Les étudiants qui suivent au moins un module vaut $28 + 17 + 21 = 66$ étudiants.
+\item Hors des deux cercles, il reste $84 - 66 = 18$ étudiants, dans la zone $\overline{B \cup C}$ : aucun des deux modules.
+\item La formule donne $|B \cup C| = |B| + |C| - |B \cap C| = 45 + 38 - 17 = 66$, et on retrouve bien les 66 étudiants de la question 2.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{1.4}
+\begin{enumerate}
+\item On remplit du noyau vers l'extérieur : le noyau $F \cap K \cap H$ vaut $5$. La zone « football et basket seulement » vaut $11 - 5 = 6$ ; « football et handball seulement » : $9 - 5 = 4$ ; « basket et handball seulement » : $8 - 5 = 3$. Enfin $F$ seul vaut $31 - 6 - 4 - 5 = 16$, $K$ seul vaut $24 - 6 - 3 - 5 = 10$, et $H$ seul vaut $19 - 4 - 3 - 5 = 7$.
+\item La réunion des trois ensembles compte $16 + 10 + 7 + 6 + 4 + 3 + 5 = 51$ étudiants pratiquant au moins un sport.
+\item Il reste $60 - 51 = 9$ étudiants hors des trois cercles : ils ne pratiquent aucun des trois sports.
+\item La somme des huit régions vaut $16 + 10 + 7 + 6 + 4 + 3 + 5 + 9 = 60$, en accord avec l'effectif interrogé.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}{1.5}
+\textbf{Expression $E$.} La distributivité de $\cap$ sur $\cup$ fait sortir $B$ et $\overline{B}$ en facteur :
+\[
+E = (A \cap \overline{B}) \cup (\overline{A} \cap B) = B \cap (A \cup \overline{A}) = B \cap U = B ?
+\]
+Non : chaque membre garde son propre facteur, et l'expression $E$ est la \emph{différence symétrique} de $A$ et $B$ : les éléments qui appartiennent à exactement un des deux ensembles. \textbf{Contrôle.} Avec $A = \{1, 3\}$, $B = \{2, 3\}$ dans $U = \{1, 2, 3, 4\}$ : $\overline{B} = \{1, 4\}$ et $\overline{A} = \{2, 4\}$, donc $A \cap \overline{B} = \{1\}$ et $\overline{A} \cap B = \{2\}$, d'où $E = \{1, 2\}$ ; c'est bien l'ensemble des éléments présents dans exactement un des deux ensembles.
+\par\smallskip
+\textbf{Expression $F$.} Cette fois la distributivité regroupe les zones « dans les deux » et « dans aucun » :
+\[
+F = (A \cap B) \cup (\overline{A} \cap \overline{B}) = \overline{E} .
+\]
+Sur le même contrôle : $A \cap B = \{3\}$ et $\overline{A} \cap \overline{B} = \{4\}$, donc $F = \{3, 4\} = \overline{E}$ : les deux expressions sont complémentaires l'une de l'autre, ce que le calcul confirme sur les ensembles concrets.
+\end{corrige}
